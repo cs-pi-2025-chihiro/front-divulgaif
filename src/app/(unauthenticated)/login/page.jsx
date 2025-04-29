@@ -98,7 +98,8 @@ const LoginPage = () => {
             
             <Button 
               type="submit" 
-              className="login-button" 
+              className="secondary"
+              variant="secondary" 
               disabled={isLoading}
             >
               {isLoading ? 'Carregando...' : 'Acessar'}
@@ -108,7 +109,7 @@ const LoginPage = () => {
               <p className="options-divider">Entrar com:</p>
               <Button 
                 type="button" 
-                className="suap-button"
+                variant="secondary"
               >
                 SUAP
               </Button>
@@ -116,22 +117,6 @@ const LoginPage = () => {
           </form>
         </div>
       </div>
-      
-      <footer className="login-footer">
-        <div className="footer-logo">
-          <Image 
-            src="/ifpr_logo.png" 
-            alt="IFPR Logo" 
-            className="ifpr-logo-small" 
-          />
-          <span className="footer-title">DivulgaIF</span>
-        </div>
-        <div className="footer-links">
-          <p>SIGAA | Cronos | SUAP | Moodle</p>
-          <p>Acessibilidade e Ajuda | Sobre Nós</p>
-          <p>© DivulgaIF | Todos os Direitos Reservados</p>
-        </div>
-      </footer>
     </div>
   );
 };

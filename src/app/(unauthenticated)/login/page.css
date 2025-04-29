@@ -20,7 +20,6 @@ body {
 .divulgaif-login-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   background-color: var(--primary-green);
   color: var(--text-light);
 }
@@ -56,13 +55,13 @@ body {
 
 .login-heading {
   font-size: 1.75rem;
-  font-weight: 500;
+  font-weight: bold;
   margin: 0;
   text-align: center;
 }
 
 .login-subheading {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 400;
   margin: 0.5rem 0 1.5rem;
   text-align: center;
@@ -126,13 +125,11 @@ input {
 }
 
 .login-options {
-  margin-top: 1.5rem;
   text-align: center;
 }
 
 .options-divider {
-  font-size: 0.9rem;
-  margin: 1rem 0;
+  font-size: 1.2rem;
 }
 
 .suap-button {
@@ -149,45 +146,4 @@ input {
 
 .suap-button:hover {
   opacity: 0.9;
-}
-
-.login-footer {
-  padding: 1rem;
-  background-color: var(--dark-green);
-  text-align: center;
-  font-size: 0.8rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.footer-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.5rem;
-}
-
-.ifpr-logo-small {
-  height: 40px;
-  margin-right: 1rem;
-}
-
-.footer-title {
-  font-size: 1.2rem;
-  font-weight: 500;
-}
-
-.footer-links {
-  line-height: 1.6;
-}
-
-.footer-links p {
-  margin: 0.25rem 0;
-}
-
-@media (max-width: 768px) {
-  .login-form-container {
-    padding: 1.5rem;
-  }
 }
