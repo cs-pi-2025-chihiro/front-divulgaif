@@ -2,8 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Footer from '../components/footer/footer';
 import Header from '../components/header/header';
-import Calculadora from '../components/calculadora/calculadora';
 import Home from './(unauthenticated)/home/page';
+import LoginPage from './(unauthenticated)/login/page';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/calculadora' element={<Calculadora />} />
+          <Route path='/login' element={<LoginPage />} />
         </Routes>
         <Footer />
       </div>

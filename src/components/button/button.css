@@ -1,0 +1,376 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  justify-content: center;
+  white-space: nowrap;
+  font-weight: bold;
+  font-family: var(--font-primary, 'Roboto');
+  transition: all 0.2s ease;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.btn:focus-visible {
+  outline: none;
+  ring: 1px solid var(--accent);
+}
+
+.btn-default {
+  background: linear-gradient(to right, var(--primary), var(--background));
+  color: var(--text-light);
+}
+
+.btn-default:hover {
+  background: linear-gradient(to right, rgba(75, 100, 85, 0.9), rgba(46, 59, 51, 0.9));
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--text-light);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  background-color: rgba(75, 100, 85, 0.8);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: var(--text-dark);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(169, 190, 140, 0.8);
+}
+
+.btn-success {
+  background-color: var(--secondary);
+  color: var(--text-dark);
+}
+
+.btn-success:hover {
+  background-color: rgba(169, 190, 140, 0.8);
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: var(--text-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-danger:hover {
+  background-color: rgba(220, 53, 69, 0.6);
+}
+
+.btn-outline {
+  border: 1px solid var(--accent);
+  background-color: transparent;
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline:hover {
+  background-color: var(--accent);
+  color: var(--text-dark);
+}
+
+.btn-outlineHover {
+  border: 1px solid var(--accent);
+  background-color: var(--text-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  color: var(--primary);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--primary);
+}
+
+.btn-ghost:hover {
+  background-color: var(--accent);
+  color: var(--text-dark);
+}
+
+.btn-link {
+  color: var(--primary);
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+.btn-disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.btn-light {
+  background-color: var(--text-light);
+  color: var(--text-dark);
+}
+
+.btn-light:hover {
+  background-color: var(--text-dark);
+  color: var(--text-light);
+}
+
+.btn-gray {
+  background-color: #6c757d;
+  color: var(--text-light);
+}
+
+.btn-gray:hover {
+  background-color: var(--text-light);
+  color: #6c757d;
+}
+
+.btn-cardIcon {
+  background-color: var(--text-light);
+  color: var(--text-dark);
+}
+
+.btn-cardIcon:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-card {
+  border: 1px solid var(--accent);
+  background-color: var(--text-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-card:hover {
+  background-color: var(--accent);
+  color: var(--text-dark);
+}
+
+.btn-cardSelected {
+  background: linear-gradient(to right, var(--primary), var(--background));
+  color: var(--text-light);
+}
+
+.btn-cardSelected:hover {
+  background: linear-gradient(to right, rgba(75, 100, 85, 0.9), rgba(46, 59, 51, 0.9));
+}
+
+.btn-back {
+  background-color: var(--text-light);
+  color: var(--primary);
+}
+
+.btn-favorite {
+  background-color: var(--text-light);
+  color: var(--primary);
+}
+
+.btn-favorite:hover {
+  background-color: #dc3545;
+}
+
+.btn-inline {
+  border: 1px solid var(--accent);
+  background-color: var(--text-light);
+  color: var(--text-dark);
+  border-radius: 9999px;
+}
+
+.btn-home {
+  border: 1px solid var(--accent);
+  background-color: transparent;
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-home:hover {
+  background-color: var(--accent);
+  color: var(--text-dark);
+}
+
+.btn-home-active {
+  background-color: var(--secondary);
+  border: 1px solid var(--secondary);
+  color: var(--text-dark);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-filter {
+  border: 1px solid var(--accent);
+  color: var(--primary);
+}
+
+.btn-filterSelected {
+  background: linear-gradient(to right, var(--primary), var(--background));
+  color: var(--text-light);
+}
+
+.btn-profile {
+  background-color: transparent;
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-profile:hover {
+  background-color: var(--accent);
+  color: var(--text-dark);
+}
+
+.btn-cancel {
+  background-color: var(--text-light);
+  color: var(--text-dark);
+}
+
+.btn-removeTutor {
+  border-radius: 0.375rem;
+  background-color: var(--background);
+  color: var(--text-light);
+}
+
+.btn-removeTutor:hover {
+  background-color: var(--secondary);
+  color: var(--text-dark);
+}
+
+.btn-size-xs {
+  height: 1.5rem;
+  padding: 0 0.5rem;
+  font-size: 0.75rem; 
+}
+
+.btn-size-sm {
+  height: 2rem; 
+  padding: 0 0.75rem; 
+  font-size: 0.75rem; 
+}
+
+.btn-size-md {
+  height: 2.25rem; 
+  padding: 0.5rem 1rem; 
+  font-size: 0.875rem; 
+}
+
+.btn-size-lg {
+  height: 2.5rem; 
+  padding: 0 2rem; 
+  font-size: 0.875rem; 
+}
+
+.btn-size-2lg {
+  height: 3rem; 
+  padding: 0 2rem; 
+  font-size: 0.875rem; 
+}
+
+.btn-size-xl {
+  height: 3.5rem; 
+  padding: 0 2.5rem; 
+  font-size: 1rem; 
+}
+
+.btn-size-2xl {
+  height: 3.5rem; 
+  padding: 0 3rem; 
+  font-size: 1rem; 
+}
+
+.btn-size-3xl {
+  height: 4rem; 
+  padding: 0 3.5rem; 
+  font-size: 1rem; 
+}
+
+.btn-size-4xl {
+  height: 5rem; 
+  padding: 0 4rem; 
+  font-size: 1rem; 
+}
+
+.btn-size-icon {
+  height: 1.75rem; 
+  padding: 0.375rem; 
+}
+
+.btn-size-full {
+  height: 2.5rem; 
+}
+
+@media (min-width: 768px) {
+  .btn-size-full {
+    height: 100%;
+  }
+  
+  .btn-card, .btn-cardSelected {
+    min-width: 180px;
+  }
+}
+
+.btn-size-home {
+  height: auto;
+  width: auto;
+}
+
+.btn-width-full {
+  width: 100%;
+}
+
+.btn-width-w-35 {
+  width: 45px;
+}
+
+.btn-font-xs {
+  font-size: 0.75rem; 
+}
+
+.btn-font-sm {
+  font-size: 0.875rem; 
+}
+
+.btn-font-md {
+  font-size: 1rem; 
+}
+
+.btn-font-lg {
+  font-size: 1.125rem; 
+}
+
+.btn-font-xl {
+  font-size: 1.25rem; 
+}
+
+.btn-weight-normal {
+  font-weight: var(--font-weight-normal, 400);
+}
+
+.btn-weight-bold {
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.btn-weight-semi {
+  font-weight: 600;
+}
+
+.btn-weight-extra {
+  font-weight: 800;
+}
+
+.btn-square {
+  border-radius: 0;
+}
+
+.btn-rounded {
+  border-radius: 0.375rem; 
+}
+
+.btn-circle {
+  border-radius: 9999px;
+}
