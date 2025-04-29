@@ -47,6 +47,7 @@ const LoginPage = () => {
     setSuccessResult('');
     
     try {
+      // só pra fingir de conta q ta funfando
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       setSuccessResult('Login realizado com sucesso!');

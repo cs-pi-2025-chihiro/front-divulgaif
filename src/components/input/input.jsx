@@ -2,7 +2,7 @@ import React from 'react';
 
 const Input = ({ type, name, value, onChange, placeholder, className, style }) => {
   const defaultStyle = {
-    backgroundColor: '#DAD7CD',
+    backgroundColor: 'var(--bone, #CDCEBE)',
     ...style
   };
 

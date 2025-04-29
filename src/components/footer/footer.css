@@ -1,6 +1,6 @@
 .login-footer {
     padding: 1rem;
-    background-color: var(--dark-green);
+    background-color: var(--hunter, #08190A);
     text-align: center;
     font-size: 0.8rem;
     display: flex;

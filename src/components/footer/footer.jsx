@@ -8,7 +8,7 @@ const Footer = () => {
                   <footer className="login-footer">
         <div className="footer-logo">
           <Image 
-            src="/ifpr_logo.png" 
+            src="public/ifpr_png.png" 
             alt="IFPR Logo" 
             className="ifpr-logo-small" 
           />

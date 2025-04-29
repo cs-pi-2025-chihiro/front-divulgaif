@@ -5,10 +5,13 @@
   --font-size-base: 16px;
   --font-weight-normal: 400;
   --font-weight-bold: 700;
-  --primary: #4B6455;
-  --secondary: #A9BE8C;
-  --background: #2E3B33;
-  --text-light: #FFFFFF;
+  --primary: #95A68F;
+  --secondary: #A9BE8C; /* Olive */
+  --grey-blue: #2B3348; /* Grey Blue */
+  --text-light: #FFFCF5; /* Fluffy Cloud */
+  --brown: #7D4A31; /* Brown Sugar */
+  --hunter: #08190A; /* Hunter */
+  --bone: #CDCEBE; /* Bone */
   --text-dark: #333333;
   --accent: #D1D9C4;
   --container-green: #344E41;
@@ -45,18 +48,18 @@ body, html {
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--grey-blue, #2B3348);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--text-light, #FFFCF5);
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--secondary, #A9BE8C);
 }
 
 @keyframes App-logo-spin {
