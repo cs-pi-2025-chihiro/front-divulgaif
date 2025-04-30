@@ -15,6 +15,9 @@ const Button = forwardRef(
       fontSize,
       fontWeight,
       typeFormat = 'rounded',
+      ariaLabel,
+      role,
+      tabIndex = 0,
       ...props
     },
     ref
@@ -38,13 +41,25 @@ const Button = forwardRef(
       className
     ].filter(Boolean).join(' ');
 
+    const handleKeyDown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onClick && onClick(e);
+      }
+    };
+
     return (
       <button
         ref={ref}
         type={type}
         onClick={onClick}
+        onKeyDown={handleKeyDown}
         className={buttonClass}
         disabled={disabled}
+        aria-label={ariaLabel || (typeof children === 'string' ? children : undefined)}
+        role={role || 'button'}
+        tabIndex={disabled ? -1 : tabIndex}
+        aria-disabled={disabled}
         {...props}
       >
         {children}

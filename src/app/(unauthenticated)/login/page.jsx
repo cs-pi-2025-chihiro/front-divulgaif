@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./page.css";
 import { Input, PasswordInput } from "../../../components/input";
 import Button from "../../../components/button/index.js";
-import Image from "../../../components/image/image";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -59,38 +58,46 @@ const LoginPage = () => {
       <div className="login-content">
         <div className="login-header-with-favicon">
           <div className="login-header">
-            <h1 className="main-title">DivulgaIF</h1>
+            <a href="/" tabIndex="0" aria-label="DivulgaIF página inicial">
+              <h1 className="main-title">DivulgaIF</h1>
+            </a>
           </div>
         </div>
 
         <div className="login-form-container">
-          <h2 className="login-heading">Login</h2>
+          <h2 id="login-heading" className="login-heading">Login</h2>
           <p className="login-subheading">Acesse ao DivulgaIF:</p>
-          <form onSubmit={handleSubmit} className="login-form">
+          <form onSubmit={handleSubmit} className="login-form" aria-labelledby="login-heading">
             <div className="form-group">
               <label htmlFor="username">Usuário:</label>
               <Input
                 name="username"
+                id="username"
                 value={formData.username}
                 onChange={handleChange}
                 className={errors.username ? "input-error" : ""}
                 placeholder="Digite seu usuário"
+                aria-invalid={!!errors.username}
+                aria-describedby={errors.username ? "username-error" : undefined}
               />
               {errors.username && (
-                <span className="error-message">{errors.username}</span>
+                <span id="username-error" className="error-message" role="alert">{errors.username}</span>
               )}
             </div>
             <div className="form-group">
               <label htmlFor="password">Senha:</label>
               <PasswordInput
                 name="password"
+                id="password"
                 value={formData.password}
                 onChange={handleChange}
                 className={errors.password ? "input-error" : ""}
                 placeholder="Senha"
+                aria-invalid={!!errors.password}
+                aria-describedby={errors.password ? "password-error" : undefined}
               />
               {errors.password && (
-                <span className="error-message">{errors.password}</span>
+                <span id="password-error" className="error-message" role="alert">{errors.password}</span>
               )}
             </div>
             <Button
@@ -98,12 +105,25 @@ const LoginPage = () => {
               className="secondary"
               variant="secondary"
               disabled={isLoading}
+              aria-busy={isLoading}
+              ariaLabel="Acessar o sistema"
             >
               {isLoading ? "Carregando..." : "Acessar"}
             </Button>
-            <div className="login-options">
-              <p className="options-divider">Entrar com:</p>
-              <Button type="button" variant="secondary">
+            {successResult && (
+              <div className="success-message" role="status" aria-live="polite">{successResult}</div>
+            )}
+            {errorResult && (
+              <div className="error-message" role="alert">{errorResult}</div>
+            )}
+            <div className="login-options" aria-labelledby="login-options-heading">
+              <p id="login-options-heading" className="options-divider">Entrar com:</p>
+              <Button 
+                type="button" 
+                variant="secondary"
+                ariaLabel="Entrar com SUAP"
+                onClick={() => window.location.href="https://suap.ifpr.edu.br"}
+              >
                 SUAP
               </Button>
             </div>
