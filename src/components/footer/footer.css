@@ -1,7 +1,105 @@
-.footer {
-    background-color: rgb(85, 85, 85);
-    height: 100px;
-    border: 1px solid black;
+.login-footer {
+  background-color: var(--container-green);
+  color: white;
+  margin: 0;
+  padding: 1.5rem 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.footer-section {
+  width: 30%;
+}
+
+.left-section,
+.right-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.middle-section {
+  text-align: center;
+}
+
+.footer-heading {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem 0;
+}
+
+.footer-description {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0 0 0.5rem 0;
+}
+
+.footer-copyright {
+  font-size: 0.8rem;
+  margin-top: auto;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.ifpr-logo-small {
+  height: 30px;
+  margin-right: 0.5rem;
+}
+
+.footer-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.footer-links {
+  line-height: 1.6;
+  font-size: 0.8rem;
+}
+
+.footer-links p {
+  margin: 0.25rem 0;
+}
+
+.github-icon a {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
+
+.github-icon svg {
+  fill: rgb(199, 199, 172);
+  transition: fill 0.3s ease;
+}
+
+.github-icon a:hover svg {
+  fill: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .login-footer {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .footer-section {
     width: 100%;
-    padding: 20px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .left-section,
+  .right-section {
+    align-items: center;
+  }
+
+  .middle-section {
+    order: -1;
+  }
 }

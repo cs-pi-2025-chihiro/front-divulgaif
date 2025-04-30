@@ -1,3 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap");
+
+:root {
+  --font-primary: "Montserrat", sans-serif;
+  --font-size-base: 16px;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  --primary: #95a68f;
+  --secondary: #a9be8c; /* Olive */
+  --grey-blue: #2b3348; /* Grey Blue */
+  --text-light: #f8e9c7; /* Fluffy Cloud */
+  --brown: #7d4a31; /* Brown Sugar */
+  --hunter: #08190a; /* Hunter */
+  --bone: #cdcebe; /* Bone */
+  --primary-green: #3c7148;
+  --dark-green: #2a4e33;
+  --light-green: #47895a;
+  --form-bg: #324c3c;
+  --text-dark: #333;
+  --text-light: #fff;
+  --button-bg: #c0c9af;
+  --button-text: #324c3c;
+  --text-dark: #333333;
+  --accent: #d1d9c4;
+  --container-green: #344e41;
+  --accent-orange: #ff6b00;
+  --primary-beige: #fdf5dc;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.App > *:nth-child(2) {
+  flex: 1 0 auto;
+}
+
+body,
+html {
+  font-family: "Montserrat", sans-serif;
+  font-size: var(--font-size-base);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.logo {
+  color: var(--accent-blue);
+  font-weight: var(--font-weight-bold);
+  font-size: 2rem;
+}
+
 .App {
   text-align: center;
 }
@@ -14,18 +76,18 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--grey-blue, #2b3348);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--text-light, #fffcf5);
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--secondary, #a9be8c);
 }
 
 @keyframes App-logo-spin {
