@@ -1,8 +1,7 @@
 .header {
-    background-color: var(--primary);
-    font-family: var(--primary);
-    height: 100px;
-    border: 1px solid black;
-    width: 100%;
-    padding: 20px;
+  background-color: var(--primary);
+  font-family: var(--primary);
+  height: 100%;
+  border: 1px solid black;
+  width: 100%;
 }

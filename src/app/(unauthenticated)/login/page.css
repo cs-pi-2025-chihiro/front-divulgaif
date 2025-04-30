@@ -1,12 +1,4 @@
 :root {
-  --primary-green: #3c7148;
-  --dark-green: #2a4e33;
-  --light-green: #47895a;
-  --form-bg: #324c3c;
-  --text-dark: #333;
-  --text-light: #fff;
-  --button-bg: #c0c9af;
-  --button-text: #324c3c;
   --border-radius: 5px;
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -23,6 +15,7 @@ body {
 .divulgaif-login-container {
   display: flex;
   flex-direction: column;
+  flex: 1 0 auto;
   background-color: var(--primary-green);
   color: var(--text-light);
   width: 100%;
@@ -37,17 +30,24 @@ body {
   padding: 2rem 1rem;
 }
 
-.login-content {
-  flex: 1;
+/* New styles for favicon layout */
+.login-header-with-favicon {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 2rem 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.favicon-container {
+  margin-right: 1rem;
+}
+
+.favicon-image {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
 }
 
 .login-header {
-  margin-bottom: 2rem;
   text-align: center;
 }
 
@@ -55,8 +55,8 @@ body {
   font-size: 2.5rem;
   font-weight: 500;
   margin: 0;
-  font-family: 'Montserrat';
-  color: var(--text-light);
+  font-family: "Montserrat";
+  color: var(--primary-beige);
 }
 
 .login-form-container {
@@ -75,8 +75,17 @@ body {
     width: 70%;
     max-width: 380px;
   }
-}
 
+  /* Responsive favicon layout */
+  .login-header-with-favicon {
+    flex-direction: column;
+  }
+
+  .favicon-container {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}
 
 .login-heading {
   font-size: 1.75rem;
