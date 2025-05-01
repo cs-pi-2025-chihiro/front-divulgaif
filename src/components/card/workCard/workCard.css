@@ -1,0 +1,29 @@
+.work-card-authors {
+  font-size: 0.875rem;
+  color: var(--text-dark);
+}
+
+.work-card-description {
+  font-size: 0.875rem;
+  color: var(--text-dark);
+}
+
+.work-card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.work-card-button {
+  min-width: 90px;
+}
+
+.work-card-button:first-child {
+  background-color: var(--dark-green) !important;
+  color: var(--text-light) !important;
+}
+
+.work-card-button:last-child {
+  background-color: var(--dark-green) !important;
+  color: var(--text-light) !important;
+}

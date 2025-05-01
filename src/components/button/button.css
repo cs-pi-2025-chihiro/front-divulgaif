@@ -5,7 +5,7 @@
   justify-content: center;
   white-space: nowrap;
   font-weight: bold;
-  font-family: var(--font-primary, 'Roboto');
+  font-family: var(--font-primary, "Roboto");
   transition: all 0.2s ease;
   outline: none;
   border: none;
@@ -28,7 +28,11 @@
 }
 
 .btn-default:hover {
-  background: linear-gradient(to right, rgba(75, 100, 85, 0.9), rgba(46, 59, 51, 0.9));
+  background: linear-gradient(
+    to right,
+    rgba(75, 100, 85, 0.9),
+    rgba(46, 59, 51, 0.9)
+  );
 }
 
 .btn-primary {
@@ -48,6 +52,16 @@
 }
 
 .btn-secondary:hover {
+  background-color: rgba(169, 190, 140, 0.8);
+}
+
+.btn-tertiary {
+  background-color: var(--dark-green);
+  color: var(--text-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-tertiary:hover {
   background-color: rgba(169, 190, 140, 0.8);
 }
 
@@ -161,7 +175,11 @@
 }
 
 .btn-cardSelected:hover {
-  background: linear-gradient(to right, rgba(75, 100, 85, 0.9), rgba(46, 59, 51, 0.9));
+  background: linear-gradient(
+    to right,
+    rgba(75, 100, 85, 0.9),
+    rgba(46, 59, 51, 0.9)
+  );
 }
 
 .btn-back {
@@ -244,72 +262,73 @@
 .btn-size-xs {
   height: 1.5rem;
   padding: 0 0.5rem;
-  font-size: 0.75rem; 
+  font-size: 0.75rem;
 }
 
 .btn-size-sm {
-  height: 2rem; 
-  padding: 0 0.75rem; 
-  font-size: 0.75rem; 
+  height: 2rem;
+  padding: 0 0.75rem;
+  font-size: 0.75rem;
 }
 
 .btn-size-md {
-  height: 2.25rem; 
-  padding: 0.5rem 1rem; 
-  font-size: 0.875rem; 
+  height: 2.25rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
 }
 
 .btn-size-lg {
-  height: 2.5rem; 
-  padding: 0 2rem; 
-  font-size: 0.875rem; 
+  height: 2.5rem;
+  padding: 0 2rem;
+  font-size: 0.875rem;
 }
 
 .btn-size-2lg {
-  height: 3rem; 
-  padding: 0 2rem; 
-  font-size: 0.875rem; 
+  height: 3rem;
+  padding: 0 2rem;
+  font-size: 0.875rem;
 }
 
 .btn-size-xl {
-  height: 3.5rem; 
-  padding: 0 2.5rem; 
-  font-size: 1rem; 
+  height: 3.5rem;
+  padding: 0 2.5rem;
+  font-size: 1rem;
 }
 
 .btn-size-2xl {
-  height: 3.5rem; 
-  padding: 0 3rem; 
-  font-size: 1rem; 
+  height: 3.5rem;
+  padding: 0 3rem;
+  font-size: 1rem;
 }
 
 .btn-size-3xl {
-  height: 4rem; 
-  padding: 0 3.5rem; 
-  font-size: 1rem; 
+  height: 4rem;
+  padding: 0 3.5rem;
+  font-size: 1rem;
 }
 
 .btn-size-4xl {
-  height: 5rem; 
-  padding: 0 4rem; 
-  font-size: 1rem; 
+  height: 5rem;
+  padding: 0 4rem;
+  font-size: 1rem;
 }
 
 .btn-size-icon {
-  height: 1.75rem; 
-  padding: 0.375rem; 
+  height: 1.75rem;
+  padding: 0.375rem;
 }
 
 .btn-size-full {
-  height: 2.5rem; 
+  height: 2.5rem;
 }
 
 @media (min-width: 768px) {
   .btn-size-full {
     height: 100%;
   }
-  
-  .btn-card, .btn-cardSelected {
+
+  .btn-card,
+  .btn-cardSelected {
     min-width: 180px;
   }
 }
@@ -328,23 +347,23 @@
 }
 
 .btn-font-xs {
-  font-size: 0.75rem; 
+  font-size: 0.75rem;
 }
 
 .btn-font-sm {
-  font-size: 0.875rem; 
+  font-size: 0.875rem;
 }
 
 .btn-font-md {
-  font-size: 1rem; 
+  font-size: 1rem;
 }
 
 .btn-font-lg {
-  font-size: 1.125rem; 
+  font-size: 1.125rem;
 }
 
 .btn-font-xl {
-  font-size: 1.25rem; 
+  font-size: 1.25rem;
 }
 
 .btn-weight-normal {
@@ -368,7 +387,7 @@
 }
 
 .btn-rounded {
-  border-radius: 0.375rem; 
+  border-radius: 0.375rem;
 }
 
 .btn-circle {
