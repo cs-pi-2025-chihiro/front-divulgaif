@@ -1,0 +1,107 @@
+.filtrar-busca-modal {
+  background-color: var(--dark-green);
+  color: var(--primary-beige);
+}
+
+.filtrar-busca-content {
+  color: var(--primary-beige);
+}
+
+.filter-section {
+  margin-bottom: 24px;
+}
+
+.filter-section:last-child {
+  margin-bottom: 0;
+}
+
+.filter-section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: var(--primary-beige);
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.filter-checkbox {
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-beige);
+  border: 1px solid var(--primary-beige);
+  background-color: transparent;
+  cursor: pointer;
+  appearance: auto;
+  -webkit-appearance: auto;
+}
+
+.filter-checkbox:checked {
+  background-color: var(--primary-beige);
+  border-color: var(--primary-beige);
+}
+
+.filter-checkbox:default {
+  background-color: var(--primary-beige);
+  border-color: var(--primary-beige);
+}
+
+.filter-input {
+  width: 90%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  background-color: var(--primary-beige);
+  border-radius: 4px;
+  font-size: 1rem;
+  color: black;
+}
+
+.date-inputs {
+  display: flex;
+  gap: 16px;
+}
+
+.date-input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.date-input-group label {
+  font-size: 0.9rem;
+}
+
+.date-input {
+  padding: 8px 10px;
+  border: 1px solid var(--primary-beige);
+  background-color: var(--primary-beige);
+  border-radius: 4px;
+  font-size: 1rem;
+  color: black;
+}
+
+.modal-btn {
+  min-width: 100px;
+}
+
+.modal-cancel-btn {
+  background-color: var(--primary-beige);
+  color: black;
+}
+
+.modal-apply-btn {
+  background-color: var(--lighter-green);
+  color: black;
+}

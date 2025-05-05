@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-const Input = ({ 
-  type, 
-  name, 
-  value, 
-  onChange, 
-  placeholder, 
-  className, 
+const Input = ({
+  type,
+  name,
+  value,
+  onChange,
+  placeholder,
+  className,
   style,
   id,
   required,
@@ -17,15 +17,15 @@ const Input = ({
   ...props
 }) => {
   const defaultStyle = {
-    backgroundColor: 'var(--bone, #CDCEBE)',
-    ...style
+    backgroundColor: "var(--primary-beige, #CDCEBE)",
+    ...style,
   };
 
   const inputId = id || name;
 
   return (
     <input
-      type={type || 'text'}
+      type={type || "text"}
       name={name}
       id={inputId}
       value={value}

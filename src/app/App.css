@@ -6,7 +6,7 @@
   --font-weight-normal: 400;
   --font-weight-bold: 700;
   --primary: #95a68f;
-  --secondary: #a9be8c; /* Olive */
+  --secondary: #a3b18a; /* Olive */
   --grey-blue: #2b3348; /* Grey Blue */
   --text-light: #f8e9c7; /* Fluffy Cloud */
   --brown: #7d4a31; /* Brown Sugar */
@@ -15,9 +15,9 @@
   --primary-green: #3c7148;
   --dark-green: #2a4e33;
   --light-green: #47895a;
+  --lighter-green: #a3b18a;
   --form-bg: #324c3c;
   --text-dark: #333;
-  --text-light: #fff;
   --button-bg: #c0c9af;
   --button-text: #324c3c;
   --text-dark: #333333;
@@ -25,6 +25,7 @@
   --container-green: #344e41;
   --accent-orange: #ff6b00;
   --primary-beige: #fdf5dc;
+  --green-beige: #dad7cd;
 }
 
 #root {
