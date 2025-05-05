@@ -64,7 +64,7 @@
   background-color: var(--primary-beige);
   border-radius: 4px;
   font-size: 1rem;
-  color: var(--primary-beige);
+  color: black;
 }
 
 .date-inputs {
