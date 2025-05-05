@@ -28,7 +28,7 @@ jobs:
       - name: Determine deployment directory
         id: deployment
         run: |
-          if [[ $GITHUB_REF == refs/heads/master ]]; then
+          if [[ $GITHUB_REF == refs/heads/main ]]; then
             echo "target_dir=/var/www/divulgaif" >> $GITHUB_OUTPUT
           else
             echo "target_dir=/var/www/dev-divulgaif" >> $GITHUB_OUTPUT
