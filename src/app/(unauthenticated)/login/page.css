@@ -30,7 +30,6 @@ body {
   padding: 2rem 1rem;
 }
 
-/* New styles for favicon layout */
 .login-header-with-favicon {
   display: flex;
   align-items: center;
@@ -76,7 +75,6 @@ body {
     max-width: 380px;
   }
 
-  /* Responsive favicon layout */
   .login-header-with-favicon {
     flex-direction: column;
   }

@@ -58,16 +58,20 @@ const LoginPage = () => {
       <div className="login-content">
         <div className="login-header-with-favicon">
           <div className="login-header">
-            <a href="/" tabIndex="0" aria-label="DivulgaIF página inicial">
-              <h1 className="main-title">DivulgaIF</h1>
-            </a>
+            <h1 className="main-title">DivulgaIF</h1>
           </div>
         </div>
 
         <div className="login-form-container">
-          <h2 id="login-heading" className="login-heading">Login</h2>
+          <h2 id="login-heading" className="login-heading">
+            Login
+          </h2>
           <p className="login-subheading">Acesse ao DivulgaIF:</p>
-          <form onSubmit={handleSubmit} className="login-form" aria-labelledby="login-heading">
+          <form
+            onSubmit={handleSubmit}
+            className="login-form"
+            aria-labelledby="login-heading"
+          >
             <div className="form-group">
               <label htmlFor="username">Usuário:</label>
               <Input
@@ -78,10 +82,18 @@ const LoginPage = () => {
                 className={errors.username ? "input-error" : ""}
                 placeholder="Digite seu usuário"
                 aria-invalid={!!errors.username}
-                aria-describedby={errors.username ? "username-error" : undefined}
+                aria-describedby={
+                  errors.username ? "username-error" : undefined
+                }
               />
               {errors.username && (
-                <span id="username-error" className="error-message" role="alert">{errors.username}</span>
+                <span
+                  id="username-error"
+                  className="error-message"
+                  role="alert"
+                >
+                  {errors.username}
+                </span>
               )}
             </div>
             <div className="form-group">
@@ -94,10 +106,18 @@ const LoginPage = () => {
                 className={errors.password ? "input-error" : ""}
                 placeholder="Senha"
                 aria-invalid={!!errors.password}
-                aria-describedby={errors.password ? "password-error" : undefined}
+                aria-describedby={
+                  errors.password ? "password-error" : undefined
+                }
               />
               {errors.password && (
-                <span id="password-error" className="error-message" role="alert">{errors.password}</span>
+                <span
+                  id="password-error"
+                  className="error-message"
+                  role="alert"
+                >
+                  {errors.password}
+                </span>
               )}
             </div>
             <Button
@@ -111,18 +131,29 @@ const LoginPage = () => {
               {isLoading ? "Carregando..." : "Acessar"}
             </Button>
             {successResult && (
-              <div className="success-message" role="status" aria-live="polite">{successResult}</div>
+              <div className="success-message" role="status" aria-live="polite">
+                {successResult}
+              </div>
             )}
             {errorResult && (
-              <div className="error-message" role="alert">{errorResult}</div>
+              <div className="error-message" role="alert">
+                {errorResult}
+              </div>
             )}
-            <div className="login-options" aria-labelledby="login-options-heading">
-              <p id="login-options-heading" className="options-divider">Entrar com:</p>
-              <Button 
-                type="button" 
+            <div
+              className="login-options"
+              aria-labelledby="login-options-heading"
+            >
+              <p id="login-options-heading" className="options-divider">
+                Entrar com:
+              </p>
+              <Button
+                type="button"
                 variant="secondary"
                 ariaLabel="Entrar com SUAP"
-                onClick={() => window.location.href="https://suap.ifpr.edu.br"}
+                onClick={() =>
+                  (window.location.href = "https://suap.ifpr.edu.br")
+                }
               >
                 SUAP
               </Button>
