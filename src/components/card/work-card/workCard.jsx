@@ -1,9 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../../button";
 import Card from "../card";
 import "./workCard.css";
 
 const WorkCard = ({
+  id, 
   title,
   authors,
   description,
@@ -11,6 +13,16 @@ const WorkCard = ({
   onEdit,
   onView,
 }) => {
+  const navigate = useNavigate();
+  
+  const handleView = () => {
+    
+    navigate(`/trabalho/${id}`);
+    
+    
+    if (onView) onView();
+  };
+
   const cardContent = (
     <>
       <p className="work-card-authors">Autores: {authors}</p>
@@ -32,7 +44,7 @@ const WorkCard = ({
         variant="primary"
         size="sm"
         className="work-card-button"
-        onClick={onView}
+        onClick={handleView}
       >
         Visualizar
       </Button>
