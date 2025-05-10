@@ -4,7 +4,7 @@ import Button from "../../../components/button";
 import FiltrarBuscaModal from "../../../components/modal/filtrar-busca/filtrarBuscaModal";
 import "./page.css";
 import mockedValues from "../../../data/mockedValues.json";
-import WorkCard from "../../../components/card/work-card/index";
+import PaginatedResults from "../../../components/paginated-results/paginated-results";
 
 const Home = () => {
   const [works, setWorks] = useState(mockedValues.trabalhos);
@@ -25,7 +25,6 @@ const Home = () => {
 
   const handleEdit = (id) => {
     console.log("Edit work with id:", id);
-    // Implement edit logic
   };
 
   const handleView = (id) => {
@@ -107,29 +106,9 @@ const Home = () => {
           </Button>
         </div>
       </div>
-      <div className="ifexplore-results">
-        <div className="results-header">
-          <h2 className="results-title">{works.length} Resultados</h2>
-          <div className="pagination-controls">
-            <button className="pagination-button prev">&lt;</button>
-            <button className="pagination-button next">&gt;</button>
-          </div>
-        </div>
-        <div className="work-cards-container">
-          {works.map((work) => (
-            <WorkCard
-              key={work.id}
-              title={work.title}
-              authors={work.authors}
-              description={work.description}
-              imageUrl={work.imageUrl}
-              onEdit={() => handleEdit(work.id)}
-              onView={() => handleView(work.id)}
-            />
-          ))}
-        </div>
+      <div>
+        <PaginatedResults works={worksData} />
       </div>
-
       <FiltrarBuscaModal
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}

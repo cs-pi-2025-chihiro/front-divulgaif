@@ -55,6 +55,38 @@
       "authors": "autor 1, autor 2",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
       "imageUrl": "/cronus-scaled-2995199348.jpg"
+    },
+
+    {
+      "id": 9,
+      "title": "Título do Trabalho",
+      "authors": "autor 1, autor 2",
+      "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
+      "imageUrl": "/cronus-scaled-2995199348.jpg"
+    },
+
+    {
+      "id": 10,
+      "title": "Título do Trabalho",
+      "authors": "autor 1, autor 2",
+      "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
+      "imageUrl": "/cronus-scaled-2995199348.jpg"
+    },
+    
+    {
+      "id": 11,
+      "title": "Título do Trabalho",
+      "authors": "autor 1, autor 2",
+      "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
+      "imageUrl": "/cronus-scaled-2995199348.jpg"
+    },
+
+    {
+      "id": 12,
+      "title": "Título do Trabalho",
+      "authors": "autor 1, autor 2",
+      "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
+      "imageUrl": "/cronus-scaled-2995199348.jpg"
     }
   ]
 }
