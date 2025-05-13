@@ -1,6 +1,3 @@
-/**
- * Constants for the Login Page
- */
 export const LoginPageEnum = {
   MAIN_TITLE: "DivulgaIF",
   LOGIN_HEADING: "Login",

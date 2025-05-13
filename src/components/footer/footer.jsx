@@ -1,30 +1,31 @@
 import Image from "../image/image";
+import { useTranslation } from "react-i18next";
 import "./footer.css";
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <footer className="login-footer">
       <div className="footer-section middle-section">
         <div className="footer-logo">
           <Image
             src="/ifpr_logo.png"
-            alt="Logo do Instituto Federal do Paraná"
+            alt="Logo of Federal Institute of Paraná"
             className="ifpr-logo-small"
           />
           <span className="footer-title">DivulgaIF</span>
         </div>
         <div className="footer-links">
           <p>SIGAA | Cronos | SUAP | Moodle</p>
-          <p>Acessibilidade e Ajuda | Sobre Nós</p>
-          <p>© DivulgaIF | Todos os Direitos Reservados</p>
+          <p>{t('footer.help')} | {t('footer.about')}</p>
+          <p>© DivulgaIF | {t('footer.rights')}</p>
         </div>
       </div>
 
       <div className="footer-section right-section">
-        <h3 className="footer-heading">Projeto IFPR</h3>
+        <h3 className="footer-heading">{t('footer.projectTitle')}</h3>
         <p className="footer-description">
-          Um projeto de extensão do Instituto Federal do Paraná para
-          democratizar o acesso à educação.
+          {t('footer.projectDescription')}
         </p>
         <div className="github-icon">
           <a href="https://github.com/cs-pi-2025-chihiro">

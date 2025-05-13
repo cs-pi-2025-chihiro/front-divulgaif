@@ -1,0 +1,79 @@
+{
+  "common": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter Search",
+    "language": "Language"
+  },
+  "home": {
+    "welcome": "IF Xplore",
+    "description": "Discover academic works from IFPR",
+    "newWork": "New Work",
+    "results": "Results",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "login": {
+    "title": "Login",
+    "access": "Access DivulgaIF:",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create an account",
+    "forgotPassword": "Forgot password?",
+    "usernamePlaceholder": "Enter your username",
+    "usernameRequired": "Username is required",
+    "passwordRequired": "Password is required",
+    "submit": "Access",
+    "loading": "Loading...",
+    "success": "Login successful!",
+    "error": "Login failed. Please check your credentials.",
+    "loginWith": "Login with:",
+    "loginWithSUAP": "Login with SUAP"
+  },
+  "register": {
+    "title": "Register",
+    "name": "Name",
+    "confirmPassword": "Confirm Password",
+    "alreadyHaveAccount": "Already have an account?"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "contact": "Contact",
+    "help": "Accessibility and Help",
+    "about": "About Us",
+    "projectTitle": "IFPR Project",
+    "projectDescription": "An extension project of the Federal Institute of Paraná to democratize access to education."
+  },
+  "header": {
+    "home": "Home",
+    "works": "Works",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "filters": {
+    "title": "Filter presentation",
+    "tags": "Tags",
+    "date": "Date",
+    "author": "Author",
+    "campus": "Campus",
+    "course": "Course",
+    "apply": "Apply Filters",
+    "clear": "Clear Filters",
+    "filterSearch": "Filter Search",
+    "work": "Work",
+    "article": "Article",
+    "dissertation": "Dissertation",
+    "research": "Research",
+    "finalPaper": "Final Paper",
+    "keywords": "Keywords",
+    "period": "Period",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "back": "Back",
+    "searchPlaceholder": "Search...",
+    "filterOptions": "Filter options"
+  }
+}

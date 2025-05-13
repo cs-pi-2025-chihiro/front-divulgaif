@@ -1,0 +1,79 @@
+{
+  "common": {
+    "login": "Entrar",
+    "register": "Cadastrar",
+    "email": "Email",
+    "password": "Senha",
+    "submit": "Enviar",
+    "search": "Buscar",
+    "filter": "Filtrar Busca",
+    "language": "Idioma"
+  },
+  "home": {
+    "welcome": "IF Xplore",
+    "description": "Descubra trabalhos acadêmicos do IFPR",
+    "newWork": "Novo Trabalho",
+    "results": "Resultados",
+    "previous": "Anterior",
+    "next": "Próximo"
+  },
+  "login": {
+    "title": "Entrar",
+    "access": "Acesse ao DivulgaIF:",
+    "noAccount": "Não tem uma conta?",
+    "createAccount": "Criar uma conta",
+    "forgotPassword": "Esqueceu a senha?",
+    "usernamePlaceholder": "Digite seu usuário",
+    "usernameRequired": "Usuário é obrigatório",
+    "passwordRequired": "Senha é obrigatória",
+    "submit": "Acessar",
+    "loading": "Carregando...",
+    "success": "Login realizado com sucesso!",
+    "error": "Falha no login. Verifique suas credenciais.",
+    "loginWith": "Entrar com:",
+    "loginWithSUAP": "Entrar com SUAP"
+  },
+  "register": {
+    "title": "Cadastro",
+    "name": "Nome",
+    "confirmPassword": "Confirmar Senha",
+    "alreadyHaveAccount": "Já tem uma conta?"
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados",
+    "contact": "Contato",
+    "help": "Acessibilidade e Ajuda",
+    "about": "Sobre Nós",
+    "projectTitle": "Projeto IFPR",
+    "projectDescription": "Um projeto de extensão do Instituto Federal do Paraná para democratizar o acesso à educação."
+  },
+  "header": {
+    "home": "Início",
+    "works": "Trabalhos",
+    "about": "Sobre",
+    "contact": "Contato"
+  },
+  "filters": {
+    "title": "Filtrar Apresentação",
+    "tags": "Tags",
+    "date": "Data",
+    "author": "Autor",
+    "campus": "Campus",
+    "course": "Curso",
+    "apply": "Aplicar Filtros",
+    "clear": "Limpar Filtros",
+    "filterSearch": "Filtrar Busca",
+    "work": "Trabalho",
+    "article": "Artigo",
+    "dissertation": "Dissertação",
+    "research": "Pesquisa",
+    "finalPaper": "TCC",
+    "keywords": "Palavras-chaves",
+    "period": "Período",
+    "startDate": "Data Inicial",
+    "endDate": "Data Final",
+    "back": "Voltar",
+    "searchPlaceholder": "Pesquisar...",
+    "filterOptions": "Opções de filtro de busca"
+  }
+}
