@@ -1,146 +1,139 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { SearchInput } from "../../../components/input";
-import Button from "../../../components/button";
-import FiltrarBuscaModal from "../../../components/modal/filtrar-busca/filtrarBuscaModal";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import Button from "../../../../components/button";
 import "./page.css";
-import mockedValues from "../../../data/mockedValues.json";
-import WorkCard from "../../../components/card/work-card/index";
+import mockedValues from "../../../../data/mockedValues.json";
 
-const Home = () => {
-  const [works, setWorks] = useState(mockedValues.trabalhos);
-  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+const WorkDetail = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const [activeFilters, setActiveFilters] = useState({
-    trabalho: {
-      artigo: false,
-      dissertacao: false,
-      pesquisa: false,
-      tcc: false,
-    },
-    palavrasChaves: "",
-    periodo: {
-      dataInicial: "",
-      dataFinal: "",
-    },
-  });
-
-  const handleEdit = (id) => {
-    console.log("Edit work with id:", id);
-    navigate(`/trabalho/${id}/editar`);
-  };
-
-  const handleView = (id) => {
-    console.log("View work with id:", id);
+  const { t, i18n } = useTranslation();
+  const [work, setWork] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    // Log for debugging
+    console.log("WorkDetail component - ID from params:", id);
+    console.log("Available works:", mockedValues.trabalhos);
     
+    // Find the work with the matching ID
+    // Note: Convert both IDs to strings for comparison to ensure type consistency
+    const foundWork = mockedValues.trabalhos.find(
+      (work) => String(work.id) === String(id)
+    );
+    
+    // Log what we found
+    console.log("Found work:", foundWork);
+    
+    if (foundWork) {
+      setWork(foundWork);
+    } else {
+      console.error(`Work with ID ${id} not found in mocked data.`);
+    }
+    
+    setLoading(false);
+  }, [id]);
+
+  const handleGoBack = () => {
+    navigate(-1); // Go back to previous page
   };
 
-  const handleApplyFilters = (filters) => {
-    console.log("Applied filters:", filters);
-    setActiveFilters(filters);
+  if (loading) {
+    return (
+      <div className="work-detail-container">
+        <div className="loading-indicator">{t("common.loading") || "Loading"}...</div>
+      </div>
+    );
+  }
 
-    let filteredWorks = [...mockedValues.trabalhos];
+  if (!work) {
+    return (
+      <div className="work-detail-container">
+        <div className="error-message">
+          {t("errors.workNotFound") || "Work not found"}
+          <p>ID requested: {id}</p>
+          <Button 
+            variant="primary" 
+            size="md" 
+            onClick={handleGoBack}
+            className="mt-4"
+          >
+            {t("common.goBack") || "Go Back"}
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
-    if (Object.values(filters.trabalho).some((value) => value)) {
-      filteredWorks = filteredWorks.filter((work) => {
-        return filters.trabalho[work.type.toLowerCase()];
-      });
-    }
-
-    if (filters.palavrasChaves.trim()) {
-      const keywords = filters.palavrasChaves
-        .split(";")
-        .map((k) => k.trim().toLowerCase());
-      filteredWorks = filteredWorks.filter((work) => {
-        return keywords.some(
-          (keyword) =>
-            work.title.toLowerCase().includes(keyword) ||
-            work.description.toLowerCase().includes(keyword)
-        );
-      });
-    }
-
-    if (filters.periodo.dataInicial || filters.periodo.dataFinal) {
-      filteredWorks = filteredWorks.filter((work) => {
-        const workDate = new Date(work.date);
-        let isValid = true;
-
-        if (filters.periodo.dataInicial) {
-          const startDate = new Date(filters.periodo.dataInicial);
-          isValid = isValid && workDate >= startDate;
-        }
-
-        if (filters.periodo.dataFinal) {
-          const endDate = new Date(filters.periodo.dataFinal);
-          isValid = isValid && workDate <= endDate;
-        }
-
-        return isValid;
-      });
-    }
-
-    setWorks(filteredWorks);
-  };
+  // Safe access to work type with fallback
+  const workType = work.type ? work.type.toLowerCase() : 'unknown';
 
   return (
-    <div className="ifexplore-container">
-      <div className="ifexplore-search-container">
-        <h1 className="ifexplore-title">IF Xplore</h1>
-        <div className="search-bar-container">
-          <div className="search-input-wrapper">
-            <SearchInput className="search-input" placeholder="Pesquisar..." />
-          </div>
-        </div>
-        <div className="filter-buttons-container">
-          <Button
-            variant="tertiary"
-            size="md"
-            className="filter-btn"
-            onClick={() => setIsFilterModalOpen(true)}
-          >
-            Filtrar Busca
-          </Button>
-          <Button variant="tertiary" size="md" className="filter-btn">
-            Filtrar Apresentação
-          </Button>
-        </div>
-        <div className="new-work-container">
-          <Button variant="tertiary" size="lg" className="new-work-btn">
-            <span className="icon">📄</span> Novo Trabalho
-          </Button>
-        </div>
+    <div className="work-detail-container">
+      <Button 
+        variant="tertiary" 
+        size="md" 
+        onClick={handleGoBack}
+        className="back-button"
+      >
+        &larr; {t("common.goBack") || "Go Back"}
+      </Button>
+      
+      <div className="work-detail-header">
+        <h1 className="work-detail-title">{work.title}</h1>
+        {/* Fixed: Safely access type property */}
+        <p className="work-detail-type">
+          {work.type ? t(`workTypes.${workType}`) || work.type : t("workTypes.unknown") || "Unknown type"}
+        </p>
+        <p className="work-detail-id">ID: {work.id}</p>
       </div>
-      <div className="ifexplore-results">
-        <div className="results-header">
-          <h2 className="results-title">{works.length} Resultados</h2>
-          <div className="pagination-controls">
-            <button className="pagination-button prev">&lt;</button>
-            <button className="pagination-button next">&gt;</button>
+      
+      {work.imageUrl && (
+        <div className="work-detail-image-container">
+          <img src={work.imageUrl} alt={work.title} className="work-detail-image" />
+        </div>
+      )}
+      
+      <div className="work-detail-content">
+        <div className="work-detail-metadata">
+          <h2>{t("workDetail.authors") || "Authors"}</h2>
+          <p className="work-detail-authors">{work.authors}</p>
+          
+          <h2>{t("workDetail.publishDate") || "Publication Date"}</h2>
+          <p className="work-detail-date">
+            {work.date ? new Date(work.date).toLocaleDateString() : t("common.notAvailable") || "Not available"}
+          </p>
+        </div>
+        
+        <div className="work-detail-description">
+          <h2>{t("workDetail.abstract") || "Abstract"}</h2>
+          <p>{work.description || t("common.noDescription") || "No description available"}</p>
+        </div>
+        
+        {work.keywords && work.keywords.length > 0 && (
+          <div className="work-detail-keywords">
+            <h2>{t("workDetail.keywords") || "Keywords"}</h2>
+            <div className="keywords-list">
+              {work.keywords.map((keyword, index) => (
+                <span key={index} className="keyword-tag">
+                  {keyword}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="work-cards-container">
-          {works.map((work) => (
-            <WorkCard
-              key={work.id}
-              id={work.id} 
-              title={work.title}
-              authors={work.authors}
-              description={work.description}
-              imageUrl={work.imageUrl}
-              onEdit={() => handleEdit(work.id)}
-              onView={() => handleView(work.id)}
-            />
-          ))}
-        </div>
+        )}
+        
+        {work.download && (
+          <div className="work-detail-actions">
+            <Button variant="primary" size="lg">
+              {t("workDetail.download") || "Download"}
+            </Button>
+          </div>
+        )}
       </div>
-
-      <FiltrarBuscaModal
-        isOpen={isFilterModalOpen}
-        onClose={() => setIsFilterModalOpen(false)}
-        onApplyFilters={handleApplyFilters}
-      />
     </div>
   );
 };
 
-export default Home;
+export default WorkDetail;
