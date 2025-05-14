@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { SearchInput } from "../../../components/input";
 import Button from "../../../components/button";
 import FiltrarBuscaModal from "../../../components/modal/filtrar-busca/filtrarBuscaModal";
+import FiltrarApresentacaoModal from "../../../components/modal/filtrar-apresentacao/filtrarApresentacaoModal";
 import "./page.css";
 import mockedValues from "../../../data/mockedValues.json";
 import WorkCard from "../../../components/card/work-card/index";
@@ -21,7 +22,17 @@ const Home = () => {
       dataInicial: "",
       dataFinal: "",
     },
+    date: {
+      recent: false,
+      older: false,
+    },
+    pagelimit: {
+      twelve: false,
+      twentyfour: false,
+      thirtysix: false,
+    },
   });
+  const [isPresentationModalOpen, setIsPresentationModalOpen] = useState(false);
 
   const handleEdit = (id) => {
     console.log("Edit work with id:", id);
@@ -97,7 +108,7 @@ const Home = () => {
           >
             Filtrar Busca
           </Button>
-          <Button variant="tertiary" size="md" className="filter-btn">
+          <Button variant="tertiary" size="md" className="filter-btn" onClick={() => setIsPresentationModalOpen(true)}>
             Filtrar Apresentação
           </Button>
         </div>
@@ -133,6 +144,12 @@ const Home = () => {
       <FiltrarBuscaModal
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
+        onApplyFilters={handleApplyFilters}
+      />
+
+      <FiltrarApresentacaoModal
+        isOpen={isPresentationModalOpen}
+        onClose={() => setIsPresentationModalOpen(false)}
         onApplyFilters={handleApplyFilters}
       />
     </div>
