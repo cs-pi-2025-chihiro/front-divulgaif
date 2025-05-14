@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Button from './Button'; 
+import Button from '../button/index'; 
+import WorkCard from '../card/work-card';
 
 const PaginatedResults = ({ works }) => {
     
