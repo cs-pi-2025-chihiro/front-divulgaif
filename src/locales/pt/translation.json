@@ -7,7 +7,15 @@
     "submit": "Enviar",
     "search": "Buscar",
     "filter": "Filtrar Busca",
-    "language": "Idioma"
+    "language": "Idioma",
+     "loading": "Carregando",
+    "goBack": "Voltar",
+    "back": "Voltar",
+    "edit": "Editar",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "notAvailable": "Não disponível",
+    "noDescription": "Nenhuma descrição disponível"
   },
   "home": {
     "welcome": "IF Xplore",
@@ -16,6 +24,28 @@
     "results": "Resultados",
     "previous": "Anterior",
     "next": "Próximo"
+  },
+  "errors": {
+    "workNotFound": "Trabalho não encontrado",
+    "unexpectedError": "Ocorreu um erro inesperado"
+  },
+  "workTypes": {
+    "article": "Artigo",
+    "dissertation": "Dissertação",
+    "research": "Pesquisa",
+    "finalPaper": "TCC",
+    "unknown": "Tipo desconhecido"
+  },
+  "workDetail": {
+    "authors": "Autores",
+    "advisor": "Professor Responsável",
+    "publishDate": "Data de Publicação",
+    "abstract": "Resumo",
+    "keywords": "Palavras-chaves",
+    "additionalLinks": "Links Adicionais",
+    "link": "Link",
+    "download": "Baixar PDF",
+    "edit": "Editar"
   },
   "login": {
     "title": "Entrar",
@@ -76,4 +106,6 @@
     "searchPlaceholder": "Pesquisar...",
     "filterOptions": "Opções de filtro de busca"
   }
+
+  
 }

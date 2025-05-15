@@ -14,41 +14,38 @@ const WorkCard = ({
   onView,
 }) => {
   const navigate = useNavigate();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   
   const handleCardClick = () => {
-    // Make sure we have a valid ID
+    
     if (!id) {
       console.error("WorkCard: No ID provided for navigation");
       return;
     }
     
-    // Convert ID to string to ensure consistent formatting
+    
     const workId = String(id);
     
-    // Determine the current language
+    
     const currentLang = i18n.language;
     
-    // Use the appropriate path based on language
+    
     const workPath = currentLang === 'pt' ? 'trabalho' : 'work';
     
-    // Log the navigation for debugging
+    
     console.log(`Navigating to: /${currentLang}/${workPath}/${workId}`);
     
-    // Navigate to the work detail page
+    
     navigate(`/${currentLang}/${workPath}/${workId}`);
     
-    // Call the onView function if provided
+    
     if (onView) onView();
   };
 
-  // Render content only if we have a valid ID
-  const cardContent = (
-    <>
-      <p className="work-card-authors">Autores: {authors}</p>
-      <p className="work-card-description">{description}</p>
-    </>
-  );
+  
+  const truncatedDescription = description && description.length > 100 
+    ? `${description.substring(0, 100)}...` 
+    : description;
 
   return (
     <div className="work-card-wrapper">
@@ -57,7 +54,12 @@ const WorkCard = ({
         imageUrl={imageUrl}
         imageAlt={title}
         title={title}
-        content={cardContent}
+        content={
+          <>
+            <p className="work-card-authors">{t(authors)}:</p>
+            <p className="work-card-description">{truncatedDescription}</p>
+          </>
+        }
         onClick={handleCardClick}
       />
     </div>
