@@ -35,6 +35,9 @@ const Home = () => {
     console.log("View work with id:", id);
   };
 
+  
+  console.log("Available works:", works);
+
   const handleApplyFilters = (filters) => {
     console.log("Applied filters:", filters);
     setActiveFilters(filters);
@@ -134,17 +137,23 @@ const Home = () => {
           </div>
         </div>
         <div className="work-cards-container">
-          {works.map((work) => (
-            <WorkCard
-              key={work.id}
-              title={work.title}
-              authors={work.authors}
-              description={work.description}
-              imageUrl={work.imageUrl}
-              onEdit={() => handleEdit(work.id)}
-              onView={() => handleView(work.id)}
-            />
-          ))}
+          {works.map((work) => {
+            
+            console.log(`Rendering work card with ID: ${work.id}`);
+            
+            return (
+              <WorkCard
+                key={work.id}
+                id={work.id}  
+                title={work.title}
+                authors={work.authors}
+                description={work.description}
+                imageUrl={work.imageUrl}
+                onEdit={() => handleEdit(work.id)}
+                onView={() => handleView(work.id)}
+              />
+            );
+          })}
         </div>
       </div>
 
