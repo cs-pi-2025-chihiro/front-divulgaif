@@ -6,7 +6,7 @@ import Button from "../../../components/button";
 import FiltrarBuscaModal from "../../../components/modal/filtrar-busca/filtrarBuscaModal";
 import "./page.css";
 import mockedValues from "../../../data/mockedValues.json";
-import WorkCard from "../../../components/card/work-card/index";
+import PaginatedResults from "../../../components/paginated-results/paginated-results";
 
 const Home = () => {
   const { t, i18n } = useTranslation();
@@ -113,41 +113,10 @@ const Home = () => {
           </Button>
         </div>
       </div>
-      <div className="ifexplore-results">
-        <div className="results-header">
-          <h2 className="results-title">
-            {works.length} {t("home.results")}
-          </h2>
-          <div className="pagination-controls">
-            <button
-              className="pagination-button prev"
-              aria-label={t("home.previous")}
-            >
-              &lt;
-            </button>
-            <button
-              className="pagination-button next"
-              aria-label={t("home.next")}
-            >
-              &gt;
-            </button>
-          </div>
-        </div>
-        <div className="work-cards-container">
-          {works.map((work) => (
-            <WorkCard
-              key={work.id}
-              title={work.title}
-              authors={work.authors}
-              description={work.description}
-              imageUrl={work.imageUrl}
-              onEdit={() => handleEdit(work.id)}
-              onView={() => handleView(work.id)}
-            />
-          ))}
-        </div>
-      </div>
-
+      
+      {/* Substituindo a seção de resultados pelo componente PaginatedResults */}
+      <PaginatedResults works={works} />
+      
       <FiltrarBuscaModal
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
