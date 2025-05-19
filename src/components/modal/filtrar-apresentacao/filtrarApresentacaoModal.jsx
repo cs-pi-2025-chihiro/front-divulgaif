@@ -7,16 +7,16 @@ import { Input } from "../../input";
 const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
   const [filters, setFilters] = useState({
     date: {
-      recent: false,
+      recent: true,
       older: false,
     },
     pagelimit: {
-      twelve: false,
+      twelve: true,
       twentyfour: false,
       thirtysix: false,
     },
   });
-
+  
   const initialFocusRef = useRef(null);
 
   const returnFocusRef = useRef(null);
@@ -39,8 +39,11 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
     setFilters((prev) => ({
       ...prev,
       [category]: {
-        ...prev[category],
-        [item]: !prev[category][item],
+        recent: category === "date" && item === "recent",
+        older: category === "date" && item === "older",
+        twelve: category === "pagelimit" && item === "twelve",
+        twentyfour: category === "pagelimit" && item === "twentyfour",
+        thirtysix: category === "pagelimit" && item === "thirtysix",
       },
     }));
   };
@@ -53,6 +56,13 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Escape") {
       onClose();
+    }
+  };
+
+  const handleCheckboxKeyDown = (e, category, item) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleCheckboxChange(category, item);
     }
   };
 
@@ -92,6 +102,7 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
       aria-labelledby="modal-title"
       onKeyDown={handleKeyDown}
     >
+
       <div
         className="filtrar-apresentacao-content"
         role="region"
@@ -111,6 +122,7 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
                 type="checkbox"
                 checked={filters.date.recent}
                 onChange={() => handleCheckboxChange("date", "recent")}
+                onKeyDown={(e) => handleCheckboxKeyDown(e, "date", "recent")}
                 className="filter-checkbox"
                 ref={initialFocusRef}
                 aria-checked={filters.date.recent}
@@ -123,6 +135,7 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
                 type="checkbox"
                 checked={filters.date.older}
                 onChange={() => handleCheckboxChange("date", "older")}
+                onKeyDown={(e) => handleCheckboxKeyDown(e, "date", "older")}
                 className="filter-checkbox"
                 aria-checked={filters.date.older}
                 id="date-older"
@@ -146,8 +159,8 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
                 type="checkbox"
                 checked={filters.pagelimit.twelve}
                 onChange={() => handleCheckboxChange("pagelimit", "twelve")}
+                onKeyDown={(e) => handleCheckboxKeyDown(e, "pagelimit", "twelve")} 
                 className="filter-checkbox"
-                ref={initialFocusRef}
                 aria-checked={filters.pagelimit.twelve}
                 id="page-limit-12"
               />
@@ -158,6 +171,7 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
                 type="checkbox"
                 checked={filters.pagelimit.twentyfour}
                 onChange={() => handleCheckboxChange("pagelimit", "twentyfour")}
+                onKeyDown={(e) => handleCheckboxKeyDown(e, "pagelimit", "twentyfour")} 
                 className="filter-checkbox"
                 aria-checked={filters.pagelimit.twentyfour}
                 id="page-limit-24"
@@ -169,6 +183,7 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
                 type="checkbox"
                 checked={filters.pagelimit.thirtysix}
                 onChange={() => handleCheckboxChange("pagelimit", "thirtysix")}
+                onKeyDown={(e) => handleCheckboxKeyDown(e, "pagelimit", "thirtysix")} 
                 className="filter-checkbox"
                 aria-checked={filters.pagelimit.thirtysix}
                 id="page-limit-36"

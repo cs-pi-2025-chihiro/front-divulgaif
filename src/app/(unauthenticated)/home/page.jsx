@@ -23,11 +23,11 @@ const Home = () => {
       dataFinal: "",
     },
     date: {
-      recent: false,
+      recent: true,
       older: false,
     },
     pagelimit: {
-      twelve: false,
+      twelve: true,
       twentyfour: false,
       thirtysix: false,
     },
