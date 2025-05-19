@@ -27,8 +27,8 @@ const Home = () => {
       older: false,
     },
     pagelimit: {
-      twelve: true,
-      twentyfour: false,
+      twelve: false,
+      twentyfour: true,
       thirtysix: false,
     },
   });
@@ -49,6 +49,7 @@ const Home = () => {
 
     let filteredWorks = [...mockedValues.trabalhos];
 
+    // lógica para filtros de busca
     if (Object.values(filters.trabalho).some((value) => value)) {
       filteredWorks = filteredWorks.filter((work) => {
         return filters.trabalho[work.type.toLowerCase()];
@@ -87,6 +88,21 @@ const Home = () => {
       });
     }
 
+    // lógica para filtros de apresentação
+    if (filters.date.recent) {
+      filteredWorks.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (filters.date.older) {
+      filteredWorks.sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+
+    if (filters.pagelimit.twelve) {
+      filteredWorks = filteredWorks.slice(0, 12);
+    } else if (filters.pagelimit.twentyfour) {
+      filteredWorks = filteredWorks.slice(0, 24);
+    } else if (filters.pagelimit.thirtysix) {
+      filteredWorks = filteredWorks.slice(0, 36);
+    }
+    
     setWorks(filteredWorks);
   };
 

@@ -11,8 +11,8 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
       older: false,
     },
     pagelimit: {
-      twelve: true,
-      twentyfour: false,
+      twelve: false,
+      twentyfour: true,
       thirtysix: false,
     },
   });
