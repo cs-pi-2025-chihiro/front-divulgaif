@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import Modal from "../modal";
 import Button from "../../button";
 import "./filtrarBuscaModal.css";
 import { Input } from "../../input";
 
 const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters }) => {
+  const { t } = useTranslation();
   const [filters, setFilters] = useState({
     trabalho: {
       artigo: false,
@@ -84,18 +86,18 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters }) => {
         size="md"
         onClick={onClose}
         className="modal-btn modal-cancel-btn"
-        aria-label="Voltar sem aplicar filtros"
+        aria-label={t('filters.back')}
       >
-        Voltar
+        {t('filters.back')}
       </Button>
       <Button
         variant="primary"
         size="md"
         onClick={handleApply}
         className="modal-btn modal-apply-btn"
-        aria-label="Aplicar filtros de busca"
+        aria-label={t('filters.apply')}
       >
-        Aplicar
+        {t('filters.apply', 'Aplicar')}
       </Button>
     </>
   );
@@ -104,7 +106,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Filtrar Busca"
+      title={t('filters.filterSearch')}
       className="filtrar-busca-modal"
       footer={modalFooter}
       width="medium"
@@ -116,11 +118,11 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters }) => {
       <div
         className="filtrar-busca-content"
         role="region"
-        aria-label="Opções de filtro de busca"
+        aria-label={t('filters.filterOptions')}
       >
         <section className="filter-section">
           <h3 className="filter-section-title" id="trabalho-heading">
-            Trabalho
+            {t('filters.work')}
           </h3>
           <div
             className="checkbox-group"
@@ -137,7 +139,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters }) => {
                 aria-checked={filters.trabalho.artigo}
                 id="trabalho-artigo"
               />
-              Artigo
+              {t('filters.article')}
             </label>
             <label className="checkbox-label" htmlFor="trabalho-dissertacao">
               <Input
@@ -148,7 +150,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters }) => {
                 aria-checked={filters.trabalho.dissertacao}
                 id="trabalho-dissertacao"
               />
-              Dissertação
+              {t('filters.dissertation')}
             </label>
             <label className="checkbox-label" htmlFor="trabalho-pesquisa">
               <Input
@@ -159,7 +161,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters }) => {
                 aria-checked={filters.trabalho.pesquisa}
                 id="trabalho-pesquisa"
               />
-              Pesquisa
+              {t('filters.research')}
             </label>
             <label className="checkbox-label" htmlFor="trabalho-tcc">
               <Input
@@ -170,21 +172,21 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters }) => {
                 aria-checked={filters.trabalho.tcc}
                 id="trabalho-tcc"
               />
-              TCC
+              {t('filters.finalPaper')}
             </label>
           </div>
         </section>
 
         <section className="filter-section">
           <h3 className="filter-section-title" id="palavras-chave-heading">
-            Palavras-chaves
+            {t('filters.keywords')}
           </h3>
           <Input
             type="text"
             name="palavrasChaves"
             value={filters.palavrasChaves}
             onChange={handleInputChange}
-            placeholder="Pesquisar..."
+            placeholder={t('filters.searchPlaceholder')}
             className="filter-input"
             aria-labelledby="palavras-chave-heading"
             id="palavras-chave-input"
@@ -193,7 +195,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters }) => {
 
         <section className="filter-section">
           <h3 className="filter-section-title" id="periodo-heading">
-            Período
+            {t('filters.period')}
           </h3>
           <div
             className="date-inputs"
@@ -201,7 +203,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters }) => {
             aria-labelledby="periodo-heading"
           >
             <div className="date-input-group">
-              <label htmlFor="data-inicial">Data Inicial</label>
+              <label htmlFor="data-inicial">{t('filters.startDate')}</label>
               <Input
                 type="date"
                 name="dataInicial"
@@ -209,11 +211,11 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters }) => {
                 value={filters.periodo.dataInicial}
                 onChange={handleInputChange}
                 className="date-input"
-                aria-label="Data inicial para filtrar resultados"
+                aria-label={t('filters.startDate')}
               />
             </div>
             <div className="date-input-group">
-              <label htmlFor="data-final">Data Final</label>
+              <label htmlFor="data-final">{t('filters.endDate')}</label>
               <Input
                 type="date"
                 name="dataFinal"
@@ -221,7 +223,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters }) => {
                 value={filters.periodo.dataFinal}
                 onChange={handleInputChange}
                 className="date-input"
-                aria-label="Data final para filtrar resultados"
+                aria-label={t('filters.endDate')}
               />
             </div>
           </div>
