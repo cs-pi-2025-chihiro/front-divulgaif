@@ -63,6 +63,7 @@
     "apply": "Aplicar Filtros",
     "clear": "Limpar Filtros",
     "filterSearch": "Filtrar Busca",
+    "filterPresentation": "Filtrar Apresentação",
     "work": "Trabalho",
     "article": "Artigo",
     "dissertation": "Dissertação",
@@ -74,6 +75,13 @@
     "endDate": "Data Final",
     "back": "Voltar",
     "searchPlaceholder": "Pesquisar...",
-    "filterOptions": "Opções de filtro de busca"
+    "filterOptions": "Opções de filtro de busca",
+    "filterDate": "Filtrar por data",
+    "recent": "Mais recentes",
+    "older": "Mais antigos",
+    "twelve": "12 trabalhos",
+    "twentyfour": "24 trabalhos",
+    "thirtysix": "36 trabalhos",
+    "page-limit": "Limite por página"
   }
 }
