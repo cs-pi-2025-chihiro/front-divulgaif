@@ -131,7 +131,7 @@ const Home = () => {
             {t("common.filter")}
           </Button>
           <Button variant="tertiary" size="md" className="filter-btn" onClick={() => setIsPresentationModalOpen(true)}>
-            Filtrar Apresentação
+            {t("filters.title")}
           </Button>
         </div>
         <div className="new-work-container">

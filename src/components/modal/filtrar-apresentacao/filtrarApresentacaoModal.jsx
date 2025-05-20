@@ -3,6 +3,7 @@ import Modal from "../modal";
 import Button from "../../button";
 import "./filtrarApresentacaoModal.css";
 import { Input } from "../../input";
+import { useTranslation } from "react-i18next";
 
 const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
   const [filters, setFilters] = useState({
@@ -18,7 +19,7 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
   });
   
   const initialFocusRef = useRef(null);
-
+  const { t, i18n } = useTranslation();
   const returnFocusRef = useRef(null);
 
   useEffect(() => {
@@ -75,7 +76,7 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
         className="modal-btn modal-cancel-btn"
         aria-label="Voltar sem aplicar filtros"
       >
-        Voltar
+        {t("filters.back")}
       </Button>
       <Button
         variant="primary"
@@ -84,7 +85,7 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
         className="modal-btn modal-apply-btn"
         aria-label="Aplicar filtros de busca"
       >
-        Aplicar
+        {t("filters.apply")}
       </Button>
     </>
   );
@@ -93,16 +94,15 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Filtrar Apresentação"
+      title={t("filters.title")}
       className="filtrar-apresentacao-modal"
       footer={modalFooter}
       width="medium"
       role="dialog"
       aria-modal="true"
-      aria-labelledby="modal-title"
+      aria-labelledby={t("filters.title")}
       onKeyDown={handleKeyDown}
     >
-
       <div
         className="filtrar-apresentacao-content"
         role="region"
@@ -110,85 +110,90 @@ const FiltrarApresentacaoModal = ({ isOpen, onClose, onApplyFilters }) => {
       >
         <section className="filter-section">
           <h3 className="filter-section-title" id="date-heading">
-            Ordenar por data
+            {t("filters.filterDate")}
           </h3>
           <div
-            className="checkbox-group"
-            role="group"
+            className="radio-group"
+            role="radiogroup"
             aria-labelledby="date-heading"
           >
-            <label className="checkbox-label">
+            <label className="radio-label">
               <Input
-                type="checkbox"
+                type="radio"
+                name="date"
                 checked={filters.date.recent}
                 onChange={() => handleCheckboxChange("date", "recent")}
                 onKeyDown={(e) => handleCheckboxKeyDown(e, "date", "recent")}
-                className="filter-checkbox"
-                ref={initialFocusRef}
+                className="filter-radio"
                 aria-checked={filters.date.recent}
                 id="date-recent"
               />
-              Mais recentes
+              {t("filters.recent")}
             </label>
-            <label className="checkbox-label">
+            <label className="radio-label">
               <Input
-                type="checkbox"
+                type="radio"
+                name="date"
                 checked={filters.date.older}
                 onChange={() => handleCheckboxChange("date", "older")}
                 onKeyDown={(e) => handleCheckboxKeyDown(e, "date", "older")}
-                className="filter-checkbox"
+                className="filter-radio"
                 aria-checked={filters.date.older}
                 id="date-older"
               />
-              Mais antigos
+              {t("filters.older")}
             </label>
           </div>
         </section>
 
         <section className="filter-section">
           <h3 className="filter-section-title" id="page-limit-heading">
-            Limite por página
+          {t("filters.page-limit")}
           </h3>
           <div
-            className="checkbox-group"
-            role="group"
+            className="radio-group"
+            role="radiogroup"
             aria-labelledby="page-limit-heading"
           >
-            <label className="checkbox-label">
+            <label className="radio-label">
               <Input
-                type="checkbox"
+                type="radio"
+                name="pagelimit"
                 checked={filters.pagelimit.twelve}
                 onChange={() => handleCheckboxChange("pagelimit", "twelve")}
-                onKeyDown={(e) => handleCheckboxKeyDown(e, "pagelimit", "twelve")} 
-                className="filter-checkbox"
+                onKeyDown={(e) => handleCheckboxKeyDown(e, "pagelimit", "twelve")}
+                className="filter-radio"
                 aria-checked={filters.pagelimit.twelve}
                 id="page-limit-12"
               />
-              12 trabalhos
+              {t("filters.twelve")}
+              
             </label>
-            <label className="checkbox-label">
+            <label className="radio-label">
               <Input
-                type="checkbox"
+                type="radio"
+                name="pagelimit"
                 checked={filters.pagelimit.twentyfour}
                 onChange={() => handleCheckboxChange("pagelimit", "twentyfour")}
-                onKeyDown={(e) => handleCheckboxKeyDown(e, "pagelimit", "twentyfour")} 
-                className="filter-checkbox"
+                onKeyDown={(e) => handleCheckboxKeyDown(e, "pagelimit", "twentyfour")}
+                className="filter-radio"
                 aria-checked={filters.pagelimit.twentyfour}
                 id="page-limit-24"
               />
-              24 trabalhos
+              {t("filters.twentyfour")}
             </label>
-            <label className="checkbox-label">
+            <label className="radio-label">
               <Input
-                type="checkbox"
+                type="radio"
+                name="pagelimit"
                 checked={filters.pagelimit.thirtysix}
                 onChange={() => handleCheckboxChange("pagelimit", "thirtysix")}
-                onKeyDown={(e) => handleCheckboxKeyDown(e, "pagelimit", "thirtysix")} 
-                className="filter-checkbox"
+                onKeyDown={(e) => handleCheckboxKeyDown(e, "pagelimit", "thirtysix")}
+                className="filter-radio"
                 aria-checked={filters.pagelimit.thirtysix}
                 id="page-limit-36"
               />
-              36 trabalhos
+              {t("filters.thirtysix")}
             </label>
           </div>
         </section>

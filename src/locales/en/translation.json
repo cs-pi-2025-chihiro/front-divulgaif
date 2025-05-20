@@ -54,7 +54,7 @@
     "contact": "Contact"
   },
   "filters": {
-    "title": "Filter presentation",
+    "title": "Filter Presentation",
     "tags": "Tags",
     "date": "Date",
     "author": "Author",
@@ -63,6 +63,7 @@
     "apply": "Apply Filters",
     "clear": "Clear Filters",
     "filterSearch": "Filter Search",
+    "filterPresentation": "Filter Presentation",
     "work": "Work",
     "article": "Article",
     "dissertation": "Dissertation",
@@ -74,6 +75,13 @@
     "endDate": "End Date",
     "back": "Back",
     "searchPlaceholder": "Search...",
-    "filterOptions": "Filter options"
+    "filterOptions": "Filter options",
+    "filterDate": "Filter by date",
+    "recent": "Newest",
+    "older": "Oldest",
+    "twelve": "12 works",
+    "twentyfour": "24 works",
+    "thirtysix": "36 works",
+    "page-limit": "Page Limit"
   }
 }
