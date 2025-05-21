@@ -21,12 +21,11 @@
 
 .work-card-label {
   display: inline-block;
-  background: #e0e0e0;
+  background: var(--light-white);
   border-radius: 12px;
   border: var(--dark-green) 1px solid;
   padding: 2px 10px;
   margin: 2px 4px 2px 0;
-  font-size: 0.7rem;
 }
 
 .work-card-actions {
