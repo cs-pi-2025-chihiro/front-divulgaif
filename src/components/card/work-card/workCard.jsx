@@ -39,24 +39,16 @@ const WorkCard = ({
   );
 
   const handleCardClick = () => {
-
     if (!id) {
       console.error("WorkCard: No ID provided for navigation");
       return;
     }
 
-
     const workId = String(id);
-
 
     const currentLang = i18n.language;
 
-
     const workPath = currentLang === 'pt' ? 'trabalho' : 'work';
-
-
-    console.log(`Navigating to: /${currentLang}/${workPath}/${workId}`);
-
 
     navigate(`/${currentLang}/${workPath}/${workId}`);
 
@@ -76,12 +68,8 @@ const WorkCard = ({
         imageUrl={imageUrl}
         imageAlt={title}
         title={title}
-        content={
-          <>
-            <p className="work-card-authors">{t(authors)}:</p>
-            <p className="work-card-description">{truncatedDescription}</p>
-          </>
-        }
+        description={truncatedDescription}
+        content={cardContent}
         onClick={handleCardClick}
       />
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../button';
 import WorkCard from '../card/work-card';
 import './paginated-results.css'; 
@@ -89,9 +89,12 @@ const PaginatedResults = ({ works, isLoading = false }) => {
                     visibleWorks.map((work) => (
                         <WorkCard
                             key={work.id}
+                            id={work.id}
                             title={work.title}
                             authors={work.authors}
                             description={work.description}
+                            labels={work.labels}
+                            date={work.date}
                             imageUrl={work.imageUrl}
                             onEdit={() => handleEdit(work.id)}
                             onView={() => handleView(work.id)}

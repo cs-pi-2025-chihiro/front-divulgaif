@@ -71,6 +71,9 @@
       "advisor": "Professor Responsável",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
       "imageUrl": "/cronus-scaled-2995199348.jpg",
+      "labels": ["Artigo",
+        "Sustentabilidade"
+      ],
       "type": "article",
       "keywords": ["Palavra 1", "Palavra 2", "Palavra 3", "Palavra 4"],
       "download": "#"
@@ -82,6 +85,7 @@
       "advisor": "Professor Responsável",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
       "imageUrl": "/cronus-scaled-2995199348.jpg",
+      "labels": ["Artigo", "Química", "Sustentabilidade"],
       "type": "dissertation",
       "download": "#",
       "canEdit": true
@@ -103,7 +107,6 @@
       "labels": ["Artigo", "Computação", "Inteligência Artificial", "Tecnologia"],
       "imageUrl": "/cronus-scaled-2995199348.jpg",
       "date": "08/06/2024"
-      "imageUrl": "/cronus-scaled-2995199348.jpg"
     },
 
     {
