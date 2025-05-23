@@ -113,10 +113,9 @@ const Home = () => {
           </Button>
         </div>
       </div>
-      
-      {/* Substituindo a seção de resultados pelo componente PaginatedResults */}
+
       <PaginatedResults works={works} />
-      
+
       <FiltrarBuscaModal
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
