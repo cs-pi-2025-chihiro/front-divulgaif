@@ -24,7 +24,7 @@ const WorkCard = ({
 
       <div className="work-card-labels"> 
         {Array.isArray(labels) &&
-          labels.map((label, idx) => (
+          labels.slice(0,4).map((label, idx) => (
             <span className="work-card-label" key={idx}>
               {label}
             </span>
