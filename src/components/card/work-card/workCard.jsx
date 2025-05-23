@@ -6,6 +6,8 @@ import "./workCard.css";
 const WorkCard = ({
   title,
   authors,
+  date,
+  labels,
   description,
   imageUrl = "/default-image.jpg",
   onEdit,
@@ -13,8 +15,21 @@ const WorkCard = ({
 }) => {
   const cardContent = (
     <>
-      <p className="work-card-authors">Autores: {authors}</p>
       <p className="work-card-description">{description}</p>
+
+      <div className="work-card-authors-date">
+        <p className="work-card-authors">{authors}</p>
+        <p className="work-card-date">{date}</p>
+      </div>
+
+      <div className="work-card-labels"> 
+        {Array.isArray(labels) &&
+          labels.slice(0,4).map((label, idx) => (
+            <span className="work-card-label" key={idx}>
+              {label}
+            </span>
+          ))}
+      </div>
     </>
   );
 

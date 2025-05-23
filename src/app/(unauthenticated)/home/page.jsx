@@ -167,6 +167,8 @@ const Home = () => {
               title={work.title}
               authors={work.authors}
               description={work.description}
+              labels={work.labels}
+              date={work.date}
               imageUrl={work.imageUrl}
               onEdit={() => handleEdit(work.id)}
               onView={() => handleView(work.id)}
