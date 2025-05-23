@@ -1,53 +1,88 @@
 import React from "react";
-import Button from "../../button";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Card from "../card";
 import "./workCard.css";
 
 const WorkCard = ({
+  id, 
   title,
   authors,
+  date,
+  labels,
   description,
   imageUrl = "/default-image.jpg",
   onEdit,
   onView,
 }) => {
+  const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+
   const cardContent = (
     <>
-      <p className="work-card-authors">Autores: {authors}</p>
       <p className="work-card-description">{description}</p>
+
+      <div className="work-card-authors-date">
+        <p className="work-card-authors">{authors}</p>
+        <p className="work-card-date">{date}</p>
+      </div>
+
+      <div className="work-card-labels"> 
+        {Array.isArray(labels) &&
+          labels.slice(0,4).map((label, idx) => (
+            <span className="work-card-label" key={idx}>
+              {label}
+            </span>
+          ))}
+      </div>
     </>
   );
 
-  const cardFooter = (
-    <div className="work-card-actions">
-      <Button
-        variant="secondary"
-        size="sm"
-        className="work-card-button"
-        onClick={onEdit}
-      >
-        Editar
-      </Button>
-      <Button
-        variant="primary"
-        size="sm"
-        className="work-card-button"
-        onClick={onView}
-      >
-        Visualizar
-      </Button>
-    </div>
-  );
+  const handleCardClick = () => {
+
+    if (!id) {
+      console.error("WorkCard: No ID provided for navigation");
+      return;
+    }
+
+
+    const workId = String(id);
+
+
+    const currentLang = i18n.language;
+
+
+    const workPath = currentLang === 'pt' ? 'trabalho' : 'work';
+
+
+    console.log(`Navigating to: /${currentLang}/${workPath}/${workId}`);
+
+
+    navigate(`/${currentLang}/${workPath}/${workId}`);
+
+
+    if (onView) onView();
+  };
+
+
+  const truncatedDescription = description && description.length > 100
+    ? `${description.substring(0, 100)}...`
+    : description;
 
   return (
-    <div>
+    <div className="work-card-wrapper">
       <Card
         className="work-card"
         imageUrl={imageUrl}
         imageAlt={title}
         title={title}
-        content={cardContent}
-        footer={cardFooter}
+        content={
+          <>
+            <p className="work-card-authors">{t(authors)}:</p>
+            <p className="work-card-description">{truncatedDescription}</p>
+          </>
+        }
+        onClick={handleCardClick}
       />
     </div>
   );

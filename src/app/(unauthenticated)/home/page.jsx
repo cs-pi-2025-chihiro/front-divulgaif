@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { SearchInput } from "../../../components/input";
 import Button from "../../../components/button";
 import FiltrarBuscaModal from "../../../components/modal/filtrar-busca/filtrarBuscaModal";
+import FiltrarApresentacaoModal from "../../../components/modal/filtrar-apresentacao/filtrarApresentacaoModal";
 import "./page.css";
 import mockedValues from "../../../data/mockedValues.json";
 import PaginatedResults from "../../../components/paginated-results/paginated-results";
@@ -25,7 +26,17 @@ const Home = () => {
       dataInicial: "",
       dataFinal: "",
     },
+    date: {
+      recent: true,
+      older: false,
+    },
+    pagelimit: {
+      twelve: false,
+      twentyfour: true,
+      thirtysix: false,
+    },
   });
+  const [isPresentationModalOpen, setIsPresentationModalOpen] = useState(false);
 
   const handleEdit = (id) => {
     console.log("Edit work with id:", id);
@@ -35,12 +46,16 @@ const Home = () => {
     console.log("View work with id:", id);
   };
 
+  
+  console.log("Available works:", works);
+
   const handleApplyFilters = (filters) => {
     console.log("Applied filters:", filters);
     setActiveFilters(filters);
 
     let filteredWorks = [...mockedValues.trabalhos];
 
+    // lógica para filtros de busca
     if (Object.values(filters.trabalho).some((value) => value)) {
       filteredWorks = filteredWorks.filter((work) => {
         return filters.trabalho[work.type.toLowerCase()];
@@ -79,6 +94,21 @@ const Home = () => {
       });
     }
 
+    // lógica para filtros de apresentação
+    if (filters.date.recent) {
+      filteredWorks.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (filters.date.older) {
+      filteredWorks.sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+
+    if (filters.pagelimit.twelve) {
+      filteredWorks = filteredWorks.slice(0, 12);
+    } else if (filters.pagelimit.twentyfour) {
+      filteredWorks = filteredWorks.slice(0, 24);
+    } else if (filters.pagelimit.thirtysix) {
+      filteredWorks = filteredWorks.slice(0, 36);
+    }
+    
     setWorks(filteredWorks);
   };
 
@@ -103,7 +133,7 @@ const Home = () => {
           >
             {t("common.filter")}
           </Button>
-          <Button variant="tertiary" size="md" className="filter-btn">
+          <Button variant="tertiary" size="md" className="filter-btn" onClick={() => setIsPresentationModalOpen(true)}>
             {t("filters.title")}
           </Button>
         </div>
@@ -113,12 +143,54 @@ const Home = () => {
           </Button>
         </div>
       </div>
+      <div className="ifexplore-results">
+        <div className="results-header">
+          <h2 className="results-title">
+            {works.length} {t("home.results")}
+          </h2>
+          <div className="pagination-controls">
+            <button
+              className="pagination-button prev"
+              aria-label={t("home.previous")}
+            >
+              &lt;
+            </button>
+            <button
+              className="pagination-button next"
+              aria-label={t("home.next")}
+            >
+              &gt;
+            </button>
+          </div>
+        </div>
+        <div className="work-cards-container">
+          {works.map((work) => (
+            <WorkCard
+              key={work.id}
+              id={work.id} 
+              title={work.title}
+              authors={work.authors}
+              description={work.description}
+              labels={work.labels}
+              date={work.date}
+              imageUrl={work.imageUrl}
+              onEdit={() => handleEdit(work.id)}
+              onView={() => handleView(work.id)}
+            />
+          ))}
+        </div>
+      </div>
 
-      <PaginatedResults works={works} />
 
       <FiltrarBuscaModal
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
+        onApplyFilters={handleApplyFilters}
+      />
+
+      <FiltrarApresentacaoModal
+        isOpen={isPresentationModalOpen}
+        onClose={() => setIsPresentationModalOpen(false)}
         onApplyFilters={handleApplyFilters}
       />
     </div>

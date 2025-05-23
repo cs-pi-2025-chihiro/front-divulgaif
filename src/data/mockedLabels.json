@@ -1,0 +1,44 @@
+{
+    "labels": [
+        {
+            "id": 1,
+            "label": "Artigo",
+            "description": "Trabalhos acadêmicos publicados em periódicos ou conferências."
+        },
+        {
+            "id": 2,
+            "label": "Pesquisa",
+            "description": "Projetos ou estudos científicos desenvolvidos para gerar conhecimento."
+        },
+        {
+            "id": 3,
+            "label": "TCC",
+            "description": "Trabalho de Conclusão de Curso apresentado para obtenção de grau acadêmico."
+        },
+        {
+            "id": 4,
+            "label": "Dissertação",
+            "description": "Trabalho acadêmico apresentado para obtenção do título de mestre."
+        },
+        {
+            "id": 5,
+            "label": "Educação",
+            "description": "Projetos e iniciativas voltados ao ensino e aprendizagem."
+        },
+        {
+            "id": 6,
+            "label": "Web",
+            "description": "Trabalhos relacionados ao desenvolvimento e tecnologias para a web."
+        },
+        {
+            "id": 7,
+            "label": "IA",
+            "description": "Projetos e pesquisas sobre Inteligência Artificial."
+        },
+        {
+            "id": 8,
+            "label": "Machine Learning",
+            "description": "Trabalhos focados em aprendizado de máquina e suas aplicações."
+        }
+    ]
+}
