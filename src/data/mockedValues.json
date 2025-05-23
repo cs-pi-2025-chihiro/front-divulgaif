@@ -89,16 +89,20 @@
     {
       "id": 7,
       "title": "Título do Trabalho",
-      "authors": "autor 1, autor 2",
+      "authors": "Autor 1, Autor 2",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
-      "imageUrl": "/cronus-scaled-2995199348.jpg"
+      "labels": ["Artigo", "Química", "Meio Ambiente", "Sustentabilidade"],
+      "imageUrl": "/cronus-scaled-2995199348.jpg",
+      "date": "07/06/2024"
     },
     {
       "id": 8,
       "title": "Título do Trabalho",
-      "authors": "autor 1, autor 2",
+      "authors": "Autor 1, Autor 2",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
-      "imageUrl": "/cronus-scaled-2995199348.jpg"
+      "labels": ["Artigo", "Computação", "Inteligência Artificial", "Tecnologia"],
+      "imageUrl": "/cronus-scaled-2995199348.jpg",
+      "date": "08/06/2024"
     }
   ]
 }
