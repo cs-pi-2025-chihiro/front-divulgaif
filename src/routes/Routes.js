@@ -13,11 +13,6 @@ function AppRoutes() {
     const userLang = navigator.language.split("-")[0];
     const targetLang = ["en", "pt"].includes(userLang) ? userLang : "pt";
 
-    useEffect(() => {
-      
-      i18n.changeLanguage(targetLang);
-    }, [i18n, targetLang]);
-
     return <Navigate to={`/${targetLang}`} replace />;
   };
 

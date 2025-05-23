@@ -18,8 +18,7 @@ const WorkDetail = () => {
     console.log("WorkDetail component - ID from params:", id);
     console.log("Available works:", mockedValues.trabalhos);
     
-    
-    
+
     const foundWork = mockedValues.trabalhos.find(
       (work) => String(work.id) === String(id)
     );
@@ -29,8 +28,6 @@ const WorkDetail = () => {
     
     if (foundWork) {
       setWork(foundWork);
-    } else {
-      console.error(`Work with ID ${id} not found in mocked data.`);
     }
     
     setLoading(false);
@@ -86,7 +83,7 @@ const WorkDetail = () => {
 
   return (
     <div className="work-detail-container">
-      {/* Back button */}
+      {}
       <Button 
         variant="tertiary" 
         size="md" 
@@ -116,19 +113,6 @@ const WorkDetail = () => {
               alt={`${work.title} - ${currentImageIndex + 1}`} 
               className="work-detail-image" 
             />
-            
-            {/* Image navigation dots */}
-            {images.length > 1 && (
-              <div className="image-navigation-dots">
-                {images.map((_, index) => (
-                  <span 
-                    key={index} 
-                    className={`dot ${index === currentImageIndex ? 'active' : ''}`}
-                    onClick={() => setCurrentImageIndex(index)}
-                  />
-                ))}
-              </div>
-            )}
           </div>
         </div>
       )}
@@ -196,38 +180,6 @@ const WorkDetail = () => {
       )}
       
       {}
-      <div className="work-detail-actions">
-        <Button 
-          variant="secondary" 
-          size="md"
-          onClick={handleGoBack}
-          className="action-button"
-        >
-          {t("common.back") || "Voltar"}
-        </Button>
-        
-        {work.canEdit && (
-          <Button 
-            variant="secondary" 
-            size="md"
-            onClick={() => navigate(`/edit/${work.id}`)}
-            className="action-button"
-          >
-            {t("workDetail.edit") || "Editar"}
-          </Button>
-        )}
-        
-        {work.download && (
-          <Button 
-            variant="primary" 
-            size="md"
-            onClick={() => window.open(work.download, '_blank')}
-            className="action-button"
-          >
-            {t("workDetail.download") || "Baixar PDF"}
-          </Button>
-        )}
-      </div>
     </div>
   );
 };

@@ -42,13 +42,13 @@
 
 .work-card-authors {
   font-size: 0.9rem;
-  color: #555;
+  color: var(--gray);
   margin-bottom: 8px;
 }
 
 .work-card-description {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--gray);
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
