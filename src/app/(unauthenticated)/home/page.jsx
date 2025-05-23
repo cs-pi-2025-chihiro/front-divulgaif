@@ -46,6 +46,9 @@ const Home = () => {
     console.log("View work with id:", id);
   };
 
+  
+  console.log("Available works:", works);
+
   const handleApplyFilters = (filters) => {
     console.log("Applied filters:", filters);
     setActiveFilters(filters);
@@ -164,6 +167,7 @@ const Home = () => {
           {works.map((work) => (
             <WorkCard
               key={work.id}
+              id={work.id} 
               title={work.title}
               authors={work.authors}
               description={work.description}

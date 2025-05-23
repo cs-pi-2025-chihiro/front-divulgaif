@@ -7,8 +7,39 @@
     "submit": "Submit",
     "search": "Search",
     "filter": "Filter Search",
-    "language": "Language"
+    "language": "Language",
+    "loading": "Loading",
+    "goBack": "Go Back",
+    "back": "Back",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "notAvailable": "Not available",
+    "noDescription": "No description available"
   },
+   "errors": {
+    "workNotFound": "Work not found",
+    "unexpectedError": "An unexpected error occurred"
+  },
+  "workTypes": {
+    "article": "Article",
+    "dissertation": "Dissertation",
+    "research": "Research",
+    "finalPaper": "Final Paper",
+    "unknown": "Unknown type"
+  },
+  "workDetail": {
+    "authors": "Authors",
+    "advisor": "Advisor",
+    "publishDate": "Publication Date",
+    "abstract": "Abstract",
+    "keywords": "Keywords",
+    "additionalLinks": "Additional Links",
+    "link": "Link",
+    "download": "Download PDF",
+    "edit": "Edit"
+  },
+  
   "home": {
     "welcome": "IF Xplore",
     "description": "Discover academic works from IFPR",

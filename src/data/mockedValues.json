@@ -3,56 +3,88 @@
     {
       "id": 1,
       "title": "Título do Trabalho",
-      "authors": "Autor 1, Autor 2",
+      "authors": "autor 1, autor 2",
+      "advisor": "Professor Responsável",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
-      "labels": ["Artigo", "Ciência", "Inovação", "Pesquisa"],
       "imageUrl": "/cronus-scaled-2995199348.jpg",
-      "date": "01/06/2024"
+      "type": "article",
+      "keywords": ["Palavra 1", "Palavra 2", "Palavra 3", "Palavra 4", "Palavra 5"],
+      "additionalLinks": [
+        { "title": "Link Adicional 1", "url": "#" },
+        { "title": "Link Adicional 2", "url": "#" },
+        { "title": "Link Adicional 3", "url": "#" },
+        { "title": "Link Adicional 4", "url": "#" }
+      ],
+      "download": "#"
     },
     {
       "id": 2,
       "title": "Título do Trabalho",
-      "authors": "Autor 1, Autor 2",
+      "authors": "autor 1, autor 2",
+      "advisor": "Professor Responsável",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
-      "labels": ["Artigo", "Tecnologia", "Pesquisa", "Desenvolvimento"],
       "imageUrl": "/cronus-scaled-2995199348.jpg",
-      "date": "02/06/2024"
+      "type": "dissertation",
+      "keywords": ["Palavra 1", "Palavra 2", "Palavra 3"],
+      "additionalLinks": [
+        { "title": "Link Adicional 1", "url": "#" },
+        { "title": "Link Adicional 2", "url": "#" }
+      ],
+      "download": "#"
     },
     {
       "id": 3,
       "title": "Título do Trabalho",
-      "authors": "Autor 1, Autor 2",
-      "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
-      "labels": ["Artigo", "Educação", "Sustentabilidade", "Sociedade"],
+      "authors": "autor 1, autor 2",
+      "advisor": "Professor Responsável",
+      "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sed ornare nibh. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce et fringilla dolor. Integer sollicitudin rhoncus massa luctus fringilla. Mauris eget metus mi. Integer lectus nulla, dignissim eget rutrum tincidunt, porta id purus.",
       "imageUrl": "/cronus-scaled-2995199348.jpg",
-      "date": "03/06/2024"
+      "type": "research",
+      "keywords": ["Palavra 1", "Palavra 2", "Palavra 3", "Palavra 4", "Palavra 5"],
+      "additionalLinks": [
+        { "title": "Link Adicional 1", "url": "#" },
+        { "title": "Link Adicional 2", "url": "#" },
+        { "title": "Link Adicional 3", "url": "#" },
+        { "title": "Link Adicional 4", "url": "#" }
+      ],
+      "download": "#",
+      "canEdit": true
     },
     {
       "id": 4,
       "title": "Título do Trabalho",
-      "authors": "Autor 1, Autor 2",
+      "authors": "autor 1, autor 2, autor 3",
+      "advisor": "Professor Responsável",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
-      "labels": ["Artigo", "Saúde", "Biologia", "Medicina"],
       "imageUrl": "/cronus-scaled-2995199348.jpg",
-      "date": "04/06/2024"
+      "type": "finalPaper",
+      "keywords": ["Palavra 1", "Palavra 2"],
+      "additionalLinks": [
+        { "title": "Link Adicional 1", "url": "#" }
+      ],
+      "download": "#"
     },
     {
       "id": 5,
       "title": "Título do Trabalho",
-      "authors": "Autor 1, Autor 2",
+      "authors": "autor 1, autor 2",
+      "advisor": "Professor Responsável",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
-      "labels": ["Artigo", "Engenharia", "Robótica", "Inovação"],
       "imageUrl": "/cronus-scaled-2995199348.jpg",
-      "date": "05/06/2024"
+      "type": "article",
+      "keywords": ["Palavra 1", "Palavra 2", "Palavra 3", "Palavra 4"],
+      "download": "#"
     },
     {
       "id": 6,
       "title": "Título do Trabalho",
-      "authors": "Autor 1, Autor 2",
+      "authors": "autor 1, autor 2",
+      "advisor": "Professor Responsável",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
-      "labels": ["Artigo", "Matemática", "Física", "Ciência"],
       "imageUrl": "/cronus-scaled-2995199348.jpg",
-      "date": "06/06/2024"
+      "type": "dissertation",
+      "download": "#",
+      "canEdit": true
     },
     {
       "id": 7,
