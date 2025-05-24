@@ -109,11 +109,11 @@ const Home = () => {
         </div>
         <div className="new-work-container">
           <Button variant="tertiary" size="lg" className="new-work-btn">
-            <span className="icon">📄</span> {t("home.newWork")}
+            <span className="icon">+</span> {t("home.newWork")}
           </Button>
         </div>
       </div>
-      
+
       <PaginatedResults works={works} />
 
       <FiltrarBuscaModal
