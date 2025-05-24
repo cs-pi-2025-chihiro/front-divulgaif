@@ -16,11 +16,6 @@ const Input = ({
   ariaDescribedby,
   ...props
 }) => {
-  const defaultStyle = {
-    backgroundColor: "var(--primary-beige, #CDCEBE)",
-    ...style,
-  };
-
   const inputId = id || name;
 
   return (
@@ -32,7 +27,7 @@ const Input = ({
       onChange={onChange}
       placeholder={placeholder}
       className={className}
-      style={defaultStyle}
+      style={style}
       required={required}
       aria-label={ariaLabel || placeholder}
       aria-required={ariaRequired || required || false}

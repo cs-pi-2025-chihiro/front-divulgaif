@@ -47,7 +47,6 @@ const LoginPage = () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setSuccessResult(t("login.success", "Login realizado com sucesso!"));
       setTimeout(() => {
-        console.log("Redirecting to dashboard...");
         navigate(`/${i18n.language}`);
       }, 1000);
     } catch (error) {
