@@ -8,7 +8,7 @@
     "search": "Buscar",
     "filter": "Filtrar Busca",
     "language": "Idioma",
-     "loading": "Carregando",
+    "loading": "Carregando",
     "goBack": "Voltar",
     "back": "Voltar",
     "edit": "Editar",
@@ -113,7 +113,14 @@
     "twentyfour": "24 trabalhos",
     "thirtysix": "36 trabalhos",
     "page-limit": "Limite por página"
+  },
+  "pagination": {
+    "results": "Resultados",
+    "page": "Página",
+    "of": "de",
+    "previousPage": "Ir para página anterior",
+    "nextPage": "Ir para próxima página",
+    "currentPage": "Página {{current}} de {{total}}",
+    "resultsFound": "{{count}} resultados encontrados"
   }
-
-  
 }

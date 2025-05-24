@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Button from "../button";
 import WorkCard from "../card/work-card";
 import "./paginated-results.css";
+import { useTranslation } from "react-i18next";
 
 const PaginatedResults = ({ works, isLoading = false }) => {
   const [currentPage, setCurrentPage] = useState(0);
+  const { t } = useTranslation();
 
   const firstPageSize = 8;
 
@@ -48,9 +50,9 @@ const PaginatedResults = ({ works, isLoading = false }) => {
       <div className="results-header">
         <h2
           className="results-title"
-          aria-label={`${works.length} resultados encontrados`}
+          aria-label={t("pagination.resultsFound", { count: works.length })}
         >
-          {works.length} Resultados
+          {works.length} {t("pagination.results")}
         </h2>
         <div className="pagination-controls">
           <Button
@@ -60,15 +62,19 @@ const PaginatedResults = ({ works, isLoading = false }) => {
             className="pagination-button prev"
             onClick={goToPreviousPage}
             disabled={currentPage === 0}
-            aria-label="Ir para página anterior"
+            aria-label={t("pagination.previousPage")}
           >
             &lt;
           </Button>
           <span
             className="pagination-info"
-            aria-label={`Página ${currentPage + 1} de ${totalPages}`}
+            aria-label={t("pagination.currentPage", {
+              current: currentPage + 1,
+              total: totalPages,
+            })}
           >
-            Página {currentPage + 1} de {totalPages}
+            {t("pagination.page")} {currentPage + 1} {t("pagination.of")}{" "}
+            {totalPages}
           </span>
           <Button
             variant="outline"
@@ -77,7 +83,7 @@ const PaginatedResults = ({ works, isLoading = false }) => {
             className="pagination-button next"
             onClick={goToNextPage}
             disabled={currentPage === 1 || works.length <= firstPageSize}
-            aria-label="Ir para próxima página"
+            aria-label={t("pagination.nextPage")}
           >
             &gt;
           </Button>
