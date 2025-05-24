@@ -14,14 +14,9 @@ const WorkDetail = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    console.log("WorkDetail component - ID from params:", id);
-    console.log("Available works:", mockedValues.trabalhos);
-
     const foundWork = mockedValues.trabalhos.find(
       (work) => String(work.id) === String(id)
     );
-
-    console.log("Found work:", foundWork);
 
     if (foundWork) {
       setWork(foundWork);

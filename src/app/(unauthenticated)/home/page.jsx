@@ -7,12 +7,14 @@ import FiltrarBuscaModal from "../../../components/modal/filtrar-busca/filtrarBu
 import "./page.css";
 import mockedValues from "../../../data/mockedValues.json";
 import PaginatedResults from "../../../components/paginated-results/paginated-results";
+import FiltrarApresentacaoModal from "../../../components/modal/filtrar-apresentacao/filtrarApresentacaoModal";
 
 const Home = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [works, setWorks] = useState(mockedValues.trabalhos);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [isPresentationModalOpen, setIsPresentationModalOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState({
     trabalho: {
       artigo: false,
@@ -27,16 +29,7 @@ const Home = () => {
     },
   });
 
-  const handleEdit = (id) => {
-    console.log("Edit work with id:", id);
-  };
-
-  const handleView = (id) => {
-    console.log("View work with id:", id);
-  };
-
   const handleApplyFilters = (filters) => {
-    console.log("Applied filters:", filters);
     setActiveFilters(filters);
 
     let filteredWorks = [...mockedValues.trabalhos];
@@ -119,6 +112,12 @@ const Home = () => {
       <FiltrarBuscaModal
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
+        onApplyFilters={handleApplyFilters}
+      />
+
+      <FiltrarApresentacaoModal
+        isOpen={isPresentationModalOpen}
+        onClose={() => setIsPresentationModalOpen(false)}
         onApplyFilters={handleApplyFilters}
       />
     </div>
