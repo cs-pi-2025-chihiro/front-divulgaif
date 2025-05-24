@@ -96,7 +96,12 @@ const Home = () => {
           >
             {t("common.filter")}
           </Button>
-          <Button variant="tertiary" size="md" className="filter-btn">
+          <Button
+            variant="tertiary"
+            size="md"
+            className="filter-btn"
+            onClick={() => setIsPresentationModalOpen(true)}
+          >
             {t("filters.title")}
           </Button>
         </div>
