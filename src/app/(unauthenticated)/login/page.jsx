@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom";
 import "./page.css";
 import { Input, PasswordInput } from "../../../components/input";
 import Button from "../../../components/button/index.js";
+import { useLogin } from "./useLogin.js";
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const loginMutation = useLogin();
+
   const [formData, setFormData] = useState({
-    username: "",
+    identifier: "",
     password: "",
   });
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [successResult, setSuccessResult] = useState("");
-  const [errorResult, setErrorResult] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,8 +27,11 @@ const LoginPage = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.username) {
-      newErrors.username = t("login.usernameRequired", "Usuário é obrigatório");
+    if (!formData.identifier) {
+      newErrors.identifier = t(
+        "login.usernameRequired",
+        "Usuário é obrigatório"
+      );
     }
     if (!formData.password) {
       newErrors.password = t("login.passwordRequired", "Senha é obrigatória");
@@ -40,23 +43,24 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    setIsLoading(true);
-    setErrorResult("");
-    setSuccessResult("");
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setSuccessResult(t("login.success", "Login realizado com sucesso!"));
+      await loginMutation.mutateAsync(formData);
+
       setTimeout(() => {
         navigate(`/${i18n.language}`);
-      }, 1000);
-    } catch (error) {
-      setErrorResult(
-        t("login.error", "Falha no login. Verifique suas credenciais.")
-      );
-    } finally {
-      setIsLoading(false);
-    }
+      }, 1500);
+    } catch (error) {}
   };
+
+  const isLoading = loginMutation.isPending;
+  const successResult = loginMutation.isSuccess
+    ? t("login.success", "Login realizado com sucesso!")
+    : "";
+  const errorResult = loginMutation.isError
+    ? loginMutation.error?.response?.data?.message ||
+      t("login.error", "Falha no login. Verifique suas credenciais.")
+    : "";
 
   return (
     <div className="divulgaif-login-container">
@@ -72,7 +76,7 @@ const LoginPage = () => {
             {t("login.title")}
           </h2>
           <p className="login-subheading">
-            {t("login.access", "Acesse ao DivulgaIF:")}
+            {t("login.access", "Acesse o DivulgaIF:")}
           </p>
           <form
             onSubmit={handleSubmit}
@@ -80,29 +84,29 @@ const LoginPage = () => {
             aria-labelledby="login-heading"
           >
             <div className="form-group">
-              <label htmlFor="username">{t("common.email")}:</label>
+              <label htmlFor="identifier">{t("common.identifier")}:</label>
               <Input
-                name="username"
-                id="username"
-                value={formData.username}
+                name="identifier"
+                id="identifier"
+                value={formData.identifier}
                 onChange={handleChange}
-                className={errors.username ? "input-error" : ""}
+                className={errors.identifier ? "input-error" : ""}
                 placeholder={t(
                   "login.usernamePlaceholder",
-                  "Digite seu usuário"
+                  "Email ou Matrícula"
                 )}
-                aria-invalid={!!errors.username}
+                aria-invalid={!!errors.identifier}
                 aria-describedby={
-                  errors.username ? "username-error" : undefined
+                  errors.identifier ? "identifier-error" : undefined
                 }
               />
-              {errors.username && (
+              {errors.identifier && (
                 <span
-                  id="username-error"
+                  id="identifier-error"
                   className="error-message"
                   role="alert"
                 >
-                  {errors.username}
+                  {errors.identifier}
                 </span>
               )}
             </div>
@@ -132,11 +136,11 @@ const LoginPage = () => {
             </div>
             <Button
               type="submit"
-              className="secondary"
+              className="login-button"
               variant="secondary"
               disabled={isLoading}
               aria-busy={isLoading}
-              ariaLabel={t("login.access", "Acessar o sistema")}
+              ariaLabel={t("login.access", "Login")}
             >
               {isLoading
                 ? t("login.loading", "Carregando...")
@@ -148,28 +152,10 @@ const LoginPage = () => {
               </div>
             )}
             {errorResult && (
-              <div className="error-message" role="alert">
+              <div className="success-message" role="status" aria-live="polite">
                 {errorResult}
               </div>
             )}
-            <div
-              className="login-options"
-              aria-labelledby="login-options-heading"
-            >
-              <p id="login-options-heading" className="options-divider">
-                {t("login.loginWith", "Entrar com:")}
-              </p>
-              <Button
-                type="button"
-                variant="secondary"
-                ariaLabel={t("login.loginWithSUAP", "Entrar com SUAP")}
-                onClick={() =>
-                  window.open("https://suap.ifpr.edu.br", "_blank")
-                }
-              >
-                SUAP
-              </Button>
-            </div>
           </form>
         </div>
       </div>

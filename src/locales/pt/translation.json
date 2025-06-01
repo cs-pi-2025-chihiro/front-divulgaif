@@ -1,8 +1,9 @@
 {
   "common": {
     "login": "Entrar",
+    "logout": "Sair",
     "register": "Cadastrar",
-    "email": "Email",
+    "identifier": "Email ou Matrícula",
     "password": "Senha",
     "submit": "Enviar",
     "search": "Buscar",
@@ -49,12 +50,12 @@
   },
   "login": {
     "title": "Entrar",
-    "access": "Acesse ao DivulgaIF:",
+    "access": "Acesse o DivulgaIF:",
     "noAccount": "Não tem uma conta?",
     "createAccount": "Criar uma conta",
     "forgotPassword": "Esqueceu a senha?",
-    "usernamePlaceholder": "Digite seu usuário",
-    "usernameRequired": "Usuário é obrigatório",
+    "usernamePlaceholder": "Email ou Matrícula",
+    "usernameRequired": "Email ou Matrícula são obrigatórias",
     "passwordRequired": "Senha é obrigatória",
     "submit": "Acessar",
     "loading": "Carregando...",

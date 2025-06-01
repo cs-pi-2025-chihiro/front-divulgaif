@@ -1,7 +1,7 @@
 export const LoginPageEnum = {
   MAIN_TITLE: "DivulgaIF",
   LOGIN_HEADING: "Login",
-  LOGIN_SUBHEADING: "Acesse ao DivulgaIF:",
+  LOGIN_SUBHEADING: "Acesse o DivulgaIF:",
 
   FIELDS: {
     USERNAME: {
@@ -20,9 +20,9 @@ export const LoginPageEnum = {
 
   BUTTONS: {
     SUBMIT: {
-      TEXT: "Acessar",
+      TEXT: "Login",
       LOADING_TEXT: "Carregando...",
-      ARIA_LABEL: "Acessar o sistema",
+      ARIA_LABEL: "Login no sistema",
     },
     SUAP: {
       TEXT: "SUAP",
