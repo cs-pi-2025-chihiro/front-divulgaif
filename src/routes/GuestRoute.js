@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 
 const GuestRoute = () => {
   const { i18n } = useTranslation();
-  const location = useLocation();
 
   if (isAuthenticated()) {
     return <Navigate to={`/${i18n.language}`} replace />;
