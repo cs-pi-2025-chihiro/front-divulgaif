@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./page.css";
 import { Input, PasswordInput } from "../../../components/input";
 import Button from "../../../components/button/index.js";
+import useSuap from "./useSuap.js";
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
@@ -16,6 +17,12 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [successResult, setSuccessResult] = useState("");
   const [errorResult, setErrorResult] = useState("");
+  const {
+    loginWithSuap,
+    isProcessing,
+    error: suapError,
+    clearError,
+  } = useSuap();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,6 +63,11 @@ const LoginPage = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSuapLogin = () => {
+    clearError();
+    loginWithSuap();
   };
 
   return (
@@ -163,9 +175,7 @@ const LoginPage = () => {
                 type="button"
                 variant="secondary"
                 ariaLabel={t("login.loginWithSUAP", "Entrar com SUAP")}
-                onClick={() =>
-                  window.open("https://suap.ifpr.edu.br", "_blank")
-                }
+                onClick={handleSuapLogin}
               >
                 SUAP
               </Button>
