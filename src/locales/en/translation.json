@@ -1,9 +1,8 @@
 {
   "common": {
     "login": "Login",
-    "logout": "Logout",
     "register": "Register",
-    "identifier": "Email or Enrollment Number",
+    "email": "Email",
     "password": "Password",
     "submit": "Submit",
     "search": "Search",
@@ -55,8 +54,8 @@
     "noAccount": "Don't have an account?",
     "createAccount": "Create an account",
     "forgotPassword": "Forgot password?",
-    "usernamePlaceholder": "Email or Password",
-    "usernameRequired": "Email or Enrollment Number are required",
+    "usernamePlaceholder": "Enter your username",
+    "usernameRequired": "Username is required",
     "passwordRequired": "Password is required",
     "submit": "Access",
     "loading": "Loading...",

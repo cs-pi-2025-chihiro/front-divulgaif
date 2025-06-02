@@ -6,7 +6,6 @@ import WorkDetail from "../app/(unauthenticated)/home/[id]/page";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import LanguageRoute from "./LanguageRoute";
-import GuestRoute from "./GuestRoute";
 
 function AppRoutes() {
   const DefaultLanguageRedirect = () => {
@@ -25,10 +24,8 @@ function AppRoutes() {
       {}
       <Route path="/en" element={<LanguageRoute lang="en" />}>
         <Route index element={<Home />} />
-        <Route element={<GuestRoute />}>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-        </Route>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
         {}
         <Route path="work/:id" element={<WorkDetail />} />
       </Route>
@@ -36,10 +33,8 @@ function AppRoutes() {
       {}
       <Route path="/pt" element={<LanguageRoute lang="pt" />}>
         <Route index element={<Home />} />
-        <Route element={<GuestRoute />}>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-        </Route>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
         {}
         <Route path="trabalho/:id" element={<WorkDetail />} />
       </Route>
