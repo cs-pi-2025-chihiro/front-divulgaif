@@ -177,6 +177,7 @@
   color: #1e3d25;
 }
 
+/* Action buttons */
 .work-detail-actions {
   display: flex;
   flex-wrap: wrap;
