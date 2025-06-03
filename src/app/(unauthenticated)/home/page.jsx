@@ -32,9 +32,28 @@ const Home = () => {
     },
   });
 
+  const [initialHash] = useState(() => {
+    const hash = window.location.hash;
+    console.log("Initial hash captured:", hash);
+    return hash;
+  });
+
   useEffect(() => {
-    handleOAuthCallback();
-  }, [location.hash]);
+    console.log("Home component useEffect triggered");
+    console.log("Current location.hash:", location.hash);
+    console.log("Initial captured hash:", initialHash);
+
+    const hashToCheck = location.hash || initialHash;
+    console.log("Hash to check:", hashToCheck);
+
+    if (hashToCheck.includes("access_token=")) {
+      console.log("Found access_token, calling handleOAuthCallback");
+      if (!location.hash && initialHash) {
+        window.location.hash = initialHash;
+      }
+      handleOAuthCallback();
+    }
+  }, [location.hash, initialHash]);
 
   const handleOAuthCallback = async () => {
     const hash = window.location.hash.substring(1);

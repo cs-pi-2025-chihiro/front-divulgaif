@@ -25,7 +25,6 @@ const useSuap = () => {
     authUrl.searchParams.append("scope", SUAP_CONFIG.scope);
 
     window.location.href = authUrl.toString();
-    handleOAuthCallback();
   };
 
   return {
