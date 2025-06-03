@@ -29,10 +29,37 @@ const useSuap = () => {
 
   const handleOAuthCallback = async () => {
     const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    const accessToken = params.get("access_token");
+    console.log("Full hash:", hash);
+    const params = {};
+    hash.split("&").forEach((param) => {
+      const [key, value] = param.split("=");
+      if (key && value) {
+        params[key] = decodeURIComponent(value);
+      }
+    });
 
-    if (!accessToken) return false;
+    console.log("Parsed params:", params);
+    console.log("access_token (underscore):", params.access_token);
+    console.log("accessToken (camelCase):", params.accessToken);
+
+    let accessToken = params.access_token || params.accessToken;
+
+    const urlParams = new URLSearchParams(hash);
+    console.log("URLSearchParams access_token:", urlParams.get("access_token"));
+    console.log("URLSearchParams accessToken:", urlParams.get("accessToken"));
+    console.log("All URLSearchParams:", [...urlParams.entries()]);
+
+    if (!accessToken) {
+      accessToken =
+        urlParams.get("access_token") || urlParams.get("accessToken");
+    }
+
+    console.log("Final accessToken:", accessToken);
+
+    if (!accessToken) {
+      console.log("No access token found with either naming convention");
+      return false;
+    }
 
     setIsProcessing(true);
     setError(null);
