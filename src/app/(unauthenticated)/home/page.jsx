@@ -39,21 +39,29 @@ const Home = () => {
   });
 
   useEffect(() => {
-    console.log("Home component useEffect triggered");
-    console.log("Current location.hash:", location.hash);
-    console.log("Initial captured hash:", initialHash);
+    console.log("Checking for OAuth callback");
+    let hashToProcess = window.location.hash;
+    console.log("Current hash:", hashToProcess);
 
-    const hashToCheck = location.hash || initialHash;
-    console.log("Hash to check:", hashToCheck);
+    if (!hashToProcess) {
+      const storedHash = sessionStorage.getItem("oauth_hash");
+      console.log("Stored hash from sessionStorage:", storedHash);
 
-    if (hashToCheck.includes("access_token=")) {
-      console.log("Found access_token, calling handleOAuthCallback");
-      if (!location.hash && initialHash) {
-        window.location.hash = initialHash;
+      if (storedHash) {
+        hashToProcess = storedHash;
+        console.log("Using stored hash:", hashToProcess);
+        sessionStorage.removeItem("oauth_hash");
       }
+    }
+
+    console.log("Final hash to process:", hashToProcess);
+
+    if (hashToProcess && hashToProcess.includes("access_token=")) {
+      console.log("Processing OAuth callback with hash:", hashToProcess);
+      window.location.hash = hashToProcess;
       handleOAuthCallback();
     }
-  }, [location.hash, initialHash]);
+  }, []);
 
   const handleOAuthCallback = async () => {
     const hash = window.location.hash.substring(1);
