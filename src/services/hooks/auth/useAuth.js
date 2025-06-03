@@ -45,5 +45,7 @@ export const logout = () => {
 
   localStorage.removeItem("userRoles");
 
+  localStorage.removeItem("");
+
   window.location.href = "/login";
 };
