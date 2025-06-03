@@ -3,9 +3,9 @@ import Home from "../app/(unauthenticated)/home/page";
 import LoginPage from "../app/(unauthenticated)/login/page";
 import RegisterPage from "../app/(unauthenticated)/register/page";
 import WorkDetail from "../app/(unauthenticated)/home/[id]/page";
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import LanguageRoute from "./LanguageRoute";
+import GuestRoute from "./GuestRoute";
 
 function AppRoutes() {
   const DefaultLanguageRedirect = () => {
@@ -18,28 +18,26 @@ function AppRoutes() {
 
   return (
     <Routes>
-      {}
       <Route path="/" element={<DefaultLanguageRedirect />} />
 
-      {}
       <Route path="/en" element={<LanguageRoute lang="en" />}>
         <Route index element={<Home />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        {}
+        <Route element={<GuestRoute />}>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+        </Route>
         <Route path="work/:id" element={<WorkDetail />} />
       </Route>
 
-      {}
       <Route path="/pt" element={<LanguageRoute lang="pt" />}>
         <Route index element={<Home />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        {}
+        <Route element={<GuestRoute />}>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+        </Route>
         <Route path="trabalho/:id" element={<WorkDetail />} />
       </Route>
 
-      {}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

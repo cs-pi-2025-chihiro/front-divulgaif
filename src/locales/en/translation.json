@@ -2,6 +2,7 @@
   "common": {
     "login": "Login",
     "register": "Register",
+    "logout": "Logout",
     "email": "Email",
     "password": "Password",
     "submit": "Submit",
@@ -54,8 +55,8 @@
     "noAccount": "Don't have an account?",
     "createAccount": "Create an account",
     "forgotPassword": "Forgot password?",
-    "usernamePlaceholder": "Enter your username",
-    "usernameRequired": "Username is required",
+    "usernamePlaceholder": "Email",
+    "usernameRequired": "Email is required",
     "passwordRequired": "Password is required",
     "submit": "Access",
     "loading": "Loading...",
