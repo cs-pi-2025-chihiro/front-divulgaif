@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import api from "../../../services/utils/api";
+import { BASE_URL } from "../../../constants";
 
 const useSuap = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -80,8 +82,17 @@ const useSuap = () => {
 
       const authResult = await authResponse.json();
 
-      localStorage.setItem("divulgaif_token", authResult.token);
-      localStorage.setItem("divulgaif_user", JSON.stringify(authResult.user));
+      localStorage.setItem("divulgaifToken", authResult.token);
+      localStorage.setItem("divulgaifUser", JSON.stringify(authResult.user));
+
+      api.post(BASE_URL + "/api/v1/users", {
+        name: processedUserData.name,
+        email: processedUserData.email,
+        secondaryEmail: processedUserData.secondaryEmail,
+        ra: processedUserData.ra,
+        avatarUrl: processedUserData.photo,
+        userType: processedUserData.userType,
+      });
 
       window.history.replaceState({}, document.title, window.location.pathname);
 

@@ -19,7 +19,6 @@ const LoginPage = () => {
   const [errorResult, setErrorResult] = useState("");
   const { loginWithSuap, error: suapError, clearError } = useSuap();
 
-  // Properly use the useLogin hook
   const loginMutation = useLogin();
 
   const handleChange = (e) => {
