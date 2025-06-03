@@ -33,7 +33,7 @@ export const hasRole = (roleName) => {
 };
 
 export const isAuthenticated = () => {
-  return !!getAccessToken();
+  return !!getAccessToken() || !!localStorage.getItem("divulgaifToken");
 };
 
 export const logout = () => {
@@ -45,7 +45,9 @@ export const logout = () => {
 
   localStorage.removeItem("userRoles");
 
-  localStorage.removeItem("");
+  localStorage.removeItem("divulgaifToken");
+
+  localStorage.removeItem("divulgaifUser");
 
   window.location.href = "/login";
 };
