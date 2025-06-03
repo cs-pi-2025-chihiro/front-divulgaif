@@ -13,7 +13,7 @@ const useSuap = () => {
 
   const SUAP_CONFIG = {
     clientId: "1aJjdqqzsur8URjIDDnRyz5TMoVrOfA0MQQhYdCu",
-    redirectUri: `${window.location.origin}`,
+    redirectUri: `${window.location.origin}/pt/login`,
     scope: "identificacao email",
   };
 
@@ -25,6 +25,7 @@ const useSuap = () => {
     authUrl.searchParams.append("scope", SUAP_CONFIG.scope);
 
     window.location.href = authUrl.toString();
+    handleOAuthCallback();
   };
 
   const handleOAuthCallback = async () => {
