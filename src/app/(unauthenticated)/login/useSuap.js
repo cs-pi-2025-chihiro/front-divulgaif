@@ -11,7 +11,7 @@ const useSuap = () => {
 
   const SUAP_CONFIG = {
     clientId: "1aJjdqqzsur8URjIDDnRyz5TMoVrOfA0MQQhYdCu",
-    redirectUri: `${window.location.origin}/${i18n.language}`,
+    redirectUri: `${window.location.origin}`,
     scope: "identificacao email",
   };
 

@@ -2,6 +2,7 @@
   "common": {
     "login": "Entrar",
     "register": "Cadastrar",
+    "logout": "Sair",
     "email": "Email",
     "password": "Senha",
     "submit": "Enviar",
@@ -53,8 +54,8 @@
     "noAccount": "Não tem uma conta?",
     "createAccount": "Criar uma conta",
     "forgotPassword": "Esqueceu a senha?",
-    "usernamePlaceholder": "Digite seu usuário",
-    "usernameRequired": "Usuário é obrigatório",
+    "usernamePlaceholder": "Digite seu Email",
+    "usernameRequired": "Email é obrigatório",
     "passwordRequired": "Senha é obrigatória",
     "submit": "Acessar",
     "loading": "Carregando...",
