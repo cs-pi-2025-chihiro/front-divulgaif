@@ -71,7 +71,6 @@ const LoginPage = () => {
   };
 
   const handleSuapLogin = () => {
-    clearError();
     loginWithSuap();
   };
 

@@ -150,10 +150,20 @@ const useSuap = () => {
   };
 
   useEffect(() => {
+    console.log("useEffect triggered");
+    console.log("Current location.hash:", location.hash);
+    console.log(
+      "Hash includes access_token:",
+      location.hash.includes("access_token=")
+    );
+
     if (location.hash.includes("access_token=")) {
+      console.log("Calling handleOAuthCallback");
       handleOAuthCallback();
+    } else {
+      console.log("Not calling handleOAuthCallback - no access_token in hash");
     }
-  }, [location]);
+  }, [location.hash]);
 
   return {
     loginWithSuap,
