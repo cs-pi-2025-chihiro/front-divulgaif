@@ -85,14 +85,20 @@ const useSuap = () => {
       localStorage.setItem("divulgaifToken", authResult.token);
       localStorage.setItem("divulgaifUser", JSON.stringify(authResult.user));
 
-      api.post(BASE_URL + "/api/v1/users", {
-        name: processedUserData.name,
-        email: processedUserData.email,
-        secondaryEmail: processedUserData.secondaryEmail,
-        ra: processedUserData.ra,
-        avatarUrl: processedUserData.photo,
-        userType: processedUserData.userType,
-      });
+      try {
+        const response = await api.post(BASE_URL + "/api/v1/users", {
+          name: processedUserData.name,
+          email: processedUserData.email,
+          secondaryEmail: processedUserData.secondaryEmail,
+          ra: processedUserData.ra,
+          avatarUrl: processedUserData.photo,
+          userType: processedUserData.userType,
+        });
+
+        console.log("User created:", response.data);
+      } catch (error) {
+        console.error("Failed to create user:", error);
+      }
 
       window.history.replaceState({}, document.title, window.location.pathname);
 
