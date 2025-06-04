@@ -54,6 +54,10 @@ const useSuap = () => {
 
       await api.post("/api/v1/users", {
         name: suapUserData.nome,
+        cpf: null,
+        password: null,
+        bio: null,
+        phone: null,
         email: suapUserData.email,
         secondaryEmail: suapUserData.email_secundario,
         ra: suapUserData.identificacao,
