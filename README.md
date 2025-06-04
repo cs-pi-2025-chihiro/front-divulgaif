@@ -8,4 +8,4 @@ PO: Andrey Jodar
 
 ### Ele está acessível em:
 
-[text](https://divulgaif.com.br/)
+[https://divulgaif.com.br/](https://divulgaif.com.br/)

@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SearchInput } from "../../../components/input";
 import Button from "../../../components/button";
 import FiltrarBuscaModal from "../../../components/modal/filtrar-busca/filtrarBuscaModal";
-import FiltrarApresentacaoModal from "../../../components/modal/filtrar-apresentacao/filtrarApresentacaoModal";
 import "./page.css";
 import mockedValues from "../../../data/mockedValues.json";
-import WorkCard from "../../../components/card/work-card/index";
+import PaginatedResults from "../../../components/paginated-results/paginated-results";
+import FiltrarApresentacaoModal from "../../../components/modal/filtrar-apresentacao/filtrarApresentacaoModal";
+import useSuap from "../login/useSuap";
 
 const Home = () => {
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
   const [works, setWorks] = useState(mockedValues.trabalhos);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [isPresentationModalOpen, setIsPresentationModalOpen] = useState(false);
+  const { handleOAuthCallback } = useSuap();
   const [activeFilters, setActiveFilters] = useState({
     trabalho: {
       artigo: false,
@@ -26,33 +28,17 @@ const Home = () => {
       dataInicial: "",
       dataFinal: "",
     },
-    date: {
-      recent: true,
-      older: false,
-    },
-    pagelimit: {
-      twelve: false,
-      twentyfour: true,
-      thirtysix: false,
-    },
   });
-  const [isPresentationModalOpen, setIsPresentationModalOpen] = useState(false);
 
-  const handleEdit = (id) => {
-    console.log("Edit work with id:", id);
-  };
-
-  const handleView = (id) => {
-    console.log("View work with id:", id);
-  };
+  useEffect(() => {
+    handleOAuthCallback();
+  }, []);
 
   const handleApplyFilters = (filters) => {
-    console.log("Applied filters:", filters);
     setActiveFilters(filters);
 
     let filteredWorks = [...mockedValues.trabalhos];
 
-    // lógica para filtros de busca
     if (Object.values(filters.trabalho).some((value) => value)) {
       filteredWorks = filteredWorks.filter((work) => {
         return filters.trabalho[work.type.toLowerCase()];
@@ -91,21 +77,6 @@ const Home = () => {
       });
     }
 
-    // lógica para filtros de apresentação
-    if (filters.date.recent) {
-      filteredWorks.sort((a, b) => new Date(b.date) - new Date(a.date));
-    } else if (filters.date.older) {
-      filteredWorks.sort((a, b) => new Date(a.date) - new Date(b.date));
-    }
-
-    if (filters.pagelimit.twelve) {
-      filteredWorks = filteredWorks.slice(0, 12);
-    } else if (filters.pagelimit.twentyfour) {
-      filteredWorks = filteredWorks.slice(0, 24);
-    } else if (filters.pagelimit.thirtysix) {
-      filteredWorks = filteredWorks.slice(0, 36);
-    }
-    
     setWorks(filteredWorks);
   };
 
@@ -130,50 +101,23 @@ const Home = () => {
           >
             {t("common.filter")}
           </Button>
-          <Button variant="tertiary" size="md" className="filter-btn" onClick={() => setIsPresentationModalOpen(true)}>
+          <Button
+            variant="tertiary"
+            size="md"
+            className="filter-btn"
+            onClick={() => setIsPresentationModalOpen(true)}
+          >
             {t("filters.title")}
           </Button>
         </div>
         <div className="new-work-container">
           <Button variant="tertiary" size="lg" className="new-work-btn">
-            <span className="icon">📄</span> {t("home.newWork")}
+            <span className="icon">+</span> {t("home.newWork")}
           </Button>
         </div>
       </div>
-      <div className="ifexplore-results">
-        <div className="results-header">
-          <h2 className="results-title">
-            {works.length} {t("home.results")}
-          </h2>
-          <div className="pagination-controls">
-            <button
-              className="pagination-button prev"
-              aria-label={t("home.previous")}
-            >
-              &lt;
-            </button>
-            <button
-              className="pagination-button next"
-              aria-label={t("home.next")}
-            >
-              &gt;
-            </button>
-          </div>
-        </div>
-        <div className="work-cards-container">
-          {works.map((work) => (
-            <WorkCard
-              key={work.id}
-              title={work.title}
-              authors={work.authors}
-              description={work.description}
-              imageUrl={work.imageUrl}
-              onEdit={() => handleEdit(work.id)}
-              onView={() => handleView(work.id)}
-            />
-          ))}
-        </div>
-      </div>
+
+      <PaginatedResults works={works} />
 
       <FiltrarBuscaModal
         isOpen={isFilterModalOpen}

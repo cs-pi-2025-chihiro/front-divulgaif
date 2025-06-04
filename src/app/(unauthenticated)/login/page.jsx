@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import "./page.css";
 import { Input, PasswordInput } from "../../../components/input";
 import Button from "../../../components/button/index.js";
+import useSuap from "./useSuap.js";
+import { useLogin } from "./useLogin.js";
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
@@ -13,9 +15,11 @@ const LoginPage = () => {
     password: "",
   });
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const [successResult, setSuccessResult] = useState("");
   const [errorResult, setErrorResult] = useState("");
+  const { loginWithSuap, error: suapError, clearError } = useSuap();
+
+  const loginMutation = useLogin();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,23 +44,34 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    setIsLoading(true);
+
     setErrorResult("");
     setSuccessResult("");
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setSuccessResult(t("login.success", "Login realizado com sucesso!"));
-      setTimeout(() => {
-        console.log("Redirecting to dashboard...");
-        navigate(`/${i18n.language}`);
-      }, 1000);
-    } catch (error) {
-      setErrorResult(
-        t("login.error", "Falha no login. Verifique suas credenciais.")
-      );
-    } finally {
-      setIsLoading(false);
-    }
+
+    loginMutation.mutate(
+      {
+        identifier: formData.username,
+        password: formData.password,
+      },
+      {
+        onSuccess: (data) => {
+          setSuccessResult(t("login.success", "Login realizado com sucesso!"));
+          setTimeout(() => {
+            navigate(`/${i18n.language}`);
+          }, 1000);
+        },
+        onError: (error) => {
+          const errorMessage =
+            error.response?.data?.message ||
+            t("login.error", "Falha no login. Verifique suas credenciais.");
+          setErrorResult(errorMessage);
+        },
+      }
+    );
+  };
+
+  const handleSuapLogin = () => {
+    loginWithSuap();
   };
 
   return (
@@ -88,10 +103,7 @@ const LoginPage = () => {
                 value={formData.username}
                 onChange={handleChange}
                 className={errors.username ? "input-error" : ""}
-                placeholder={t(
-                  "login.usernamePlaceholder",
-                  "Digite seu usuário"
-                )}
+                placeholder={t("login.usernamePlaceholder", "Digite seu email")}
                 aria-invalid={!!errors.username}
                 aria-describedby={
                   errors.username ? "username-error" : undefined
@@ -135,11 +147,11 @@ const LoginPage = () => {
               type="submit"
               className="secondary"
               variant="secondary"
-              disabled={isLoading}
-              aria-busy={isLoading}
+              disabled={loginMutation.isPending}
+              aria-busy={loginMutation.isPending}
               ariaLabel={t("login.access", "Acessar o sistema")}
             >
-              {isLoading
+              {loginMutation.isPending
                 ? t("login.loading", "Carregando...")
                 : t("login.submit", "Acessar")}
             </Button>
@@ -149,7 +161,7 @@ const LoginPage = () => {
               </div>
             )}
             {errorResult && (
-              <div className="error-message" role="alert">
+              <div className="success-message" role="alert">
                 {errorResult}
               </div>
             )}
@@ -164,12 +176,15 @@ const LoginPage = () => {
                 type="button"
                 variant="secondary"
                 ariaLabel={t("login.loginWithSUAP", "Entrar com SUAP")}
-                onClick={() =>
-                  window.open("https://suap.ifpr.edu.br", "_blank")
-                }
+                onClick={handleSuapLogin}
               >
                 SUAP
               </Button>
+              {suapError && (
+                <div className="error-message" role="alert">
+                  {suapError}
+                </div>
+              )}
             </div>
           </form>
         </div>

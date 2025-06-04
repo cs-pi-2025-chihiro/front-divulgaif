@@ -14,6 +14,7 @@
   --bone: #cdcebe; /* Bone */
   --primary-green: #3c7148;
   --dark-green: #2a4e33;
+  --darker-green: #003a33;
   --light-green: #47895a;
   --lighter-green: #a3b18a;
   --form-bg: #324c3c;
@@ -26,6 +27,9 @@
   --accent-orange: #ff6b00;
   --primary-beige: #fdf5dc;
   --green-beige: #dad7cd;
+  --light-white: #e0e0e0;
+  --gray: #666;
+  --bottle-green: #679267;
 }
 
 #root {

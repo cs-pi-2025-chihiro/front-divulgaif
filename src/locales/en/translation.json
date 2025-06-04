@@ -2,13 +2,45 @@
   "common": {
     "login": "Login",
     "register": "Register",
+    "logout": "Logout",
     "email": "Email",
     "password": "Password",
     "submit": "Submit",
     "search": "Search",
     "filter": "Filter Search",
-    "language": "Language"
+    "language": "Language",
+    "loading": "Loading",
+    "goBack": "Go Back",
+    "back": "Back",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "notAvailable": "Not available",
+    "noDescription": "No description available"
   },
+  "errors": {
+    "workNotFound": "Work not found",
+    "unexpectedError": "An unexpected error occurred"
+  },
+  "workTypes": {
+    "article": "Article",
+    "dissertation": "Dissertation",
+    "research": "Research",
+    "finalPaper": "Final Paper",
+    "unknown": "Unknown type"
+  },
+  "workDetail": {
+    "authors": "Authors",
+    "advisor": "Advisor",
+    "publishDate": "Publication Date",
+    "abstract": "Abstract",
+    "keywords": "Keywords",
+    "additionalLinks": "Additional Links",
+    "link": "Link",
+    "download": "Download PDF",
+    "edit": "Edit"
+  },
+
   "home": {
     "welcome": "IF Xplore",
     "description": "Discover academic works from IFPR",
@@ -23,8 +55,8 @@
     "noAccount": "Don't have an account?",
     "createAccount": "Create an account",
     "forgotPassword": "Forgot password?",
-    "usernamePlaceholder": "Enter your username",
-    "usernameRequired": "Username is required",
+    "usernamePlaceholder": "Email",
+    "usernameRequired": "Email is required",
     "passwordRequired": "Password is required",
     "submit": "Access",
     "loading": "Loading...",
@@ -83,5 +115,14 @@
     "twentyfour": "24 works",
     "thirtysix": "36 works",
     "page-limit": "Page Limit"
+  },
+  "pagination": {
+    "results": "Results",
+    "page": "Page",
+    "of": "of",
+    "previousPage": "Go to previous page",
+    "nextPage": "Go to next page",
+    "currentPage": "Page {{current}} of {{total}}",
+    "resultsFound": "{{count}} results found"
   }
 }
