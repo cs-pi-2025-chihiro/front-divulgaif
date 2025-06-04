@@ -31,11 +31,6 @@ const Home = () => {
   });
 
   useEffect(() => {
-    const storedHash = sessionStorage.getItem("oauth_hash");
-    if (storedHash) {
-      hashToProcess = storedHash;
-      sessionStorage.removeItem("oauth_hash");
-    }
     handleOAuthCallback();
   }, []);
 

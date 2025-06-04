@@ -33,7 +33,7 @@ export const hasRole = (roleName) => {
 };
 
 export const isAuthenticated = () => {
-  return !!getAccessToken() || !!localStorage.getItem("divulgaifToken");
+  return !!getAccessToken() || !!localStorage.getItem("oauth_hash");
 };
 
 export const logout = () => {
