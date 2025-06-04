@@ -28,12 +28,15 @@ const useSuap = () => {
   };
 
   const handleOAuthCallback = async () => {
-    const accessToken = localStorage.getItem("oauth_hash");
+    const oauthHash = localStorage.getItem("oauth_hash");
 
-    if (!accessToken) {
+    if (!oauthHash) {
       console.log("No access token found");
       return false;
     }
+
+    const params = new URLSearchParams(oauthHash.substring(1));
+    const accessToken = params.get("access_token");
 
     try {
       const suapResponse = await fetch("https://suap.ifpr.edu.br/api/eu/", {
