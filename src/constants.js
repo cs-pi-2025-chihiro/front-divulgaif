@@ -1,4 +1,12 @@
-const isDev = process.env.NODE_ENV === "development";
-export const BASE_URL = isDev
-  ? "http://localhost:8080"
-  : "https://desenvolvimento.divulgaif.com.br";
+const env = process.env.NODE_ENV;
+
+export const BASE_URL = (() => {
+  switch (env) {
+    case 'development':
+      return 'http://localhost:8080';
+    case 'production':
+      return 'https://divulgaif.com.br';
+    default:
+      return 'https://desenvolvimento.divulgaif.com.br';
+  }
+})();
