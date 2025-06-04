@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import api from "../../../services/utils/api";
 import { BASE_URL } from "../../../constants";
+import axios from "axios";
 
 const useSuap = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -52,18 +53,22 @@ const useSuap = () => {
 
       const suapUserData = await suapResponse.json();
 
-      await api.post("/api/v1/users", {
-        name: suapUserData.nome,
-        cpf: null,
-        password: null,
-        bio: null,
-        phone: null,
-        email: suapUserData.email,
-        secondaryEmail: suapUserData.email_secundario,
-        ra: suapUserData.identificacao,
-        avatarUrl: suapUserData.foto,
-        userType: suapUserData.tipo_usuario,
-      });
+      await api.post(
+        "/api/v1/users",
+        {
+          name: suapUserData.nome,
+          email: suapUserData.email,
+          secondaryEmail: suapUserData.email_secundario,
+          ra: suapUserData.identificacao,
+          avatarUrl: suapUserData.foto,
+          userType: suapUserData.tipo_usuario,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       window.history.replaceState({}, document.title, window.location.pathname);
 
