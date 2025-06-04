@@ -45,9 +45,7 @@ export const logout = () => {
 
   localStorage.removeItem("userRoles");
 
-  localStorage.removeItem("divulgaifToken");
-
-  localStorage.removeItem("divulgaifUser");
+  localStorage.removeItem("oauth_hash");
 
   window.location.href = "/login";
 };
