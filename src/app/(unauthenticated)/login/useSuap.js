@@ -52,7 +52,7 @@ const useSuap = () => {
 
       const suapUserData = await suapResponse.json();
 
-      await api.post("/api/users", {
+      await api.post("/api/v1/users", {
         name: suapUserData.nome,
         email: suapUserData.email,
         secondaryEmail: suapUserData.email_secundario,
