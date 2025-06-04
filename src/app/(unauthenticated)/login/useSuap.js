@@ -27,8 +27,102 @@ const useSuap = () => {
     window.location.href = authUrl.toString();
   };
 
+  const handleOAuthCallback = async () => {
+    const accessToken = localStorage.getItem("oauth_hash");
+
+    if (!accessToken) {
+      console.log("No access token found");
+      return false;
+    }
+
+    try {
+      const suapResponse = await fetch("https://suap.ifpr.edu.br/api/eu/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json",
+        },
+      });
+
+      if (!suapResponse.ok) {
+        throw new Error(`SUAP API error: ${suapResponse.status}`);
+      }
+
+      const suapUserData = await suapResponse.json();
+      const processedUserData = {
+        ra: suapUserData.identificacao,
+        name: suapUserData.nome,
+        email: suapUserData.email,
+        secondaryEmail: suapUserData.email_secundario,
+        campus: suapUserData.campus,
+        userType: suapUserData.tipo_usuario,
+        fullName: suapUserData.nome_registro,
+        firstName: suapUserData.primeiro_nome,
+        lastName: suapUserData.ultimo_nome,
+        photo: suapUserData.foto,
+        role: determineRole(suapUserData),
+      };
+
+      const authResponse = await fetch("/api/auth/suap-login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userData: processedUserData,
+          suapToken: accessToken,
+          provider: "SUAP_IFPR",
+        }),
+      });
+
+      if (!authResponse.ok) {
+        throw new Error("Backend authentication failed");
+      }
+
+      const authResult = await authResponse.json();
+
+      localStorage.setItem("divulgaifToken", authResult.token);
+      localStorage.setItem("divulgaifUser", JSON.stringify(authResult.user));
+
+      try {
+        const response = await api.post(BASE_URL + "/api/v1/users", {
+          name: processedUserData.name,
+          email: processedUserData.email,
+          secondaryEmail: processedUserData.secondaryEmail,
+          ra: processedUserData.ra,
+          avatarUrl: processedUserData.photo,
+          userType: processedUserData.userType,
+        });
+
+        console.log("User created:", response.data);
+      } catch (error) {
+        console.error("Failed to create user:", error);
+      }
+
+      window.history.replaceState({}, document.title, window.location.pathname);
+
+      navigate(`/${i18n.language}`);
+
+      return true;
+    } catch (err) {
+      setError("Falha na autenticação com SUAP. Tente novamente.");
+      window.history.replaceState({}, document.title, window.location.pathname);
+
+      return false;
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const determineRole = (suapData) => {
+    if (suapData.tipo_usuario.includes("aluno")) {
+      return "STUDENT";
+    }
+    return suapData.tipo_usuario === "Aluno" ? "STUDENT" : "TEACHER";
+  };
+
   return {
     loginWithSuap,
+    handleOAuthCallback,
     isProcessing,
     error,
     clearError: () => setError(null),
