@@ -123,5 +123,14 @@
     "nextPage": "Ir para próxima página",
     "currentPage": "Página {{current}} de {{total}}",
     "resultsFound": "{{count}} resultados encontrados"
+  },
+  "new-work": {
+    "worktype": "Tipo do Trabalho",
+    "worktitle": "Título",
+    "workauthors": "Autores",
+    "workdescription": "Descrição",
+    "workabstract": "Resumo",
+    "publish": "Publicar",
+    "send": "Enviar"
   }
 }
