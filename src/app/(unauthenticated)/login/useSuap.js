@@ -7,7 +7,7 @@ const createSuapUser = async (suapUserData) => {
   await api.post(
     "/users",
     {
-      name: suapUserData.nome,
+      name: suapUserData.nome_registro,
       email: suapUserData.email,
       secondaryEmail: suapUserData.email_secundario,
       ra: suapUserData.identificacao,
@@ -28,7 +28,7 @@ const loginSuapUser = async (suapData, provider) => {
     {
       userData: {
         identificacao: suapData.identificacao,
-        nome: suapData.nome,
+        nome: suapData.nome_registro,
         email: suapData.email,
         tipoUsuario: suapData.tipo_usuario,
       },

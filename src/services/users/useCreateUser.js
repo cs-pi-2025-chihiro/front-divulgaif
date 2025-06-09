@@ -4,7 +4,7 @@ export const createSuapUser = async (suapUserData) => {
   await api.post(
     "/users",
     {
-      name: suapUserData.nome,
+      name: suapUserData.nome_registro,
       email: suapUserData.email,
       secondaryEmail: suapUserData.email_secundario,
       ra: suapUserData.identificacao,
