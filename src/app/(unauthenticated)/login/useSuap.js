@@ -2,14 +2,51 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import api from "../../../services/utils/api";
-import { BASE_URL } from "../../../constants";
-import axios from "axios";
+
+const createSuapUser = async (suapUserData) => {
+  await api.post(
+    "/users",
+    {
+      name: suapUserData.nome,
+      email: suapUserData.email,
+      secondaryEmail: suapUserData.email_secundario,
+      ra: suapUserData.identificacao,
+      avatarUrl: suapUserData.foto,
+      userType: suapUserData.tipo_usuario,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
+
+const loginSuapUser = async (suapData, provider) => {
+  const response = await api.post(
+    "/auth/oauth-login",
+    {
+      userData: {
+        identificacao: suapData.identificacao,
+        nome: suapData.nome,
+        email: suapData.email,
+        tipoUsuario: suapData.tipo_usuario,
+      },
+      provider,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
+};
 
 const useSuap = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const location = useLocation();
   const { i18n } = useTranslation();
 
   const SUAP_CONFIG = {
@@ -17,6 +54,8 @@ const useSuap = () => {
     redirectUri: `${window.location.origin}`,
     scope: "identificacao email",
   };
+
+  const SUAP_PROVIDER = "SUAP";
 
   const loginWithSuap = () => {
     const authUrl = new URL("https://suap.ifpr.edu.br/o/authorize/");
@@ -30,16 +69,18 @@ const useSuap = () => {
 
   const handleOAuthCallback = async () => {
     const oauthHash = localStorage.getItem("oauth_hash");
-
     if (!oauthHash) {
       console.log("No access token found");
       return false;
     }
 
-    const params = new URLSearchParams(oauthHash.substring(1));
-    const accessToken = params.get("access_token");
+    setIsProcessing(true);
+    setError(null);
 
     try {
+      const params = new URLSearchParams(oauthHash.substring(1));
+      const accessToken = params.get("access_token");
+
       const suapResponse = await fetch("https://suap.ifpr.edu.br/api/eu/", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -53,32 +94,51 @@ const useSuap = () => {
 
       const suapUserData = await suapResponse.json();
 
-      await api.post(
-        "/api/v1/users",
-        {
-          name: suapUserData.nome,
-          email: suapUserData.email,
-          secondaryEmail: suapUserData.email_secundario,
-          ra: suapUserData.identificacao,
-          avatarUrl: suapUserData.foto,
-          userType: suapUserData.tipo_usuario,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+      try {
+        const loginResult = await loginSuapUser(suapUserData, SUAP_PROVIDER);
+
+        if (loginResult) {
+          localStorage.setItem("accessToken", loginResult.accessToken);
+          localStorage.setItem("refreshToken", loginResult.refreshToken);
+
+          localStorage.removeItem("oauth_hash");
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+          );
+          navigate(`/${i18n.language}`);
+          return true;
         }
-      );
+      } catch (error) {
+        console.log("error: ", error);
+      }
 
+      try {
+        await createSuapUser(suapUserData);
+        console.log("User created successfully");
+      } catch (error) {
+        console.log("error:", error);
+      }
+
+      const loginResult = await loginSuapUser(suapUserData, SUAP_PROVIDER);
+
+      if (!loginResult) {
+        throw new Error("Failed to login after user creation");
+      }
+
+      localStorage.setItem("accessToken", loginResult.accessToken);
+      localStorage.setItem("refreshToken", loginResult.refreshToken);
+
+      localStorage.removeItem("oauth_hash");
       window.history.replaceState({}, document.title, window.location.pathname);
-
       navigate(`/${i18n.language}`);
-
       return true;
     } catch (err) {
+      console.error("OAuth callback error:", err);
       setError("Falha na autenticação com SUAP. Tente novamente.");
+      localStorage.removeItem("oauth_hash");
       window.history.replaceState({}, document.title, window.location.pathname);
-
       return false;
     } finally {
       setIsProcessing(false);
