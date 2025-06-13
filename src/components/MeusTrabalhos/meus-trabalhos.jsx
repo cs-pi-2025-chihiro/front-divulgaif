@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Filter, Plus, User, Menu, ChevronLeft, ChevronRight, Search, ChevronDown } from 'lucide-react';
-import './meus-trabalhos.css';
+import { Filter, Plus, ChevronLeft, ChevronRight, Search, ChevronDown } from 'lucide-react';
+import './MeusTrabalhos.css';
 
 const MeusTrabalhos = () => {
-  // Estados para filtros
   const [filtroTrabalhos, setFiltroTrabalhos] = useState('');
   const [showTrabalhosFilter, setShowTrabalhosFilter] = useState(false);
   const [paginaAtual, setPaginaAtual] = useState(1);
@@ -172,37 +171,17 @@ const MeusTrabalhos = () => {
   };
 
   const getFiltroTexto = () => {
-    if (!filtroTrabalhos) return 'Filtrar';
-    return `Filtros (${filtroTrabalhos})`;
+    if (!filtroTrabalhos) return 'Filtrar Trabalhos';
+    return filtroTrabalhos;
   };
 
   return (
     <div className="container">
-      {/* Header */}
-      <header className="header">
-        <div className="header-content">
-          <div className="header-flex">
-            <div className="header-left">
-              <Menu className="menu-icon" />
-              <h1 className="header-title">DivulgaIF</h1>
-            </div>
-            <div className="user-info">
-              <User className="user-icon" />
-              <span className="user-name">{usuarioLogado.nome}</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Main Content */}
       <main className="main-content">
-        {/* Título da Página */}
-        <h1 className="page-title">Meus Trabalhos</h1>
-
-        {/* Filtros e Ações */}
-        <div className="actions-container">
-          <div className="filters-container">
-            {/* Filtro de Trabalhos */}
+        {/* Filters Section */}
+        <div className="filters-section">
+          <div className="filters-wrapper">
             <div className="filter-dropdown">
               <button
                 onClick={(e) => {
@@ -211,26 +190,26 @@ const MeusTrabalhos = () => {
                 }}
                 className="filter-button"
               >
-                <Filter className="filter-icon" />
+                <Filter className="icon" />
                 <span>{getFiltroTexto()}</span>
-                <ChevronDown className={`chevron-icon ${showTrabalhosFilter ? 'rotated' : ''}`} />
+                <ChevronDown className={`icon chevron ${showTrabalhosFilter ? 'rotated' : ''}`} />
               </button>
               
               {showTrabalhosFilter && (
-                <div className="filter-dropdown-menu">
+                <div className="dropdown-menu">
                   <button
                     onClick={() => {
                       setFiltroTrabalhos('');
                       setShowTrabalhosFilter(false);
                     }}
-                    className="filter-option todos-trabalhos"
+                    className="dropdown-item all-items"
                   >
                     Todos os Trabalhos
                   </button>
                   
                   {todasOpcoesFiltro.map((grupo) => (
                     <div key={grupo.tipo}>
-                      <div className="filter-group-header">
+                      <div className="dropdown-group-header">
                         {grupo.label}
                       </div>
                       {grupo.opcoes.map((opcao) => (
@@ -240,7 +219,7 @@ const MeusTrabalhos = () => {
                             setFiltroTrabalhos(opcao);
                             setShowTrabalhosFilter(false);
                           }}
-                          className="filter-option"
+                          className="dropdown-item"
                         >
                           {opcao}
                         </button>
@@ -252,83 +231,75 @@ const MeusTrabalhos = () => {
             </div>
           </div>
 
-          {/* Botão Novo Trabalho */}
           <button
             onClick={handleNovoTrabalho}
-            className="novo-trabalho-button"
+            className="new-work-button"
           >
-            <Plus className="plus-icon" />
+            <Plus className="icon" />
             Novo Trabalho
           </button>
         </div>
 
-        {/* Contador de Resultados e Paginação */}
-        <div className="results-pagination-container">
-          <h2 className="results-count">
+        {/* Results and Pagination */}
+        <div className="results-pagination">
+          <h2 className="results-title">
             {trabalhosFiltrados.length} Resultado{trabalhosFiltrados.length !== 1 ? 's' : ''}
           </h2>
           
-          {/* Paginação */}
           {totalPaginas > 1 && (
-            <div className="pagination">
+            <div className="pagination-controls">
               <span className="pagination-info">
                 Página {paginaAtual} de {totalPaginas}
               </span>
               <button
                 onClick={handlePaginaAnterior}
                 disabled={paginaAtual === 1}
-                className={`pagination-button ${paginaAtual === 1 ? 'disabled' : ''}`}
+                className={`pagination-button ${paginaAtual === 1 ? 'disabled' : 'enabled'}`}
               >
-                <ChevronLeft className="pagination-icon" />
+                <ChevronLeft className="icon" />
               </button>
               <button
                 onClick={handleProximaPagina}
                 disabled={paginaAtual === totalPaginas}
-                className={`pagination-button ${paginaAtual === totalPaginas ? 'disabled' : ''}`}
+                className={`pagination-button ${paginaAtual === totalPaginas ? 'disabled' : 'enabled'}`}
               >
-                <ChevronRight className="pagination-icon" />
+                <ChevronRight className="icon" />
               </button>
             </div>
           )}
         </div>
 
-        {/* Grid de Trabalhos */}
+        {/* Trabalhos Grid */}
         {trabalhosPaginaAtual.length > 0 ? (
           <div className="trabalhos-grid">
             {trabalhosPaginaAtual.map((trabalho) => (
               <div key={trabalho.id} className="trabalho-card">
-                <div className="trabalho-content">
-                  {/* Área da Imagem */}
-                  <div className="trabalho-imagem">
-                    <span className="imagem-placeholder">Imagem</span>
+                <div className="card-content">
+                  <div className="image-placeholder">
+                    <span className="image-text">Imagem</span>
                   </div>
 
-                  {/* Status Badge */}
                   <div className="status-container">
                     <span className={`status-badge ${getStatusColor(trabalho.status)}`}>
                       {trabalho.status}
                     </span>
                   </div>
-
-                  {/* Título */}
-                  <h3 className="trabalho-titulo">
+                  
+                  <h3 className="trabalho-title">
                     {trabalho.titulo}
                   </h3>
                   
-                  {/* Descrição */}
-                  <p className="trabalho-descricao">
+                  <p className="trabalho-description">
                     {trabalho.descricao}
                   </p>
 
-                  {/* Metadados */}
-                  <div className="trabalho-metadados">
+                  <div className="trabalho-meta">
                     <div><strong>Autores:</strong> {trabalho.autores.map(a => a.nome).join(', ')}</div>
                     <div><strong>Data:</strong> {trabalho.data}</div>
                   </div>
 
-                  {/* Tags */}
                   <div className="tags-container">
-                    <span className="tag categoria-tag">
+                    <span className="categoria-tag">
                       {trabalho.categoria}
                     </span>
                     {trabalho.tags.slice(0, 2).map((tag, index) => (
@@ -347,7 +318,6 @@ const MeusTrabalhos = () => {
             ))}
           </div>
         ) : (
-          // Estado Vazio
           <div className="empty-state">
             <div className="empty-icon">
               <Search className="search-icon" />
@@ -362,56 +332,12 @@ const MeusTrabalhos = () => {
               onClick={handleNovoTrabalho}
               className="empty-action-button"
             >
-              <Plus className="plus-icon" />
+              <Plus className="icon" />
               {filtroTrabalhos ? 'Criar Novo Trabalho' : 'Criar Primeiro Trabalho'}
             </button>
           </div>
         )}
       </main>
-
-      {/* Footer */}
-      <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-main">
-            <div className="footer-brand">
-              <div className="footer-logo">
-                <div className="logo-grid">
-                  <div className="logo-square red"></div>
-                  <div className="logo-square yellow"></div>
-                  <div className="logo-square green"></div>
-                  <div className="logo-square blue"></div>
-                </div>
-              </div>
-              <div className="footer-institute">
-                <div className="institute-line">INSTITUTO FEDERAL</div>
-                <div className="institute-line">do Paraná</div>
-                <div className="institute-line">Campus Paranavaí</div>
-              </div>
-              <div className="footer-title">DivulgaIF</div>
-            </div>
-          </div>
-          
-          <div className="footer-bottom">
-            <div className="footer-links">
-              <span>SIGAA</span>
-              <span className="separator">|</span>
-              <span>Cronos</span>
-              <span className="separator">|</span>
-              <span>SUAP</span>
-              <span className="separator">|</span>
-              <span>Moodle</span>
-            </div>
-            <div className="footer-links">
-              <span>Acessibilidade e Ajuda</span>
-              <span className="separator">|</span>
-              <span>Sobre o Projeto</span>
-            </div>
-            <div className="footer-copyright">
-              © DivulgaIF | Todos os Direitos Reservados
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
