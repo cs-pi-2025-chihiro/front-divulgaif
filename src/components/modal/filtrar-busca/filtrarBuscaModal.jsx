@@ -234,17 +234,17 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
             <div className="tag-group">
               <Button
                 className={`tag-button ${
-                  localFilters.order === "recent" ? "selected" : ""
+                  localFilters.order === "asc" ? "selected" : ""
                 }`}
-                onClick={() => handleRadioChange("order", "recent")}
+                onClick={() => handleRadioChange("order", "desc")}
               >
                 {t("filters.recent")}
               </Button>
               <Button
                 className={`tag-button ${
-                  localFilters.order === "oldest" ? "selected" : ""
+                  localFilters.order === "desc" ? "selected" : ""
                 }`}
-                onClick={() => handleRadioChange("order", "oldest")}
+                onClick={() => handleRadioChange("order", "asc")}
               >
                 {t("filters.older")}
               </Button>

@@ -68,15 +68,16 @@ const useSuap = () => {
   };
 
   const handleOAuthCallback = async () => {
-    const oauthHash = localStorage.getItem("oauth_hash");
+    try {
+      const oauthHash = localStorage.getItem("oauth_hash");
 
-    if (!oauthHash) {
-      console.log("No access token found");
-      return false;
-    }
+      if (!oauthHash) {
+        console.log("No access token found");
+        return false;
+      }
 
-    const params = new URLSearchParams(oauthHash.substring(1));
-    const accessToken = params.get("access_token");
+      const params = new URLSearchParams(oauthHash.substring(1));
+      const accessToken = params.get("access_token");
 
       const suapResponse = await fetch(ENDPOINTS.SUAP.INFO, {
         headers: {
