@@ -2,8 +2,47 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import api from "../../../services/utils/api";
-import { BASE_URL } from "../../../constants";
-import axios from "axios";
+import { ENDPOINTS, endpoints } from "../../../enums/endpoints";
+
+const createSuapUser = async (suapUserData) => {
+  await api.post(
+    ENDPOINTS.USERS.CREATE,
+    {
+      name: suapUserData.nome_registro,
+      email: suapUserData.email,
+      secondaryEmail: suapUserData.email_secundario,
+      ra: suapUserData.identificacao,
+      avatarUrl: suapUserData.foto,
+      userType: suapUserData.tipo_usuario,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
+
+const loginSuapUser = async (suapData, provider) => {
+  const response = await api.post(
+    "/auth/oauth-login",
+    {
+      userData: {
+        identificacao: suapData.identificacao,
+        nome: suapData.nome_registro,
+        email: suapData.email,
+        tipoUsuario: suapData.tipo_usuario,
+      },
+      provider,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
+};
 
 const useSuap = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -19,7 +58,7 @@ const useSuap = () => {
   };
 
   const loginWithSuap = () => {
-    const authUrl = new URL("https://suap.ifpr.edu.br/o/authorize/");
+    const authUrl = new URL(ENDPOINTS.SUAP.OAUTH);
     authUrl.searchParams.append("response_type", "token");
     authUrl.searchParams.append("client_id", SUAP_CONFIG.clientId);
     authUrl.searchParams.append("redirect_uri", SUAP_CONFIG.redirectUri);
@@ -39,8 +78,7 @@ const useSuap = () => {
     const params = new URLSearchParams(oauthHash.substring(1));
     const accessToken = params.get("access_token");
 
-    try {
-      const suapResponse = await fetch("https://suap.ifpr.edu.br/api/eu/", {
+      const suapResponse = await fetch(ENDPOINTS.SUAP.INFO, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           Accept: "application/json",

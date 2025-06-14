@@ -1,37 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "../button";
 import WorkCard from "../card/work-card";
 import "./paginated-results.css";
 import { useTranslation } from "react-i18next";
+import { PAGE_SIZE } from "../../constants";
 
-const PaginatedResults = ({ works, isLoading = false }) => {
-  const [currentPage, setCurrentPage] = useState(0);
+const PaginatedResults = ({
+  content = [],
+  totalPages,
+  isLoading = false,
+  currentPage,
+  setCurrentPage,
+  totalElements,
+  refetch,
+}) => {
   const { t } = useTranslation();
 
-  const firstPageSize = 8;
-
-  const totalPages = works.length <= firstPageSize ? 1 : 2;
+  const pageSize = PAGE_SIZE;
 
   const goToPreviousPage = () => {
     if (currentPage > 0) {
-      setCurrentPage(0);
+      setCurrentPage(currentPage - 1);
+      refetch();
     }
   };
 
   const goToNextPage = () => {
-    if (currentPage === 0 && works.length > firstPageSize) {
-      setCurrentPage(1);
-    }
+    setCurrentPage(currentPage + 1);
+    refetch();
   };
-
-  const visibleWorks =
-    currentPage === 0
-      ? works.slice(0, firstPageSize)
-      : works.slice(firstPageSize);
-
-  const handleEdit = (id) => {};
-
-  const handleView = (id) => {};
 
   const LoadingCard = () => (
     <div className="loading-card">
@@ -50,14 +47,14 @@ const PaginatedResults = ({ works, isLoading = false }) => {
       <div className="results-header">
         <h2
           className="results-title"
-          aria-label={t("pagination.resultsFound", { count: works.length })}
+          aria-label={t("pagination.resultsFound", { count: totalElements })}
         >
-          {works.length} {t("pagination.results")}
+          {totalElements} {t("pagination.results")}
         </h2>
         <div className="pagination-controls">
           <Button
             variant="outline"
-            size="sm"
+            pageSize="sm"
             typeFormat="rounded"
             className="pagination-button prev"
             onClick={goToPreviousPage}
@@ -78,11 +75,11 @@ const PaginatedResults = ({ works, isLoading = false }) => {
           </span>
           <Button
             variant="outline"
-            size="sm"
+            pageSize="sm"
             typeFormat="rounded"
             className="pagination-button next"
             onClick={goToNextPage}
-            disabled={currentPage === 1 || works.length <= firstPageSize}
+            disabled={currentPage >= totalPages - 1}
             aria-label={t("pagination.nextPage")}
           >
             &gt;
@@ -91,10 +88,10 @@ const PaginatedResults = ({ works, isLoading = false }) => {
       </div>
       <div className="work-cards-container">
         {isLoading
-          ? Array.from({ length: firstPageSize }).map((_, index) => (
+          ? Array.from({ length: pageSize }).map((_, index) => (
               <LoadingCard key={`loading-${index}`} />
             ))
-          : visibleWorks.map((work) => (
+          : content.map((work) => (
               <WorkCard
                 key={work.id}
                 id={work.id}
@@ -104,8 +101,6 @@ const PaginatedResults = ({ works, isLoading = false }) => {
                 labels={work.labels}
                 date={work.date}
                 imageUrl={work.imageUrl}
-                onEdit={() => handleEdit(work.id)}
-                onView={() => handleView(work.id)}
               />
             ))}
       </div>
