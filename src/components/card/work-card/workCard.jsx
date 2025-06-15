@@ -37,7 +37,7 @@ const WorkCard = ({
         {Array.isArray(labels) &&
           labels.slice(0, 4).map((label, idx) => (
             <span className="work-card-label" key={idx}>
-              {label}
+              {label.name}
             </span>
           ))}
       </div>

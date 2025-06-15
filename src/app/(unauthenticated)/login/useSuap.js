@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import api from "../../../services/utils/api";
+import { ENDPOINTS, endpoints } from "../../../enums/endpoints";
 
 const createSuapUser = async (suapUserData) => {
   await api.post(
-    "/users",
+    ENDPOINTS.USERS.CREATE,
     {
       name: suapUserData.nome_registro,
       email: suapUserData.email,
@@ -58,7 +59,7 @@ const useSuap = () => {
   const SUAP_PROVIDER = "SUAP";
 
   const loginWithSuap = () => {
-    const authUrl = new URL("https://suap.ifpr.edu.br/o/authorize/");
+    const authUrl = new URL(ENDPOINTS.SUAP.OAUTH);
     authUrl.searchParams.append("response_type", "token");
     authUrl.searchParams.append("client_id", SUAP_CONFIG.clientId);
     authUrl.searchParams.append("redirect_uri", SUAP_CONFIG.redirectUri);
@@ -68,20 +69,17 @@ const useSuap = () => {
   };
 
   const handleOAuthCallback = async () => {
-    const oauthHash = localStorage.getItem("oauth_hash");
-    if (!oauthHash) {
-      console.log("No access token found");
-      return false;
-    }
-
-    setIsProcessing(true);
-    setError(null);
-
     try {
+      const oauthHash = localStorage.getItem("oauth_hash");
+
+      if (!oauthHash) {
+        return false;
+      }
+
       const params = new URLSearchParams(oauthHash.substring(1));
       const accessToken = params.get("access_token");
 
-      const suapResponse = await fetch("https://suap.ifpr.edu.br/api/eu/", {
+      const suapResponse = await fetch(ENDPOINTS.SUAP.INFO, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           Accept: "application/json",
