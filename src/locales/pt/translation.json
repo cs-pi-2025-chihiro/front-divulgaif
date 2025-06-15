@@ -30,7 +30,8 @@
   },
   "errors": {
     "workNotFound": "Trabalho não encontrado",
-    "unexpectedError": "Ocorreu um erro inesperado"
+    "unexpectedError": "Ocorreu um erro inesperado",
+    "NoWorksFound": "Nenhum trabalho encontrado."
   },
   "workTypes": {
     "article": "Artigo",

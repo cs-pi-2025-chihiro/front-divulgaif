@@ -7,12 +7,36 @@ export const listWorks = async (page = 0, size = 8, filters = {}) => {
     size: size.toString(),
   });
 
-  if (filters.workTypes) {
-    params.append("workTypes", filters.workTypes);
+  if (filters.search) {
+    params.append("title", filters.search);
   }
 
-  if (filters.keywords) {
-    params.append("keywords", filters.keywords);
+  if (filters.workTypes) {
+    const workTypesArray = filters.workTypes.split(",");
+    workTypesArray.forEach((workType) => {
+      params.append("workType.name", workType);
+    });
+  }
+
+  if (filters.order) {
+    params.append(
+      "sort",
+      `createdAt,${filters.order === "desc" ? "desc" : "asc"}`
+    ); // TODO: Mudar isso quando for implementado a submissão pra SUBMITEDAT
+  }
+
+  if (filters.startDate) {
+    params.append("createdAt.goe", `${filters.startDate}T00:00:00`);
+  }
+
+  if (filters.endDate) {
+    params.append("createdAt.loe", `${filters.endDate}T23:59:59`);
+  }
+
+  if (filters.labels) {
+    for (const label of filters.labels) {
+      params.append("labels.name", label);
+    }
   }
 
   if (filters.startDate) {
@@ -22,15 +46,6 @@ export const listWorks = async (page = 0, size = 8, filters = {}) => {
   if (filters.endDate) {
     params.append("endDate", filters.endDate);
   }
-
-  Object.entries(filters).forEach(([key, value]) => {
-    if (
-      value &&
-      !["workTypes", "keywords", "startDate", "endDate"].includes(key)
-    ) {
-      params.append(key, value);
-    }
-  });
 
   const result = await api.get(ENDPOINTS.WORKS.LIST + "?" + params, {
     headers: {

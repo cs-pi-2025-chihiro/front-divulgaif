@@ -22,7 +22,8 @@
   },
   "errors": {
     "workNotFound": "Work not found",
-    "unexpectedError": "An unexpected error occurred"
+    "unexpectedError": "An unexpected error occurred",
+    "NoWorksFound": "No works Found with these filters."
   },
   "workTypes": {
     "article": "Article",

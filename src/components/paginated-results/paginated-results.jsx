@@ -44,66 +44,74 @@ const PaginatedResults = ({
 
   return (
     <div className="ifexplore-results">
-      <div className="results-header">
-        <h2
-          className="results-title"
-          aria-label={t("pagination.resultsFound", { count: totalElements })}
-        >
-          {totalElements} {t("pagination.results")}
-        </h2>
-        <div className="pagination-controls">
-          <Button
-            variant="outline"
-            pageSize="sm"
-            typeFormat="rounded"
-            className="pagination-button prev"
-            onClick={goToPreviousPage}
-            disabled={currentPage === 0}
-            aria-label={t("pagination.previousPage")}
-          >
-            &lt;
-          </Button>
-          <span
-            className="pagination-info"
-            aria-label={t("pagination.currentPage", {
-              current: currentPage + 1,
-              total: totalPages,
+      <>
+        <div className="results-header">
+          <h2
+            className="results-title"
+            aria-label={t("pagination.resultsFound", {
+              count: totalElements,
             })}
           >
-            {t("pagination.page")} {currentPage + 1} {t("pagination.of")}{" "}
-            {totalPages}
-          </span>
-          <Button
-            variant="outline"
-            pageSize="sm"
-            typeFormat="rounded"
-            className="pagination-button next"
-            onClick={goToNextPage}
-            disabled={currentPage >= totalPages - 1}
-            aria-label={t("pagination.nextPage")}
-          >
-            &gt;
-          </Button>
+            {totalElements} {t("pagination.results")}
+          </h2>
+          <div className="pagination-controls">
+            <Button
+              variant="outline"
+              pageSize="sm"
+              typeFormat="rounded"
+              className="pagination-button prev"
+              onClick={goToPreviousPage}
+              disabled={currentPage === 0}
+              aria-label={t("pagination.previousPage")}
+            >
+              &lt;
+            </Button>
+            <span
+              className="pagination-info"
+              aria-label={t("pagination.currentPage", {
+                current: currentPage + 1,
+                total: totalPages,
+              })}
+            >
+              {t("pagination.page")} {currentPage + 1} {t("pagination.of")}{" "}
+              {totalPages}
+            </span>
+            <Button
+              variant="outline"
+              pageSize="sm"
+              typeFormat="rounded"
+              className="pagination-button next"
+              onClick={goToNextPage}
+              disabled={currentPage >= totalPages - 1}
+              aria-label={t("pagination.nextPage")}
+            >
+              &gt;
+            </Button>
+          </div>
         </div>
-      </div>
-      <div className="work-cards-container">
-        {isLoading
-          ? Array.from({ length: pageSize }).map((_, index) => (
-              <LoadingCard key={`loading-${index}`} />
-            ))
-          : content.map((work) => (
-              <WorkCard
-                key={work.id}
-                id={work.id}
-                title={work.title}
-                authors={work.authors}
-                description={work.description}
-                labels={work.labels}
-                date={work.date}
-                imageUrl={work.imageUrl}
-              />
-            ))}
-      </div>
+        {content.length > 0 ? (
+          <div className="work-cards-container">
+            {isLoading
+              ? Array.from({ length: pageSize }).map((_, index) => (
+                  <LoadingCard key={`loading-${index}`} />
+                ))
+              : content.map((work) => (
+                  <WorkCard
+                    key={work.id}
+                    id={work.id}
+                    title={work.title}
+                    authors={work.authors}
+                    description={work.description}
+                    labels={work.labels}
+                    date={work.date}
+                    imageUrl={work.imageUrl}
+                  />
+                ))}
+          </div>
+        ) : (
+          <div>{t("errors.NoWorksFound")}</div>
+        )}
+      </>
     </div>
   );
 };

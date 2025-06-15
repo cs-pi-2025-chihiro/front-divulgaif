@@ -72,7 +72,6 @@ const useSuap = () => {
       const oauthHash = localStorage.getItem("oauth_hash");
 
       if (!oauthHash) {
-        console.log("No access token found");
         return false;
       }
 

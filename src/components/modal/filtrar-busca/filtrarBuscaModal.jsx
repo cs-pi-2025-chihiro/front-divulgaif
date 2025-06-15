@@ -11,10 +11,10 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
   const [localFilters, setLocalFilters] = useState({
     workType: {
       article: false,
-      research: false,
+      search: false,
       dissertation: false,
       extension: false,
-      finalPaper: false,
+      final_thesis: false,
     },
     period: {
       startDate: "",
@@ -88,10 +88,10 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
     const clearedFilters = {
       workType: {
         article: false,
-        research: false,
+        search: false,
         dissertation: false,
         extension: false,
-        finalPaper: false,
+        final_thesis: false,
       },
       period: {
         startDate: "",
@@ -131,9 +131,9 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
               </Button>
               <Button
                 className={`tag-button ${
-                  localFilters.workType.research ? "selected" : ""
+                  localFilters.workType.search ? "selected" : ""
                 }`}
-                onClick={() => handleCheckboxChange("workType", "research")}
+                onClick={() => handleCheckboxChange("workType", "search")}
               >
                 {t("workTypes.research")}
               </Button>
@@ -155,9 +155,9 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
               </Button>
               <Button
                 className={`tag-button ${
-                  localFilters.workType.finalPaper ? "selected" : ""
+                  localFilters.workType.final_thesis ? "selected" : ""
                 }`}
-                onClick={() => handleCheckboxChange("workType", "finalPaper")}
+                onClick={() => handleCheckboxChange("workType", "final_thesis")}
               >
                 {t("workTypes.finalPaper")}
               </Button>
@@ -234,7 +234,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
             <div className="tag-group">
               <Button
                 className={`tag-button ${
-                  localFilters.order === "asc" ? "selected" : ""
+                  localFilters.order === "desc" ? "selected" : ""
                 }`}
                 onClick={() => handleRadioChange("order", "desc")}
               >
@@ -242,7 +242,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
               </Button>
               <Button
                 className={`tag-button ${
-                  localFilters.order === "desc" ? "selected" : ""
+                  localFilters.order === "asc" ? "selected" : ""
                 }`}
                 onClick={() => handleRadioChange("order", "asc")}
               >
@@ -293,7 +293,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
             <Button
               variant="secondary"
               size="md"
-              className="modal-btn"
+              className="btn-secondary-btn"
               onClick={handleClearFilters}
             >
               {t("common.clearFilters") || "Clear Filters"}
@@ -301,7 +301,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
             <Button className="btn-secondary" onClick={onClose}>
               {t("common.back")}
             </Button>
-            <Button className="btn-primary" onClick={handleApply}>
+            <Button className="btn-primary-modal" onClick={handleApply}>
               {t("filters.apply")}
             </Button>
           </div>

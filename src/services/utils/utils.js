@@ -1,5 +1,4 @@
 export function mapPaginationValues(value, setSize) {
-  console.log("value", value);
   switch (value) {
     case "eight":
       setSize(8);

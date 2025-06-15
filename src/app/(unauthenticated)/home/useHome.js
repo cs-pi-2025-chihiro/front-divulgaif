@@ -3,13 +3,18 @@ import { listWorks } from "../../../services/works/list";
 import { atom, useAtom } from "jotai";
 import { ENDPOINTS } from "../../../enums/endpoints";
 import { PAGE_SIZE } from "../../../constants";
+import { useDebounce } from "@uidotdev/usehooks";
 
 export const pageAtom = atom(0);
 export const sizeAtom = atom(PAGE_SIZE);
+export const searchAtom = atom("");
 
 export const useHome = (appliedFilters = {}) => {
   const [page] = useAtom(pageAtom);
   const [size] = useAtom(sizeAtom);
+  const [search] = useAtom(searchAtom);
+
+  const debouncedSearch = useDebounce(search, 500);
 
   const fetchWorks = async ({ currentPage, size, filters }) => {
     try {
@@ -18,6 +23,11 @@ export const useHome = (appliedFilters = {}) => {
     } catch (err) {
       throw err;
     }
+  };
+
+  const combinedFilters = {
+    ...appliedFilters,
+    ...(debouncedSearch?.trim() && { search: debouncedSearch.trim() }),
   };
 
   const {
@@ -30,9 +40,15 @@ export const useHome = (appliedFilters = {}) => {
       fetchWorks({
         currentPage: page,
         size,
-        filters: appliedFilters,
+        filters: combinedFilters,
       }),
-    queryKey: [ENDPOINTS.WORKS.LIST, page, size, appliedFilters],
+    queryKey: [
+      ENDPOINTS.WORKS.LIST,
+      page,
+      size,
+      debouncedSearch,
+      appliedFilters,
+    ],
     keepPreviousData: true,
     refetchOnMount: true,
   });
