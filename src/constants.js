@@ -5,8 +5,9 @@ export const BASE_URL = (() => {
       return "http://localhost:8080";
     case "production":
       return "https://divulgaif.com.br";
+    case "staging":
+      return "https://desenvolvimento.divulgaif.com.br";
     default:
       return "https://desenvolvimento.divulgaif.com.br";
   }
 })();
-export const PAGE_SIZE = 8;
