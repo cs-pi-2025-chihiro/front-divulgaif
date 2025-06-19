@@ -185,7 +185,7 @@
 }
 
 .pagination-button:hover {
-  background-color: #2a362a;
+  background-color: var(--gray);
 }
 
 .work-cards-container {

@@ -2,17 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 import api from "../../../services/utils/api";
 
 const loginUser = async (credentials) => {
-  const response = await api.post(
-    "/api/v1/auth/login",
-
-    credentials,
-
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const response = await api.post("/auth/login", credentials, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   return response.data;
 };
