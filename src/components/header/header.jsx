@@ -31,7 +31,7 @@ const Header = () => {
         {authenticated ? (
           <Button
             type="button"
-            className="secondary"
+            className="primary"
             variant="secondary"
             ariaLabel={t("common.logout")}
             children={t("common.logout")}
@@ -40,7 +40,7 @@ const Header = () => {
         ) : (
           <Button
             type="button"
-            className="secondary"
+            className="primary"
             variant="secondary"
             ariaLabel={t("common.login")}
             children={t("common.login")}

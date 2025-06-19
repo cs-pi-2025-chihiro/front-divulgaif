@@ -16,12 +16,7 @@ const Footer = () => {
           <span className="footer-title">DivulgaIF</span>
         </div>
         <div className="footer-links">
-          <p>
-            <a href="https://sigaa.ifpr.edu.br/sigaa/verTelaLogin.do" target="_blank" rel="sigaa">SIGAA</a> | 
-            <a href="https://cronos.paranavai.ifpr.edu.br/index.jsf#" target="_blank" rel="cronos">Cronos</a> | 
-            <a href="https://suap.ifpr.edu.br/accounts/login/?next=/" target="_blank" rel="suap">SUAP</a> | 
-            <a href="https://ava.ifpr.edu.br/" target="_blank" rel="moodle">Moodle</a>
-          </p>
+          <p>SIGAA | Cronos | SUAP | Moodle</p>
           <p>{t('footer.help')} | {t('footer.about')}</p>
           <p>© DivulgaIF | {t('footer.rights')}</p>
         </div>

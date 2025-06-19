@@ -67,18 +67,6 @@
   margin: 0.25rem 0;
 }
 
-.footer-links a {
-  color: white;
-  text-decoration: none;
-  padding: 0 0.25rem;
-  transition: color 0.3s ease, text-decoration 0.3s ease;
-}
-
-.footer-links a:hover {
-  color: rgb(199, 199, 172);
-  text-decoration: underline;
-}
-
 .github-icon a {
   text-decoration: none;
   color: inherit;
