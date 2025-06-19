@@ -11,3 +11,4 @@ export const BASE_URL = (() => {
       return "https://desenvolvimento.divulgaif.com.br";
   }
 })();
+export const PAGE_SIZE = 8;
