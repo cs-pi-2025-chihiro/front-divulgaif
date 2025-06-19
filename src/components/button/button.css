@@ -19,17 +19,30 @@
 
 .btn:focus-visible {
   outline: none;
+  ring: 1px solid var(--accent);
 }
 
 .btn-default {
-  background: transparent;
-  color: black;
+  background: linear-gradient(to right, var(--primary), var(--background));
+  color: var(--text-light);
+}
+
+.btn-default:hover {
+  background: linear-gradient(
+    to right,
+    rgba(75, 100, 85, 0.9),
+    rgba(46, 59, 51, 0.9)
+  );
 }
 
 .btn-primary {
-  color: var(--text-light);
   background-color: var(--primary);
+  color: var(--text-light);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  background-color: rgba(75, 100, 85, 0.8);
 }
 
 .btn-secondary {

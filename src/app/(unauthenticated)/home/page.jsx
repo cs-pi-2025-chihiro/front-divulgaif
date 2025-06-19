@@ -1,88 +1,84 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SearchInput } from "../../../components/input";
 import Button from "../../../components/button";
 import FiltrarBuscaModal from "../../../components/modal/filtrar-busca/filtrarBuscaModal";
 import "./page.css";
+import mockedValues from "../../../data/mockedValues.json";
 import PaginatedResults from "../../../components/paginated-results/paginated-results";
+import FiltrarApresentacaoModal from "../../../components/modal/filtrar-apresentacao/filtrarApresentacaoModal";
 import useSuap from "../login/useSuap";
-import { pageAtom, searchAtom, sizeAtom, useHome } from "./useHome";
-import { useAtom } from "jotai";
-import { mapPaginationValues } from "../../../services/utils/utils";
 
 const Home = () => {
-  const { t } = useTranslation();
-  const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useAtom(pageAtom);
-  const [currentSize, setCurrentSize] = useAtom(sizeAtom);
-  const [search, setSearch] = useAtom(searchAtom);
+  const { t, i18n } = useTranslation();
+  const [works, setWorks] = useState(mockedValues.trabalhos);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [appliedFilters, setAppliedFilters] = useState({});
+  const [isPresentationModalOpen, setIsPresentationModalOpen] = useState(false);
   const { handleOAuthCallback } = useSuap();
-  const { works, totalWorks, totalPages, isLoading, refetch } =
-    useHome(appliedFilters);
+  const [activeFilters, setActiveFilters] = useState({
+    trabalho: {
+      artigo: false,
+      dissertacao: false,
+      pesquisa: false,
+      tcc: false,
+    },
+    palavrasChaves: "",
+    periodo: {
+      dataInicial: "",
+      dataFinal: "",
+    },
+  });
 
   useEffect(() => {
     handleOAuthCallback();
   }, []);
 
-  const handleSearchChange = (newSearch) => {
-    setSearch(newSearch);
-    if (newSearch !== search) {
-      setCurrentPage(0);
-    }
-  };
-
   const handleApplyFilters = (filters) => {
-    const backendFilters = {};
+    setActiveFilters(filters);
 
-    if (
-      filters.workType &&
-      Object.values(filters.workType).some((value) => value)
-    ) {
-      const selectedTypes = Object.entries(filters.workType)
-        .filter(([key, value]) => value)
-        .map(([key]) => key.toUpperCase());
-      if (selectedTypes.length > 0) {
-        backendFilters.workTypes = selectedTypes.join(",");
-      }
+    let filteredWorks = [...mockedValues.trabalhos];
+
+    if (Object.values(filters.trabalho).some((value) => value)) {
+      filteredWorks = filteredWorks.filter((work) => {
+        return filters.trabalho[work.type.toLowerCase()];
+      });
     }
 
-    if (filters.labels) {
-      backendFilters.labels = filters.labels;
+    if (filters.palavrasChaves.trim()) {
+      const keywords = filters.palavrasChaves
+        .split(";")
+        .map((k) => k.trim().toLowerCase());
+      filteredWorks = filteredWorks.filter((work) => {
+        return keywords.some(
+          (keyword) =>
+            work.title.toLowerCase().includes(keyword) ||
+            work.description.toLowerCase().includes(keyword)
+        );
+      });
     }
 
-    if (filters.period) {
-      if (filters.period.startDate) {
-        backendFilters.startDate = filters.period.startDate;
-      }
-      if (filters.period.endDate) {
-        backendFilters.endDate = filters.period.endDate;
-      }
+    if (filters.periodo.dataInicial || filters.periodo.dataFinal) {
+      filteredWorks = filteredWorks.filter((work) => {
+        const workDate = new Date(work.date);
+        let isValid = true;
+
+        if (filters.periodo.dataInicial) {
+          const startDate = new Date(filters.periodo.dataInicial);
+          isValid = isValid && workDate >= startDate;
+        }
+
+        if (filters.periodo.dataFinal) {
+          const endDate = new Date(filters.periodo.dataFinal);
+          isValid = isValid && workDate <= endDate;
+        }
+
+        return isValid;
+      });
     }
 
-    if (filters.pagination) {
-      mapPaginationValues(filters.pagination, setCurrentSize);
-    }
-
-    if (filters.order) {
-      backendFilters.order = filters.order;
-    }
-
-    setCurrentPage(0);
-    setAppliedFilters(backendFilters);
+    setWorks(filteredWorks);
   };
-
-  if (error) {
-    return (
-      <div className="ifexplore-container">
-        <div className="error-container">
-          <p>{error}</p>
-          <div>{t("common.retry") || "Try Again"}</div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="ifexplore-container">
@@ -92,8 +88,6 @@ const Home = () => {
           <div className="search-input-wrapper">
             <SearchInput
               className="search-input"
-              value={search}
-              onChange={(e) => handleSearchChange(e.target.value)}
               placeholder={t("common.search") + "..."}
             />
           </div>
@@ -101,11 +95,19 @@ const Home = () => {
         <div className="filter-buttons-container">
           <Button
             variant="tertiary"
-            size="bg"
+            size="md"
             className="filter-btn"
             onClick={() => setIsFilterModalOpen(true)}
           >
             {t("common.filter")}
+          </Button>
+          <Button
+            variant="tertiary"
+            size="md"
+            className="filter-btn"
+            onClick={() => setIsPresentationModalOpen(true)}
+          >
+            {t("filters.title")}
           </Button>
         </div>
         <div className="new-work-container">
@@ -115,21 +117,18 @@ const Home = () => {
         </div>
       </div>
 
-      <PaginatedResults
-        content={works}
-        totalPages={totalPages}
-        isLoading={isLoading}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalElements={totalWorks}
-        refetch={refetch}
-      />
+      <PaginatedResults works={works} />
 
       <FiltrarBuscaModal
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
         onApplyFilters={handleApplyFilters}
-        setSize={setCurrentSize}
+      />
+
+      <FiltrarApresentacaoModal
+        isOpen={isPresentationModalOpen}
+        onClose={() => setIsPresentationModalOpen(false)}
+        onApplyFilters={handleApplyFilters}
       />
     </div>
   );

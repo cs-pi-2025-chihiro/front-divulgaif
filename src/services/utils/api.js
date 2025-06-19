@@ -32,7 +32,7 @@ const refreshToken = async () => {
 
   try {
     const response = await axios.post(
-      `${BASE_URL}/auth/refresh-token`,
+      `${BASE_URL}/api/v1/auth/refresh-token`,
 
       {
         refreshToken: currentRefreshToken,
