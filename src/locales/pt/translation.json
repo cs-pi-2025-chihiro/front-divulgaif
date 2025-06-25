@@ -39,7 +39,12 @@
     "research": "Pesquisa",
     "finalPaper": "TCC",
     "extension": "Extensão",
-    "unknown": "Tipo desconhecido"
+    "unknown": "Tipo desconhecido",
+    "Artigo": "Artigo",
+    "TCC": "TCC",
+    "Projeto": "Projeto",
+    "Dissertação": "Dissertação",
+    "Tese": "Tese"
   },
   "workDetail": {
     "authors": "Autores",
@@ -132,5 +137,29 @@
     "nextPage": "Ir para próxima página",
     "currentPage": "Página {{current}} de {{total}}",
     "resultsFound": "{{count}} resultados encontrados"
+  },
+  "pageTitle": "Meus Trabalhos",
+  "filterWorks": "Filtrar Trabalhos",
+  "newWork": "Novo Trabalho",
+  "results": "Resultado",
+  "results_plural": "Resultados",
+  "page": "Página",
+  "of": "de",
+  "noWorksFound": "Nenhum trabalho encontrado",
+  "noWorksFoundDesc": "Tente ajustar os filtros para encontrar seus trabalhos ou remova todos os filtros.",
+  "noWorksYet": "Você ainda não possui trabalhos cadastrados. Comece criando seu primeiro trabalho!",
+  "createNewWork": "Criar Novo Trabalho",
+  "createFirstWork": "Criar Primeiro Trabalho",
+  "allWorks": "Todos os Trabalhos",
+  "category": "Categoria",
+  "status": "Status",
+  "authors": "Autores",
+  "date": "Data",
+  "imageText": "Imagem",
+  "statusTypes": {
+    "Rascunho": "Rascunho",
+    "Enviado": "Enviado",
+    "Rejeitado": "Rejeitado",
+    "Aprovado": "Aprovado"
   }
 }

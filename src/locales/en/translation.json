@@ -31,7 +31,12 @@
     "extension": "Extension",
     "research": "Research",
     "finalPaper": "Final Paper",
-    "unknown": "Unknown type"
+    "unknown": "Unknown type",
+    "Artigo": "Article",
+    "TCC": "Final Paper",
+    "Projeto": "Project",
+    "Dissertação": "Dissertation",
+    "Tese": "Thesis"
   },
   "workDetail": {
     "authors": "Authors",
@@ -132,5 +137,29 @@
     "nextPage": "Go to next page",
     "currentPage": "Page {{current}} of {{total}}",
     "resultsFound": "{{count}} results found"
+  },
+  "pageTitle": "My Works",
+  "filterWorks": "Filter Works",
+  "newWork": "New Work",
+  "results": "Result",
+  "results_plural": "Results",
+  "page": "Page",
+  "of": "of",
+  "noWorksFound": "No works found",
+  "noWorksFoundDesc": "Try adjusting the filters to find your works or remove all filters.",
+  "noWorksYet": "You don't have any registered works yet. Start by creating your first work!",
+  "createNewWork": "Create New Work",
+  "createFirstWork": "Create First Work",
+  "allWorks": "All Works",
+  "category": "Category",
+  "status": "Status",
+  "authors": "Authors",
+  "date": "Date",
+  "imageText": "Image",
+  "statusTypes": {
+    "Rascunho": "Draft",
+    "Enviado": "Submitted",
+    "Rejeitado": "Rejected",
+    "Aprovado": "Approved"
   }
 }
