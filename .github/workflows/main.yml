@@ -9,24 +9,29 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: divulgaif-vps
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
-          
+          node-version: "20"
+
       - name: Install dependencies
         run: |
           rm -rf node_modules
           npm install
-        
+
       - name: Build React app
-        run: npm run build
-        
+        run: |
+          if [[ $GITHUB_REF == refs/heads/main ]]; then
+            npm run build
+          else
+            npm run build:dev
+          fi
+
       - name: Determine deployment directory
         id: deployment
         run: |
@@ -35,7 +40,7 @@ jobs:
           else
             echo "target_dir=/var/www/dev-divulgaif" >> $GITHUB_OUTPUT
           fi
-        
+
       - name: Clean deployment directory
         uses: appleboy/ssh-action@master
         with:
@@ -47,7 +52,7 @@ jobs:
             rm -rf ${{ steps.deployment.outputs.target_dir }}/*
             mkdir -p ${{ steps.deployment.outputs.target_dir }}
             echo "Preparing to copy files..."
-            
+
       - name: Copy build files to server
         uses: appleboy/scp-action@master
         with:
@@ -58,7 +63,7 @@ jobs:
           source: "build/*"
           target: "${{ steps.deployment.outputs.target_dir }}"
           strip_components: 1
-          
+
       - name: Set permissions and reload Nginx
         uses: appleboy/ssh-action@master
         with:

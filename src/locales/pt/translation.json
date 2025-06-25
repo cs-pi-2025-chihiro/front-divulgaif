@@ -7,16 +7,18 @@
     "password": "Senha",
     "submit": "Enviar",
     "search": "Buscar",
-    "filter": "Filtrar Busca",
+    "filter": "Filtrar Trabalhos",
     "language": "Idioma",
-    "loading": "Carregando",
+    "loading": "Carregando...",
     "goBack": "Voltar",
     "back": "Voltar",
     "edit": "Editar",
     "save": "Salvar",
     "cancel": "Cancelar",
     "notAvailable": "Não disponível",
-    "noDescription": "Nenhuma descrição disponível"
+    "noDescription": "Nenhuma descrição disponível",
+    "retry": "Por favor, tente novamente mais tarde",
+    "clearFilters": "Limpar filtros"
   },
   "home": {
     "welcome": "IF Xplore",
@@ -28,13 +30,15 @@
   },
   "errors": {
     "workNotFound": "Trabalho não encontrado",
-    "unexpectedError": "Ocorreu um erro inesperado"
+    "unexpectedError": "Ocorreu um erro inesperado",
+    "NoWorksFound": "Nenhum trabalho encontrado."
   },
   "workTypes": {
     "article": "Artigo",
     "dissertation": "Dissertação",
     "research": "Pesquisa",
     "finalPaper": "TCC",
+    "extension": "Extensão",
     "unknown": "Tipo desconhecido"
   },
   "workDetail": {
@@ -86,18 +90,21 @@
   },
   "filters": {
     "title": "Filtrar Apresentação",
-    "tags": "Tags",
+    "workType": "Tipo do trabalho",
+    "labels": "Palvras-Chave",
+    "addLabel": "Nova Palavra-Chave",
     "date": "Data",
     "author": "Autor",
     "campus": "Campus",
     "course": "Curso",
     "apply": "Aplicar Filtros",
     "clear": "Limpar Filtros",
-    "filterSearch": "Filtrar Busca",
+    "filterSearch": "Filtrar Trabalhos",
     "filterPresentation": "Filtrar Apresentação",
     "work": "Trabalho",
     "article": "Artigo",
     "dissertation": "Dissertação",
+    "extension": "Extensão",
     "research": "Pesquisa",
     "finalPaper": "TCC",
     "keywords": "Palavras-chaves",
@@ -110,10 +117,12 @@
     "filterDate": "Filtrar por data",
     "recent": "Mais recentes",
     "older": "Mais antigos",
+    "eight": "8 trabalhos",
     "twelve": "12 trabalhos",
     "twentyfour": "24 trabalhos",
     "thirtysix": "36 trabalhos",
-    "page-limit": "Limite por página"
+    "page-limit": "Limite por página",
+    "order": "Ordem"
   },
   "pagination": {
     "results": "Resultados",
