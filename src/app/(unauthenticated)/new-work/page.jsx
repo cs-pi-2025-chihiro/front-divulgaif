@@ -1,18 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./page.css";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/button";
-import { Input } from "../../../components/input";
+import { Input, MultipleAutocompleteInput } from "../../../components/input";
+import mockedAuthors from "../../../data/mockedAuthors.json";
 
 const NewWork = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const [authors, setAuthors] = useState([]);
+
+  const validateForm = () => {
+    if (authors.length === 0) {
+      alert("O campo de autores não pode ser nulo.");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      // Lógica de envio do formulário
+      console.log("Formulário válido, enviando dados...");
+    }
+  };
 
   return (
     <>
-      <form action="">
-        <div id="work-img">
-          
-        </div>
+      <form onSubmit={handleSubmit} id="new-work-form">
+        <div id="work-img"></div>
 
         <div id="work-type">
           <label>{t("new-work.worktype")}</label>
@@ -26,6 +42,11 @@ const NewWork = () => {
 
         <div id="work-authors">
           <label>{t("new-work.workauthors")}</label>
+          <MultipleAutocompleteInput
+            authors={authors}
+            setAuthors={setAuthors}
+            suggestions={mockedAuthors}
+          />
         </div>
 
         <div id="work-description">
@@ -43,11 +64,11 @@ const NewWork = () => {
         <div id="work-links">
           <label>Links</label>
         </div>
-    
+
         <div id="new-work-buttons">
           <Button>{t("common.back")}</Button>
           <Button>{t("common.save")}</Button>
-          <Button>{t("new-work.send")}</Button>
+          <Button type="submit">{t("new-work.send")}</Button>
           <Button>{t("new-work.publish")}</Button>
         </div>
       </form>

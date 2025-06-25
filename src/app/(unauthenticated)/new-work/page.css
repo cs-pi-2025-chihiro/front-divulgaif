@@ -1,5 +1,10 @@
-h2{
+#new-work-form{
+    margin: 20px;
+}
+
+label{
     font-weight: 500;
+    font-size: 20px;
 }
 
 .big-input{
