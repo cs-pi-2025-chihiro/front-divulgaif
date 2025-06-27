@@ -35,12 +35,11 @@ const NewWork = () => {
 
         <div id="work-type">
           <label>{t("new-work.worktype")}</label>
-          <Input></Input>
         </div>
 
         <div id="work-title">
           <label>{t("new-work.worktitle")}</label>
-          <Input></Input>
+          <Input ></Input>
         </div>
 
         <div id="work-authors">
@@ -54,10 +53,12 @@ const NewWork = () => {
 
         <div id="work-description">
           <label>{t("new-work.workdescription")}</label>
+          <textarea></textarea>
         </div>
 
         <div id="work-abstract">
           <label>{t("new-work.workabstract")}</label>
+          <textarea></textarea>
         </div>
 
         <div id="work-labels">

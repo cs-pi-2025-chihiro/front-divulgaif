@@ -5,8 +5,18 @@
 label{
     font-weight: 500;
     font-size: 20px;
+    
 }
 
-.big-input{
-    height: 50px;
+textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px 15px;
+  font-size: 16px;
+  color: #333;
+  background-color: #f8f8f8;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  resize: vertical;
 }
