@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./author-input.css";
 
-const MultipleAutocompleteInput = ({
+const AuthorInput = ({
   authors,
   setAuthors,
   suggestions,
@@ -101,37 +101,37 @@ const MultipleAutocompleteInput = ({
       )}
 
       <div className="new-author-form-layout">
-            <div className="form-top-row">
-                <div className="field-wrapper">
-                    <label>Nome Completo</label>
-                    <input type="text" name="name" value={newAuthor.name} onChange={handleNewAuthorChange} />
-                </div>
-                <div className="field-wrapper">
-                    <label>Email</label>
-                    <input type="email" name="email" value={newAuthor.email} onChange={handleNewAuthorChange} />
-                </div>
-            </div>
-            <div className="form-bottom-row">
-                <div className="field-wrapper">
-                    <label>Tipo</label>
-                    <div className="type-buttons">
-                        <button type="button" className={`type-button ${newAuthor.type === "Aluno" ? "active" : ""}`} onClick={() => setNewAuthor({ ...newAuthor, type: "Aluno" })}>
-                            Aluno
-                        </button>
-                        <button type="button" className={`type-button ${newAuthor.type === "Professor" ? "active" : ""}`} onClick={() => setNewAuthor({ ...newAuthor, type: "Professor" })}>
-                            Professor
-                        </button>
-                    </div>
-                </div>
-                <div className="add-button-wrapper">
-                    <button type="button" className="add-button" onClick={addNewAuthorManually}>
-                        Adicionar
-                    </button>
-                </div>
-            </div>
+        <div className="form-top-row">
+          <div className="field-wrapper">
+            <label>Nome Completo</label>
+            <input type="text" name="name" value={newAuthor.name} onChange={handleNewAuthorChange} />
+          </div>
+          <div className="field-wrapper">
+            <label>Email</label>
+            <input type="email" name="email" value={newAuthor.email} onChange={handleNewAuthorChange} />
+          </div>
         </div>
+        <div className="form-bottom-row">
+          <div className="field-wrapper">
+            <label>Tipo</label>
+            <div className="type-buttons">
+              <button type="button" className={`type-button ${newAuthor.type === "Aluno" ? "active" : ""}`} onClick={() => setNewAuthor({ ...newAuthor, type: "Aluno" })}>
+                Aluno
+              </button>
+              <button type="button" className={`type-button ${newAuthor.type === "Professor" ? "active" : ""}`} onClick={() => setNewAuthor({ ...newAuthor, type: "Professor" })}>
+                Professor
+              </button>
+            </div>
+          </div>
+          <div className="add-button-wrapper">
+            <button type="button" className="add-button" onClick={addNewAuthorManually}>
+              Adicionar
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default MultipleAutocompleteInput;
+export default AuthorInput;

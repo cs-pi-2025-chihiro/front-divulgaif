@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import "./page.css";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/button";
-import { Input, MultipleAutocompleteInput } from "../../../components/input";
+import { Input, AuthorInput, LabelInput } from "../../../components/input";
 import mockedAuthors from "../../../data/mockedAuthors.json";
+import mockedLabels from "../../../data/mockedLabels.json";
 
 const NewWork = () => {
   const { t } = useTranslation();
   const [authors, setAuthors] = useState([]);
+  const [labels, setLabels] = useState([]);
 
   const validateForm = () => {
     if (authors.length === 0) {
@@ -20,7 +22,6 @@ const NewWork = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Lógica de envio do formulário
       console.log("Formulário válido, enviando dados...");
     }
   };
@@ -42,7 +43,7 @@ const NewWork = () => {
 
         <div id="work-authors">
           <label>{t("new-work.workauthors")}</label>
-          <MultipleAutocompleteInput
+          <AuthorInput
             authors={authors}
             setAuthors={setAuthors}
             suggestions={mockedAuthors}
@@ -59,6 +60,11 @@ const NewWork = () => {
 
         <div id="work-labels">
           <label>Labels</label>
+          <LabelInput
+            labels={labels}
+            setLabels={setLabels}
+            suggestions={mockedLabels.labels} 
+          />
         </div>
 
         <div id="work-links">
