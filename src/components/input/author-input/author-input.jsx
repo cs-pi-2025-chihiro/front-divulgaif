@@ -31,7 +31,7 @@ const MultipleAutocompleteInput = ({
     if (value) {
       const filtered = suggestions.filter(
         (s) =>
-          s.name.toLowerCase().includes(value.toLowerCase()) &&
+          s.name.toLowerCase().startsWith(value.toLowerCase()) && // Correção aplicada aqui
           !authors.some((a) => a.id === s.id)
       );
       setFilteredSuggestions(filtered);
