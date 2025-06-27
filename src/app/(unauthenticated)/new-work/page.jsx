@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import "./page.css";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/button";
-import { Input, AuthorInput, LabelInput } from "../../../components/input";
+import { Input, AuthorInput, LabelInput, LinkInput } from "../../../components/input";
 import mockedAuthors from "../../../data/mockedAuthors.json";
 import mockedLabels from "../../../data/mockedLabels.json";
+import mockedLinks from "../../../data/mockedLinks.json";
 
 const NewWork = () => {
   const { t } = useTranslation();
   const [authors, setAuthors] = useState([]);
   const [labels, setLabels] = useState([]);
+  const [links, setLinks] = useState([]);
 
   const validateForm = () => {
     if (authors.length === 0) {
@@ -69,6 +71,11 @@ const NewWork = () => {
 
         <div id="work-links">
           <label>Links</label>
+          <LinkInput
+            links={links}
+            setLinks={setLinks}
+            suggestions={mockedLinks.links} 
+            />
         </div>
 
         <div id="new-work-buttons">

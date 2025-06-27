@@ -1,18 +1,18 @@
-.custom-autocomplete-container {
+.custom-link-container {
   background-color: #F0F0E1;
   border-radius: 8px;
   padding: 1rem;
   position: relative;
 }
 
-.autocomplete-main-box {
+.link-main-box {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   background-color: white;
   border: 1px solid #DCDCDC;
   border-radius: 8px;
-  padding: 5px 10px;
-  margin: 0;
+  padding: 8px 12px;
+  min-height: 40px;
 }
 
 .tags-container {
@@ -23,18 +23,36 @@
   gap: 6px;
 }
 
-.label-tag {
+.link-tag {
   display: flex;
   align-items: center;
-  background-color: #E7E7E7;
-  border: 1px solid #DBDBDB;
+  background-color: #E0E7FF;
+  border: 1px solid #C7D2FE;
   border-radius: 16px;
   padding: 4px 10px;
   font-size: 14px;
   color: #333;
+  max-width: 100%;
 }
 
-.label-tag .remove-tag-button {
+.link-tag .link-icon {
+  margin-right: 6px;
+}
+
+.link-tag .link-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  color: #3730A3;
+  max-width: 200px;
+}
+
+.link-tag .link-text:hover {
+  text-decoration: underline;
+}
+
+.link-tag .remove-tag-button {
   background: none;
   border: none;
   color: #E53E3E; 
@@ -42,8 +60,6 @@
   cursor: pointer;
   margin-left: 8px;
   font-size: 18px;
-  line-height: 1;
-  padding: 0;
 }
 
 .autocomplete-input {
@@ -51,16 +67,17 @@
   outline: none;
   background-color: transparent;
   flex-grow: 1;
-  min-width: 120px;
+  min-width: 150px;
   height: 30px;
   font-size: 14px;
 }
 
-.add-input-button-container {
-  margin-left: auto;
+.add-link-button-container {
+  margin-left: 8px;
+  align-self: center;
 }
 
-.add-input-button {
+.add-link-button {
   background-color: #e0e0e0;
   border: none;
   border-radius: 50%;
@@ -73,12 +90,13 @@
   justify-content: center;
 }
 
+
 .suggestions-list {
   list-style: none;
   padding: 0;
   margin: 0;
   position: absolute;
-  top: calc(1rem + 30px + 10px); /* padding + input height + padding */
+  top: calc(1rem + 40px + 5px);
   left: 1rem;
   right: 1rem;
   background: white;

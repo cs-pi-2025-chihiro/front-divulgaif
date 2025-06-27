@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./label-input.css";
+import "./link-input.css";
 
-const LabelInput = ({
-  labels,
-  setLabels,
+const LinkInput = ({
+  links,
+  setLinks,
   suggestions = [],
 }) => {
   const [inputValue, setInputValue] = useState("");
@@ -26,8 +26,8 @@ const LabelInput = ({
     if (value) {
       const filtered = suggestions.filter(
         (suggestion) =>
-          suggestion.label.toLowerCase().startsWith(value.toLowerCase()) &&
-          !labels.some((label) => label.id === suggestion.id)
+          suggestion.link.toLowerCase().startsWith(value.toLowerCase()) &&
+          !links.some((link) => link.id === suggestion.id)
       );
       setFilteredSuggestions(filtered);
     } else {
@@ -35,27 +35,30 @@ const LabelInput = ({
     }
   };
 
-  const addLabelFromSuggestion = (label) => {
-    setLabels([...labels, label]);
+  const addLinkFromSuggestion = (link) => {
+    setLinks([...links, link]);
     setInputValue("");
     setFilteredSuggestions([]);
   };
 
-  const removeLabel = (labelToRemove) => {
-    setLabels(labels.filter((label) => label.id !== labelToRemove.id));
+  const removeLink = (linkToRemove) => {
+    setLinks(links.filter((link) => link.id !== linkToRemove.id));
   };
 
   return (
-    <div className="custom-autocomplete-container" ref={containerRef}>
-      <div className="autocomplete-main-box">
+    <div className="custom-link-container" ref={containerRef}>
+      <div className="link-main-box">
         <div className="tags-container">
-          {labels.map((label) => (
-            <div key={label.id} className="label-tag">
-              {label.label}
+          {links.map((link) => (
+            <div key={link.id} className="link-tag">
+              <span className="link-icon">🔗</span>
+              <a href={link.link} target="_blank" rel="noopener noreferrer" className="link-text">
+                {link.link}
+              </a>
               <button
                 type="button"
                 className="remove-tag-button"
-                onClick={() => removeLabel(label)}
+                onClick={() => removeLink(link)}
               >
                 &times;
               </button>
@@ -66,12 +69,12 @@ const LabelInput = ({
             className="autocomplete-input"
             value={inputValue}
             onChange={handleInputChange}
-            placeholder="Buscar label..."
+            placeholder="Buscar links..."
           />
         </div>
 
-        <div className="add-input-button-container">
-          <button type="button" className="add-input-button">
+        <div className="add-link-button-container">
+          <button type="button" className="add-link-button">
             +
           </button>
         </div>
@@ -80,8 +83,8 @@ const LabelInput = ({
       {filteredSuggestions.length > 0 && (
         <ul className="suggestions-list">
           {filteredSuggestions.map((suggestion) => (
-            <li key={suggestion.id} onClick={() => addLabelFromSuggestion(suggestion)}>
-              {suggestion.label}
+            <li key={suggestion.id} onClick={() => addLinkFromSuggestion(suggestion)}>
+              {suggestion.link}
             </li>
           ))}
         </ul>
@@ -90,4 +93,4 @@ const LabelInput = ({
   );
 };
 
-export default LabelInput;
+export default LinkInput;

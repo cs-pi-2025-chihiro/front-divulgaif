@@ -4,5 +4,6 @@ import PasswordInput from './password-input';
 import SearchInput from './search-input';
 import AuthorInput from './author-input/author-input';
 import LabelInput from './label-input/label-input';
+import LinkInput from './links-input/link-input';
 
-export { Input, EmailInput, PasswordInput, SearchInput, AuthorInput, LabelInput};
+export { Input, EmailInput, PasswordInput, SearchInput, AuthorInput, LabelInput, LinkInput};
