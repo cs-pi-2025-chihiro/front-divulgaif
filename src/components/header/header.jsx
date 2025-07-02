@@ -6,11 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
-
   const navigate = useNavigate();
-
   const currentLang = i18n.language;
-
   const authenticated = isAuthenticated();
 
   const navigateTo = (path) => {
@@ -23,20 +20,27 @@ const Header = () => {
 
   return (
     <div className="header">
-      <h1 onClick={() => navigateTo("")} style={{ cursor: "pointer" }}>
-        DivulgaIF
-      </h1>
+      <div className="header-left" onClick={() => navigateTo("")}>
+        <h1 style={{ cursor: "pointer" }}>DivulgaIF</h1>
+      </div>
 
-      <div>
+      <div className="header-center">
+        <a onClick={() => navigateTo("/busca")}>Busca Principal</a>
+        <a onClick={() => navigateTo("/meus-trabalhos")}>Meus Trabalhos</a>
+        <a onClick={() => navigateTo("/sobre")}>Sobre o Projeto</a>
+      </div>
+
+      <div className="header-right">
         {authenticated ? (
           <Button
-            type="button"
-            className="secondary"
-            variant="secondary"
-            ariaLabel={t("common.logout")}
-            children={t("common.logout")}
-            onClick={handleLogout}
-          />
+  type="button"
+  className="login-style"
+  ariaLabel={t("common.login")}
+  onClick={() => navigateTo("/login")}
+>
+  <FaUser /> {t("common.login")}
+</Button>
+
         ) : (
           <Button
             type="button"
