@@ -41,6 +41,21 @@ const LabelInput = ({
     setFilteredSuggestions([]);
   };
 
+  const addNewLabel = () => {
+    const trimmedValue = inputValue.trim();
+    if (trimmedValue === "") return;
+
+    if (!labels.some(label => label.label.toLowerCase() === trimmedValue.toLowerCase())) {
+      const newLabel = {
+        id: `new_${Date.now()}`,
+        label: trimmedValue,
+      };
+      setLabels([...labels, newLabel]);
+    }
+    setInputValue("");
+    setFilteredSuggestions([]);
+  };
+
   const removeLabel = (labelToRemove) => {
     setLabels(labels.filter((label) => label.id !== labelToRemove.id));
   };
@@ -71,7 +86,7 @@ const LabelInput = ({
         </div>
 
         <div className="add-input-button-container">
-          <button type="button" className="add-input-button">
+          <button type="button" className="add-input-button" onClick={addNewLabel}>
             +
           </button>
         </div>

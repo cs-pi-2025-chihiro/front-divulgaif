@@ -31,7 +31,7 @@ const AuthorInput = ({
     if (value) {
       const filtered = suggestions.filter(
         (s) =>
-          s.name.toLowerCase().startsWith(value.toLowerCase()) && // Correção aplicada aqui
+          s.name.toLowerCase().startsWith(value.toLowerCase()) &&
           !authors.some((a) => a.id === s.id)
       );
       setFilteredSuggestions(filtered);

@@ -41,6 +41,21 @@ const LinkInput = ({
     setFilteredSuggestions([]);
   };
 
+  const addNewLink = () => {
+    const trimmedValue = inputValue.trim();
+    if (trimmedValue === "") return;
+
+    if (!links.some(link => link.link.toLowerCase() === trimmedValue.toLowerCase())) {
+        const newLink = {
+            id: `new_${Date.now()}`,
+            link: trimmedValue,
+        };
+        setLinks([...links, newLink]);
+    }
+    setInputValue("");
+    setFilteredSuggestions([]);
+  };
+
   const removeLink = (linkToRemove) => {
     setLinks(links.filter((link) => link.id !== linkToRemove.id));
   };
@@ -74,7 +89,7 @@ const LinkInput = ({
         </div>
 
         <div className="add-link-button-container">
-          <button type="button" className="add-link-button">
+          <button type="button" className="add-link-button" onClick={addNewLink}>
             +
           </button>
         </div>
