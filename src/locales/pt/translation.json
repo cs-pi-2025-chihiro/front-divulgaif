@@ -161,5 +161,8 @@
     "Enviado": "Enviado",
     "Rejeitado": "Rejeitado",
     "Aprovado": "Aprovado"
+  },
+  "myWorks": {
+    "redirectingToCreate": "Redirecionando para criação de novo trabalho..."
   }
 }

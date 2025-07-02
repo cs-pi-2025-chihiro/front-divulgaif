@@ -20,17 +20,25 @@
     "retry": "Please try again later",
     "clearFilters": "Clear filters"
   },
+  "home": {
+    "welcome": "IF Xplore",
+    "description": "Discover academic works from IFPR",
+    "newWork": "New Work",
+    "results": "Results",
+    "previous": "Previous",
+    "next": "Next"
+  },
   "errors": {
     "workNotFound": "Work not found",
     "unexpectedError": "An unexpected error occurred",
-    "NoWorksFound": "No works Found with these filters."
+    "NoWorksFound": "No works found."
   },
   "workTypes": {
     "article": "Article",
     "dissertation": "Dissertation",
-    "extension": "Extension",
     "research": "Research",
     "finalPaper": "Final Paper",
+    "extension": "Extension",
     "unknown": "Unknown type",
     "Artigo": "Article",
     "TCC": "Final Paper",
@@ -49,32 +57,24 @@
     "download": "Download PDF",
     "edit": "Edit"
   },
-  "home": {
-    "welcome": "IF Xplore",
-    "description": "Discover academic works from IFPR",
-    "newWork": "New Work",
-    "results": "Results",
-    "previous": "Previous",
-    "next": "Next"
-  },
   "login": {
     "title": "Login",
     "access": "Access DivulgaIF:",
     "noAccount": "Don't have an account?",
     "createAccount": "Create an account",
     "forgotPassword": "Forgot password?",
-    "usernamePlaceholder": "Email",
+    "usernamePlaceholder": "Enter your Email",
     "usernameRequired": "Email is required",
     "passwordRequired": "Password is required",
     "submit": "Access",
     "loading": "Loading...",
     "success": "Login successful!",
-    "error": "Login failed. Please check your credentials.",
+    "error": "Login failed. Check your credentials.",
     "loginWith": "Login with:",
     "loginWithSUAP": "Login with SUAP"
   },
   "register": {
-    "title": "Register",
+    "title": "Registration",
     "name": "Name",
     "confirmPassword": "Confirm Password",
     "alreadyHaveAccount": "Already have an account?"
@@ -85,7 +85,7 @@
     "help": "Accessibility and Help",
     "about": "About Us",
     "projectTitle": "IFPR Project",
-    "projectDescription": "An extension project of the Federal Institute of Paraná to democratize access to education."
+    "projectDescription": "An extension project from the Federal Institute of Paraná to democratize access to education."
   },
   "header": {
     "home": "Home",
@@ -95,9 +95,9 @@
   },
   "filters": {
     "title": "Filter Presentation",
-    "workType": "Work types",
-    "labels": "Labels",
-    "addLabel": "Add label",
+    "workType": "Work type",
+    "labels": "Keywords",
+    "addLabel": "New Keyword",
     "date": "Date",
     "author": "Author",
     "campus": "Campus",
@@ -118,15 +118,15 @@
     "endDate": "End Date",
     "back": "Back",
     "searchPlaceholder": "Search...",
-    "filterOptions": "Filter options",
+    "filterOptions": "Search filter options",
     "filterDate": "Filter by date",
-    "recent": "Newest",
+    "recent": "Most recent",
     "older": "Oldest",
     "eight": "8 works",
     "twelve": "12 works",
     "twentyfour": "24 works",
     "thirtysix": "36 works",
-    "page-limit": "Page Limit",
+    "page-limit": "Limit per page",
     "order": "Order"
   },
   "pagination": {
@@ -161,5 +161,8 @@
     "Enviado": "Submitted",
     "Rejeitado": "Rejected",
     "Aprovado": "Approved"
+  },
+  "myWorks": {
+    "redirectingToCreate": "Redirecting to create new work..."
   }
 }
