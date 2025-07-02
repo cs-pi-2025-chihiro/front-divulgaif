@@ -6,6 +6,7 @@ import { Input, AuthorInput, LabelInput, LinkInput } from "../../../components/i
 import mockedAuthors from "../../../data/mockedAuthors.json";
 import mockedLabels from "../../../data/mockedLabels.json";
 import mockedLinks from "../../../data/mockedLinks.json";
+import WorkTypeSelector from '../../../components/work-type-selector/WorkTypeSelector';
 
 const NewWork = () => {
   const { t } = useTranslation();
@@ -35,6 +36,7 @@ const NewWork = () => {
 
         <div id="work-type">
           <label>{t("new-work.worktype")}</label>
+          <WorkTypeSelector/>
         </div>
 
         <div id="work-title">
