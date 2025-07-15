@@ -28,7 +28,10 @@
   },
   "errors": {
     "workNotFound": "Trabalho não encontrado",
-    "unexpectedError": "Ocorreu um erro inesperado"
+    "unexpectedError": "Ocorreu um erro inesperado",
+    "workTypeRequired": "O tipo do trabalho é obrigatório.",
+    "titleRequired": "O título do trabalho é obrigatório.",
+    "authorsRequired": "O campo de autores não pode estar vazio."
   },
   "workTypes": {
     "article": "Artigo",

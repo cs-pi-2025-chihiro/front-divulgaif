@@ -20,7 +20,10 @@
   },
   "errors": {
     "workNotFound": "Work not found",
-    "unexpectedError": "An unexpected error occurred"
+    "unexpectedError": "An unexpected error occurred",
+    "workTypeRequired": "Work type is required.",
+    "titleRequired": "Work title is required.",
+    "authorsRequired": "Authors field cannot be empty."
   },
   "workTypes": {
     "article": "Article",

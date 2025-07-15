@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import './WorkTypeSelector.css';
+import React, { useState } from "react";
+import "./WorkTypeSelector.css";
 
 const WorkTypeSelector = ({ onTypeChange }) => {
-  const workTypes = ['Artigo', 'Pesquisa', 'Dissertação', 'Extensão', 'TCC'];
-  const [selectedType, setSelectedType] = useState(workTypes[0]);
+  const workTypes = ["Artigo", "Pesquisa", "Dissertação", "Extensão", "TCC"];
+  const [selectedType, setSelectedType] = useState("");
 
   const handleSelectType = (type) => {
     setSelectedType(type);
@@ -14,16 +14,16 @@ const WorkTypeSelector = ({ onTypeChange }) => {
 
   return (
     <div className="work-type-selector">
-        {workTypes.map((type) => (
-          <button
-            key={type}
-            type="button"
-            className={`type-button ${selectedType === type ? 'active' : ''}`}
-            onClick={() => handleSelectType(type)}
-          >
-            {type}
-          </button>
-        ))}
+      {workTypes.map((type) => (
+        <button
+          key={type}
+          type="button"
+          className={`type-button ${selectedType === type ? "active" : ""}`}
+          onClick={() => handleSelectType(type)}
+        >
+          {type}
+        </button>
+      ))}
     </div>
   );
 };

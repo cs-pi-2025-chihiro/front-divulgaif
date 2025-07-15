@@ -9,6 +9,13 @@
   margin-bottom: 20px;
 }
 
+#work-type .work-type-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+}
+
 label {
   display: block;
   font-weight: 500;
@@ -79,6 +86,24 @@ textarea {
   background-color: var(--dark-green);
   transform: translateY(-1px);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.required-field label::after {
+  content: " *";
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.field-error {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
 }
 
 @media (min-width: 481px) {
@@ -154,6 +179,10 @@ textarea {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
+
+  #work-type .work-type-selector {
+    gap: 15px;
+  }
 }
 
 @media (min-width: 1201px) {
@@ -222,5 +251,9 @@ textarea {
     padding: 16px 32px;
     font-size: 18px;
     min-width: 160px;
+  }
+
+  #work-type .work-type-selector {
+    gap: 20px;
   }
 }
