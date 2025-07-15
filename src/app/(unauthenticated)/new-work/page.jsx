@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./page.css";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import Button from "../../../components/button";
 import {
   Input,
@@ -13,9 +14,12 @@ import mockedAuthors from "../../../data/mockedAuthors.json";
 import mockedLabels from "../../../data/mockedLabels.json";
 import mockedLinks from "../../../data/mockedLinks.json";
 import WorkTypeSelector from "../../../components/work-type-selector/WorkTypeSelector";
+import { isAuthenticated, hasRole } from "../../../services/hooks/auth/useAuth";
+import { api } from "../../../services/utils/api";
 
 const NewWork = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [authors, setAuthors] = useState([]);
   const [labels, setLabels] = useState([]);
   const [links, setLinks] = useState([]);
@@ -25,6 +29,11 @@ const NewWork = () => {
   const [abstract, setAbstract] = useState("");
   const [image, setImage] = useState(null);
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  const userIsAuthenticated = isAuthenticated();
+  const isAdmin = hasRole("admin") || hasRole("Admin");
+  const isCommon = hasRole("comum") || hasRole("common") || hasRole("Comum");
 
   const validateField = (fieldName, value) => {
     const newErrors = { ...errors };
@@ -88,7 +97,19 @@ const NewWork = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Formulário válido, enviando dados...");
+      handleSendForReview();
+    }
+  };
+
+  // Função para voltar à página anterior
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  // Função para salvar como rascunho
+  const handleSaveDraft = async () => {
+    setIsLoading(true);
+    try {
       const formData = {
         workType,
         title,
@@ -98,8 +119,102 @@ const NewWork = () => {
         labels,
         links,
         image,
+        status: "draft",
       };
-      console.log("Dados do formulário:", formData);
+
+      // Simular chamada da API para salvar rascunho
+      console.log("Salvando rascunho:", formData);
+
+      // Aqui seria a chamada real para a API
+      // const response = await api.post("/works/draft", formData);
+
+      alert(t("messages.draftSaved") || "Rascunho salvo com sucesso!");
+    } catch (error) {
+      console.error("Erro ao salvar rascunho:", error);
+      alert(
+        t("errors.saveDraftError") ||
+          "Erro ao salvar rascunho. Tente novamente."
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Função para enviar para avaliação docente
+  const handleSendForReview = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const formData = {
+        workType,
+        title,
+        authors,
+        description,
+        abstract,
+        labels,
+        links,
+        image,
+        status: "under_review",
+      };
+
+      console.log("Enviando para avaliação:", formData);
+
+      // Aqui seria a chamada real para a API
+      // const response = await api.post("/works/submit", formData);
+
+      alert(
+        t("messages.sentForReview") ||
+          "Trabalho enviado para avaliação com sucesso!"
+      );
+      navigate(-1); // Voltar à página anterior após envio
+    } catch (error) {
+      console.error("Erro ao enviar trabalho:", error);
+      alert(
+        t("errors.submitError") || "Erro ao enviar trabalho. Tente novamente."
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Função para publicar diretamente (apenas Admin)
+  const handlePublish = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const formData = {
+        workType,
+        title,
+        authors,
+        description,
+        abstract,
+        labels,
+        links,
+        image,
+        status: "published",
+      };
+
+      console.log("Publicando trabalho:", formData);
+
+      // Aqui seria a chamada real para a API
+      // const response = await api.post("/works/publish", formData);
+
+      alert(t("messages.published") || "Trabalho publicado com sucesso!");
+      navigate(-1); // Voltar à página anterior após publicação
+    } catch (error) {
+      console.error("Erro ao publicar trabalho:", error);
+      alert(
+        t("errors.publishError") ||
+          "Erro ao publicar trabalho. Tente novamente."
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -210,10 +325,27 @@ const NewWork = () => {
         </div>
 
         <div id="new-work-buttons">
-          <Button>{t("common.back")}</Button>
-          <Button>{t("common.save")}</Button>
-          <Button type="submit">{t("new-work.send")}</Button>
-          <Button>{t("new-work.publish")}</Button>
+          <Button onClick={handleBack} disabled={isLoading}>
+            {t("common.back")}
+          </Button>
+
+          <Button onClick={handleSaveDraft} disabled={isLoading}>
+            {isLoading ? t("common.loading") : t("common.save")}
+          </Button>
+
+          {/* Botão Enviar - apenas para usuários comuns autenticados */}
+          {userIsAuthenticated && isCommon && (
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? t("common.loading") : t("new-work.send")}
+            </Button>
+          )}
+
+          {/* Botão Publicar - apenas para administradores */}
+          {userIsAuthenticated && isAdmin && (
+            <Button onClick={handlePublish} disabled={isLoading}>
+              {isLoading ? t("common.loading") : t("new-work.publish")}
+            </Button>
+          )}
         </div>
       </form>
     </>

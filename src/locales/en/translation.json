@@ -23,7 +23,10 @@
     "unexpectedError": "An unexpected error occurred",
     "workTypeRequired": "Work type is required.",
     "titleRequired": "Work title is required.",
-    "authorsRequired": "Authors field cannot be empty."
+    "authorsRequired": "Authors field cannot be empty.",
+    "saveDraftError": "Error saving draft. Please try again.",
+    "submitError": "Error submitting work. Please try again.",
+    "publishError": "Error publishing work. Please try again."
   },
   "workTypes": {
     "article": "Article",
@@ -139,5 +142,10 @@
     "workabstract": "Abstract",
     "publish": "Publish",
     "send": "Send"
+  },
+  "messages": {
+    "draftSaved": "Draft saved successfully!",
+    "sentForReview": "Work sent for review successfully!",
+    "published": "Work published successfully!"
   }
 }
