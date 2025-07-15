@@ -23,8 +23,7 @@
     -->
     <script>
       if (window.location.hash.includes("access_token=")) {
-        console.log("Hash found before React load:", window.location.hash);
-        sessionStorage.setItem("oauth_hash", window.location.hash);
+        localStorage.setItem("oauth_hash", window.location.hash);
       }
     </script>
     <title>DivulgaIF</title>

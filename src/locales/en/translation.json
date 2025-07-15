@@ -7,16 +7,18 @@
     "password": "Password",
     "submit": "Submit",
     "search": "Search",
-    "filter": "Filter Search",
+    "filter": "Filter Works",
     "language": "Language",
-    "loading": "Loading",
+    "loading": "Loading...",
     "goBack": "Go Back",
     "back": "Back",
     "edit": "Edit",
     "save": "Save",
     "cancel": "Cancel",
     "notAvailable": "Not available",
-    "noDescription": "No description available"
+    "noDescription": "No description available",
+    "retry": "Please try again later",
+    "clearFilters": "Clear filters"
   },
   "errors": {
     "workNotFound": "Work not found",
@@ -26,11 +28,13 @@
     "authorsRequired": "Authors field cannot be empty.",
     "saveDraftError": "Error saving draft. Please try again.",
     "submitError": "Error submitting work. Please try again.",
-    "publishError": "Error publishing work. Please try again."
+    "publishError": "Error publishing work. Please try again.",
+    "NoWorksFound": "No works Found with these filters."
   },
   "workTypes": {
     "article": "Article",
     "dissertation": "Dissertation",
+    "extension": "Extension",
     "research": "Research",
     "finalPaper": "Final Paper",
     "unknown": "Unknown type"
@@ -46,7 +50,6 @@
     "download": "Download PDF",
     "edit": "Edit"
   },
-
   "home": {
     "welcome": "IF Xplore",
     "description": "Discover academic works from IFPR",
@@ -93,18 +96,21 @@
   },
   "filters": {
     "title": "Filter Presentation",
-    "tags": "Tags",
+    "workType": "Work types",
+    "labels": "Labels",
+    "addLabel": "Add label",
     "date": "Date",
     "author": "Author",
     "campus": "Campus",
     "course": "Course",
     "apply": "Apply Filters",
     "clear": "Clear Filters",
-    "filterSearch": "Filter Search",
+    "filterSearch": "Filter Works",
     "filterPresentation": "Filter Presentation",
     "work": "Work",
     "article": "Article",
     "dissertation": "Dissertation",
+    "extension": "Extension",
     "research": "Research",
     "finalPaper": "Final Paper",
     "keywords": "Keywords",
@@ -117,10 +123,12 @@
     "filterDate": "Filter by date",
     "recent": "Newest",
     "older": "Oldest",
+    "eight": "8 works",
     "twelve": "12 works",
     "twentyfour": "24 works",
     "thirtysix": "36 works",
-    "page-limit": "Page Limit"
+    "page-limit": "Page Limit",
+    "order": "Order"
   },
   "pagination": {
     "results": "Results",
