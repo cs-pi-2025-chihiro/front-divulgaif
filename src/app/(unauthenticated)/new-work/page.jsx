@@ -8,6 +8,7 @@ import {
   LabelInput,
   LinkInput,
 } from "../../../components/input";
+import ImageUpload from "../../../components/image-upload";
 import mockedAuthors from "../../../data/mockedAuthors.json";
 import mockedLabels from "../../../data/mockedLabels.json";
 import mockedLinks from "../../../data/mockedLinks.json";
@@ -22,6 +23,7 @@ const NewWork = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [abstract, setAbstract] = useState("");
+  const [image, setImage] = useState(null);
   const [errors, setErrors] = useState({});
 
   const validateField = (fieldName, value) => {
@@ -95,6 +97,7 @@ const NewWork = () => {
         abstract,
         labels,
         links,
+        image,
       };
       console.log("Dados do formulário:", formData);
     }
@@ -124,10 +127,17 @@ const NewWork = () => {
     validateField("authors", newAuthors);
   };
 
+  const handleImageChange = (file) => {
+    setImage(file);
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit} id="new-work-form">
-        <div id="work-img"></div>
+        <div id="work-image-upload">
+          <label>{t("new-work.workimage")}</label>
+          <ImageUpload onImageChange={handleImageChange} />
+        </div>
 
         <div id="work-type">
           <label>{t("new-work.worktype")}</label>

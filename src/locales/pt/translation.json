@@ -128,6 +128,9 @@
     "resultsFound": "{{count}} resultados encontrados"
   },
   "new-work": {
+    "workimage": "Imagem do Trabalho",
+    "uploadimage": "Selecione uma imagem",
+    "dragdropimage": "Ou arraste e solte um arquivo",
     "worktype": "Tipo do Trabalho",
     "worktitle": "Título",
     "workauthors": "Autores",

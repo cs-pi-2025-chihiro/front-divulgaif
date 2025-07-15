@@ -129,6 +129,9 @@
     "resultsFound": "{{count}} results found"
   },
   "new-work": {
+    "workimage": "Work Image",
+    "uploadimage": "Select an image",
+    "dragdropimage": "Or drag and drop an file",
     "worktype": "Work Type",
     "worktitle": "Title",
     "workauthors": "Authors",
