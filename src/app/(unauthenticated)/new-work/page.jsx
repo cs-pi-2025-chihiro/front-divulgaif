@@ -35,6 +35,11 @@ const NewWork = () => {
   const isAdmin = hasRole("admin") || hasRole("Admin");
   const isCommon = hasRole("comum") || hasRole("common") || hasRole("Comum");
 
+  const countWords = (text) => {
+    if (!text || text.trim() === "") return 0;
+    return text.trim().split(/\s+/).length;
+  };
+
   const validateField = (fieldName, value) => {
     const newErrors = { ...errors };
 
@@ -60,6 +65,26 @@ const NewWork = () => {
           delete newErrors.authors;
         }
         break;
+      case "description":
+        const descriptionWordCount = countWords(value);
+        if (descriptionWordCount > 160) {
+          newErrors.description =
+            t("errors.descriptionTooLong") ||
+            "A descrição deve ter no máximo 160 palavras";
+        } else {
+          delete newErrors.description;
+        }
+        break;
+      case "abstract":
+        const abstractWordCount = countWords(value);
+        if (abstractWordCount > 300) {
+          newErrors.abstract =
+            t("errors.abstractTooLong") ||
+            "O resumo deve ter no máximo 300 palavras";
+        } else {
+          delete newErrors.abstract;
+        }
+        break;
       default:
         break;
     }
@@ -81,6 +106,20 @@ const NewWork = () => {
 
     if (authors.length === 0) {
       newErrors.authors = t("errors.authorsRequired");
+    }
+
+    const descriptionWordCount = countWords(description);
+    if (descriptionWordCount > 160) {
+      newErrors.description =
+        t("errors.descriptionTooLong") ||
+        "A descrição deve ter no máximo 160 palavras";
+    }
+
+    const abstractWordCount = countWords(abstract);
+    if (abstractWordCount > 300) {
+      newErrors.abstract =
+        t("errors.abstractTooLong") ||
+        "O resumo deve ter no máximo 300 palavras";
     }
 
     setErrors(newErrors);
@@ -230,11 +269,15 @@ const NewWork = () => {
   };
 
   const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
+    const value = e.target.value;
+    setDescription(value);
+    validateField("description", value);
   };
 
   const handleAbstractChange = (e) => {
-    setAbstract(e.target.value);
+    const value = e.target.value;
+    setAbstract(value);
+    validateField("abstract", value);
   };
 
   const handleAuthorsChange = (newAuthors) => {
@@ -290,20 +333,34 @@ const NewWork = () => {
 
         <div id="work-description">
           <label>{t("new-work.workdescription")}</label>
+          <div className="word-count-info">
+            {countWords(description)}/160 palavras
+          </div>
           <textarea
             value={description}
             onChange={handleDescriptionChange}
             placeholder={t("new-work.workdescription")}
+            className={errors.description ? "field-error" : ""}
           ></textarea>
+          {errors.description && (
+            <span className="error-message">{errors.description}</span>
+          )}
         </div>
 
         <div id="work-abstract">
           <label>{t("new-work.workabstract")}</label>
+          <div className="word-count-info">
+            {countWords(abstract)}/300 palavras
+          </div>
           <textarea
             value={abstract}
             onChange={handleAbstractChange}
             placeholder={t("new-work.workabstract")}
+            className={errors.abstract ? "field-error" : ""}
           ></textarea>
+          {errors.abstract && (
+            <span className="error-message">{errors.abstract}</span>
+          )}
         </div>
 
         <div id="work-labels">
