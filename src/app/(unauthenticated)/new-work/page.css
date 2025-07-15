@@ -1,22 +1,226 @@
-#new-work-form{
-    margin: 20px;
+#new-work-form {
+  margin: 16px;
+  padding: 16px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-label{
-    font-weight: 500;
-    font-size: 20px;
-    
+#new-work-form > div {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: var(--text-dark);
 }
 
 textarea {
   width: 100%;
-  min-height: 100px;
-  padding: 12px 15px;
-  font-size: 16px;
+  min-height: 80px;
+  padding: 12px;
+  font-size: 14px;
   color: #333;
   background-color: #f8f8f8;
   border: 1px solid #dcdcdc;
-  border-radius: 8px;
+  border-radius: 6px;
   box-sizing: border-box;
   resize: vertical;
+  font-family: inherit;
+}
+
+#new-work-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 24px;
+  padding: 16px 0;
+}
+
+#new-work-buttons .btn {
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  min-width: 80px;
+  flex: 1;
+  max-width: 120px;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#new-work-buttons .btn:nth-child(1) {
+  background-color: var(--accent);
+  color: var(--text-dark);
+  border: 1px solid var(--primary);
+}
+
+#new-work-buttons .btn:nth-child(1):hover {
+  background-color: var(--primary);
+  color: var(--text-light);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+#new-work-buttons .btn:nth-child(2),
+#new-work-buttons .btn:nth-child(3),
+#new-work-buttons .btn:nth-child(4) {
+  background-color: var(--primary-green);
+  color: var(--text-light);
+  border: 1px solid var(--primary-green);
+}
+
+#new-work-buttons .btn:nth-child(2):hover,
+#new-work-buttons .btn:nth-child(3):hover,
+#new-work-buttons .btn:nth-child(4):hover {
+  background-color: var(--dark-green);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+@media (min-width: 481px) {
+  #new-work-form {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  label {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    min-height: 90px;
+    padding: 14px;
+    font-size: 15px;
+    border-radius: 7px;
+  }
+
+  #new-work-buttons {
+    gap: 10px;
+    margin-top: 28px;
+    padding: 18px 0;
+  }
+
+  #new-work-buttons .btn {
+    padding: 11px 20px;
+    font-size: 15px;
+    min-width: 100px;
+    max-width: 140px;
+    border-radius: 7px;
+  }
+}
+
+@media (min-width: 769px) {
+  #new-work-form {
+    margin: 24px auto;
+    padding: 24px;
+    max-width: 1000px;
+  }
+
+  label {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  textarea {
+    min-height: 100px;
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+
+  #new-work-buttons {
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 32px;
+    padding: 20px 0;
+  }
+
+  #new-work-buttons .btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    min-width: 120px;
+    max-width: none;
+    flex: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  #new-work-buttons .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@media (min-width: 1201px) {
+  #new-work-form {
+    margin: 32px auto;
+    padding: 32px;
+    max-width: 1200px;
+  }
+
+  #new-work-form > div {
+    margin-bottom: 28px;
+  }
+
+  label {
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+
+  textarea {
+    min-height: 120px;
+    padding: 18px;
+    font-size: 17px;
+  }
+
+  #new-work-buttons {
+    margin-top: 40px;
+    padding: 24px 0;
+  }
+
+  #new-work-buttons .btn {
+    padding: 14px 28px;
+    font-size: 17px;
+    min-width: 140px;
+  }
+}
+
+@media (min-width: 1601px) {
+  #new-work-form {
+    margin: 40px auto;
+    padding: 40px;
+    max-width: 1400px;
+  }
+
+  #new-work-form > div {
+    margin-bottom: 32px;
+  }
+
+  label {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  textarea {
+    min-height: 140px;
+    padding: 20px;
+    font-size: 18px;
+  }
+
+  #new-work-buttons {
+    margin-top: 48px;
+    padding: 28px 0;
+    gap: 20px;
+  }
+
+  #new-work-buttons .btn {
+    padding: 16px 32px;
+    font-size: 18px;
+    min-width: 160px;
+  }
 }
