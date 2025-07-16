@@ -23,7 +23,13 @@ const WorkCard = ({
       <p className="work-card-description">{description}</p>
 
       <div className="work-card-authors-date">
-        <p className="work-card-authors">{authors.name}</p>
+        <br></br>
+        {Array.isArray(authors) &&
+          authors.slice(0, 4).map((author, idx) => (
+            <div className="work-card-authors" key={idx}>
+              {author.name}
+            </div>
+          ))}
         <p className="work-card-date">{date}</p>
       </div>
 

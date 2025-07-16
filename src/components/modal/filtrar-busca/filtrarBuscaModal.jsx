@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import "./filtrarBuscaModal.css";
 import { t } from "i18next";
 import Button from "../../button";

@@ -124,6 +124,18 @@
   width: 90%;
 }
 
+@media (max-width: 480px) {
+  .modal-container {
+    width: 95%;
+    padding: 16px;
+    border-radius: 8px;
+    max-width: 60px;
+    max-height: 60vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+}
+
 .modal-content {
   background-color: white;
   display: flex;
@@ -316,4 +328,56 @@
   background: var(--primary);
   color: white;
   border: 1px solid var(--primary);
+}
+
+@media (max-width: 768px) {
+  .modal-container {
+    width: 95%;
+    max-width: 95%;
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .modal-content {
+    gap: 16px;
+  }
+
+  .tag-group,
+  .labels-list,
+  .pagination-options {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .date-inputs {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 16px;
+  }
+
+  .btn-secondary-modal,
+  .btn-primary-modal {
+    width: 100%;
+  }
+
+  .label-tag {
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+
+  .tag-button,
+  .pagination-btn {
+    width: 100%;
+    text-align: center;
+  }
 }
