@@ -15,11 +15,19 @@ import mockedLabels from "../../../data/mockedLabels.json";
 import mockedLinks from "../../../data/mockedLinks.json";
 import WorkTypeSelector from "../../../components/work-type-selector/WorkTypeSelector";
 import { isAuthenticated, hasRole } from "../../../services/hooks/auth/useAuth";
-import { api } from "../../../services/utils/api";
+import { useCreateWork } from "../../../services/works/useCreateWork";
+import {
+  countWords,
+  validateField,
+  validateForm,
+} from "../../../services/utils/validation";
 
 const NewWork = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { isLoading, error, saveDraft, submitForReview, publish } =
+    useCreateWork();
+
   const [authors, setAuthors] = useState([]);
   const [labels, setLabels] = useState([]);
   const [links, setLinks] = useState([]);
@@ -29,103 +37,44 @@ const NewWork = () => {
   const [abstract, setAbstract] = useState("");
   const [image, setImage] = useState(null);
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
 
   const userIsAuthenticated = isAuthenticated();
   const isAdmin = hasRole("admin") || hasRole("Admin");
   const isCommon = hasRole("comum") || hasRole("common") || hasRole("Comum");
 
-  const countWords = (text) => {
-    if (!text || text.trim() === "") return 0;
-    return text.trim().split(/\s+/).length;
-  };
+  const getWorkData = () => ({
+    title,
+    description,
+    abstract,
+    image,
+    authors,
+    labels,
+    links,
+    workType,
+  });
 
-  const validateField = (fieldName, value) => {
+  const validateSingleField = (fieldName, value) => {
+    const fieldErrors = validateField(fieldName, value, t);
     const newErrors = { ...errors };
 
-    switch (fieldName) {
-      case "workType":
-        if (!value) {
-          newErrors.workType = t("errors.workTypeRequired");
-        } else {
-          delete newErrors.workType;
-        }
-        break;
-      case "title":
-        if (!value || value.trim() === "") {
-          newErrors.title = t("errors.titleRequired");
-        } else {
-          delete newErrors.title;
-        }
-        break;
-      case "authors":
-        if (!value || value.length === 0) {
-          newErrors.authors = t("errors.authorsRequired");
-        } else {
-          delete newErrors.authors;
-        }
-        break;
-      case "description":
-        const descriptionWordCount = countWords(value);
-        if (descriptionWordCount > 160) {
-          newErrors.description =
-            t("errors.descriptionTooLong") ||
-            "A descrição deve ter no máximo 160 palavras";
-        } else {
-          delete newErrors.description;
-        }
-        break;
-      case "abstract":
-        const abstractWordCount = countWords(value);
-        if (abstractWordCount > 300) {
-          newErrors.abstract =
-            t("errors.abstractTooLong") ||
-            "O resumo deve ter no máximo 300 palavras";
-        } else {
-          delete newErrors.abstract;
-        }
-        break;
-      default:
-        break;
+    if (Object.keys(fieldErrors).length > 0) {
+      Object.assign(newErrors, fieldErrors);
+    } else {
+      delete newErrors[fieldName];
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return Object.keys(fieldErrors).length === 0;
   };
 
-  const validateForm = () => {
-    const newErrors = {};
+  const validateCompleteForm = () => {
+    const workData = getWorkData();
+    const formErrors = validateForm(workData, t);
 
-    if (!workType) {
-      newErrors.workType = t("errors.workTypeRequired");
-    }
+    setErrors(formErrors);
 
-    if (!title || title.trim() === "") {
-      newErrors.title = t("errors.titleRequired");
-    }
-
-    if (authors.length === 0) {
-      newErrors.authors = t("errors.authorsRequired");
-    }
-
-    const descriptionWordCount = countWords(description);
-    if (descriptionWordCount > 160) {
-      newErrors.description =
-        t("errors.descriptionTooLong") ||
-        "A descrição deve ter no máximo 160 palavras";
-    }
-
-    const abstractWordCount = countWords(abstract);
-    if (abstractWordCount > 300) {
-      newErrors.abstract =
-        t("errors.abstractTooLong") ||
-        "O resumo deve ter no máximo 300 palavras";
-    }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length > 0) {
-      const errorMessages = Object.values(newErrors).join("\n");
+    if (Object.keys(formErrors).length > 0) {
+      const errorMessages = Object.values(formErrors).join("\n");
       alert(errorMessages);
       return false;
     }
@@ -135,154 +84,81 @@ const NewWork = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (validateCompleteForm()) {
       handleSendForReview();
     }
   };
 
-  // Função para voltar à página anterior
   const handleBack = () => {
     navigate(-1);
   };
 
-  // Função para salvar como rascunho
   const handleSaveDraft = async () => {
-    setIsLoading(true);
     try {
-      const formData = {
-        workType,
-        title,
-        authors,
-        description,
-        abstract,
-        labels,
-        links,
-        image,
-        status: "draft",
-      };
-
-      // Simular chamada da API para salvar rascunho
-      console.log("Salvando rascunho:", formData);
-
-      // Aqui seria a chamada real para a API
-      // const response = await api.post("/works/draft", formData);
-
+      await saveDraft(getWorkData());
       alert(t("messages.draftSaved") || "Rascunho salvo com sucesso!");
     } catch (error) {
-      console.error("Erro ao salvar rascunho:", error);
-      alert(
-        t("errors.saveDraftError") ||
-          "Erro ao salvar rascunho. Tente novamente."
-      );
-    } finally {
-      setIsLoading(false);
+      alert(error.message);
     }
   };
 
-  // Função para enviar para avaliação docente
   const handleSendForReview = async () => {
-    if (!validateForm()) {
+    if (!validateCompleteForm()) {
       return;
     }
 
-    setIsLoading(true);
     try {
-      const formData = {
-        workType,
-        title,
-        authors,
-        description,
-        abstract,
-        labels,
-        links,
-        image,
-        status: "under_review",
-      };
-
-      console.log("Enviando para avaliação:", formData);
-
-      // Aqui seria a chamada real para a API
-      // const response = await api.post("/works/submit", formData);
-
+      await submitForReview(getWorkData());
       alert(
         t("messages.sentForReview") ||
           "Trabalho enviado para avaliação com sucesso!"
       );
-      navigate(-1); // Voltar à página anterior após envio
+      navigate(-1);
     } catch (error) {
-      console.error("Erro ao enviar trabalho:", error);
-      alert(
-        t("errors.submitError") || "Erro ao enviar trabalho. Tente novamente."
-      );
-    } finally {
-      setIsLoading(false);
+      alert(error.message);
     }
   };
 
-  // Função para publicar diretamente (apenas Admin)
   const handlePublish = async () => {
-    if (!validateForm()) {
+    if (!validateCompleteForm()) {
       return;
     }
 
-    setIsLoading(true);
     try {
-      const formData = {
-        workType,
-        title,
-        authors,
-        description,
-        abstract,
-        labels,
-        links,
-        image,
-        status: "published",
-      };
-
-      console.log("Publicando trabalho:", formData);
-
-      // Aqui seria a chamada real para a API
-      // const response = await api.post("/works/publish", formData);
-
+      await publish(getWorkData());
       alert(t("messages.published") || "Trabalho publicado com sucesso!");
-      navigate(-1); // Voltar à página anterior após publicação
+      navigate(-1);
     } catch (error) {
-      console.error("Erro ao publicar trabalho:", error);
-      alert(
-        t("errors.publishError") ||
-          "Erro ao publicar trabalho. Tente novamente."
-      );
-    } finally {
-      setIsLoading(false);
+      alert(error.message);
     }
   };
 
   const handleWorkTypeChange = (selectedType) => {
     setWorkType(selectedType);
-    validateField("workType", selectedType);
+    validateSingleField("workType", selectedType);
   };
 
   const handleTitleChange = (e) => {
     const value = e.target.value;
     setTitle(value);
-    validateField("title", value);
+    validateSingleField("title", value);
   };
 
   const handleDescriptionChange = (e) => {
     const value = e.target.value;
     setDescription(value);
-    validateField("description", value);
+    validateSingleField("description", value);
   };
 
   const handleAbstractChange = (e) => {
     const value = e.target.value;
     setAbstract(value);
-    validateField("abstract", value);
+    validateSingleField("abstract", value);
   };
 
   const handleAuthorsChange = (newAuthors) => {
     setAuthors(newAuthors);
-    validateField("authors", newAuthors);
+    validateSingleField("authors", newAuthors);
   };
 
   const handleImageChange = (file) => {
@@ -390,14 +266,12 @@ const NewWork = () => {
             {isLoading ? t("common.loading") : t("common.save")}
           </Button>
 
-          {/* Botão Enviar - apenas para usuários comuns autenticados */}
           {userIsAuthenticated && isCommon && (
             <Button type="submit" disabled={isLoading}>
               {isLoading ? t("common.loading") : t("new-work.send")}
             </Button>
           )}
 
-          {/* Botão Publicar - apenas para administradores */}
           {userIsAuthenticated && isAdmin && (
             <Button onClick={handlePublish} disabled={isLoading}>
               {isLoading ? t("common.loading") : t("new-work.publish")}
