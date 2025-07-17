@@ -42,6 +42,8 @@ export const useCreateWork = () => {
 
         if (name && email) {
           newAuthors.push({ name, email });
+        } else if (name) {
+          newAuthors.push({ name, email: "" });
         }
       }
     });
@@ -51,32 +53,39 @@ export const useCreateWork = () => {
 
   const formatLabelsForBackend = (labelsArray) => {
     return labelsArray.map((label) => {
+      let labelName = "";
+
       if (typeof label === "string") {
-        return {
-          name: label,
-          color: "#007bff",
-        };
+        labelName = label;
+      } else if (label && typeof label === "object") {
+        labelName = label.label || label.name || String(label);
+      } else {
+        labelName = String(label);
       }
+
       return {
-        name: label.name || label,
-        color: label.color || "#007bff",
+        name: labelName,
+        color: (label && label.color) || "#007bff",
       };
     });
   };
 
   const formatLinksForBackend = (linksArray) => {
     return linksArray.map((link) => {
+      let linkUrl = "";
+
       if (typeof link === "string") {
-        return {
-          name: "Link",
-          url: link,
-          description: "",
-        };
+        linkUrl = link;
+      } else if (link && typeof link === "object") {
+        linkUrl = link.link || link.url || String(link);
+      } else {
+        linkUrl = String(link);
       }
+
       return {
-        name: link.name || "Link",
-        url: link.url || link,
-        description: link.description || "",
+        name: (link && link.name) || "Link",
+        url: linkUrl,
+        description: (link && link.description) || "",
       };
     });
   };
@@ -92,28 +101,25 @@ export const useCreateWork = () => {
       const workLabels = formatLabelsForBackend(workData.labels || []);
       const workLinks = formatLinksForBackend(workData.links || []);
 
-      const formData = new FormData();
-      formData.append("title", workData.title || "");
-      formData.append("description", workData.description || "");
-      formData.append("abstract", workData.abstract || "");
-      formData.append("workType", mapWorkTypeToBackend(workData.workType));
-      formData.append("workStatus", mapStatusToBackend(status));
+      const simplePayload = {
+        title: workData.title?.trim() || "",
+        description: workData.description?.trim() || "",
+        content: workData.abstract?.trim() || "",
+        workType: mapWorkTypeToBackend(workData.workType),
+        workStatus: mapStatusToBackend(status),
+      };
 
-      if (workData.image) {
-        formData.append("image", workData.image);
+      if (!simplePayload.title) {
+        throw new Error("Título é obrigatório");
+      }
+      if (!simplePayload.workType) {
+        throw new Error("Tipo de trabalho é obrigatório");
+      }
+      if (studentIds.length === 0 && newAuthors.length === 0) {
+        throw new Error("Pelo menos um autor é obrigatório");
       }
 
-      formData.append("studentIds", JSON.stringify(studentIds));
-      formData.append("newAuthors", JSON.stringify(newAuthors));
-      formData.append("workLabels", JSON.stringify(workLabels));
-      formData.append("workLinks", JSON.stringify(workLinks));
-
-      const response = await api.post(ENDPOINTS.WORKS.CREATE, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
+      const response = await api.post(ENDPOINTS.WORKS.CREATE, simplePayload);
       return response.data;
     } catch (error) {
       console.error("Erro ao criar trabalho:", error);
@@ -132,8 +138,6 @@ export const useCreateWork = () => {
           errorMessage = "Sessão expirada. Faça login novamente.";
         } else if (status === 403) {
           errorMessage = "Você não tem permissão para realizar esta ação.";
-        } else if (status === 413) {
-          errorMessage = "Arquivo muito grande. Reduza o tamanho da imagem.";
         } else if (status >= 500) {
           errorMessage =
             "Erro interno do servidor. Tente novamente mais tarde.";

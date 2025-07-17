@@ -9,7 +9,6 @@ import {
   LabelInput,
   LinkInput,
 } from "../../../components/input";
-import ImageUpload from "../../../components/image-upload";
 import mockedAuthors from "../../../data/mockedAuthors.json";
 import mockedLabels from "../../../data/mockedLabels.json";
 import mockedLinks from "../../../data/mockedLinks.json";
@@ -35,18 +34,16 @@ const NewWork = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [abstract, setAbstract] = useState("");
-  const [image, setImage] = useState(null);
   const [errors, setErrors] = useState({});
 
   const userIsAuthenticated = isAuthenticated();
-  const isAdmin = hasRole("admin") || hasRole("Admin");
-  const isCommon = hasRole("comum") || hasRole("common") || hasRole("Comum");
+  const isAdmin = hasRole("IS_ADMIN");
+  const isStudent = hasRole("IS_STUDENT");
 
   const getWorkData = () => ({
     title,
     description,
     abstract,
-    image,
     authors,
     labels,
     links,
@@ -161,17 +158,10 @@ const NewWork = () => {
     validateSingleField("authors", newAuthors);
   };
 
-  const handleImageChange = (file) => {
-    setImage(file);
-  };
-
   return (
     <>
       <form onSubmit={handleSubmit} id="new-work-form">
-        <div id="work-image-upload">
-          <label>{t("new-work.workimage")}</label>
-          <ImageUpload onImageChange={handleImageChange} />
-        </div>
+        {/* TODO: Implementar upload de imagem para trabalhos */}
 
         <div id="work-type">
           <label>{t("new-work.worktype")}</label>
@@ -266,7 +256,7 @@ const NewWork = () => {
             {isLoading ? t("common.loading") : t("common.save")}
           </Button>
 
-          {userIsAuthenticated && isCommon && (
+          {userIsAuthenticated && isStudent && (
             <Button type="submit" disabled={isLoading}>
               {isLoading ? t("common.loading") : t("new-work.send")}
             </Button>
