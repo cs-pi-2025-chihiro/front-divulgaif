@@ -43,9 +43,8 @@
     "article": "Artigo",
     "dissertation": "Dissertação",
     "research": "Pesquisa",
-    "finalPaper": "TCC",
-    "extension": "Extensão",
-    "unknown": "Tipo desconhecido"
+    "finalThesis": "TCC",
+    "extension": "Extensão"
   },
   "workDetail": {
     "authors": "Autores",
@@ -148,6 +147,19 @@
     "workauthors": "Autores",
     "workdescription": "Descrição",
     "workabstract": "Resumo",
+    "labels": "Labels",
+    "links": "Links",
+    "words": "palavras",
+    "searchAuthor": "Buscar autor",
+    "searchLabel": "Buscar label",
+    "searchLink": "Buscar links",
+    "loading": "Carregando",
+    "fullName": "Nome Completo",
+    "email": "Email",
+    "type": "Tipo",
+    "student": "Aluno",
+    "teacher": "Professor",
+    "add": "Adicionar",
     "publish": "Publicar",
     "send": "Enviar"
   },

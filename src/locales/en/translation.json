@@ -36,8 +36,7 @@
     "dissertation": "Dissertation",
     "extension": "Extension",
     "research": "Research",
-    "finalPaper": "Final Paper",
-    "unknown": "Unknown type"
+    "finalThesis": "Final Thesis"
   },
   "workDetail": {
     "authors": "Authors",
@@ -148,6 +147,19 @@
     "workauthors": "Authors",
     "workdescription": "Description",
     "workabstract": "Abstract",
+    "labels": "Labels",
+    "links": "Links",
+    "words": "words",
+    "searchAuthor": "Search author",
+    "searchLabel": "Search label",
+    "searchLink": "Search links",
+    "loading": "Loading",
+    "fullName": "Full Name",
+    "email": "Email",
+    "type": "Type",
+    "student": "Student",
+    "teacher": "Teacher",
+    "add": "Add",
     "publish": "Publish",
     "send": "Send"
   },

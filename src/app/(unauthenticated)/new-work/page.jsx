@@ -9,9 +9,6 @@ import {
   LabelInput,
   LinkInput,
 } from "../../../components/input";
-import mockedAuthors from "../../../data/mockedAuthors.json";
-import mockedLabels from "../../../data/mockedLabels.json";
-import mockedLinks from "../../../data/mockedLinks.json";
 import WorkTypeSelector from "../../../components/work-type-selector/WorkTypeSelector";
 import { isAuthenticated, hasRole } from "../../../services/hooks/auth/useAuth";
 import { useCreateWork } from "../../../services/works/useCreateWork";
@@ -20,12 +17,15 @@ import {
   validateField,
   validateForm,
 } from "../../../services/utils/validation";
+import { useGetSuggestions } from "../../../services/works/useGetSuggestions.js";
 
 const NewWork = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { isLoading, error, saveDraft, submitForReview, publish } =
     useCreateWork();
+  const { getLabelSuggestions, getLinkSuggestions, getAuthorSuggestions } =
+    useGetSuggestions();
 
   const [authors, setAuthors] = useState([]);
   const [labels, setLabels] = useState([]);
@@ -43,10 +43,10 @@ const NewWork = () => {
   const getWorkData = () => ({
     title,
     description,
-    abstract,
-    authors,
-    labels,
-    links,
+    abstractText: abstract,
+    authors: authors,
+    labels: labels,
+    links: links,
     workType,
   });
 
@@ -92,7 +92,8 @@ const NewWork = () => {
 
   const handleSaveDraft = async () => {
     try {
-      await saveDraft(getWorkData());
+      const workData = getWorkData();
+      await saveDraft(workData);
       alert(t("messages.draftSaved") || "Rascunho salvo com sucesso!");
     } catch (error) {
       alert(error.message);
@@ -105,7 +106,8 @@ const NewWork = () => {
     }
 
     try {
-      await submitForReview(getWorkData());
+      const workData = getWorkData();
+      await submitForReview(workData);
       alert(
         t("messages.sentForReview") ||
           "Trabalho enviado para avaliação com sucesso!"
@@ -122,7 +124,8 @@ const NewWork = () => {
     }
 
     try {
-      await publish(getWorkData());
+      const workData = getWorkData();
+      await publish(workData);
       alert(t("messages.published") || "Trabalho publicado com sucesso!");
       navigate(-1);
     } catch (error) {
@@ -150,12 +153,22 @@ const NewWork = () => {
   const handleAbstractChange = (e) => {
     const value = e.target.value;
     setAbstract(value);
-    validateSingleField("abstract", value);
+    validateSingleField("abstractText", value);
   };
 
   const handleAuthorsChange = (newAuthors) => {
     setAuthors(newAuthors);
     validateSingleField("authors", newAuthors);
+  };
+
+  const handleLabelsChange = (newLabels) => {
+    setLabels(newLabels);
+    validateSingleField("labels", newLabels);
+  };
+
+  const handleLinksChange = (newLinks) => {
+    setLinks(newLinks);
+    validateSingleField("links", newLinks);
   };
 
   return (
@@ -190,7 +203,7 @@ const NewWork = () => {
           <AuthorInput
             authors={authors}
             setAuthors={handleAuthorsChange}
-            suggestions={mockedAuthors}
+            getSuggestions={getAuthorSuggestions}
           />
           {errors.authors && (
             <span className="error-message">{errors.authors}</span>
@@ -222,10 +235,10 @@ const NewWork = () => {
             value={abstract}
             onChange={handleAbstractChange}
             placeholder={t("new-work.workabstract")}
-            className={errors.abstract ? "field-error" : ""}
+            className={errors.abstractText ? "field-error" : ""}
           ></textarea>
-          {errors.abstract && (
-            <span className="error-message">{errors.abstract}</span>
+          {errors.abstractText && (
+            <span className="error-message">{errors.abstractText}</span>
           )}
         </div>
 
@@ -233,8 +246,8 @@ const NewWork = () => {
           <label>Labels</label>
           <LabelInput
             labels={labels}
-            setLabels={setLabels}
-            suggestions={mockedLabels.labels}
+            setLabels={handleLabelsChange}
+            getSuggestions={getLabelSuggestions}
           />
         </div>
 
@@ -242,8 +255,8 @@ const NewWork = () => {
           <label>Links</label>
           <LinkInput
             links={links}
-            setLinks={setLinks}
-            suggestions={mockedLinks.links}
+            setLinks={handleLinksChange}
+            getSuggestions={getLinkSuggestions}
           />
         </div>
 

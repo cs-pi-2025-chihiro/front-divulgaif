@@ -8,12 +8,16 @@ export const ENDPOINTS = {
     UPLOAD_IMAGE: "/works/upload-image",
   },
   AUTHORS: {
-    SEARCH: "/authors/search",
+    SEARCH: "/authors/list",
     CREATE: "/authors",
   },
   LABELS: {
-    LIST: "/labels",
+    LIST: "/labels/list",
     CREATE: "/labels",
+  },
+  LINKS: {
+    LIST: "/links/list",
+    CREATE: "/links",
   },
   SUAP: {
     OAUTH: "https://suap.ifpr.edu.br/o/authorize/",

@@ -10,82 +10,116 @@ export const useCreateWork = () => {
     const statusMap = {
       draft: "DRAFT",
       under_review: "SUBMITTED",
+      submitted: "SUBMITTED",
       published: "PUBLISHED",
+      pending_changes: "PENDING_CHANGES",
+      rejected: "REJECTED",
     };
     return statusMap[status] || "DRAFT";
   };
 
   const mapWorkTypeToBackend = (workType) => {
     const typeMap = {
-      Artigo: "ARTICLE",
-      Pesquisa: "SEARCH",
-      Dissertação: "DISSERTATION",
-      Extensão: "EXTENSION",
-      TCC: "FINAL_THESIS",
+      ARTICLE: "ARTICLE",
+      RESEARCH: "SEARCH",
+      DISSERTATION: "DISSERTATION",
+      EXTENSION: "EXTENSION",
+      FINAL_PAPER: "FINAL_THESIS",
     };
     return typeMap[workType] || workType;
   };
 
   const formatAuthorsForBackend = (authorsArray) => {
-    const studentIds = [];
     const newAuthors = [];
 
     authorsArray.forEach((author) => {
-      if (typeof author === "object" && author.id) {
-        studentIds.push(author.id);
-      } else {
-        const authorStr =
-          typeof author === "string" ? author : author.name || "";
-        const [name, email] = authorStr.includes("@")
-          ? authorStr.split(" <").map((part) => part.replace(">", "").trim())
-          : [authorStr, ""];
+      let name = "";
+      let email = "";
 
-        if (name && email) {
-          newAuthors.push({ name, email });
-        } else if (name) {
-          newAuthors.push({ name, email: "" });
+      if (typeof author === "string") {
+        if (author.includes("<") && author.includes(">")) {
+          const match = author.match(/^(.+?)\s*<(.+?)>$/);
+          if (match) {
+            name = match[1].trim();
+            email = match[2].trim();
+          } else {
+            name = author.trim();
+          }
+        } else if (author.includes("@")) {
+          name = author.split("@")[0].trim();
+          email = author.trim();
+        } else {
+          name = author.trim();
         }
+      } else if (typeof author === "object") {
+        name = author.name || author.label || "";
+        email = author.email || "";
+      }
+
+      if (name) {
+        if (!email || !isValidEmail(email)) {
+          email = `${name.toLowerCase().replace(/\s+/g, ".")}@external.com`;
+        }
+        newAuthors.push({ name, email });
       }
     });
 
-    return { studentIds, newAuthors };
+    return { newAuthors };
+  };
+
+  const isValidEmail = (email) => {
+    if (!email || typeof email !== "string") return false;
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
   const formatLabelsForBackend = (labelsArray) => {
     return labelsArray.map((label) => {
-      let labelName = "";
+      const labelName =
+        typeof label === "string"
+          ? label
+          : label && typeof label === "object"
+          ? label.label || label.name || String(label)
+          : String(label);
 
-      if (typeof label === "string") {
-        labelName = label;
-      } else if (label && typeof label === "object") {
-        labelName = label.label || label.name || String(label);
-      } else {
-        labelName = String(label);
-      }
+      const labelColor = (label && label.color) || "#3B82F6";
+
+      const colorHex = labelColor.startsWith("#")
+        ? labelColor
+        : `#${labelColor}`;
 
       return {
         name: labelName,
-        color: (label && label.color) || "#007bff",
+        color: colorHex,
       };
     });
   };
 
   const formatLinksForBackend = (linksArray) => {
     return linksArray.map((link) => {
-      let linkUrl = "";
+      let linkUrl, linkName, linkDescription;
 
       if (typeof link === "string") {
         linkUrl = link;
+        linkName = link;
+        linkDescription = "";
       } else if (link && typeof link === "object") {
-        linkUrl = link.link || link.url || String(link);
+        linkUrl = link.url || link.link || link.name || String(link);
+        linkName = link.name || link.label || linkUrl;
+        linkDescription = link.description || "";
       } else {
         linkUrl = String(link);
+        linkName = String(link);
+        linkDescription = "";
+      }
+
+      if (!linkUrl.startsWith("http://") && !linkUrl.startsWith("https://")) {
+        linkUrl = `https://${linkUrl}`;
       }
 
       return {
-        name: (link && link.name) || "Link",
+        name: linkName || "Link",
         url: linkUrl,
-        description: (link && link.description) || "",
+        description: linkDescription,
       };
     });
   };
@@ -95,52 +129,75 @@ export const useCreateWork = () => {
     setError(null);
 
     try {
-      const { studentIds, newAuthors } = formatAuthorsForBackend(
-        workData.authors || []
-      );
+      if (!workData.title?.trim()) {
+        throw new Error("Título é obrigatório");
+      }
+      if (!workData.workType) {
+        throw new Error("Tipo de trabalho é obrigatório");
+      }
+
+      const { newAuthors } = formatAuthorsForBackend(workData.authors || []);
       const workLabels = formatLabelsForBackend(workData.labels || []);
       const workLinks = formatLinksForBackend(workData.links || []);
 
-      const simplePayload = {
-        title: workData.title?.trim() || "",
+      const payload = {
+        title: workData.title.trim(),
         description: workData.description?.trim() || "",
-        content: workData.abstract?.trim() || "",
+        content:
+          workData.abstractText?.trim() || workData.abstract?.trim() || "",
         workType: mapWorkTypeToBackend(workData.workType),
         workStatus: mapStatusToBackend(status),
       };
 
-      if (!simplePayload.title) {
-        throw new Error("Título é obrigatório");
+      if (newAuthors.length > 0) {
+        payload.newAuthors = newAuthors;
       }
-      if (!simplePayload.workType) {
-        throw new Error("Tipo de trabalho é obrigatório");
+      if (workLabels.length > 0) {
+        payload.workLabels = workLabels;
       }
-      if (studentIds.length === 0 && newAuthors.length === 0) {
-        throw new Error("Pelo menos um autor é obrigatório");
+      if (workLinks.length > 0) {
+        payload.workLinks = workLinks;
       }
 
-      const response = await api.post(ENDPOINTS.WORKS.CREATE, simplePayload);
+      const response = await api.post(ENDPOINTS.WORKS.CREATE, payload);
       return response.data;
     } catch (error) {
-      console.error("Erro ao criar trabalho:", error);
-
+      const status = error.response?.status;
+      const data = error.response?.data;
       let errorMessage = "Erro ao criar trabalho. Tente novamente.";
 
       if (error.response) {
-        const status = error.response.status;
-        const data = error.response.data;
-
         if (status === 400) {
           errorMessage =
             data.message ||
+            data.error ||
             "Dados inválidos. Verifique os campos obrigatórios.";
         } else if (status === 401) {
           errorMessage = "Sessão expirada. Faça login novamente.";
         } else if (status === 403) {
           errorMessage = "Você não tem permissão para realizar esta ação.";
+        } else if (status === 404) {
+          if (data.error && data.error.includes("User with id")) {
+            errorMessage =
+              "Erro interno: usuário não encontrado. Todos os autores serão criados como novos usuários.";
+          } else if (data.error && data.error.includes("WorkType")) {
+            errorMessage =
+              "Tipo de trabalho inválido. Verifique se o tipo selecionado é válido.";
+          } else {
+            errorMessage =
+              "Recurso não encontrado. Verifique os dados enviados.";
+          }
         } else if (status >= 500) {
           errorMessage =
             "Erro interno do servidor. Tente novamente mais tarde.";
+        }
+
+        if (data.details || data.errors) {
+          const details = data.details || data.errors;
+          if (typeof details === "object") {
+            const errorDetails = Object.values(details).flat().join(", ");
+            errorMessage += ` Detalhes: ${errorDetails}`;
+          }
         }
       } else if (error.request) {
         errorMessage =

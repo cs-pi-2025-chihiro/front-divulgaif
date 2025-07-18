@@ -1,23 +1,32 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import "./author-input.css";
 
-const AuthorInput = ({
-  authors,
-  setAuthors,
-  suggestions,
-}) => {
+const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [newAuthor, setNewAuthor] = useState({
     name: "",
     email: "",
-    type: "Aluno",
+    type: "student",
   });
   const containerRef = useRef(null);
 
   useEffect(() => {
+    setNewAuthor((prev) => ({
+      ...prev,
+      type: "student",
+    }));
+  }, []);
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
         setFilteredSuggestions([]);
       }
     };
@@ -25,16 +34,24 @@ const AuthorInput = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     const value = e.target.value;
     setInputValue(value);
-    if (value) {
-      const filtered = suggestions.filter(
-        (s) =>
-          s.name.toLowerCase().startsWith(value.toLowerCase()) &&
-          !authors.some((a) => a.id === s.id)
-      );
-      setFilteredSuggestions(filtered);
+
+    if (value && value.length >= 2) {
+      setIsLoading(true);
+      try {
+        const suggestions = await getSuggestions(value);
+        const filtered = suggestions.filter(
+          (s) => !authors.some((a) => a.id === s.id)
+        );
+        setFilteredSuggestions(filtered);
+      } catch (error) {
+        console.error("Erro ao buscar sugestões:", error);
+        setFilteredSuggestions([]);
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       setFilteredSuggestions([]);
     }
@@ -59,7 +76,7 @@ const AuthorInput = ({
     if (newAuthor.name && newAuthor.email) {
       const newAuthorData = { ...newAuthor, id: `new_${Date.now()}` };
       setAuthors([...authors, newAuthorData]);
-      setNewAuthor({ name: "", email: "", type: "Aluno" });
+      setNewAuthor({ name: "", email: "", type: "student" });
     }
   };
 
@@ -85,8 +102,11 @@ const AuthorInput = ({
             className="autocomplete-input"
             value={inputValue}
             onChange={handleInputChange}
-            placeholder="Buscar autor..."
+            placeholder={t("new-work.searchAuthor")}
           />
+          {isLoading && (
+            <div className="loading-indicator">{t("new-work.loading")}...</div>
+          )}
         </div>
       </div>
 
@@ -103,29 +123,55 @@ const AuthorInput = ({
       <div className="new-author-form-layout">
         <div className="form-top-row">
           <div className="field-wrapper">
-            <label>Nome Completo</label>
-            <input type="text" name="name" value={newAuthor.name} onChange={handleNewAuthorChange} />
+            <label>{t("new-work.fullName")}</label>
+            <input
+              type="text"
+              name="name"
+              value={newAuthor.name}
+              onChange={handleNewAuthorChange}
+            />
           </div>
           <div className="field-wrapper">
-            <label>Email</label>
-            <input type="email" name="email" value={newAuthor.email} onChange={handleNewAuthorChange} />
+            <label>{t("new-work.email")}</label>
+            <input
+              type="email"
+              name="email"
+              value={newAuthor.email}
+              onChange={handleNewAuthorChange}
+            />
           </div>
         </div>
         <div className="form-bottom-row">
           <div className="field-wrapper">
-            <label>Tipo</label>
+            <label>{t("new-work.type")}</label>
             <div className="type-buttons">
-              <button type="button" className={`type-button ${newAuthor.type === "Aluno" ? "active" : ""}`} onClick={() => setNewAuthor({ ...newAuthor, type: "Aluno" })}>
-                Aluno
+              <button
+                type="button"
+                className={`type-button ${
+                  newAuthor.type === "student" ? "active" : ""
+                }`}
+                onClick={() => setNewAuthor({ ...newAuthor, type: "student" })}
+              >
+                {t("new-work.student")}
               </button>
-              <button type="button" className={`type-button ${newAuthor.type === "Professor" ? "active" : ""}`} onClick={() => setNewAuthor({ ...newAuthor, type: "Professor" })}>
-                Professor
+              <button
+                type="button"
+                className={`type-button ${
+                  newAuthor.type === "teacher" ? "active" : ""
+                }`}
+                onClick={() => setNewAuthor({ ...newAuthor, type: "teacher" })}
+              >
+                {t("new-work.teacher")}
               </button>
             </div>
           </div>
           <div className="add-button-wrapper">
-            <button type="button" className="add-button" onClick={addNewAuthorManually}>
-              Adicionar
+            <button
+              type="button"
+              className="add-button"
+              onClick={addNewAuthorManually}
+            >
+              {t("new-work.add")}
             </button>
           </div>
         </div>

@@ -1,18 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import "./link-input.css";
 
-const LinkInput = ({
-  links,
-  setLinks,
-  suggestions = [],
-}) => {
+const LinkInput = ({ links, setLinks, getSuggestions }) => {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
         setFilteredSuggestions([]);
       }
     };
@@ -20,16 +22,24 @@ const LinkInput = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     const value = e.target.value;
     setInputValue(value);
-    if (value) {
-      const filtered = suggestions.filter(
-        (suggestion) =>
-          suggestion.link.toLowerCase().startsWith(value.toLowerCase()) &&
-          !links.some((link) => link.id === suggestion.id)
-      );
-      setFilteredSuggestions(filtered);
+
+    if (value && value.length >= 2) {
+      setIsLoading(true);
+      try {
+        const suggestions = await getSuggestions(value);
+        const filtered = suggestions.filter(
+          (suggestion) => !links.some((link) => link.id === suggestion.id)
+        );
+        setFilteredSuggestions(filtered);
+      } catch (error) {
+        console.error("Erro ao buscar sugestões:", error);
+        setFilteredSuggestions([]);
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       setFilteredSuggestions([]);
     }
@@ -45,12 +55,17 @@ const LinkInput = ({
     const trimmedValue = inputValue.trim();
     if (trimmedValue === "") return;
 
-    if (!links.some(link => link.link.toLowerCase() === trimmedValue.toLowerCase())) {
-        const newLink = {
-            id: `new_${Date.now()}`,
-            link: trimmedValue,
-        };
-        setLinks([...links, newLink]);
+    if (
+      !links.some(
+        (link) =>
+          link.url && link.url.toLowerCase() === trimmedValue.toLowerCase()
+      )
+    ) {
+      const newLink = {
+        id: `new_${Date.now()}`,
+        url: trimmedValue,
+      };
+      setLinks([...links, newLink]);
     }
     setInputValue("");
     setFilteredSuggestions([]);
@@ -67,8 +82,13 @@ const LinkInput = ({
           {links.map((link) => (
             <div key={link.id} className="link-tag">
               <span className="link-icon">🔗</span>
-              <a href={link.link} target="_blank" rel="noopener noreferrer" className="link-text">
-                {link.link}
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-text"
+              >
+                {link.url}
               </a>
               <button
                 type="button"
@@ -84,12 +104,19 @@ const LinkInput = ({
             className="autocomplete-input"
             value={inputValue}
             onChange={handleInputChange}
-            placeholder="Buscar links..."
+            placeholder={t("new-work.searchLink")}
           />
+          {isLoading && (
+            <div className="loading-indicator">{t("new-work.loading")}...</div>
+          )}
         </div>
 
         <div className="add-link-button-container">
-          <button type="button" className="add-link-button" onClick={addNewLink}>
+          <button
+            type="button"
+            className="add-link-button"
+            onClick={addNewLink}
+          >
             +
           </button>
         </div>
@@ -98,8 +125,11 @@ const LinkInput = ({
       {filteredSuggestions.length > 0 && (
         <ul className="suggestions-list">
           {filteredSuggestions.map((suggestion) => (
-            <li key={suggestion.id} onClick={() => addLinkFromSuggestion(suggestion)}>
-              {suggestion.link}
+            <li
+              key={suggestion.id}
+              onClick={() => addLinkFromSuggestion(suggestion)}
+            >
+              {suggestion.url}
             </li>
           ))}
         </ul>
