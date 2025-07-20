@@ -86,7 +86,9 @@
     "home": "Home",
     "works": "Works",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "mainSearch": "Main Search",
+    "myWorks": "My Works"
   },
   "filters": {
     "title": "Filter Presentation",

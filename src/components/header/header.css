@@ -12,13 +12,13 @@
 }
 
 .header-left h1 {
-  font-size: 20px;
   font-weight: bold;
 }
 
 .header-center {
+  margin-right: 2.5%;
   display: flex;
-  gap: 25px;
+  gap: 30px;
 }
 
 .header-center a {
@@ -36,6 +36,7 @@
 .header-right {
   display: flex;
   align-items: center;
+  color: white;
 }
 
 .button.login-style {
@@ -43,7 +44,6 @@
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 999px;
   background-color: transparent;
   color: white;
@@ -54,5 +54,44 @@
 }
 
 .button.login-style:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: white;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.desktop-auth {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .header-center {
+    display: none;
+  }
+
+  .desktop-auth {
+    margin-right: 10px;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .header {
+    padding: 0 15px;
+  }
+
+  .header-left h1 {
+    font-size: 1.5rem;
+  }
 }
