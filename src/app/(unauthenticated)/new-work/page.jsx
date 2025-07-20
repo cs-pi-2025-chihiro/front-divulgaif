@@ -92,12 +92,10 @@ const NewWork = () => {
 
   const handleSaveDraft = async () => {
     try {
-      console.log("mandei");
       const workData = getWorkData();
       await saveDraft(workData);
       alert(t("messages.draftSaved") || "Rascunho salvo com sucesso!");
     } catch (error) {
-      console.log("error: ", error);
       alert(error.message);
     }
   };
