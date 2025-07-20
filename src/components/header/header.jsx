@@ -49,7 +49,11 @@ const Header = () => {
         <div className="header-center">
           <a onClick={() => navigateTo("")}>{t("header.mainSearch")}</a>
           {authenticated && (
-            <a onClick={() => navigateTo("/meus-trabalhos")}>
+            <a
+              onClick={() =>
+                alert("Ainda trabalhando nisso! Still working on this!")
+              }
+            >
               {" "}
               {/* TODO: APLICAR ISSO QUANDO TERMINARMOS A PÁGINA */}
               {t("header.myWorks")}
