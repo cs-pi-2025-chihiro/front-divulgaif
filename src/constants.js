@@ -2,9 +2,9 @@ const env = process.env.REACT_APP_ENV || process.env.NODE_ENV;
 export const BASE_URL = (() => {
   switch (env) {
     case "development":
-      return "http://localhost:8081/api/v1";
-    case "production":
       return "https://desenvolvimento.divulgaif.com.br/api/v1";
+    case "production":
+      return "https://divulgaif.com.br/api/v1";
     case "staging":
       return "https://desenvolvimento.divulgaif.com.br/api/v1";
     default:
