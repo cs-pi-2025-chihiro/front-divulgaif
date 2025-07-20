@@ -42,6 +42,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  min-width: 280px;
 }
 
 .work-card .card-image-container {
@@ -70,7 +71,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.2;
-  
+
   /* Title truncation - 1 line - Method 2 (Fallback) */
   white-space: nowrap;
   max-width: 100%;
@@ -118,12 +119,15 @@
   .work-card .card-image-container {
     height: 150px;
   }
-  
-  .work-card .card-title {
-    font-size: 1.1rem;
+  .work-card {
+    min-width: 370px;
   }
-  
-  .work-card-description {
-    font-size: 0.85rem;
-  }
+}
+
+.work-card .card-title {
+  font-size: 1.1rem;
+}
+
+.work-card-description {
+  font-size: 0.85rem;
 }

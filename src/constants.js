@@ -4,7 +4,7 @@ export const BASE_URL = (() => {
     case "development":
       return "http://localhost:8081/api/v1";
     case "production":
-      return "https://divulgaif.com.br/api/v1";
+      return "https://desenvolvimento.divulgaif.com.br/api/v1";
     case "staging":
       return "https://desenvolvimento.divulgaif.com.br/api/v1";
     default:

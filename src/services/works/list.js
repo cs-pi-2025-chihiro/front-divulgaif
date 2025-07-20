@@ -22,7 +22,7 @@ export const listWorks = async (page = 0, size = 8, filters = {}) => {
     params.append(
       "sort",
       `createdAt,${filters.order === "desc" ? "desc" : "asc"}`
-    ); // TODO: Mudar isso quando for implementado a submissão pra SUBMITEDAT
+    );
   }
 
   if (filters.startDate) {
