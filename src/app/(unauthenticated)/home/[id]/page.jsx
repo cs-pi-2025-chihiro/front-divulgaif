@@ -3,45 +3,22 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../../../components/button";
 import "./page.css";
-import mockedValues from "../../../../data/mockedValues.json";
+import { useWork } from "./useWork";
 
 const WorkDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const [work, setWork] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  useEffect(() => {
-    const foundWork = mockedValues.trabalhos.find(
-      (work) => String(work.id) === String(id)
-    );
+  const workId = Number(id);
 
-    if (foundWork) {
-      setWork(foundWork);
-    }
-
-    setLoading(false);
-  }, [id]);
+  const { work, isLoading } = useWork({ id: workId });
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  const navigateImage = (direction) => {
-    if (!work || !work.images || work.images.length <= 1) return;
-
-    if (direction === "next") {
-      setCurrentImageIndex((prev) => (prev + 1) % work.images.length);
-    } else {
-      setCurrentImageIndex(
-        (prev) => (prev - 1 + work.images.length) % work.images.length
-      );
-    }
-  };
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="work-detail-container">
         <div className="loading-indicator">
@@ -58,7 +35,7 @@ const WorkDetail = () => {
           {t("errors.workNotFound") || "Work not found"}
           <p>ID: {id}</p>
           <Button
-            variant="primary"
+            variant="secondary"
             size="md"
             onClick={handleGoBack}
             className="mt-4"
@@ -69,8 +46,6 @@ const WorkDetail = () => {
       </div>
     );
   }
-
-  const images = work.images || (work.imageUrl ? [work.imageUrl] : []);
 
   return (
     <div className="work-detail-container">
@@ -95,26 +70,34 @@ const WorkDetail = () => {
         </div>
       </div>
 
-      {images.length > 0 && (
-        <div className="work-detail-image-container">
-          <div className="image-carousel">
-            <img
-              src={images[currentImageIndex]}
-              alt={`${work.title} - ${currentImageIndex + 1}`}
-              className="work-detail-image"
-            />
-          </div>
+      <div className="work-detail-image-container">
+        <div className="image-carousel">
+          <img
+            src={work.imageUrl}
+            alt={`${work.title}`}
+            className="work-detail-image"
+          />
         </div>
-      )}
+      </div>
       <div className="work-detail-content">
         <div className="work-detail-metadata">
-          <h2>{t("workDetail.authors") || "Autores"}</h2>
-          <p className="work-detail-authors">{work.authors}</p>
+          {work.authors && work.authors.length > 0 && (
+            <div className="work-detail-keywords">
+              <h2>{t("workDetail.authors") || "Autores"}</h2>
+              <div className="work-detail-authors">
+                {work.authors.map((author, index) => (
+                  <span key={index} className="keyword-tag">
+                    {author.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
-          {work.advisor && (
+          {work.teachers && (
             <>
               <h2>{t("workDetail.advisor") || "Professor Responsável"}</h2>
-              <p className="work-detail-advisor">{work.advisor}</p>
+              <p className="work-detail-advisor">{work.teachers.name}</p>
             </>
           )}
 
@@ -141,17 +124,17 @@ const WorkDetail = () => {
           <div className="keywords-list">
             {work.labels.map((label, index) => (
               <span key={index} className="keyword-tag">
-                {label}
+                {label.name}
               </span>
             ))}
           </div>
         </div>
       )}
-      {work.additionalLinks && work.additionalLinks.length > 0 && (
+      {work.links && work.links.length > 0 && (
         <div className="work-detail-links">
           <h2>{t("workDetail.additionalLinks") || "Links Adicionais"}</h2>
           <ul className="additional-links-list">
-            {work.additionalLinks.map((link, index) => (
+            {work.links.map((link, index) => (
               <li>
                 <a href={link.url} target="_blank" rel="noopener noreferrer">
                   {link.title ||
