@@ -162,6 +162,7 @@ export const useCreateWork = () => {
       const response = await api.post(ENDPOINTS.WORKS.CREATE, payload);
       return response.data;
     } catch (error) {
+      console.log("error: 1 ", error);
       const status = error.response?.status;
       const data = error.response?.data;
       let errorMessage = "Erro ao criar trabalho. Tente novamente.";

@@ -20,8 +20,8 @@ label {
   display: block;
   font-weight: 500;
   font-size: 16px;
+  margin-left: 5px;
   margin-bottom: 8px;
-  color: var(--text-dark);
 }
 
 textarea {
@@ -30,8 +30,8 @@ textarea {
   padding: 12px;
   font-size: 14px;
   color: #333;
-  background-color: #f8f8f8;
-  border: 1px solid #dcdcdc;
+  background-color: var(--white-gray);
+  border: 1px solid gray;
   border-radius: 6px;
   box-sizing: border-box;
   resize: vertical;
@@ -222,12 +222,6 @@ textarea {
 }
 
 @media (min-width: 1601px) {
-  #new-work-form {
-    margin: 40px auto;
-    padding: 40px;
-    max-width: 1400px;
-  }
-
   #new-work-form > div {
     margin-bottom: 32px;
   }

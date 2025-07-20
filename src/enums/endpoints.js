@@ -2,7 +2,7 @@ export const ENDPOINTS = {
   WORKS: {
     LIST: "/works/list",
     CREATE: "/works",
-    GET: "/works"
+    GET: "/works",
     GET_BY_ID: "/works/{id}",
     UPDATE: "/works/{id}",
     DELETE: "/works/{id}",

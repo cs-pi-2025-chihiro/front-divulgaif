@@ -95,6 +95,7 @@
 }
 
 .form-top-row {
+  margin-top: 10px;
   display: flex;
   gap: 1rem;
 }

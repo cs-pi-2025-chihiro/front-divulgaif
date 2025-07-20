@@ -92,10 +92,12 @@ const NewWork = () => {
 
   const handleSaveDraft = async () => {
     try {
+      console.log("mandei");
       const workData = getWorkData();
       await saveDraft(workData);
       alert(t("messages.draftSaved") || "Rascunho salvo com sucesso!");
     } catch (error) {
+      console.log("error: ", error);
       alert(error.message);
     }
   };
@@ -177,7 +179,7 @@ const NewWork = () => {
         {/* TODO: Implementar upload de imagem para trabalhos */}
 
         <div id="work-type">
-          <label>{t("new-work.worktype")}</label>
+          <label>{t("new-work.worktype") + "*"}</label>
           <WorkTypeSelector onTypeChange={handleWorkTypeChange} />
           {errors.workType && (
             <span className="error-message">{errors.workType}</span>
@@ -185,7 +187,7 @@ const NewWork = () => {
         </div>
 
         <div id="work-title">
-          <label>{t("new-work.worktitle")}</label>
+          <label>{t("new-work.worktitle") + "*"}</label>
           <Input
             value={title}
             onChange={handleTitleChange}
@@ -199,7 +201,7 @@ const NewWork = () => {
         </div>
 
         <div id="work-authors">
-          <label>{t("new-work.workauthors")}</label>
+          <label>{t("new-work.workauthors") + "*"}</label>
           <AuthorInput
             authors={authors}
             setAuthors={handleAuthorsChange}
@@ -211,10 +213,8 @@ const NewWork = () => {
         </div>
 
         <div id="work-description">
-          <label>{t("new-work.workdescription")}</label>
-          <div className="word-count-info">
-            {countWords(description)}/160 palavras
-          </div>
+          <label>{t("new-work.workdescription") + "*"}</label>
+          <div className="word-count-info">{countWords(description)}/160</div>
           <textarea
             value={description}
             onChange={handleDescriptionChange}
@@ -227,10 +227,8 @@ const NewWork = () => {
         </div>
 
         <div id="work-abstract">
-          <label>{t("new-work.workabstract")}</label>
-          <div className="word-count-info">
-            {countWords(abstract)}/300 palavras
-          </div>
+          <label className="new-work-label">{t("new-work.workabstract")}</label>
+          <div className="word-count-info">{countWords(abstract)}/300</div>
           <textarea
             value={abstract}
             onChange={handleAbstractChange}
@@ -243,7 +241,7 @@ const NewWork = () => {
         </div>
 
         <div id="work-labels">
-          <label>Labels</label>
+          <label>Labels*</label>
           <LabelInput
             labels={labels}
             setLabels={handleLabelsChange}
@@ -252,7 +250,7 @@ const NewWork = () => {
         </div>
 
         <div id="work-links">
-          <label>Links</label>
+          <label>Links*</label>
           <LinkInput
             links={links}
             setLinks={handleLinksChange}

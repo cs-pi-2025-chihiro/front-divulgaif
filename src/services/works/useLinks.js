@@ -13,7 +13,7 @@ export const useLinks = () => {
     try {
       const params = new URLSearchParams();
       if (searchTerm) {
-        params.append("url.startswith", searchTerm);
+        params.append("url.like", searchTerm);
       }
       params.append("page", page);
       params.append("size", size);

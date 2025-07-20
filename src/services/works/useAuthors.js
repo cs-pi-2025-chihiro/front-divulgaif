@@ -13,7 +13,7 @@ export const useAuthors = () => {
     try {
       const params = new URLSearchParams();
       if (searchTerm) {
-        params.append("name.startswith", searchTerm);
+        params.append("name.like", searchTerm);
       }
       params.append("page", page);
       params.append("size", size);
