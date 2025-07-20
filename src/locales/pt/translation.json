@@ -86,7 +86,9 @@
     "home": "Início",
     "works": "Trabalhos",
     "about": "Sobre",
-    "contact": "Contato"
+    "contact": "Contato",
+    "mainSearch": "Busca Principal",
+    "myWorks": "Meus Trabalhos"
   },
   "filters": {
     "title": "Filtrar Apresentação",

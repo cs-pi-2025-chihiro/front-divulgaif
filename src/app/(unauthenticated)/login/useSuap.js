@@ -109,14 +109,13 @@ const useSuap = () => {
           return true;
         }
       } catch (error) {
-        console.log("error: ", error);
+        console.error("error: ", error);
       }
 
       try {
         await createSuapUser(suapUserData);
-        console.log("User created successfully");
       } catch (error) {
-        console.log("error:", error);
+        console.error("error:", error);
       }
 
       const loginResult = await loginSuapUser(suapUserData, SUAP_PROVIDER);
