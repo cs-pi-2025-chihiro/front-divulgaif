@@ -199,7 +199,7 @@ const NewWork = () => {
         </div>
 
         <div id="work-authors">
-          <label>{t("new-work.workauthors") + "*"}</label>
+          <label>{t("new-work.workauthors")}</label>
           <AuthorInput
             authors={authors}
             setAuthors={handleAuthorsChange}
@@ -211,7 +211,7 @@ const NewWork = () => {
         </div>
 
         <div id="work-description">
-          <label>{t("new-work.workdescription") + "*"}</label>
+          <label>{t("new-work.workdescription")}</label>
           <div className="word-count-info">{countWords(description)}/160</div>
           <textarea
             value={description}
@@ -239,7 +239,7 @@ const NewWork = () => {
         </div>
 
         <div id="work-labels">
-          <label>Labels*</label>
+          <label>Labels</label>
           <LabelInput
             labels={labels}
             setLabels={handleLabelsChange}
@@ -248,7 +248,7 @@ const NewWork = () => {
         </div>
 
         <div id="work-links">
-          <label>Links*</label>
+          <label>Links</label>
           <LinkInput
             links={links}
             setLinks={handleLinksChange}
