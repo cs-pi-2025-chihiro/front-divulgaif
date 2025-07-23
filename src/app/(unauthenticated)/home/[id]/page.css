@@ -35,8 +35,8 @@
 
 .back-button {
   position: absolute;
-  top: 20%;
-  left: 0;
+  top: 26%;
+  left: -75px;
   z-index: 10;
   background-color: var(--dark-green);
   color: white;
@@ -116,7 +116,7 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
-  color: #2d5738;
+  color: var(--dark-green);
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 0.5rem;
 }
@@ -177,7 +177,6 @@
   color: #1e3d25;
 }
 
-/* Action buttons */
 .work-detail-actions {
   display: flex;
   flex-wrap: wrap;
@@ -198,7 +197,7 @@
 }
 
 button.action-button[variant="primary"] {
-  background-color: #2d5738;
+  background-color: var(--dark-green);
   color: white;
 }
 

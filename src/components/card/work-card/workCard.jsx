@@ -23,7 +23,6 @@ const WorkCard = ({
       <p className="work-card-description">{description}</p>
 
       <div className="work-card-authors-date">
-        <br></br>
         {Array.isArray(authors) &&
           authors.slice(0, 4).map((author, idx) => (
             <div className="work-card-authors" key={idx}>
@@ -45,26 +44,16 @@ const WorkCard = ({
   );
 
   const handleCardClick = () => {
-    if (!id) {
-      console.error("WorkCard: No ID provided for navigation");
-      return;
-    }
+    if (!id) return;
 
     const workId = String(id);
-
     const currentLang = i18n.language;
-
     const workPath = currentLang === "pt" ? "trabalho" : "work";
 
     navigate(`/${currentLang}/${workPath}/${workId}`);
 
     if (onView) onView();
   };
-
-  const truncatedDescription =
-    description && description.length > 100
-      ? `${description.substring(0, 100)}...`
-      : description;
 
   return (
     <div className="work-card-wrapper">
@@ -73,7 +62,7 @@ const WorkCard = ({
         imageUrl={imageUrl}
         imageAlt={title}
         title={title}
-        description={truncatedDescription}
+        description={description}
         content={cardContent}
         onClick={handleCardClick}
       />

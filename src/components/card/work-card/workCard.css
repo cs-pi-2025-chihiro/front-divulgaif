@@ -7,6 +7,11 @@
   text-align: justify;
 }
 
+.work-card-wrapper:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
 .work-card-authors {
   text-align: left;
 }
@@ -28,10 +33,6 @@
   border: var(--dark-green) 1px solid;
   padding: 2px 10px;
   margin: 2px 4px 2px 0;
-  .work-card-wrapper:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
 }
 
 .work-card {
@@ -41,6 +42,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  min-width: 280px;
 }
 
 .work-card .card-image-container {
@@ -62,6 +64,26 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 8px;
+  /* Title truncation - 1 line - Method 1 (Webkit) */
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+
+  /* Title truncation - 1 line - Method 2 (Fallback) */
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* Alternative approach for better browser support */
+.work-card .card-title.single-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 100%;
 }
 
 .work-card-authors {
@@ -73,15 +95,39 @@
 .work-card-description {
   font-size: 0.9rem;
   color: var(--gray);
+  margin-bottom: 12px;
+  /* Description truncation - 3 lines */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+.work-card-authors-date {
+  margin-top: auto;
+}
+
+.work-card-date {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin-top: 8px;
 }
 
 @media (max-width: 768px) {
   .work-card .card-image-container {
     height: 150px;
   }
+  .work-card {
+    min-width: 370px;
+  }
+}
+
+.work-card .card-title {
+  font-size: 1.1rem;
+}
+
+.work-card-description {
+  font-size: 0.85rem;
 }

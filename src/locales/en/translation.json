@@ -31,13 +31,19 @@
   "errors": {
     "workNotFound": "Work not found",
     "unexpectedError": "An unexpected error occurred",
-    "NoWorksFound": "No works found."
+    "workTypeRequired": "Work type is required.",
+    "titleRequired": "Work title is required.",
+    "authorsRequired": "Authors field cannot be empty.",
+    "saveDraftError": "Error saving draft. Please try again.",
+    "submitError": "Error submitting work. Please try again.",
+    "publishError": "Error publishing work. Please try again.",
+    "NoWorksFound": "No works Found with these filters."
   },
   "workTypes": {
     "article": "Article",
     "dissertation": "Dissertation",
     "research": "Research",
-    "finalPaper": "Final Paper",
+    "finalThesis": "Final Thesis",
     "extension": "Extension",
     "unknown": "Unknown type",
     "Artigo": "Article",
@@ -91,7 +97,9 @@
     "home": "Home",
     "works": "Works",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "mainSearch": "Main Search",
+    "myWorks": "My Works"
   },
   "filters": {
     "title": "Filter Presentation",
@@ -138,31 +146,34 @@
     "currentPage": "Page {{current}} of {{total}}",
     "resultsFound": "{{count}} results found"
   },
-  "pageTitle": "My Works",
-  "filterWorks": "Filter Works",
-  "newWork": "New Work",
-  "results": "Result",
-  "results_plural": "Results",
-  "page": "Page",
-  "of": "of",
-  "noWorksFound": "No works found",
-  "noWorksFoundDesc": "Try adjusting the filters to find your works or remove all filters.",
-  "noWorksYet": "You don't have any registered works yet. Start by creating your first work!",
-  "createNewWork": "Create New Work",
-  "createFirstWork": "Create First Work",
-  "allWorks": "All Works",
-  "category": "Category",
-  "status": "Status",
-  "authors": "Authors",
-  "date": "Date",
-  "imageText": "Image",
-  "statusTypes": {
-    "Rascunho": "Draft",
-    "Enviado": "Submitted",
-    "Rejeitado": "Rejected",
-    "Aprovado": "Approved"
+  "new-work": {
+    "workimage": "Work Image",
+    "uploadimage": "Select an image",
+    "dragdropimage": "Or drag and drop an file",
+    "worktype": "Work Type",
+    "worktitle": "Title",
+    "workauthors": "Authors",
+    "workdescription": "Description",
+    "workabstract": "Abstract",
+    "labels": "Labels",
+    "links": "Links",
+    "words": "words",
+    "searchAuthor": "Search author",
+    "searchLabel": "Search label",
+    "searchLink": "Search links",
+    "loading": "Loading",
+    "fullName": "Full Name",
+    "email": "Email",
+    "type": "Type",
+    "student": "Student",
+    "teacher": "Teacher",
+    "add": "Add",
+    "publish": "Publish",
+    "send": "Send"
   },
-  "myWorks": {
-    "redirectingToCreate": "Redirecting to create new work..."
+  "messages": {
+    "draftSaved": "Draft saved successfully!",
+    "sentForReview": "Work sent for review successfully!",
+    "published": "Work published successfully!"
   }
 }

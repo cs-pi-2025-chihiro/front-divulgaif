@@ -31,13 +31,19 @@
   "errors": {
     "workNotFound": "Trabalho não encontrado",
     "unexpectedError": "Ocorreu um erro inesperado",
+    "workTypeRequired": "O tipo do trabalho é obrigatório.",
+    "titleRequired": "O título do trabalho é obrigatório.",
+    "authorsRequired": "O campo de autores não pode estar vazio.",
+    "saveDraftError": "Erro ao salvar rascunho. Tente novamente.",
+    "submitError": "Erro ao enviar trabalho. Tente novamente.",
+    "publishError": "Erro ao publicar trabalho. Tente novamente.",
     "NoWorksFound": "Nenhum trabalho encontrado."
   },
   "workTypes": {
     "article": "Artigo",
     "dissertation": "Dissertação",
     "research": "Pesquisa",
-    "finalPaper": "TCC",
+    "finalThesis": "TCC",
     "extension": "Extensão",
     "unknown": "Tipo desconhecido",
     "Artigo": "Artigo",
@@ -91,7 +97,9 @@
     "home": "Início",
     "works": "Trabalhos",
     "about": "Sobre",
-    "contact": "Contato"
+    "contact": "Contato",
+    "mainSearch": "Busca Principal",
+    "myWorks": "Meus Trabalhos"
   },
   "filters": {
     "title": "Filtrar Apresentação",
@@ -138,31 +146,34 @@
     "currentPage": "Página {{current}} de {{total}}",
     "resultsFound": "{{count}} resultados encontrados"
   },
-  "pageTitle": "Meus Trabalhos",
-  "filterWorks": "Filtrar Trabalhos",
-  "newWork": "Novo Trabalho",
-  "results": "Resultado",
-  "results_plural": "Resultados",
-  "page": "Página",
-  "of": "de",
-  "noWorksFound": "Nenhum trabalho encontrado",
-  "noWorksFoundDesc": "Tente ajustar os filtros para encontrar seus trabalhos ou remova todos os filtros.",
-  "noWorksYet": "Você ainda não possui trabalhos cadastrados. Comece criando seu primeiro trabalho!",
-  "createNewWork": "Criar Novo Trabalho",
-  "createFirstWork": "Criar Primeiro Trabalho",
-  "allWorks": "Todos os Trabalhos",
-  "category": "Categoria",
-  "status": "Status",
-  "authors": "Autores",
-  "date": "Data",
-  "imageText": "Imagem",
-  "statusTypes": {
-    "Rascunho": "Rascunho",
-    "Enviado": "Enviado",
-    "Rejeitado": "Rejeitado",
-    "Aprovado": "Aprovado"
+  "new-work": {
+    "workimage": "Imagem do Trabalho",
+    "uploadimage": "Selecione uma imagem",
+    "dragdropimage": "Ou arraste e solte um arquivo",
+    "worktype": "Tipo do Trabalho",
+    "worktitle": "Título",
+    "workauthors": "Autores",
+    "workdescription": "Descrição",
+    "workabstract": "Resumo",
+    "labels": "Labels",
+    "links": "Links",
+    "words": "palavras",
+    "searchAuthor": "Buscar autor",
+    "searchLabel": "Buscar label",
+    "searchLink": "Buscar links",
+    "loading": "Carregando",
+    "fullName": "Nome Completo",
+    "email": "Email",
+    "type": "Tipo",
+    "student": "Aluno",
+    "teacher": "Professor",
+    "add": "Adicionar",
+    "publish": "Publicar",
+    "send": "Enviar"
   },
-  "myWorks": {
-    "redirectingToCreate": "Redirecionando para criação de novo trabalho..."
+  "messages": {
+    "draftSaved": "Rascunho salvo com sucesso!",
+    "sentForReview": "Trabalho enviado para avaliação com sucesso!",
+    "published": "Trabalho publicado com sucesso!"
   }
 }

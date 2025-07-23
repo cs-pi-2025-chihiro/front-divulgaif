@@ -63,6 +63,15 @@
   font-size: 0.8rem;
 }
 
+.logo-link {
+  display: inline-block;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.logo-link:hover {
+  opacity: 0.8;
+}
 .footer-links p {
   margin: 0.25rem 0;
 }
