@@ -231,16 +231,18 @@ const MyWorks = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'Aprovado': return 'bg-green-100 text-green-800';
-      case 'Enviado': return 'bg-blue-100 text-blue-800';
-      case 'Rascunho': return 'bg-gray-100 text-gray-800';
-      case 'Rejeitado': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'Aprovado': return 'status-aprovado';
+      case 'Enviado': return 'status-enviado';
+      case 'Rascunho': return 'status-rascunho';
+      case 'Rejeitado': return 'status-rejeitado';
+      default: return 'status-default';
     }
   };
 
   const getFiltroTexto = () => {
-    if (!filtroTrabalhos) return t('filterWorks');
+    // Aqui é onde a mudança é feita.
+    // Se não houver filtro, retorna a string 'Filtrar trabalhos'
+    if (!filtroTrabalhos) return 'Filtrar trabalhos';
 
     if (statusOptions.includes(filtroTrabalhos)) {
       return t(`statusTypes.${filtroTrabalhos}`);
@@ -257,50 +259,43 @@ const MyWorks = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="container">
+      <div className="main-content">
         {/* Header with Language Toggle */}
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">{t('pageTitle')}</h1>
-          <button
-            onClick={toggleLanguage}
-            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <Globe className="w-4 h-4" />
-            <span className="font-medium">{language === 'pt' ? 'EN' : 'PT'}</span>
-          </button>
+        <div className="filters-section" style={{ justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+          <h1 className="results-title">{t('Meus Trabalhos')}</h1>
         </div>
 
         {/* Filters Section */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-          <div className="filter-dropdown relative">
+        <div className="filters-section">
+          <div className="filter-dropdown">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setShowTrabalhosFilter(!showTrabalhosFilter);
               }}
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              className="filter-button"
             >
-              <Filter className="w-4 h-4" />
+              <Filter className="icon" />
               <span>{getFiltroTexto()}</span>
-              <ChevronDown className={`w-4 h-4 transition-transform ${showTrabalhosFilter ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`icon chevron ${showTrabalhosFilter ? 'rotated' : ''}`} />
             </button>
 
             {showTrabalhosFilter && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+              <div className="dropdown-menu">
                 <button
                   onClick={() => {
                     setFiltroTrabalhos('');
                     setShowTrabalhosFilter(false);
                   }}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-50 font-medium border-b border-gray-100"
+                  className="dropdown-item all-items"
                 >
                   {t('allWorks')}
                 </button>
 
                 {todasOpcoesFiltro.map((grupo) => (
                   <div key={grupo.tipo}>
-                    <div className="px-4 py-2 text-sm font-semibold text-gray-500 bg-gray-50">
+                    <div className="dropdown-group-header">
                       {grupo.label}
                     </div>
                     {grupo.opcoes.map((opcao) => (
@@ -310,7 +305,7 @@ const MyWorks = () => {
                           setFiltroTrabalhos(opcao);
                           setShowTrabalhosFilter(false);
                         }}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-50"
+                        className="dropdown-item"
                       >
                         {grupo.tipo === 'status' ? t(`statusTypes.${opcao}`) : t(`workTypes.${opcao}`)}
                       </button>
@@ -323,38 +318,38 @@ const MyWorks = () => {
 
           <button
             onClick={handleNovoTrabalho}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="new-work-button"
           >
-            <Plus className="w-4 h-4" />
-            {t('newWork')}
+            <Plus className="icon" />
+            {t('Novo Trabalho')}
           </button>
         </div>
 
         {/* Results and Pagination */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-          <h2 className="text-xl font-semibold text-gray-800">
-            {trabalhosFiltrados.length} {trabalhosFiltrados.length === 1 ? t('results') : t('results_plural')}
+        <div className="results-pagination">
+          <h2 className="results-title">
+            {trabalhosFiltrados.length} {trabalhosFiltrados.length === 1 ? t('results') : t('resultados')}
           </h2>
 
           {totalPaginas > 1 && (
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600">
+            <div className="pagination-controls">
+              <span className="pagination-info">
                 {t('page')} {paginaAtual} {t('of')} {totalPaginas}
               </span>
-              <div className="flex gap-1">
+              <div style={{ display: 'flex', gap: '0.25rem' }}>
                 <button
                   onClick={handlePaginaAnterior}
                   disabled={paginaAtual === 1}
-                  className={`p-2 rounded ${paginaAtual === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white border border-gray-300 hover:bg-gray-50'}`}
+                  className={`pagination-button ${paginaAtual === 1 ? 'disabled' : 'enabled'}`}
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="icon" />
                 </button>
                 <button
                   onClick={handleProximaPagina}
                   disabled={paginaAtual === totalPaginas}
-                  className={`p-2 rounded ${paginaAtual === totalPaginas ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white border border-gray-300 hover:bg-gray-50'}`}
+                  className={`pagination-button ${paginaAtual === totalPaginas ? 'disabled' : 'enabled'}`}
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="icon" />
                 </button>
               </div>
             </div>
@@ -363,44 +358,44 @@ const MyWorks = () => {
 
         {/* Works Grid */}
         {trabalhosPaginaAtual.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="trabalhos-grid">
             {trabalhosPaginaAtual.map((trabalho) => (
-              <div key={trabalho.id} className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="p-6">
-                  <div className="w-full h-32 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                    <span className="text-gray-500">{t('imageText')}</span>
+              <div key={trabalho.id} className="trabalho-card">
+                <div className="card-content">
+                  <div className="image-placeholder">
+                    <span className="image-text">{t('imageText')}</span>
                   </div>
 
-                  <div className="flex justify-between items-start mb-3">
-                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(trabalho.status)}`}>
+                  <div className="status-container">
+                    <span className={`status-badge ${getStatusColor(trabalho.status)}`}>
                       {t(`statusTypes.${trabalho.status}`)}
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+                  <h3 className="trabalho-title">
                     {trabalho.titulo[language]}
                   </h3>
 
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                  <p className="trabalho-description">
                     {trabalho.descricao[language]}
                   </p>
 
-                  <div className="space-y-2 text-sm text-gray-600 mb-4">
+                  <div className="trabalho-meta">
                     <div><strong>{t('authors')}:</strong> {trabalho.autores.map(a => a.nome).join(', ')}</div>
                     <div><strong>{t('date')}:</strong> {trabalho.data}</div>
                   </div>
 
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded">
+                  <div className="tags-container">
+                    <span className="categoria-tag">
                       {t(`workTypes.${trabalho.categoria}`)}
                     </span>
                     {trabalho.tags[language].slice(0, 2).map((tag, index) => (
-                      <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+                      <span key={index} className="tag">
                         {tag}
                       </span>
                     ))}
                     {trabalho.tags[language].length > 2 && (
-                      <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+                      <span className="tag">
                         +{trabalho.tags[language].length - 2}
                       </span>
                     )}
@@ -410,19 +405,19 @@ const MyWorks = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Search className="w-8 h-8 text-gray-400" />
+          <div className="empty-state">
+            <div className="image-placeholder empty-icon"> {/* Reusing image-placeholder for styling the icon background */}
+              <Search className="search-icon" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">{t('noWorksFound')}</h3>
-            <p className="text-gray-600 mb-6 max-w-md mx-auto">
+            <h3 className="empty-title">{t('noWorksFound')}</h3>
+            <p className="empty-description">
               {filtroTrabalhos ? t('noWorksFoundDesc') : t('noWorksYet')}
             </p>
             <button
               onClick={handleNovoTrabalho}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="empty-action-button"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="icon" />
               {filtroTrabalhos ? t('createNewWork') : t('createFirstWork')}
             </button>
           </div>
