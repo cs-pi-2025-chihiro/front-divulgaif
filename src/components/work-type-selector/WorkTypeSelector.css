@@ -1,0 +1,24 @@
+.work-type-selector {
+    justify-content: center;
+    gap: 1rem;
+}
+
+.type-button {
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 1px solid #DCDCDC;
+    background-color: #F8F8F8;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.type-button:hover {
+    background-color: #EAEAEA;
+    border-color: #C0C0C0;
+}
+
+.type-button.active {
+    background-color: #3A5A40;
+    color: white;
+    border-color: #3A5A40;
+}

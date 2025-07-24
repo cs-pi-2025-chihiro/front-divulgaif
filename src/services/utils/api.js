@@ -88,8 +88,6 @@ api.interceptors.response.use(
 
         return api(originalRequest);
       }
-
-      window.location.href = "/login";
     }
 
     return Promise.reject(error);

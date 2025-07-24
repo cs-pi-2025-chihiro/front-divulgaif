@@ -44,10 +44,7 @@ const WorkCard = ({
   );
 
   const handleCardClick = () => {
-    if (!id) {
-      console.error("WorkCard: No ID provided for navigation");
-      return;
-    }
+    if (!id) return;
 
     const workId = String(id);
     const currentLang = i18n.language;

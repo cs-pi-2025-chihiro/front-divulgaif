@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { FaUser, FaBars } from "react-icons/fa";
 import Drawer from "../drawer/drawer";
 import AuthButton from "../button/auth-button/auth-button";
+import { aboutWebsite } from "../../constants";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -61,8 +62,7 @@ const Header = () => {
           )}
           <a
             onClick={() => {
-              window.location.href =
-                "https://chihiro-front.s3.sa-east-1.amazonaws.com/team-chihiro-front/sobre-produto-eduardo/pagina.html";
+              window.location.href = aboutWebsite;
             }}
           >
             {t("header.about")}

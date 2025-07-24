@@ -29,6 +29,7 @@
   --green-beige: #dad7cd;
   --light-white: #e0e0e0;
   --gray: #666;
+  --white-gray: #f8f8f8;
   --bottle-green: #679267;
 }
 
@@ -81,7 +82,7 @@ html {
 }
 
 .App-header {
-  background-color: var(--grey-blue, #2b3348);
+  background-color: var(--grey-blue);
   min-height: 100vh;
   display: flex;
   flex-direction: column;

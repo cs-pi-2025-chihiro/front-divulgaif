@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import i18n from "../../../i18n";
 import { SearchInput } from "../../../components/input";
 import Button from "../../../components/button";
 import FiltrarBuscaModal from "../../../components/modal/filtrar-busca/filtrarBuscaModal";
@@ -12,6 +14,7 @@ import { mapPaginationValues } from "../../../services/utils/utils";
 
 const Home = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useAtom(pageAtom);
   const [currentSize, setCurrentSize] = useAtom(sizeAtom);
@@ -73,6 +76,14 @@ const Home = () => {
     setAppliedFilters(backendFilters);
   };
 
+  const handleNewWorkClick = () => {
+    const currentLang = i18n.language;
+    const workPath = currentLang === "pt" ? "trabalho" : "work";
+    const newLang = currentLang === "pt" ? "novo" : "new";
+
+    navigate(`/${currentLang}/${workPath}/${newLang}`);
+  };
+
   if (error) {
     return (
       <div className="ifexplore-container">
@@ -109,7 +120,12 @@ const Home = () => {
           </Button>
         </div>
         <div className="new-work-container">
-          <Button variant="tertiary" size="lg" className="new-work-btn">
+          <Button
+            variant="tertiary"
+            size="lg"
+            className="new-work-btn"
+            onClick={handleNewWorkClick}
+          >
             <span className="icon">+</span> {t("home.newWork")}
           </Button>
         </div>

@@ -1,0 +1,126 @@
+.custom-link-container {
+  background-color: #f0f0e1;
+  border-radius: 8px;
+  padding: 1rem;
+  position: relative;
+}
+
+.link-main-box {
+  display: flex;
+  align-items: flex-start;
+  background-color: white;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  padding: 8px 12px;
+  min-height: 40px;
+}
+
+.tags-container {
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.link-tag {
+  display: flex;
+  align-items: center;
+  background-color: #e0e7ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 16px;
+  padding: 4px 10px;
+  font-size: 14px;
+  color: #333;
+  max-width: 100%;
+}
+
+.link-tag .link-icon {
+  margin-right: 6px;
+}
+
+.link-tag .link-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  color: #3730a3;
+  max-width: 200px;
+}
+
+.link-tag .link-text:hover {
+  text-decoration: underline;
+}
+
+.link-tag .remove-tag-button {
+  background: none;
+  border: none;
+  color: #e53e3e;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 18px;
+}
+
+.autocomplete-input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  flex-grow: 1;
+  min-width: 150px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.add-link-button-container {
+  margin-left: 8px;
+  align-self: center;
+}
+
+.add-link-button {
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.suggestions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: calc(1rem + 40px + 5px);
+  left: 1rem;
+  right: 1rem;
+  background: white;
+  border: 1px solid #d1d1d1;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.suggestions-list li {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.suggestions-list li:hover {
+  background-color: #f5f5f5;
+}
+
+.loading-indicator {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  padding: 5px;
+}
