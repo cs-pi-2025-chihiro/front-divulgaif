@@ -5,7 +5,7 @@ import Card from "../card";
 import "./workCard.css";
 
 const WorkCard = ({
-  id, 
+  id,
   title,
   authors,
   date,
@@ -23,15 +23,20 @@ const WorkCard = ({
       <p className="work-card-description">{description}</p>
 
       <div className="work-card-authors-date">
-        <p className="work-card-authors">{authors}</p>
+        {Array.isArray(authors) &&
+          authors.slice(0, 4).map((author, idx) => (
+            <div className="work-card-authors" key={idx}>
+              {author.name}
+            </div>
+          ))}
         <p className="work-card-date">{date}</p>
       </div>
 
-      <div className="work-card-labels"> 
+      <div className="work-card-labels">
         {Array.isArray(labels) &&
-          labels.slice(0,4).map((label, idx) => (
+          labels.slice(0, 4).map((label, idx) => (
             <span className="work-card-label" key={idx}>
-              {label}
+              {label.name}
             </span>
           ))}
       </div>
@@ -45,21 +50,13 @@ const WorkCard = ({
     }
 
     const workId = String(id);
-
     const currentLang = i18n.language;
-
-    const workPath = currentLang === 'pt' ? 'trabalho' : 'work';
+    const workPath = currentLang === "pt" ? "trabalho" : "work";
 
     navigate(`/${currentLang}/${workPath}/${workId}`);
 
-
     if (onView) onView();
   };
-
-
-  const truncatedDescription = description && description.length > 100
-    ? `${description.substring(0, 100)}...`
-    : description;
 
   return (
     <div className="work-card-wrapper">
@@ -68,7 +65,7 @@ const WorkCard = ({
         imageUrl={imageUrl}
         imageAlt={title}
         title={title}
-        description={truncatedDescription}
+        description={description}
         content={cardContent}
         onClick={handleCardClick}
       />

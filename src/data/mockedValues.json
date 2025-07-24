@@ -8,7 +8,13 @@
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
       "imageUrl": "/cronus-scaled-2995199348.jpg",
       "type": "article",
-      "keywords": ["Palavra 1", "Palavra 2", "Palavra 3", "Palavra 4", "Palavra 5"],
+      "keywords": [
+        "Palavra 1",
+        "Palavra 2",
+        "Palavra 3",
+        "Palavra 4",
+        "Palavra 5"
+      ],
       "additionalLinks": [
         { "title": "Link Adicional 1", "url": "#" },
         { "title": "Link Adicional 2", "url": "#" },
@@ -40,15 +46,19 @@
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sed ornare nibh. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce et fringilla dolor. Integer sollicitudin rhoncus massa luctus fringilla. Mauris eget metus mi. Integer lectus nulla, dignissim eget rutrum tincidunt, porta id purus.",
       "imageUrl": "/cronus-scaled-2995199348.jpg",
       "type": "research",
-      "keywords": ["Palavra 1", "Palavra 2", "Palavra 3", "Palavra 4", "Palavra 5"],
+      "keywords": [
+        "Palavra 1",
+        "Palavra 2",
+        "Palavra 3",
+        "Palavra 4",
+        "Palavra 5"
+      ],
       "additionalLinks": [
         { "title": "Link Adicional 1", "url": "#" },
         { "title": "Link Adicional 2", "url": "#" },
         { "title": "Link Adicional 3", "url": "#" },
         { "title": "Link Adicional 4", "url": "#" }
-      ],
-      "download": "#",
-      "canEdit": true
+      ]
     },
     {
       "id": 4,
@@ -59,9 +69,7 @@
       "imageUrl": "/cronus-scaled-2995199348.jpg",
       "type": "finalPaper",
       "keywords": ["Palavra 1", "Palavra 2"],
-      "additionalLinks": [
-        { "title": "Link Adicional 1", "url": "#" }
-      ],
+      "additionalLinks": [{ "title": "Link Adicional 1", "url": "#" }],
       "download": "#"
     },
     {
@@ -71,9 +79,7 @@
       "advisor": "Professor Responsável",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
       "imageUrl": "/cronus-scaled-2995199348.jpg",
-      "labels": ["Artigo",
-        "Sustentabilidade"
-      ],
+      "labels": ["Artigo", "Sustentabilidade"],
       "type": "article",
       "keywords": ["Palavra 1", "Palavra 2", "Palavra 3", "Palavra 4"],
       "download": "#"
@@ -104,7 +110,12 @@
       "title": "Título do Trabalho",
       "authors": "Autor 1, Autor 2",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
-      "labels": ["Artigo", "Computação", "Inteligência Artificial", "Tecnologia"],
+      "labels": [
+        "Artigo",
+        "Computação",
+        "Inteligência Artificial",
+        "Tecnologia"
+      ],
       "imageUrl": "/cronus-scaled-2995199348.jpg",
       "date": "08/06/2024"
     },
@@ -124,7 +135,7 @@
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
       "imageUrl": "/cronus-scaled-2995199348.jpg"
     },
-    
+
     {
       "id": 11,
       "title": "Título do Trabalho",
@@ -167,6 +178,27 @@
 
     {
       "id": 16,
+      "title": "Título do Trabalho",
+      "authors": "autor 1, autor 2",
+      "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
+      "imageUrl": "/cronus-scaled-2995199348.jpg"
+    },
+    {
+      "id": 17,
+      "title": "Título do Trabalho",
+      "authors": "autor 1, autor 2",
+      "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
+      "imageUrl": "/cronus-scaled-2995199348.jpg"
+    },
+    {
+      "id": 18,
+      "title": "Título do Trabalho",
+      "authors": "autor 1, autor 2",
+      "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",
+      "imageUrl": "/cronus-scaled-2995199348.jpg"
+    },
+    {
+      "id": 19,
       "title": "Título do Trabalho",
       "authors": "autor 1, autor 2",
       "description": "Descrição: texto ilustrativo para compor a descrição do trabalho que será aberto posteriormente ao clicar nos botões.",

@@ -32,7 +32,7 @@ const refreshToken = async () => {
 
   try {
     const response = await axios.post(
-      `${BASE_URL}/api/v1/auth/refresh-token`,
+      `${BASE_URL}/auth/refresh-token`,
 
       {
         refreshToken: currentRefreshToken,
@@ -76,8 +76,8 @@ api.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      originalRequest.url !== "/api/v1/auth/login" &&
-      originalRequest.url !== "/api/v1/auth/refresh-token"
+      !originalRequest.url.includes("/auth/login") &&
+      !originalRequest.url.includes("/auth/refresh-token")
     ) {
       originalRequest._retry = true;
 

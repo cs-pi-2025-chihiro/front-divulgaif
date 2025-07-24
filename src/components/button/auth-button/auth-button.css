@@ -1,0 +1,11 @@
+.auth-button-fixed-width {
+  min-width: 120px;
+  text-align: center;
+  justify-content: center;
+}
+
+.auth-button-fixed-width {
+  width: 120px;
+  text-align: center;
+  justify-content: center;
+}
