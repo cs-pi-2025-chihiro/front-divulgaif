@@ -12,3 +12,5 @@ export const BASE_URL = (() => {
   }
 })();
 export const PAGE_SIZE = 8;
+export const aboutWebsite =
+  "https://chihiro-front.s3.sa-east-1.amazonaws.com/team-chihiro-front/sobre-produto-eduardo/pagina.html";

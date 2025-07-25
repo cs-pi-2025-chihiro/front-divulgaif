@@ -31,15 +31,20 @@
   "errors": {
     "workNotFound": "Trabalho não encontrado",
     "unexpectedError": "Ocorreu um erro inesperado",
+    "workTypeRequired": "O tipo do trabalho é obrigatório.",
+    "titleRequired": "O título do trabalho é obrigatório.",
+    "authorsRequired": "O campo de autores não pode estar vazio.",
+    "saveDraftError": "Erro ao salvar rascunho. Tente novamente.",
+    "submitError": "Erro ao enviar trabalho. Tente novamente.",
+    "publishError": "Erro ao publicar trabalho. Tente novamente.",
     "NoWorksFound": "Nenhum trabalho encontrado."
   },
   "workTypes": {
     "article": "Artigo",
     "dissertation": "Dissertação",
     "research": "Pesquisa",
-    "finalPaper": "TCC",
-    "extension": "Extensão",
-    "unknown": "Tipo desconhecido"
+    "finalThesis": "TCC",
+    "extension": "Extensão"
   },
   "workDetail": {
     "authors": "Autores",
@@ -134,5 +139,35 @@
     "nextPage": "Ir para próxima página",
     "currentPage": "Página {{current}} de {{total}}",
     "resultsFound": "{{count}} resultados encontrados"
+  },
+  "new-work": {
+    "workimage": "Imagem do Trabalho",
+    "uploadimage": "Selecione uma imagem",
+    "dragdropimage": "Ou arraste e solte um arquivo",
+    "worktype": "Tipo do Trabalho",
+    "worktitle": "Título",
+    "workauthors": "Autores",
+    "workdescription": "Descrição",
+    "workabstract": "Resumo",
+    "labels": "Labels",
+    "links": "Links",
+    "words": "palavras",
+    "searchAuthor": "Buscar autor",
+    "searchLabel": "Buscar label",
+    "searchLink": "Buscar links",
+    "loading": "Carregando",
+    "fullName": "Nome Completo",
+    "email": "Email",
+    "type": "Tipo",
+    "student": "Aluno",
+    "teacher": "Professor",
+    "add": "Adicionar",
+    "publish": "Publicar",
+    "send": "Enviar"
+  },
+  "messages": {
+    "draftSaved": "Rascunho salvo com sucesso!",
+    "sentForReview": "Trabalho enviado para avaliação com sucesso!",
+    "published": "Trabalho publicado com sucesso!"
   }
 }
