@@ -159,7 +159,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
                 }`}
                 onClick={() => handleCheckboxChange("workType", "final_thesis")}
               >
-                {t("workTypes.finalPaper")}
+                {t("filters.finalPaper")}
               </Button>
             </div>
           </section>
