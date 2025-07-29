@@ -109,15 +109,7 @@ const LoginPage = () => {
                   errors.username ? "username-error" : undefined
                 }
               />
-              {errors.username && (
-                <span
-                  id="username-error"
-                  className="error-message"
-                  role="alert"
-                >
-                  {errors.username}
-                </span>
-              )}
+              {errors.username && <p>{errors.username}</p>}
             </div>
             <div className="form-group">
               <label htmlFor="password">{t("common.password")}:</label>
@@ -133,28 +125,22 @@ const LoginPage = () => {
                   errors.password ? "password-error" : undefined
                 }
               />
-              {errors.password && (
-                <span
-                  id="password-error"
-                  className="error-message"
-                  role="alert"
-                >
-                  {errors.password}
-                </span>
-              )}
+              {errors.password && <p>{errors.password}</p>}
             </div>
-            <Button
-              type="submit"
-              className="secondary"
-              variant="secondary"
-              disabled={loginMutation.isPending}
-              aria-busy={loginMutation.isPending}
-              ariaLabel={t("login.access", "Acessar o sistema")}
-            >
-              {loginMutation.isPending
-                ? t("login.loading", "Carregando...")
-                : t("login.submit", "Acessar")}
-            </Button>
+            <div className="form-group-button">
+              <Button
+                type="submit"
+                className="login-button-small"
+                variant="secondary"
+                disabled={loginMutation.isPending}
+                aria-busy={loginMutation.isPending}
+                ariaLabel={t("login.access", "Acessar o sistema")}
+              >
+                {loginMutation.isPending
+                  ? t("login.loading", "Carregando...")
+                  : t("login.submit", "Acessar")}
+              </Button>
+            </div>
             {successResult && (
               <div className="success-message" role="status" aria-live="polite">
                 {successResult}
