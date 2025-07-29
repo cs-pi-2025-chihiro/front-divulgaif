@@ -17,6 +17,7 @@
   --darker-green: #003a33;
   --light-green: #47895a;
   --lighter-green: #a3b18a;
+  --lighterer-green: #82d186;
   --form-bg: #324c3c;
   --text-dark: #333;
   --button-bg: #c0c9af;
@@ -83,7 +84,7 @@ html {
 
 .App-header {
   background-color: var(--grey-blue);
-  min-height: 100vh;
+  min-height: 150vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -93,7 +94,7 @@ html {
 }
 
 .App-link {
-  color: var(--secondary, #a9be8c);
+  color: white;
 }
 
 @keyframes App-logo-spin {

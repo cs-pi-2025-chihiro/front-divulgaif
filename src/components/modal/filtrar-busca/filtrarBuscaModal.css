@@ -118,9 +118,12 @@
 
 .modal-container {
   background: white;
-  border-radius: 12px;
-  padding: 24px;
+  border-radius: 16px;
+  padding: 16px;
   max-width: 400px;
+  max-height: 70vh;
+  overflow-y: auto;
+  box-sizing: border-box;
   width: 90%;
 }
 
@@ -285,7 +288,7 @@
 
 .pagination-btn:hover {
   border-color: var(--dark-green);
-  color: white;
+  color: var(--lighter-green);
 }
 
 .pagination-btn.selected {
