@@ -5,13 +5,7 @@
   background-color: white;
 }
 
-.work-detail-header-wrapper {
-  position: relative;
-  margin-bottom: 1.5rem;
-}
-
 .work-detail-header {
-  margin-bottom: 1.5rem;
   text-align: center;
   padding: 1rem 0;
 }
@@ -133,10 +127,6 @@
   line-height: 1.6;
   color: var(--gray);
   text-align: justify;
-}
-
-.work-detail-keywords {
-  margin-bottom: 2rem;
 }
 
 .keywords-list {

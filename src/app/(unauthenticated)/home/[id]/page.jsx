@@ -58,6 +58,17 @@ const WorkDetail = () => {
             </p>
           )}
         </div>
+        {work.authors && work.authors.length > 0 && (
+          <div className="work-detail-keywords">
+            <div className="work-detail-authors">
+              {work.authors.map((author, index) => (
+                <span key={index} className="keyword-tag">
+                  {author.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="work-detail-image-container">
@@ -69,21 +80,16 @@ const WorkDetail = () => {
           />
         </div>
       </div>
+      <div className="work-detail-description">
+        <h2>{t("workDetail.abstract") || "Resumo"}</h2>
+        <p className="work-detail-abstract">
+          {work.description ||
+            t("common.noDescription") ||
+            "Nenhuma descrição disponível"}
+        </p>
+      </div>
       <div className="work-detail-content">
         <div className="work-detail-metadata">
-          {work.authors && work.authors.length > 0 && (
-            <div className="work-detail-keywords">
-              <h2>{t("workDetail.authors") || "Autores"}</h2>
-              <div className="work-detail-authors">
-                {work.authors.map((author, index) => (
-                  <span key={index} className="keyword-tag">
-                    {author.name}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
           {work.teachers && (
             <>
               <h2>{t("workDetail.advisor") || "Professor Responsável"}</h2>
@@ -96,15 +102,6 @@ const WorkDetail = () => {
             {work.date
               ? new Date(work.date).toLocaleDateString(i18n.language)
               : t("common.notAvailable") || "Não disponível"}
-          </p>
-        </div>
-
-        <div className="work-detail-description">
-          <h2>{t("workDetail.abstract") || "Resumo"}</h2>
-          <p className="work-detail-abstract">
-            {work.description ||
-              t("common.noDescription") ||
-              "Nenhuma descrição disponível"}
           </p>
         </div>
       </div>
