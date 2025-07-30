@@ -50,15 +50,6 @@ const WorkDetail = () => {
   return (
     <div className="work-detail-container">
       <div className="work-detail-header-wrapper">
-        <Button
-          variant="tertiary"
-          size="md"
-          onClick={handleGoBack}
-          className="back-button"
-        >
-          &larr; {t("common.back") || "Voltar"}
-        </Button>
-
         <div className="work-detail-header">
           <h1 className="work-detail-title">{work.title}</h1>
           {work.type && (
@@ -66,7 +57,6 @@ const WorkDetail = () => {
               {t(`${work.type.toLowerCase()}`)}
             </p>
           )}
-          <p className="work-detail-id">ID: {work.id}</p>
         </div>
       </div>
 
