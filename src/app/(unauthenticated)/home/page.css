@@ -74,7 +74,7 @@
 
 .search-input-wrapper {
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
 }
 
 .search-input {
@@ -96,10 +96,10 @@
 }
 
 .filter-btn {
-  background-color: var(--dark-green);
-  color: white;
+  background-color: white;
+  color: var(--dark-green);
   border: none;
-  border-radius: 30px;
+  border-radius: 8px;
   padding: 0.7rem 1.5rem;
   font-size: 0.9rem;
   cursor: pointer;

@@ -112,18 +112,16 @@ const Home = () => {
         <div className="filter-buttons-container">
           <Button
             variant="tertiary"
-            size="bg"
+            size="lg"
             className="filter-btn"
             onClick={() => setIsFilterModalOpen(true)}
           >
             {t("common.filter")}
           </Button>
-        </div>
-        <div className="new-work-container">
           <Button
             variant="tertiary"
             size="lg"
-            className="new-work-btn"
+            className="filter-btn"
             onClick={handleNewWorkClick}
           >
             <span className="icon">+</span> {t("home.newWork")}

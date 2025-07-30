@@ -33,13 +33,13 @@
 }
 
 .btn-secondary {
-  background-color: var(--secondary);
+  background-color: white;
   color: var(--text-dark);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .btn-secondary:hover {
-  background-color: rgba(169, 190, 140, 0.8);
+  background-color: var(--accent);
 }
 
 .btn-tertiary {
@@ -49,7 +49,7 @@
 }
 
 .btn-tertiary:hover {
-  background-color: rgba(169, 190, 140, 0.8);
+  background-color: var(--primary);
 }
 
 .btn-success {
