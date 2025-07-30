@@ -120,8 +120,8 @@
   background: white;
   border-radius: 16px;
   padding: 16px;
-  max-width: 400px;
-  max-height: 70vh;
+  max-width: 500px;
+  max-height: 60vh;
   overflow-y: auto;
   box-sizing: border-box;
   width: 90%;
@@ -156,7 +156,6 @@
   font-size: 18px;
   font-weight: 600;
   color: black;
-  margin: 0;
 }
 
 .tag-group {
