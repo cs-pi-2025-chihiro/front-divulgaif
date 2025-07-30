@@ -25,6 +25,11 @@ const Header = () => {
     navigate(fullPath);
   };
 
+  const handleNewWorkNavigation = () => {
+    const newWorkPath = currentLang === "pt" ? "trabalho/novo" : "work/new";
+    navigateTo(newWorkPath);
+  };
+
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
@@ -60,6 +65,9 @@ const Header = () => {
               {t("header.myWorks")}
             </a>
           )}
+          <a style={{ cursor: "pointer" }} onClick={handleNewWorkNavigation}>
+            {t("home.newWork")}
+          </a>
           <a
             onClick={() => {
               window.location.href = aboutWebsite;
@@ -83,7 +91,6 @@ const Header = () => {
           )}
         </div>
       </div>
-
       <Drawer
         isOpen={isDrawerOpen}
         onClose={closeDrawer}
