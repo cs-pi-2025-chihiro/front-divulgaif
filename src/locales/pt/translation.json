@@ -44,7 +44,13 @@
     "dissertation": "Dissertação",
     "research": "Pesquisa",
     "finalThesis": "TCC",
-    "extension": "Extensão"
+    "extension": "Extensão",
+    "unknown": "Tipo desconhecido",
+    "Artigo": "Artigo",
+    "TCC": "TCC",
+    "Projeto": "Projeto",
+    "Dissertação": "Dissertação",
+    "Tese": "Tese"
   },
   "workDetail": {
     "authors": "Autores",
