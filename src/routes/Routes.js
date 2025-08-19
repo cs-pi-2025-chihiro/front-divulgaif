@@ -6,7 +6,7 @@ import WorkDetail from "../app/(unauthenticated)/home/[id]/page";
 import { useTranslation } from "react-i18next";
 import LanguageRoute from "./LanguageRoute";
 import GuestRoute from "./GuestRoute";
-import MyWorks from "../app/(authenticated)/my-works/my-works";
+import MyWorks from "../app/(authenticated)/my-works/page";
 import NewWork from "../app/(unauthenticated)/new-work/page";
 
 function AppRoutes() {
@@ -42,7 +42,6 @@ function AppRoutes() {
         <Route path="trabalho/novo" element={<NewWork />} />
         <Route path="meus-trabalhos" element={<MyWorks />} />
       </Route>
-      
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

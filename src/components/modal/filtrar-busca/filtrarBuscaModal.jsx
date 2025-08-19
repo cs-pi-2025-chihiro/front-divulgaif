@@ -4,7 +4,7 @@ import { t } from "i18next";
 import Button from "../../button";
 import { Input } from "../../input";
 
-const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
+const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, showStatus }) => {
   const initialFocusRef = useRef(null);
   const returnFocusRef = useRef(null);
   const [newLabel, setNewLabel] = useState("");
@@ -16,6 +16,12 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
       extension: false,
       final_thesis: false,
     },
+    workStatus: {
+      draft: false,
+      submitted: false,
+      rejected: false,
+      pending_changes: false,
+    },
     period: {
       startDate: "",
       endDate: "",
@@ -24,6 +30,54 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
     pagination: "",
     labels: [],
   });
+
+  const filterConfigs = {
+    workStatus: {
+      title: "filters.workStatus",
+      options: {
+        draft: "workStatus.draft",
+        submitted: "workStatus.submitted",
+        rejected: "workStatus.rejected",
+        pending_changes: "workStatus.pendingChanges",
+      },
+    },
+    workType: {
+      title: "filters.workType",
+      options: {
+        article: "workTypes.article",
+        search: "workTypes.research",
+        dissertation: "workTypes.dissertation",
+        extension: "workTypes.extension",
+        final_thesis: "filters.finalPaper",
+      },
+    },
+  };
+
+  const renderFilterGroup = (filterKey, config) => (
+    <div key={filterKey}>
+      <h3 className="section-title">{t(config.title)}</h3>
+      <div className="tag-group">
+        {Object.entries(config.options).map(
+          ([optionKey, translationKey], index) => (
+            <Button
+              key={optionKey}
+              className={`tag-button ${
+                localFilters[filterKey][optionKey] ? "selected" : ""
+              }`}
+              onClick={() => handleCheckboxChange(filterKey, optionKey)}
+              ref={
+                filterKey === "workType" && optionKey === "article"
+                  ? initialFocusRef
+                  : null
+              }
+            >
+              {t(translationKey)}
+            </Button>
+          )
+        )}
+      </div>
+    </div>
+  );
 
   const handleCheckboxChange = (category, option) => {
     setLocalFilters((prevFilters) => ({
@@ -101,6 +155,16 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
       pagination: "",
       labels: [],
     };
+
+    if (showStatus) {
+      clearedFilters.workStatus = {
+        draft: false,
+        submitted: false,
+        rejected: false,
+        pending_changes: false,
+      };
+    }
+
     setLocalFilters(clearedFilters);
     onApplyFilters({});
   };
@@ -118,50 +182,9 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, setSize }) => {
       >
         <div className="modal-content">
           <section className="filter-section">
-            <h3 className="section-title">{t("filters.workType")}</h3>
-            <div className="tag-group">
-              <Button
-                className={`tag-button ${
-                  localFilters.workType.article ? "selected" : ""
-                }`}
-                onClick={() => handleCheckboxChange("workType", "article")}
-                ref={initialFocusRef}
-              >
-                {t("workTypes.article")}
-              </Button>
-              <Button
-                className={`tag-button ${
-                  localFilters.workType.search ? "selected" : ""
-                }`}
-                onClick={() => handleCheckboxChange("workType", "search")}
-              >
-                {t("workTypes.research")}
-              </Button>
-              <Button
-                className={`tag-button ${
-                  localFilters.workType.dissertation ? "selected" : ""
-                }`}
-                onClick={() => handleCheckboxChange("workType", "dissertation")}
-              >
-                {t("workTypes.dissertation")}
-              </Button>
-              <Button
-                className={`tag-button ${
-                  localFilters.workType.extension ? "selected" : ""
-                }`}
-                onClick={() => handleCheckboxChange("workType", "extension")}
-              >
-                {t("workTypes.extension")}
-              </Button>
-              <Button
-                className={`tag-button ${
-                  localFilters.workType.final_thesis ? "selected" : ""
-                }`}
-                onClick={() => handleCheckboxChange("workType", "final_thesis")}
-              >
-                {t("filters.finalPaper")}
-              </Button>
-            </div>
+            {showStatus &&
+              renderFilterGroup("workStatus", filterConfigs.workStatus)}
+            {renderFilterGroup("workType", filterConfigs.workType)}
           </section>
 
           <section className="filter-section">

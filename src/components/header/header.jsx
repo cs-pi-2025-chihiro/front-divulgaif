@@ -8,6 +8,7 @@ import { FaUser, FaBars } from "react-icons/fa";
 import Drawer from "../drawer/drawer";
 import AuthButton from "../button/auth-button/auth-button";
 import { aboutWebsite } from "../../constants";
+import { navigateTo } from "../../services/utils/utils";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -17,17 +18,14 @@ const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobile] = useState(window.innerWidth <= 768);
 
-  const navigateTo = (path) => {
-    const cleanPath = path.startsWith("/") ? path.slice(1) : path;
-    const fullPath = cleanPath
-      ? `/${currentLang}/${cleanPath}`
-      : `/${currentLang}`;
-    navigate(fullPath);
+  const handleMyWorksNavigation = () => {
+    const myWorksPath = currentLang === "pt" ? "meus-trabalhos" : "my-works";
+    navigateTo(myWorksPath, navigate, currentLang);
   };
 
   const handleNewWorkNavigation = () => {
     const newWorkPath = currentLang === "pt" ? "trabalho/novo" : "work/new";
-    navigateTo(newWorkPath);
+    navigateTo(newWorkPath, navigate, currentLang);
   };
 
   const toggleDrawer = () => {
@@ -39,7 +37,7 @@ const Header = () => {
   };
 
   const handleLogin = () => {
-    navigateTo("/login");
+    navigateTo("login", navigate, currentLang);
   };
 
   const handleLogout = () => {
@@ -49,21 +47,13 @@ const Header = () => {
   return (
     <>
       <div className="header">
-        <div className="header-left" onClick={() => navigateTo("")}>
+        <div className="header-left" onClick={() => navigate("")}>
           <h1 style={{ cursor: "pointer" }}>DivulgaIF</h1>
         </div>
         <div className="header-center">
-          <a onClick={() => navigateTo("")}>{t("header.mainSearch")}</a>
+          <a onClick={() => navigate("")}>{t("header.mainSearch")}</a>
           {authenticated && (
-            <a
-              onClick={() =>
-                alert("Ainda trabalhando nisso! Still working on this!")
-              }
-            >
-              {" "}
-              {/* TODO: APLICAR ISSO QUANDO TERMINARMOS A PÁGINA */}
-              {t("header.myWorks")}
-            </a>
+            <a onClick={handleMyWorksNavigation}> {t("header.myWorks")}</a>
           )}
           <a style={{ cursor: "pointer" }} onClick={handleNewWorkNavigation}>
             {t("home.newWork")}

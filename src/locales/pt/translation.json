@@ -63,6 +63,13 @@
     "download": "Baixar PDF",
     "edit": "Editar"
   },
+  "workStatus": {
+    "draft": "Rascunho",
+    "submitted": "Enviado para Avaliação",
+    "pendingChanges": "Mudanças Pendentes",
+    "published": "Publicado",
+    "rejected": "Rejeitado"
+  },
   "login": {
     "title": "Entrar",
     "access": "Acesse ao DivulgaIF:",
@@ -91,7 +98,8 @@
     "help": "Acessibilidade e Ajuda",
     "about": "Sobre Nós",
     "projectTitle": "Projeto IFPR",
-    "projectDescription": "Um projeto de extensão do Instituto Federal do Paraná para democratizar o acesso à educação."
+    "projectDescription": "Um projeto de extensão do Instituto Federal do Paraná para democratizar o acesso à educação.",
+    "version": "Versão"
   },
   "header": {
     "home": "Início",
@@ -104,6 +112,7 @@
   "filters": {
     "title": "Filtrar Apresentação",
     "workType": "Tipo do trabalho",
+    "workStatus": "Status do trabalho",
     "labels": "Palvras-Chave",
     "addLabel": "Nova Palavra-Chave",
     "date": "Data",
@@ -138,6 +147,7 @@
     "order": "Ordem"
   },
   "pagination": {
+    "result": "Resultado",
     "results": "Resultados",
     "page": "Página",
     "of": "de",
