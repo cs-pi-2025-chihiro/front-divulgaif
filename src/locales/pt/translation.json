@@ -28,6 +28,12 @@
     "previous": "Anterior",
     "next": "Próximo"
   },
+  "notFound": {
+    "title": "Página Não Encontrada",
+    "message": "Oops! A página que você está procurando não existe ou você não tem permissão para acessá-la.",
+    "submessage": "Pode ser que o link esteja quebrado ou que você precise fazer login para acessar este conteúdo.",
+    "goHome": "Ir para Início"
+  },
   "errors": {
     "workNotFound": "Trabalho não encontrado",
     "unexpectedError": "Ocorreu um erro inesperado",
