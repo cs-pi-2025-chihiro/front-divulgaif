@@ -5,16 +5,7 @@ import Button from "../../../components/button";
 import "./page.css";
 
 const NotFound = () => {
-  const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
-
-  const handleGoHome = () => {
-    navigate(`/${i18n.language}`);
-  };
-
-  const handleGoBack = () => {
-    navigate(-1);
-  };
+  const { t } = useTranslation();
 
   return (
     <div className="not-found-container">

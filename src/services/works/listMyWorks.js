@@ -1,7 +1,7 @@
 import { ENDPOINTS } from "../../enums/endpoints";
 import api from "../utils/api";
 
-export const listWorks = async (page = 0, size = 8, filters = {}) => {
+export const listMyWorks = async (page = 0, size = 8, filters = {}) => {
   const params = new URLSearchParams({
     page: page.toString(),
     size: size.toString(),
@@ -47,7 +47,7 @@ export const listWorks = async (page = 0, size = 8, filters = {}) => {
     params.append("endDate", filters.endDate);
   }
 
-  const result = await api.get(ENDPOINTS.WORKS.LIST + "?" + params, {
+  const result = await api.get(ENDPOINTS.WORKS.LIST_MY_WORKS + "?" + params, {
     headers: {
       "Content-Type": "application/json",
     },

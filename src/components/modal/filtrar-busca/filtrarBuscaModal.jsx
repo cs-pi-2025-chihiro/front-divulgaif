@@ -152,7 +152,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, showStatus }) => {
         endDate: "",
       },
       order: "",
-      pagination: "",
+      pagination: "eight",
       labels: [],
     };
 
@@ -166,7 +166,8 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, showStatus }) => {
     }
 
     setLocalFilters(clearedFilters);
-    onApplyFilters({});
+    onApplyFilters(clearedFilters);
+    onClose();
   };
 
   if (!isOpen) return null;

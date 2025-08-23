@@ -4,6 +4,7 @@ export const ENDPOINTS = {
     CREATE: "/works",
     GET: "/works",
     GET_BY_ID: "/works/{id}",
+    LIST_MY_WORKS: "works/list-my-works",
     UPDATE: "/works/{id}",
     DELETE: "/works/{id}",
     UPLOAD_IMAGE: "/works/upload-image",
