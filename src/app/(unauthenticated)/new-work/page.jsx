@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./page.css";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import Button from "../../../components/button";
 import {
   Input,
@@ -21,7 +20,6 @@ import { useGetSuggestions } from "../../../services/works/useGetSuggestions.js"
 
 const NewWork = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { isLoading, error, saveDraft, submitForReview, publish } =
     useCreateWork();
   const { getLabelSuggestions, getLinkSuggestions, getAuthorSuggestions } =

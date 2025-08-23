@@ -3,9 +3,12 @@ import Home from "../app/(unauthenticated)/home/page";
 import LoginPage from "../app/(unauthenticated)/login/page";
 import RegisterPage from "../app/(unauthenticated)/register/page";
 import WorkDetail from "../app/(unauthenticated)/home/[id]/page";
+import NotFound from "../app/(unauthenticated)/404/page";
 import { useTranslation } from "react-i18next";
 import LanguageRoute from "./LanguageRoute";
 import GuestRoute from "./GuestRoute";
+import StudentRoute from "./StudentRoute";
+import MyWorks from "../app/(authenticated)/my-works/page";
 import NewWork from "../app/(unauthenticated)/new-work/page";
 
 function AppRoutes() {
@@ -13,7 +16,6 @@ function AppRoutes() {
     const { i18n } = useTranslation();
     const userLang = navigator.language.split("-")[0];
     const targetLang = ["en", "pt"].includes(userLang) ? userLang : "pt";
-
     return <Navigate to={`/${targetLang}`} replace />;
   };
 
@@ -29,6 +31,10 @@ function AppRoutes() {
         </Route>
         <Route path="work/:id" element={<WorkDetail />} />
         <Route path="work/new" element={<NewWork />} />
+        <Route element={<StudentRoute />}>
+          <Route path="my-works" element={<MyWorks />} />
+        </Route>
+        <Route path="404" element={<NotFound />} />
       </Route>
 
       <Route path="/pt" element={<LanguageRoute lang="pt" />}>
@@ -39,9 +45,13 @@ function AppRoutes() {
         </Route>
         <Route path="trabalho/:id" element={<WorkDetail />} />
         <Route path="trabalho/novo" element={<NewWork />} />
+        <Route element={<StudentRoute />}>
+          <Route path="meus-trabalhos" element={<MyWorks />} />
+        </Route>
+        <Route path="404" element={<NotFound />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

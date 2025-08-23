@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaSignOutAlt } from "react-icons/fa";
 import Button from "../button";
 import "./auth-button.css";
 
@@ -25,6 +25,7 @@ const AuthButton = ({
 
   const buttonText = isAuthenticated ? t("common.logout") : t("common.login");
   const ariaLabel = isAuthenticated ? t("common.logout") : t("common.login");
+  const ButtonIcon = isAuthenticated ? FaSignOutAlt : FaUser;
 
   return (
     <Button
@@ -36,7 +37,7 @@ const AuthButton = ({
       onClick={handleClick}
       {...props}
     >
-      <FaUser /> {buttonText}
+      <ButtonIcon /> {buttonText}
     </Button>
   );
 };
