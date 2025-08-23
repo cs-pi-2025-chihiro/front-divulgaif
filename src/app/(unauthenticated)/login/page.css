@@ -16,7 +16,7 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
-  background-color: var(--primary-green);
+  background-color: var(--light-green);
   color: var(--text-light);
   width: 100%;
 }
