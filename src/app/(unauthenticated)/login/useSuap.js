@@ -98,6 +98,14 @@ const useSuap = () => {
         if (loginResult) {
           localStorage.setItem("accessToken", loginResult.accessToken);
           localStorage.setItem("refreshToken", loginResult.refreshToken);
+          localStorage.setItem("userData", loginResult.user);
+          if (data.user)
+            localStorage.setItem("userData", JSON.stringify(data.user));
+
+          if (data.user.roles && Array.isArray(data.user.roles)) {
+            const roleNames = data.user.roles.map((role) => role.name);
+            localStorage.setItem("userRoles", JSON.stringify(roleNames));
+          }
 
           localStorage.removeItem("oauth_hash");
           window.history.replaceState(
