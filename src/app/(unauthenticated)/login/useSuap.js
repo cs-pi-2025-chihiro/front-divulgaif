@@ -97,7 +97,6 @@ const useSuap = () => {
 
         if (loginResult) {
           localStorage.setItem("accessToken", loginResult.accessToken);
-          console.log("loginResult ", loginResult);
           localStorage.setItem("refreshToken", loginResult.refreshToken);
 
           if (loginResult.user) {
