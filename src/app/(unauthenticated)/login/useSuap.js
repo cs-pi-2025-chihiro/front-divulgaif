@@ -100,10 +100,10 @@ const useSuap = () => {
           localStorage.setItem("refreshToken", loginResult.refreshToken);
           localStorage.setItem("userData", loginResult.user);
           if (data.user)
-            localStorage.setItem("userData", JSON.stringify(data.user));
+            localStorage.setItem("userData", JSON.stringify(loginResult.user));
 
-          if (data.user.roles && Array.isArray(data.user.roles)) {
-            const roleNames = data.user.roles.map((role) => role.name);
+          if (loginResult.user.roles && Array.isArray(loginResult.user.roles)) {
+            const roleNames = loginResult.user.roles.map((role) => role.name);
             localStorage.setItem("userRoles", JSON.stringify(roleNames));
           }
 

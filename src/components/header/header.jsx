@@ -42,7 +42,7 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("");
+    navigateTo("", navigate, currentLang);
   };
 
   return (
