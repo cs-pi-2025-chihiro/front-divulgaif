@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import Button from "../../../../components/button";
 import "./page.css";
 import { useWork } from "./useWork";
+import { hasRole, isAuthenticated } from "../../../../services/hooks/auth/useAuth";
+
 
 const WorkDetail = () => {
   const { id } = useParams();
@@ -13,10 +15,20 @@ const WorkDetail = () => {
   const workId = Number(id);
 
   const { work, isLoading } = useWork({ id: workId });
+  const userIsAuthenticated = isAuthenticated();
+  const isStudent = hasRole("IS_STUDENT");
+
 
   const handleGoBack = () => {
     navigate(-1);
   };
+
+  const handleEdit = () => {
+    const currentLang = i18n.language;
+    const editPath = currentLang === "pt" ? "trabalho/editar" : "work/edit";
+    navigate(`/${currentLang}/${editPath}/${workId}`);
+  };
+
 
   if (isLoading) {
     return (
@@ -46,6 +58,12 @@ const WorkDetail = () => {
       </div>
     );
   }
+
+  const canEdit =
+  userIsAuthenticated &&
+  isStudent &&
+  (work.workStatus.name === "DRAFT" || work.workStatus.name === "PENDING_CHANGES");
+
 
   return (
     <div className="work-detail-container">
@@ -130,6 +148,13 @@ const WorkDetail = () => {
               </li>
             ))}
           </ul>
+        </div>
+      )}
+       {canEdit && (
+        <div className="work-detail-actions">
+          <Button variant="primary" size="lg" onClick={handleEdit}>
+            {t("common.edit")}
+          </Button>
         </div>
       )}
     </div>

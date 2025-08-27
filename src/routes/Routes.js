@@ -7,6 +7,8 @@ import { useTranslation } from "react-i18next";
 import LanguageRoute from "./LanguageRoute";
 import GuestRoute from "./GuestRoute";
 import NewWork from "../app/(unauthenticated)/new-work/page";
+import EditWork from "../app/(unauthenticated)/edit-work/[id]/page";
+
 
 function AppRoutes() {
   const DefaultLanguageRedirect = () => {
@@ -29,6 +31,7 @@ function AppRoutes() {
         </Route>
         <Route path="work/:id" element={<WorkDetail />} />
         <Route path="work/new" element={<NewWork />} />
+        <Route path="work/edit/:id" element={<EditWork />} />
       </Route>
 
       <Route path="/pt" element={<LanguageRoute lang="pt" />}>
@@ -39,6 +42,7 @@ function AppRoutes() {
         </Route>
         <Route path="trabalho/:id" element={<WorkDetail />} />
         <Route path="trabalho/novo" element={<NewWork />} />
+        <Route path="trabalho/editar/:id" element={<EditWork />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

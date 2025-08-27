@@ -1,0 +1,127 @@
+#edit-work-form {
+    margin: 16px;
+    padding: 16px;
+    max-width: 100%;
+    box-sizing: border-box;
+    background-color: var(--form-bg);
+    border-radius: 8px;
+    color: var(--text-light);
+  }
+  
+  #edit-work-form > div {
+    margin-bottom: 20px;
+  }
+  
+  #work-type .work-type-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+  }
+  
+  label {
+    display: block;
+    font-weight: 500;
+    font-size: 16px;
+    margin-left: 5px;
+    margin-bottom: 8px;
+  }
+  
+  textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+    font-size: 14px;
+    color: #333;
+    background-color: var(--white-gray);
+    border: 1px solid gray;
+    border-radius: 6px;
+    box-sizing: border-box;
+    resize: vertical;
+    font-family: inherit;
+  }
+  
+  #edit-work-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 24px;
+    padding: 16px 0;
+  }
+  
+  #edit-work-buttons .btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    min-width: 80px;
+    flex: 1;
+    max-width: 120px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  #edit-work-buttons .btn-back {
+    background-color: var(--accent);
+    color: var(--text-dark);
+    border: 1px solid var(--primary);
+  }
+  
+  #edit-work-buttons .btn-back:hover {
+    background-color: var(--primary);
+    color: var(--text-light);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  
+  #edit-work-buttons .btn-save,
+  #edit-work-buttons .btn-send {
+    background-color: var(--primary-green);
+    color: var(--text-light);
+    border: 1px solid var(--primary-green);
+  }
+  
+  #edit-work-buttons .btn-save:hover,
+  #edit-work-buttons .btn-send:hover {
+    background-color: var(--dark-green);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  
+  .word-count-info {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+    text-align: right;
+  }
+  
+  .field-error {
+    border-color: #e74c3c !important;
+    background-color: #fff5f5 !important;
+  }
+  
+  .error-message {
+    display: block;
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  
+  @media (min-width: 769px) {
+    #edit-work-form {
+      margin: 24px auto;
+      padding: 24px;
+      max-width: 1000px;
+    }
+  
+    #edit-work-buttons {
+      justify-content: flex-end;
+    }
+  
+    #edit-work-buttons .btn {
+      flex: none;
+      max-width: none;
+    }
+  }

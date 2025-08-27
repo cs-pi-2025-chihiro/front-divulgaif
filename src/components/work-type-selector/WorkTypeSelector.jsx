@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "./WorkTypeSelector.css";
 
-const WorkTypeSelector = ({ onTypeChange }) => {
+const WorkTypeSelector = ({ onTypeChange, selectedType: initialSelectedType }) => {
   const { t } = useTranslation();
   const workTypes = [
     { key: "ARTICLE", label: t("workTypes.article") },
@@ -11,7 +11,12 @@ const WorkTypeSelector = ({ onTypeChange }) => {
     { key: "EXTENSION", label: t("workTypes.extension") },
     { key: "FINAL_THESIS", label: t("workTypes.finalThesis") },
   ];
-  const [selectedType, setSelectedType] = useState("");
+  const [selectedType, setSelectedType] = useState(initialSelectedType || "");
+
+  useEffect(() => {
+    setSelectedType(initialSelectedType || "");
+  }, [initialSelectedType]);
+
 
   const handleSelectType = (type) => {
     setSelectedType(type.key);
