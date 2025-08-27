@@ -28,6 +28,12 @@
     "previous": "Anterior",
     "next": "Próximo"
   },
+  "notFound": {
+    "title": "Página Não Encontrada",
+    "message": "Oops! A página que você está procurando não existe ou você não tem permissão para acessá-la.",
+    "submessage": "Pode ser que o link esteja quebrado ou que você precise fazer login para acessar este conteúdo.",
+    "goHome": "Ir para Início"
+  },
   "errors": {
     "workNotFound": "Trabalho não encontrado",
     "unexpectedError": "Ocorreu um erro inesperado",
@@ -44,7 +50,13 @@
     "dissertation": "Dissertação",
     "research": "Pesquisa",
     "finalThesis": "TCC",
-    "extension": "Extensão"
+    "extension": "Extensão",
+    "unknown": "Tipo desconhecido",
+    "Artigo": "Artigo",
+    "TCC": "TCC",
+    "Projeto": "Projeto",
+    "Dissertação": "Dissertação",
+    "Tese": "Tese"
   },
   "workDetail": {
     "authors": "Autores",
@@ -56,6 +68,13 @@
     "link": "Link",
     "download": "Baixar PDF",
     "edit": "Editar"
+  },
+  "workStatus": {
+    "draft": "Rascunho",
+    "submitted": "Enviado para Avaliação",
+    "pendingChanges": "Mudanças Pendentes",
+    "published": "Publicado",
+    "rejected": "Rejeitado"
   },
   "login": {
     "title": "Entrar",
@@ -85,7 +104,8 @@
     "help": "Acessibilidade e Ajuda",
     "about": "Sobre Nós",
     "projectTitle": "Projeto IFPR",
-    "projectDescription": "Um projeto de extensão do Instituto Federal do Paraná para democratizar o acesso à educação."
+    "projectDescription": "Um projeto de extensão do Instituto Federal do Paraná para democratizar o acesso à educação.",
+    "version": "Versão"
   },
   "header": {
     "home": "Início",
@@ -98,6 +118,7 @@
   "filters": {
     "title": "Filtrar Apresentação",
     "workType": "Tipo do trabalho",
+    "workStatus": "Status do trabalho",
     "labels": "Palvras-Chave",
     "addLabel": "Nova Palavra-Chave",
     "date": "Data",
@@ -132,6 +153,7 @@
     "order": "Ordem"
   },
   "pagination": {
+    "result": "Resultado",
     "results": "Resultados",
     "page": "Página",
     "of": "de",
