@@ -37,6 +37,7 @@ const NewWork = () => {
   const userIsAuthenticated = isAuthenticated();
   const isAdmin = hasRole("IS_ADMIN");
   const isStudent = hasRole("IS_STUDENT");
+  const isTEACHER = hasRole("IS_TEACHER");
 
   const getWorkData = () => ({
     title,

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./header.css";
 import { useTranslation } from "react-i18next";
 import Button from "../button";
-import { isAuthenticated, logout } from "../../services/hooks/auth/useAuth";
+import { isAuthenticated, logout, hasRole } from "../../services/hooks/auth/useAuth";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaBars } from "react-icons/fa";
 import Drawer from "../drawer/drawer";
@@ -26,6 +26,11 @@ const Header = () => {
   const handleNewWorkNavigation = () => {
     const newWorkPath = currentLang === "pt" ? "trabalho/novo" : "work/new";
     navigateTo(newWorkPath, navigate, currentLang);
+  };
+
+  const handleRateWorkNavigation = () => {
+    const newWorkPath = currentLang === "pt" ? "avaliar-trabalho/novo" : "rate-work/new";
+    navigateTo(rateWorkPath, navigate, currentLang);
   };
 
   const toggleDrawer = () => {
@@ -55,6 +60,9 @@ const Header = () => {
           <a onClick={() => navigate("")}>{t("header.mainSearch")}</a>
           {authenticated && (
             <a onClick={handleMyWorksNavigation}> {t("header.myWorks")}</a>
+          )}
+          {authenticated && hasRole("IS_TEACHER") && (
+            <a onClick={handleRateWorkNavigation}> {t("header.rateWorks")}</a>
           )}
           <a style={{ cursor: "pointer" }} onClick={handleNewWorkNavigation}>
             {t("home.newWork")}
