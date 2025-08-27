@@ -10,6 +10,8 @@ import GuestRoute from "./GuestRoute";
 import StudentRoute from "./StudentRoute";
 import MyWorks from "../app/(authenticated)/my-works/page";
 import NewWork from "../app/(unauthenticated)/new-work/page";
+import WorkEvaluation from "../app/(authenticated)/teacher/workEvaluation";
+import TeacherRoute from "./TeacherRoute";
 
 function AppRoutes() {
   const DefaultLanguageRedirect = () => {
@@ -36,6 +38,10 @@ function AppRoutes() {
         </Route>
         <Route path="404" element={<NotFound />} />
       </Route>
+      <Route element={<TeacherRoute/>}>
+        <Route path="rate-work/:id" element={<WorkEvaluation />} />
+        <Route path="rate-work/new" element={<WorkEvaluation />} />
+      </Route>
 
       <Route path="/pt" element={<LanguageRoute lang="pt" />}>
         <Route index element={<Home />} />
@@ -49,6 +55,10 @@ function AppRoutes() {
           <Route path="meus-trabalhos" element={<MyWorks />} />
         </Route>
         <Route path="404" element={<NotFound />} />
+      </Route>
+      <Route element={<TeacherRoute />}>
+        <Route path="avaliar-trabalho/:id" element={<WorkEvaluation />} />
+        <Route path="avaliar-trabalho/new" element={<WorkEvaluation />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />
