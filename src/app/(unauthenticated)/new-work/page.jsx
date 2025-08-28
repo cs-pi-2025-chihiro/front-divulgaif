@@ -35,7 +35,7 @@ const NewWork = () => {
   const [errors, setErrors] = useState({});
 
   const userIsAuthenticated = isAuthenticated();
-  const isAdmin = hasRole("IS_ADMIN");
+  const isTeacher = hasRole("IS_TEACHER");
   const isStudent = hasRole("IS_STUDENT");
 
   const getWorkData = () => ({
