@@ -25,6 +25,7 @@ const MyWorks = () => {
     useMyWorks(appliedFilters);
 
   const handleApplyFilters = (filters) => {
+    console.log("Applying filters:", filters); // Debug log
     const backendFilters = {};
 
     if (
@@ -36,6 +37,18 @@ const MyWorks = () => {
         .map(([key]) => key.toUpperCase());
       if (selectedTypes.length > 0) {
         backendFilters.workTypes = selectedTypes.join(",");
+      }
+    }
+
+    if (
+      filters.workStatus &&
+      Object.values(filters.workStatus).some((value) => value)
+    ) {
+      const selectedTypes = Object.entries(filters.workStatus)
+        .filter(([key, value]) => value)
+        .map(([key]) => key.toUpperCase());
+      if (selectedTypes.length > 0) {
+        backendFilters.workStatus = selectedTypes.join(",");
       }
     }
 
@@ -60,6 +73,7 @@ const MyWorks = () => {
       backendFilters.order = filters.order;
     }
 
+    console.log("Backend filters:", backendFilters); // Debug log
     setCurrentPage(0);
     setAppliedFilters(backendFilters);
     setIsFilterModalOpen(false);
@@ -145,6 +159,7 @@ const MyWorks = () => {
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
         onApplyFilters={handleApplyFilters}
+        showStatus={true}
         setSize={setCurrentSize}
       />
     </div>
