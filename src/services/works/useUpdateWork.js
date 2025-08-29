@@ -31,40 +31,45 @@ export const useUpdateWork = () => {
 
   const formatAuthorsForBackend = (authorsArray) => {
     const newAuthors = [];
+    const existingAuthors = [];
 
     authorsArray.forEach((author) => {
-      let name = "";
-      let email = "";
+      if (author.id && !String(author.id).startsWith('new_')) {
+        existingAuthors.push({ id: author.id });
+      } else {
+        let name = "";
+        let email = "";
 
-      if (typeof author === "string") {
-        if (author.includes("<") && author.includes(">")) {
-          const match = author.match(/^(.+?)\s*<(.+?)>$/);
-          if (match) {
-            name = match[1].trim();
-            email = match[2].trim();
+        if (typeof author === "string") {
+          if (author.includes("<") && author.includes(">")) {
+            const match = author.match(/^(.+?)\s*<(.+?)>$/);
+            if (match) {
+              name = match[1].trim();
+              email = match[2].trim();
+            } else {
+              name = author.trim();
+            }
+          } else if (author.includes("@")) {
+            name = author.split("@")[0].trim();
+            email = author.trim();
           } else {
             name = author.trim();
           }
-        } else if (author.includes("@")) {
-          name = author.split("@")[0].trim();
-          email = author.trim();
-        } else {
-          name = author.trim();
+        } else if (typeof author === "object") {
+          name = author.name || author.label || "";
+          email = author.email || "";
         }
-      } else if (typeof author === "object") {
-        name = author.name || author.label || "";
-        email = author.email || "";
-      }
 
-      if (name) {
-        if (!email || !isValidEmail(email)) {
-          email = `${name.toLowerCase().replace(/\s+/g, ".")}@external.com`;
+        if (name) {
+          if (!email || !isValidEmail(email)) {
+            email = `${name.toLowerCase().replace(/\s+/g, ".")}@external.com`;
+          }
+          newAuthors.push({ name, email });
         }
-        newAuthors.push({ name, email });
       }
     });
 
-    return { newAuthors };
+    return { newAuthors, existingAuthors };
   };
 
   const isValidEmail = (email) => {
@@ -78,8 +83,8 @@ export const useUpdateWork = () => {
         typeof label === "string"
           ? label
           : label && typeof label === "object"
-          ? label.label || label.name || String(label)
-          : String(label);
+            ? label.label || label.name || String(label)
+            : String(label);
 
       const labelColor = (label && label.color) || "#3B82F6";
 
@@ -136,7 +141,7 @@ export const useUpdateWork = () => {
         throw new Error("Tipo de trabalho é obrigatório");
       }
 
-      const { newAuthors } = formatAuthorsForBackend(workData.authors || []);
+      const { newAuthors, existingAuthors } = formatAuthorsForBackend(workData.authors || []);
       const workLabels = formatLabelsForBackend(workData.labels || []);
       const workLinks = formatLinksForBackend(workData.links || []);
 
@@ -151,6 +156,11 @@ export const useUpdateWork = () => {
 
       if (newAuthors.length > 0) {
         payload.newAuthors = newAuthors;
+      }
+      if (existingAuthors.length > 0) {
+        payload.authors = existingAuthors;
+      } else {
+        payload.authors = [];
       }
       if (workLabels.length > 0) {
         payload.workLabels = workLabels;
