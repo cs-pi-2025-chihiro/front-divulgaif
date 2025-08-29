@@ -24,7 +24,7 @@ export const useUpdateWork = () => {
       RESEARCH: "SEARCH",
       DISSERTATION: "DISSERTATION",
       EXTENSION: "EXTENSION",
-      FINAL_PAPER: "FINAL_THESIS",
+      FINAL_THESIS: "FINAL_THESIS",
     };
     return typeMap[workType] || workType;
   };
@@ -159,7 +159,7 @@ export const useUpdateWork = () => {
         payload.workLinks = workLinks;
       }
 
-      const response = await api.put(`${ENDPOINTS.WORKS.UPDATE}/${workId}`, payload);
+      const response = await api.put(ENDPOINTS.WORKS.UPDATE.replace('{id}', workId), payload);
       return response.data;
     } catch (error) {
       const status = error.response?.status;

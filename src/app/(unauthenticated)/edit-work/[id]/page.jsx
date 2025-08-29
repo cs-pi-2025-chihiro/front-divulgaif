@@ -44,14 +44,31 @@ const EditWork = () => {
   useEffect(() => {
     const fetchWorkData = async () => {
       try {
-        const workData = await getWork(id);
-        setTitle(workData.title);
-        setDescription(workData.description);
-        setAbstract(workData.content);
-        setWorkType(workData.workType.name);
-        setAuthors(workData.authors);
-        setLabels(workData.labels);
-        setLinks(workData.links);
+        const workId = Number(id);
+        const workData = await getWork(workId);
+        setTitle(workData.title || "");
+        setDescription(workData.description || "");
+        setAbstract(workData.content || "");
+        
+        const mapWorkTypeFromBackend = (backendWorkType) => {
+          if (!backendWorkType || !backendWorkType.name) return "";
+          
+          const typeMap = {
+            "ARTICLE": "ARTICLE",
+            "SEARCH": "RESEARCH",
+            "DISSERTATION": "DISSERTATION",
+            "EXTENSION": "EXTENSION",
+            "FINAL_THESIS": "FINAL_THESIS"
+          };
+          
+          return typeMap[backendWorkType.name] || "";
+        };
+        
+        setWorkType(mapWorkTypeFromBackend(workData.workType));
+        
+        setAuthors(workData.authors || []);
+        setLabels(workData.labels || []);
+        setLinks(workData.links || []);
       } catch (error) {
         console.error("Failed to fetch work data:", error);
         alert("Failed to load work data. Please try again.");
@@ -59,7 +76,9 @@ const EditWork = () => {
       }
     };
 
-    fetchWorkData();
+    if (id) {
+      fetchWorkData();
+    }
   }, [id, navigate]);
 
 

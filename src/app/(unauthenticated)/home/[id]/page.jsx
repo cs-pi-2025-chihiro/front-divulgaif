@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Button from "../../../../components/button";
 import "./page.css";
 import { useWork } from "./useWork";
-import { hasRole, isAuthenticated } from "../../../../services/hooks/auth/useAuth";
+import { hasRole, isAuthenticated, getStoredUser } from "../../../../services/hooks/auth/useAuth";
 
 
 const WorkDetail = () => {
@@ -17,6 +17,7 @@ const WorkDetail = () => {
   const { work, isLoading } = useWork({ id: workId });
   const userIsAuthenticated = isAuthenticated();
   const isStudent = hasRole("IS_STUDENT");
+  const currentUser = getStoredUser();
 
 
   const handleGoBack = () => {
@@ -59,10 +60,15 @@ const WorkDetail = () => {
     );
   }
 
+  const isWorkOwner = work?.authors?.some(author => 
+    author.userId === currentUser?.id
+  );
+
   const canEdit =
-  userIsAuthenticated &&
-  isStudent &&
-  (work.workStatus.name === "DRAFT" || work.workStatus.name === "PENDING_CHANGES");
+    userIsAuthenticated &&
+    isStudent &&
+    currentUser &&
+    isWorkOwner;
 
 
   return (

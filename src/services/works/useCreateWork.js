@@ -24,7 +24,7 @@ export const useCreateWork = () => {
       RESEARCH: "SEARCH",
       DISSERTATION: "DISSERTATION",
       EXTENSION: "EXTENSION",
-      FINAL_PAPER: "FINAL_THESIS",
+      FINAL_THESIS: "FINAL_THESIS",
     };
     return typeMap[workType] || workType;
   };
