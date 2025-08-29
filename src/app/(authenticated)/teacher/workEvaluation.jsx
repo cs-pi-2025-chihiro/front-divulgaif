@@ -32,6 +32,8 @@ const WorkEvaluation = () => {
     const [labelInput, setLabelInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState('');
+    const [showAddLabel, setShowAddLabel] = useState(false);
+    const [showAddLink, setShowAddLink] = useState(false);
 
     // Contadores de palavras
     const [wordCounts, setWordCounts] = useState({
@@ -55,6 +57,18 @@ const WorkEvaluation = () => {
             ...prev,
             [field]: value
         }));
+    };
+
+    // Upload de imagem
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                handleInputChange('image', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
     const addAuthor = () => {
@@ -98,6 +112,22 @@ const WorkEvaluation = () => {
         }
     };
 
+    // Funções para adicionar label
+    const handleAddLabel = () => {
+        if (labelInput.trim() && !formData.labels.includes(labelInput.trim())) {
+            addToList('labels', labelInput, setLabelInput);
+            setShowAddLabel(false);
+        }
+    };
+
+    // Funções para adicionar link
+    const handleAddLink = () => {
+        if (linkInput.trim() && !formData.links.includes(linkInput.trim())) {
+            addToList('links', linkInput, setLinkInput);
+            setShowAddLink(false);
+        }
+    };
+
     // Simulação de chamadas à API
     const simulateApiCall = async (action) => {
         setIsLoading(true);
@@ -132,20 +162,6 @@ const WorkEvaluation = () => {
 
     return (
         <div className="app-container">
-            {/* Header */}
-            <header className="app-header">
-                <div className="header-content">
-                    <div className="header-left">
-                        <Menu className="menu-icon" />
-                        <h1 className="app-title">DivulgaIF</h1>
-                    </div>
-                    <div className="user-badge">
-                        <User className="user-icon" />
-                        <span className="user-name">{currentUser.name}</span>
-                    </div>
-                </div>
-            </header>
-
             <div className="main-content">
                 {/* Mensagem de sucesso */}
                 {showSuccessMessage && (
@@ -160,13 +176,34 @@ const WorkEvaluation = () => {
                     <div className="image-section">
                         <div className="image-placeholder">
                             {formData.image ? (
-                                <img src={formData.image} alt="Trabalho" className="uploaded-image" />
+                                <>
+                                    <img src={formData.image} alt="Trabalho" className="uploaded-image" />
+                                    {canEvaluate && (
+                                        <button
+                                            onClick={() => handleInputChange('image', null)}
+                                            className="image-remove-btn"
+                                        >
+                                            <X size={16} />
+                                        </button>
+                                    )}
+                                </>
                             ) : (
                                 <div className="upload-prompt">
                                     <div className="upload-icon-container">
                                         <Upload className="upload-icon" />
                                     </div>
                                     <p className="upload-text">Adicionar imagem</p>
+                                    {canEvaluate && (
+                                        <label className="upload-file-btn">
+                                            Selecionar arquivo
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={handleImageUpload}
+                                                style={{ display: 'none' }}
+                                            />
+                                        </label>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -320,13 +357,13 @@ const WorkEvaluation = () => {
                     {/* Descrição */}
                     <div className="form-section">
                         <label className="form-label">
-                            Descrição*
+                            Descrição* ({wordCounts.description}/160 palavras)
                         </label>
                         <textarea
                             value={formData.description}
                             onChange={(e) => handleInputChange('description', e.target.value)}
                             rows={4}
-                            className="form-textarea disabled"
+                            className={`form-textarea ${!canEvaluate ? 'disabled' : ''}`}
                             disabled={!canEvaluate}
                             placeholder="Descrição meramente ilustrativa deve conter no máximo 160 palavras para aceitação."
                             required
@@ -336,13 +373,13 @@ const WorkEvaluation = () => {
                     {/* Resumo */}
                     <div className="form-section">
                         <label className="form-label">
-                            Resumo*
+                            Resumo* ({wordCounts.abstract}/300 palavras)
                         </label>
                         <textarea
                             value={formData.abstract}
                             onChange={(e) => handleInputChange('abstract', e.target.value)}
                             rows={4}
-                            className="form-textarea disabled"
+                            className={`form-textarea ${!canEvaluate ? 'disabled' : ''}`}
                             disabled={!canEvaluate}
                             placeholder="Resumo meramente ilustrativo deve conter no máximo 300 palavras para aceitação."
                             required
@@ -371,9 +408,44 @@ const WorkEvaluation = () => {
                                     </span>
                                 ))}
                                 {canEvaluate && (
-                                    <button type="button" className="add-tag-btn">
-                                        <Plus className="add-icon" />
-                                    </button>
+                                    <>
+                                        {!showAddLabel ? (
+                                            <button 
+                                                type="button" 
+                                                className="add-tag-btn"
+                                                onClick={() => setShowAddLabel(true)}
+                                            >
+                                                <Plus className="add-icon" />
+                                            </button>
+                                        ) : (
+                                            <div className="add-input-container">
+                                                <input
+                                                    type="text"
+                                                    value={labelInput}
+                                                    onChange={(e) => setLabelInput(e.target.value)}
+                                                    onKeyPress={(e) => e.key === 'Enter' && handleAddLabel()}
+                                                    placeholder="Nova label"
+                                                    className="add-input"
+                                                    autoFocus
+                                                />
+                                                <button
+                                                    onClick={handleAddLabel}
+                                                    className="confirm-btn"
+                                                >
+                                                    ✓
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        setShowAddLabel(false);
+                                                        setLabelInput('');
+                                                    }}
+                                                    className="cancel-btn"
+                                                >
+                                                    ✕
+                                                </button>
+                                            </div>
+                                        )}
+                                    </>
                                 )}
                             </div>
                         </div>
@@ -400,10 +472,45 @@ const WorkEvaluation = () => {
                                 </div>
                             ))}
                             {canEvaluate && (
-                                <button type="button" className="add-link-btn">
-                                    <Plus className="add-icon" />
-                                    Adicionar link
-                                </button>
+                                <>
+                                    {!showAddLink ? (
+                                        <button 
+                                            type="button" 
+                                            className="add-link-btn"
+                                            onClick={() => setShowAddLink(true)}
+                                        >
+                                            <Plus className="add-icon" />
+                                            Adicionar link
+                                        </button>
+                                    ) : (
+                                        <div className="add-link-container">
+                                            <input
+                                                type="text"
+                                                value={linkInput}
+                                                onChange={(e) => setLinkInput(e.target.value)}
+                                                onKeyPress={(e) => e.key === 'Enter' && handleAddLink()}
+                                                placeholder="https://exemplo.com"
+                                                className="add-link-input"
+                                                autoFocus
+                                            />
+                                            <button
+                                                onClick={handleAddLink}
+                                                className="confirm-btn"
+                                            >
+                                                ✓
+                                            </button>
+                                            <button
+                                                onClick={() => {
+                                                    setShowAddLink(false);
+                                                    setLinkInput('');
+                                                }}
+                                                className="cancel-btn"
+                                            >
+                                                ✕
+                                            </button>
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </div>
                     </div>
@@ -411,13 +518,13 @@ const WorkEvaluation = () => {
                     {/* Feedback */}
                     <div className="form-section">
                         <label className="form-label">
-                            Feedback*
+                            Feedback* ({wordCounts.feedback}/160 palavras)
                         </label>
                         <textarea
                             value={formData.feedback}
                             onChange={(e) => handleInputChange('feedback', e.target.value)}
                             rows={4}
-                            className="form-textarea disabled"
+                            className={`form-textarea ${!canEvaluate ? 'disabled' : ''}`}
                             disabled={!canEvaluate}
                             placeholder="Feedback de avaliação ilustrativo deve conter no máximo 160 palavras para aceitação."
                             required
@@ -427,9 +534,6 @@ const WorkEvaluation = () => {
 
                 {/* Footer com botões */}
                 <div className="action-buttons">
-                    <button onClick={handleBack} className="btn btn-secondary">
-                        Voltar
-                    </button>
                     <button
                         onClick={handleReturn}
                         disabled={isLoading}
@@ -447,24 +551,6 @@ const WorkEvaluation = () => {
                         Aceitar
                     </button>
                 </div>
-
-                {/* Footer */}
-                <footer className="app-footer">
-                    <div className="footer-content">
-                        <div className="footer-logo">
-                            <div className="logo-icon">
-                                <div className="logo-square"></div>
-                            </div>
-                            <span className="logo-subtitle">INSTITUTO FEDERAL</span>
-                        </div>
-                        <h3 className="footer-title">DivulgaIF</h3>
-                        <div className="footer-links">
-                            <p>SIGAA | Cronos | SUAP | Moodle</p>
-                            <p>Acessibilidade e Ajuda | Sobre o Projeto</p>
-                            <p>© DivulgaIF | Todos os Direitos Reservados</p>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>
     );

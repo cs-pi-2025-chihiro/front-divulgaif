@@ -37,10 +37,10 @@ function AppRoutes() {
           <Route path="my-works" element={<MyWorks />} />
         </Route>
         <Route path="404" element={<NotFound />} />
+        <Route element={<TeacherRoute/>}>
+          <Route path="rate-work/:id" element={<WorkEvaluation />} />
+          <Route path="rate-work/new" element={<WorkEvaluation />} />
       </Route>
-      <Route element={<TeacherRoute/>}>
-        <Route path="rate-work/:id" element={<WorkEvaluation />} />
-        <Route path="rate-work/new" element={<WorkEvaluation />} />
       </Route>
 
       <Route path="/pt" element={<LanguageRoute lang="pt" />}>
@@ -55,10 +55,10 @@ function AppRoutes() {
           <Route path="meus-trabalhos" element={<MyWorks />} />
         </Route>
         <Route path="404" element={<NotFound />} />
-      </Route>
-      <Route element={<TeacherRoute />}>
-        <Route path="avaliar-trabalho/:id" element={<WorkEvaluation />} />
-        <Route path="avaliar-trabalho/new" element={<WorkEvaluation />} />
+        <Route element={<TeacherRoute />}>
+          <Route path="avaliar-trabalho/:id" element={<WorkEvaluation />} />
+          <Route path="avaliar-trabalho/novo" element={<WorkEvaluation />} />
+        </Route>
       </Route>
 
       <Route path="*" element={<NotFound />} />
