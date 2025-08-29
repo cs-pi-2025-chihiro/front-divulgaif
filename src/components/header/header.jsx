@@ -29,7 +29,7 @@ const Header = () => {
   };
 
   const handleRateWorkNavigation = () => {
-    const newWorkPath = currentLang === "pt" ? "avaliar-trabalho/novo" : "rate-work/new";
+    const rateWorkPath = currentLang === "pt" ? "avaliar-trabalho/novo" : "rate-work/new";
     navigateTo(rateWorkPath, navigate, currentLang);
   };
 
