@@ -113,7 +113,11 @@
     "about": "Sobre",
     "contact": "Contato",
     "mainSearch": "Busca Principal",
-    "myWorks": "Meus Trabalhos"
+    "myWorks": "Meus Trabalhos",
+    "rateWorks": "Avaliar Trabalhos"
+
+    
+    
   },
   "filters": {
     "title": "Filtrar Apresentação",

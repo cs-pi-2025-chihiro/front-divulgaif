@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import "./header.css";
 import { useTranslation } from "react-i18next";
 import Button from "../button";
-import { isAuthenticated, logout } from "../../services/hooks/auth/useAuth";
+import {
+  isAuthenticated,
+  logout,
+  hasRole,
+} from "../../services/hooks/auth/useAuth";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaBars } from "react-icons/fa";
 import Drawer from "../drawer/drawer";
 import AuthButton from "../button/auth-button/auth-button";
 import { aboutWebsite } from "../../constants";
 import { navigateTo } from "../../services/utils/utils";
+import { ROLES } from "../../enums/roles";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -26,6 +31,12 @@ const Header = () => {
   const handleNewWorkNavigation = () => {
     const newWorkPath = currentLang === "pt" ? "trabalho/novo" : "work/new";
     navigateTo(newWorkPath, navigate, currentLang);
+  };
+
+  const handleRateWorkNavigation = () => {
+    const rateWorkPath =
+      currentLang === "pt" ? "avaliar-trabalho/novo" : "rate-work/new";
+    navigateTo(rateWorkPath, navigate, currentLang);
   };
 
   const toggleDrawer = () => {
@@ -55,6 +66,9 @@ const Header = () => {
           <a onClick={() => navigate("")}>{t("header.mainSearch")}</a>
           {authenticated && (
             <a onClick={handleMyWorksNavigation}> {t("header.myWorks")}</a>
+          )}
+          {authenticated && hasRole(ROLES.TEACHER) && (
+            <a onClick={handleRateWorkNavigation}> {t("header.rateWorks")}</a>
           )}
           <a style={{ cursor: "pointer" }} onClick={handleNewWorkNavigation}>
             {t("home.newWork")}
