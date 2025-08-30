@@ -148,15 +148,6 @@
   box-sizing: border-box;
 }
 
-.results-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  margin-bottom: 1.5rem;
-}
-
 .results-title {
   font-size: 1.5rem;
   font-weight: bold;

@@ -1,133 +1,213 @@
-.work-card-wrapper {
-  margin-bottom: 20px;
-  transition: transform 0.2s ease-in-out;
-  margin-top: 0;
-  display: flex;
-  gap: 20px;
-  text-align: justify;
-}
-
-.work-card-wrapper:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.work-card-authors {
-  text-align: left;
-}
-
-.work-card-description {
-  text-align: justify;
-  margin-bottom: 0px;
-}
-
-.work-card-labels {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.work-card-label {
-  display: inline-block;
-  background: var(--light-white);
-  border-radius: 12px;
-  border: var(--dark-green) 1px solid;
-  padding: 2px 10px;
-  margin: 2px 4px 2px 0;
-}
-
-.work-card {
-  height: 100%;
+.work-card-new {
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
   cursor: pointer;
-  border-radius: 8px;
-  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   display: flex;
   flex-direction: column;
-  min-width: 280px;
+  height: 100%;
+  gap: 12px;
+  min-width: 340px;
+  max-width: 340px;
 }
 
-.work-card .card-image-container {
-  height: 200px;
-  overflow: hidden;
-  border-radius: 8px 8px 0 0;
+.work-card-new:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.work-card-image-container {
+  width: 100%;
+  height: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  min-width: 100px;
+  background-color: #f8f9fa;
 }
 
-.work-card .card-image {
+.work-card-image {
   width: 100%;
   height: 100%;
+  min-width: 100px;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-.work-card .card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  /* Title truncation - 1 line - Method 1 (Webkit) */
+.work-card-new:hover .work-card-image {
+  transform: scale(1.02);
+}
+
+.work-card-title-section {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 28px;
+}
+
+.work-card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--dark-green);
+  margin: 0;
+  text-align: left;
+  flex: 1;
+
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.2;
-
-  /* Title truncation - 1 line - Method 2 (Fallback) */
-  white-space: nowrap;
-  max-width: 100%;
+  line-height: 1.3;
 }
 
-/* Alternative approach for better browser support */
-.work-card .card-title.single-line {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: block;
-  max-width: 100%;
-}
-
-.work-card-authors {
+.work-card-primary-link {
+  color: var(--primary-green);
+  text-decoration: none;
   font-size: 0.9rem;
-  color: var(--gray);
-  margin-bottom: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.work-card-primary-link:hover {
+  text-decoration: underline;
 }
 
 .work-card-description {
   font-size: 0.9rem;
   color: var(--gray);
-  margin-bottom: 12px;
-  /* Description truncation - 3 lines */
+  margin: 0;
+  text-align: justify;
+  line-height: 1.4;
+
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.4;
 }
 
-.work-card-authors-date {
-  margin-top: auto;
+.work-card-authors-date-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 20px;
+}
+
+.work-card-authors {
+  font-size: 0.85rem;
+  text-align: left;
+  flex: 1;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.work-card-author {
+  display: inline;
 }
 
 .work-card-date {
   font-size: 0.85rem;
-  color: var(--gray);
-  margin-top: 8px;
+  color: #718096;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.work-card-labels {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  align-items: center;
+  overflow: hidden;
+  text-align: left;
+}
+
+.work-card-label {
+  font-size: 0.8rem;
+  background-color: #e2e8f0;
+  color: black;
+  border-radius: 16px;
+  padding: 4px 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: 1px solid #cbd5e0;
+}
+
+.work-card-label:nth-child(n + 4) {
+  display: none;
 }
 
 @media (max-width: 768px) {
-  .work-card .card-image-container {
-    height: 150px;
+  .work-card-new {
+    padding: 14px;
+    gap: 10px;
   }
-  .work-card {
-    min-width: 370px;
+
+  .work-card-image-container {
+    height: 140px;
+  }
+
+  .work-card-title {
+    font-size: 1rem;
+  }
+
+  .work-card-description {
+    font-size: 0.85rem;
+  }
+
+  .work-card-authors,
+  .work-card-date {
+    font-size: 0.8rem;
+  }
+
+  .work-card-label {
+    font-size: 0.75rem;
+    padding: 3px 10px;
+  }
+
+  .work-card-title-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .work-card-primary-link {
+    align-self: flex-start;
   }
 }
 
-.work-card .card-title {
-  font-size: 1.1rem;
+@media (max-width: 480px) {
+  .work-card-new {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .work-card-image-container {
+    height: 120px;
+  }
+
+  .work-card-authors-date-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .work-card-date {
+    align-self: flex-start;
+  }
 }
 
-.work-card-description {
-  font-size: 0.85rem;
+.work-card-wrapper {
+  margin-bottom: 20px;
+  transition: transform 0.2s ease-in-out;
+  margin-top: 0;
 }
