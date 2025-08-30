@@ -1,5 +1,5 @@
-export const ROLES  = {
-    "IS_STUDENT": 1,
-    "IS_TEACHER": 2,
-    "IS_ADMIN": 3,
-}
+export const ROLES = {
+  STUDENT: "IS_STUDENT",
+  TEACHER: "IS_TEACHER",
+  ADMIN: "IS_ADMIN",
+};
