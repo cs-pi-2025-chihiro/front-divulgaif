@@ -17,8 +17,8 @@ import {
   validateField,
   validateForm,
 } from "../../../services/utils/validation";
-import { useGetSuggestions } from "../../../services/hooks/suggestions/useGetSuggestions.js";
-import { ROLES } from "../../../enums/roles";
+import { useGetSuggestions } from "../../../services/works/useGetSuggestions.js";
+import { ROLES } from "../../../enums/roles.js";
 
 const NewWork = () => {
   const { t, i18n } = useTranslation();
@@ -38,8 +38,9 @@ const NewWork = () => {
   const [errors, setErrors] = useState({});
 
   const userIsAuthenticated = isAuthenticated();
-  const isTeacher = hasRole(ROLES.TEACHER);
   const isStudent = hasRole(ROLES.STUDENT);
+  const isTeacher = hasRole(ROLES.TEACHER);
+  const isAdmin = hasRole(ROLES.ADMIN);
 
   const getWorkData = () => ({
     title,

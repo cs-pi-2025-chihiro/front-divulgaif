@@ -100,7 +100,8 @@
     "about": "About",
     "contact": "Contact",
     "mainSearch": "Main Search",
-    "myWorks": "My Works"
+    "myWorks": "My Works",
+    "rateWorks": "Rate Works"
   },
   "filters": {
     "title": "Filter Presentation",
