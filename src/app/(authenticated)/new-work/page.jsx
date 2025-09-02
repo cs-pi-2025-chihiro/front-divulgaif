@@ -17,7 +17,7 @@ import {
   validateField,
   validateForm,
 } from "../../../services/utils/validation";
-import { useGetSuggestions } from "../../../services/works/useGetSuggestions.js";
+import { useGetSuggestions } from "../../../services/hooks/suggestions/useGetSuggestions.js";
 import { ROLES } from "../../../enums/roles.js";
 
 const NewWork = () => {
