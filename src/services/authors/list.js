@@ -1,7 +1,7 @@
 import { api } from "../utils/api";
 import { ENDPOINTS } from "../../enums/endpoints";
 
-export const searchLabels = async (searchTerm = "", page = 0, size = 20) => {
+export const searchAuthors = async (searchTerm = "", page = 0, size = 20) => {
   try {
     const params = new URLSearchParams();
     if (searchTerm) {
@@ -11,7 +11,7 @@ export const searchLabels = async (searchTerm = "", page = 0, size = 20) => {
     params.append("size", size);
 
     const response = await api.get(
-      `${ENDPOINTS.LABELS.LIST}?${params.toString()}`
+      `${ENDPOINTS.AUTHORS.SEARCH}?${params.toString()}`
     );
 
     return {
@@ -20,17 +20,17 @@ export const searchLabels = async (searchTerm = "", page = 0, size = 20) => {
       totalElements: response.data.totalElements || 0,
     };
   } catch (err) {
-    console.error("Erro ao buscar labels:", err);
-    throw new Error(err.response?.data?.message || "Erro ao buscar labels");
+    console.error("Error fetching authors:", err);
+    throw new Error(err.response?.data?.message || "Error fetching authors");
   }
 };
 
-export const createLabel = async (labelData) => {
+export const createAuthor = async (authorData) => {
   try {
-    const response = await api.post(ENDPOINTS.LABELS.CREATE, labelData);
+    const response = await api.post(ENDPOINTS.AUTHORS.CREATE, authorData);
     return response.data;
   } catch (err) {
-    console.error("Erro ao criar label:", err);
-    throw new Error(err.response?.data?.message || "Erro ao criar label");
+    console.error("Error creating author:", err);
+    throw new Error(err.response?.data?.message || "Error creating author");
   }
 };

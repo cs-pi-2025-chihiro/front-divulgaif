@@ -1,6 +1,6 @@
-import { searchLabels } from "./labelsService";
-import { searchLinks } from "./linksService";
-import { searchAuthors } from "./authorsService";
+import { searchLabels } from "../../labels/list";
+import { searchLinks } from "../../links/list";
+import { searchAuthors } from "../../authors/list";
 
 export const useGetSuggestions = () => {
   const getLabelSuggestions = async (searchTerm) => {
@@ -8,7 +8,7 @@ export const useGetSuggestions = () => {
       const result = await searchLabels(searchTerm, 0, 10);
       return result.content;
     } catch (error) {
-      console.error("Erro ao buscar sugestões de labels:", error);
+      console.error("Error fetching label suggestions:", error);
       return [];
     }
   };
@@ -18,7 +18,7 @@ export const useGetSuggestions = () => {
       const result = await searchLinks(searchTerm, 0, 10);
       return result.content;
     } catch (error) {
-      console.error("Erro ao buscar sugestões de links:", error);
+      console.error("Error fetching link suggestions:", error);
       return [];
     }
   };
@@ -28,7 +28,7 @@ export const useGetSuggestions = () => {
       const result = await searchAuthors(searchTerm, 0, 10);
       return result.content;
     } catch (error) {
-      console.error("Erro ao buscar sugestões de autores:", error);
+      console.error("Error fetching author suggestions:", error);
       return [];
     }
   };

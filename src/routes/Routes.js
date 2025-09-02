@@ -9,8 +9,8 @@ import LanguageRoute from "./LanguageRoute";
 import GuestRoute from "./GuestRoute";
 import StudentRoute from "./StudentRoute";
 import MyWorks from "../app/(authenticated)/my-works/page";
-import NewWork from "../app/(unauthenticated)/new-work/page";
-import EditWork from "../app/(unauthenticated)/edit-work/[id]/page";
+import NewWork from "../app/(authenticated)/new-work/page";
+import EditWork from "../app/(authenticated)/edit-work/[id]/page";
 
 
 function AppRoutes() {

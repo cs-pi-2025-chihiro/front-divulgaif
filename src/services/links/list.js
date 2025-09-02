@@ -20,8 +20,8 @@ export const searchLinks = async (searchTerm = "", page = 0, size = 20) => {
       totalElements: response.data.totalElements || 0,
     };
   } catch (err) {
-    console.error("Erro ao buscar links:", err);
-    throw new Error(err.response?.data?.message || "Erro ao buscar links");
+    console.error("Error fetching links:", err);
+    throw new Error(err.response?.data?.message || "Error fetching links");
   }
 };
 
@@ -30,7 +30,7 @@ export const createLink = async (linkData) => {
     const response = await api.post(ENDPOINTS.LINKS.CREATE, linkData);
     return response.data;
   } catch (err) {
-    console.error("Erro ao criar link:", err);
-    throw new Error(err.response?.data?.message || "Erro ao criar link");
+    console.error("Error creating link:", err);
+    throw new Error(err.response?.data?.message || "Error creating link");
   }
 };

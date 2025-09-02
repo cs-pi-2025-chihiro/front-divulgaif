@@ -5,6 +5,7 @@ import Button from "../../../../components/button";
 import "./page.css";
 import { useWork } from "./useWork";
 import { hasRole, isAuthenticated, getStoredUser } from "../../../../services/hooks/auth/useAuth";
+import { ROLES } from "../../../../enums/roles";
 
 
 const WorkDetail = () => {
@@ -16,7 +17,7 @@ const WorkDetail = () => {
 
   const { work, isLoading } = useWork({ id: workId });
   const userIsAuthenticated = isAuthenticated();
-  const isStudent = hasRole("IS_STUDENT");
+  const isStudent = hasRole(ROLES.STUDENT);
   const currentUser = getStoredUser();
 
 
