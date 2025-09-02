@@ -10,8 +10,8 @@ import {
   LinkInput,
 } from "../../../../components/input";
 import WorkTypeSelector from "../../../../components/work-type-selector/WorkTypeSelector";
-import { isAuthenticated, hasRole } from "../../../../services/hooks/auth/useAuth";
-import { useUpdateWork } from "../../../../services/works/useUpdateWork";
+import { isAuthenticated, hasRole, getStoredUser } from "../../../../services/hooks/auth/useAuth";
+import { useUpdateWork } from "./useUpdateWork";
 import {
   countWords,
   validateField,
@@ -23,7 +23,7 @@ import { getWork } from "../../../../services/works/get";
 
 const EditWork = () => {
   const { id } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { isLoading, error, saveDraft, submitForReview } = useUpdateWork();
   const { getLabelSuggestions, getLinkSuggestions, getAuthorSuggestions } =
@@ -40,12 +40,23 @@ const EditWork = () => {
 
   const userIsAuthenticated = isAuthenticated();
   const isStudent = hasRole("IS_STUDENT");
+  const currentUser = getStoredUser();
 
   useEffect(() => {
     const fetchWorkData = async () => {
       try {
         const workId = Number(id);
         const workData = await getWork(workId);
+
+        const isWorkOwner = workData?.authors?.some(author => 
+          author.userId === currentUser?.id
+        );
+
+        if (!userIsAuthenticated || !isStudent || !currentUser || !isWorkOwner) {
+          navigate(-1);
+          return;
+        }
+
         setTitle(workData.title || "");
         setDescription(workData.description || "");
         setAbstract(workData.content || "");
@@ -79,7 +90,7 @@ const EditWork = () => {
     if (id) {
       fetchWorkData();
     }
-  }, [id, navigate]);
+  }, [id, navigate, userIsAuthenticated, isStudent, currentUser]);
 
 
   const getWorkData = () => ({
@@ -137,6 +148,10 @@ const EditWork = () => {
       const workData = getWorkData();
       await saveDraft(id, workData);
       alert(t("messages.draftSaved") || "Rascunho salvo com sucesso!");
+      
+      const currentLang = i18n.language;
+      const myWorksPath = currentLang === "pt" ? "meus-trabalhos" : "my-works";
+      navigate(`/${currentLang}/${myWorksPath}`);
     } catch (error) {
       alert(error.message);
     }
@@ -154,7 +169,9 @@ const EditWork = () => {
         t("messages.sentForReview") ||
           "Trabalho enviado para avaliação com sucesso!"
       );
-      navigate(-1);
+      const currentLang = i18n.language;
+      const myWorksPath = currentLang === "pt" ? "meus-trabalhos" : "my-works";
+      navigate(`/${currentLang}/${myWorksPath}`);
     } catch (error) {
       alert(error.message);
     }

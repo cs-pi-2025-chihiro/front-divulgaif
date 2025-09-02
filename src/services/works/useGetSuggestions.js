@@ -1,12 +1,8 @@
-import { useLabels } from "./useLabels";
-import { useLinks } from "./useLinks";
-import { useAuthors } from "./useAuthors";
+import { searchLabels } from "./labelsService";
+import { searchLinks } from "./linksService";
+import { searchAuthors } from "./authorsService";
 
 export const useGetSuggestions = () => {
-  const { searchLabels } = useLabels();
-  const { searchLinks } = useLinks();
-  const { searchAuthors } = useAuthors();
-
   const getLabelSuggestions = async (searchTerm) => {
     try {
       const result = await searchLabels(searchTerm, 0, 10);
