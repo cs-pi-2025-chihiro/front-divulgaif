@@ -10,6 +10,10 @@ const StudentRoute = () => {
     return <Navigate to={`/${i18n.language}/404`} replace />;
   }
 
+  if (!hasRole(ROLES.STUDENT)) {
+    return <Navigate to={`/${i18n.language}/404`} replace />;
+  }
+
   return <Outlet />;
 };
 

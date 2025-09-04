@@ -1,28 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./page.css";
 import { useTranslation } from "react-i18next";
-import Button from "../../../components/button";
+import { useNavigate, useParams } from "react-router-dom";
+import Button from "../../../../components/button";
 import {
   Input,
   AuthorInput,
   LabelInput,
   LinkInput,
-} from "../../../components/input";
-import WorkTypeSelector from "../../../components/work-type-selector/WorkTypeSelector";
-import { isAuthenticated, hasRole } from "../../../services/hooks/auth/useAuth";
-import { useCreateWork } from "../../../services/works/useCreateWork";
+} from "../../../../components/input";
+import WorkTypeSelector from "../../../../components/work-type-selector/WorkTypeSelector";
+import { isAuthenticated, hasRole, getStoredUser } from "../../../../services/hooks/auth/useAuth";
+import { useUpdateWork } from "./useUpdateWork";
 import {
   countWords,
   validateField,
   validateForm,
-} from "../../../services/utils/validation";
-import { useGetSuggestions } from "../../../services/works/useGetSuggestions.js";
-import { ROLES } from "../../../enums/roles.js";
+} from "../../../../services/utils/validation";
+import { useGetSuggestions } from "../../../../services/hooks/suggestions/useGetSuggestions.js";
+import { getWork } from "../../../../services/works/get";
+import { ROLES } from "../../../../enums/roles";
 
-const NewWork = () => {
-  const { t } = useTranslation();
-  const { isLoading, error, saveDraft, submitForReview, publish } =
-    useCreateWork();
+
+const EditWork = () => {
+  const { id } = useParams();
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  const { isLoading, error, saveDraft, submitForReview } = useUpdateWork();
   const { getLabelSuggestions, getLinkSuggestions, getAuthorSuggestions } =
     useGetSuggestions();
 
@@ -33,12 +37,64 @@ const NewWork = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [abstract, setAbstract] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [errors, setErrors] = useState({});
 
   const userIsAuthenticated = isAuthenticated();
   const isStudent = hasRole(ROLES.STUDENT);
-  const isTeacher = hasRole(ROLES.TEACHER);
-  const isAdmin = hasRole(ROLES.ADMIN);
+  const currentUser = getStoredUser();
+
+  useEffect(() => {
+    const fetchWorkData = async () => {
+      try {
+        const workId = Number(id);
+        const workData = await getWork(workId);
+
+        const isWorkOwner = workData?.authors?.some(author => 
+          author.userId === currentUser?.id
+        );
+
+        if (!userIsAuthenticated || !isStudent || !currentUser || !isWorkOwner) {
+          navigate(-1);
+          return;
+        }
+
+        setTitle(workData.title || "");
+        setDescription(workData.description || "");
+        setAbstract(workData.content || "");
+        setImageUrl(workData.imageUrl || "");
+        
+        const mapWorkTypeFromBackend = (backendWorkType) => {
+          if (!backendWorkType || !backendWorkType.name) return "";
+          
+          const typeMap = {
+            "ARTICLE": "ARTICLE",
+            "SEARCH": "RESEARCH",
+            "DISSERTATION": "DISSERTATION",
+            "EXTENSION": "EXTENSION",
+            "FINAL_THESIS": "FINAL_THESIS"
+          };
+          
+          return typeMap[backendWorkType.name] || "";
+        };
+        
+        setWorkType(mapWorkTypeFromBackend(workData.workType));
+        
+        setAuthors(workData.authors || []);
+        setLabels(workData.labels || []);
+        setLinks(workData.links || []);
+      } catch (error) {
+        console.error("Failed to fetch work data:", error);
+        alert("Failed to load work data. Please try again.");
+        navigate(-1);
+      }
+    };
+
+    if (id) {
+      fetchWorkData();
+    }
+  }, [id]);  // Removendo as outras dependências que estavam causando re-renders
+
 
   const getWorkData = () => ({
     title,
@@ -48,6 +104,7 @@ const NewWork = () => {
     labels: labels,
     links: links,
     workType,
+    imageUrl,
   });
 
   const validateSingleField = (fieldName, value) => {
@@ -93,8 +150,12 @@ const NewWork = () => {
   const handleSaveDraft = async () => {
     try {
       const workData = getWorkData();
-      await saveDraft(workData);
+      await saveDraft(id, workData);
       alert(t("messages.draftSaved") || "Rascunho salvo com sucesso!");
+      
+      const currentLang = i18n.language;
+      const myWorksPath = currentLang === "pt" ? "meus-trabalhos" : "my-works";
+      navigate(`/${currentLang}/${myWorksPath}`);
     } catch (error) {
       alert(error.message);
     }
@@ -107,31 +168,19 @@ const NewWork = () => {
 
     try {
       const workData = getWorkData();
-      await submitForReview(workData);
+      await submitForReview(id, workData);
       alert(
         t("messages.sentForReview") ||
           "Trabalho enviado para avaliação com sucesso!"
       );
-      navigate(-1);
+      const currentLang = i18n.language;
+      const myWorksPath = currentLang === "pt" ? "meus-trabalhos" : "my-works";
+      navigate(`/${currentLang}/${myWorksPath}`);
     } catch (error) {
       alert(error.message);
     }
   };
 
-  const handlePublish = async () => {
-    if (!validateCompleteForm()) {
-      return;
-    }
-
-    try {
-      const workData = getWorkData();
-      await publish(workData);
-      alert(t("messages.published") || "Trabalho publicado com sucesso!");
-      navigate(-1);
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 
   const handleWorkTypeChange = (selectedType) => {
     setWorkType(selectedType);
@@ -173,12 +222,10 @@ const NewWork = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} id="new-work-form">
-        {/* TODO: Implementar upload de imagem para trabalhos */}
-
+      <form onSubmit={handleSubmit} id="edit-work-form">
         <div id="work-type">
           <label>{t("new-work.worktype") + "*"}</label>
-          <WorkTypeSelector onTypeChange={handleWorkTypeChange} />
+          <WorkTypeSelector onTypeChange={handleWorkTypeChange} selectedType={workType} />
           {errors.workType && (
             <span className="error-message">{errors.workType}</span>
           )}
@@ -256,24 +303,18 @@ const NewWork = () => {
           />
         </div>
 
-        <div id="new-work-buttons">
-          <Button onClick={handleBack} disabled={isLoading}>
+        <div id="edit-work-buttons">
+          <Button onClick={handleBack} disabled={isLoading}  className="btn-back">
             {t("common.back")}
           </Button>
 
-          <Button onClick={handleSaveDraft} disabled={isLoading}>
+          <Button onClick={handleSaveDraft} disabled={isLoading} className="btn-save">
             {isLoading ? t("common.loading") : t("common.save")}
           </Button>
 
           {userIsAuthenticated && isStudent && (
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} className="btn-send">
               {isLoading ? t("common.loading") : t("new-work.send")}
-            </Button>
-          )}
-
-          {userIsAuthenticated && isAdmin && (
-            <Button onClick={handlePublish} disabled={isLoading}>
-              {isLoading ? t("common.loading") : t("new-work.publish")}
             </Button>
           )}
         </div>
@@ -282,4 +323,4 @@ const NewWork = () => {
   );
 };
 
-export default NewWork;
+export default EditWork;
