@@ -4,9 +4,12 @@ import { useTranslation } from "react-i18next";
 import Button from "../../../../components/button";
 import "./page.css";
 import { useWork } from "./useWork";
-import { hasRole, isAuthenticated, getStoredUser } from "../../../../services/hooks/auth/useAuth";
+import {
+  hasRole,
+  isAuthenticated,
+  getStoredUser,
+} from "../../../../services/hooks/auth/useAuth";
 import { ROLES } from "../../../../enums/roles";
-
 
 const WorkDetail = () => {
   const { id } = useParams();
@@ -20,7 +23,6 @@ const WorkDetail = () => {
   const isStudent = hasRole(ROLES.STUDENT);
   const currentUser = getStoredUser();
 
-
   const handleGoBack = () => {
     navigate(-1);
   };
@@ -30,7 +32,6 @@ const WorkDetail = () => {
     const editPath = currentLang === "pt" ? "trabalho/editar" : "work/edit";
     navigate(`/${currentLang}/${editPath}/${workId}`);
   };
-
 
   if (isLoading) {
     return (
@@ -61,16 +62,12 @@ const WorkDetail = () => {
     );
   }
 
-  const isWorkOwner = work?.authors?.some(author => 
-    author.userId === currentUser?.id
+  const isWorkOwner = work?.authors?.some(
+    (author) => author.userId === currentUser?.id
   );
 
   const canEdit =
-    userIsAuthenticated &&
-    isStudent &&
-    currentUser &&
-    isWorkOwner;
-
+    userIsAuthenticated && isStudent && currentUser && isWorkOwner;
 
   return (
     <div className="work-detail-container">
@@ -147,17 +144,16 @@ const WorkDetail = () => {
           <h2>{t("workDetail.additionalLinks") || "Links Adicionais"}</h2>
           <ul className="additional-links-list">
             {work.links.map((link, index) => (
-              <li>
+              <li key={index}>
                 <a href={link.url} target="_blank" rel="noopener noreferrer">
-                  {link.title ||
-                    `${t("workDetail.link") || "Link"} ${index + 1}`}
+                  {link.name || `${index + 1}`}
                 </a>
               </li>
             ))}
           </ul>
         </div>
       )}
-       {canEdit && (
+      {canEdit && (
         <div className="work-detail-actions">
           <Button variant="primary" size="lg" onClick={handleEdit}>
             {t("common.edit")}
