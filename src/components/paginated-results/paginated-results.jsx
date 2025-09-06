@@ -61,11 +61,14 @@ const PaginatedResults = ({
         >
           {isLoading ? (
             <span className="loading-text">
-              {t("common.loading", "Loading")}...
+              {t("common.loading", "Loading")}
             </span>
           ) : (
             <>
-              {totalElements} {t("pagination.results")}
+              {totalElements}{" "}
+              {totalElements === 1
+                ? t("pagination.result")
+                : t("pagination.results")}
             </>
           )}
         </h2>{" "}

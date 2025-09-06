@@ -8,10 +8,11 @@ import { useTranslation } from "react-i18next";
 import LanguageRoute from "./LanguageRoute";
 import GuestRoute from "./GuestRoute";
 import StudentRoute from "./StudentRoute";
-import MyWorks from "../app/(authenticated)/my-works/page";
 import NewWork from "../app/(unauthenticated)/new-work/page";
-import WorkEvaluation from "../app/(authenticated)/teacher/workEvaluation";
 import TeacherRoute from "./TeacherRoute";
+import MyWorks from "../app/(authenticated)/student/my-works/page";
+import WorkEvaluation from "../app/(authenticated)/teacher/workEvaluations/[id]/page";
+import WorkEvaluations from "../app/(authenticated)/teacher/workEvaluations/page";
 
 function AppRoutes() {
   const DefaultLanguageRedirect = () => {
@@ -37,10 +38,10 @@ function AppRoutes() {
           <Route path="my-works" element={<MyWorks />} />
         </Route>
         <Route path="404" element={<NotFound />} />
-        <Route element={<TeacherRoute/>}>
+        <Route element={<TeacherRoute />}>
+          <Route path="rate-works" element={<WorkEvaluations />} />
           <Route path="rate-work/:id" element={<WorkEvaluation />} />
-          <Route path="rate-work/new" element={<WorkEvaluation />} />
-      </Route>
+        </Route>
       </Route>
 
       <Route path="/pt" element={<LanguageRoute lang="pt" />}>
@@ -56,8 +57,8 @@ function AppRoutes() {
         </Route>
         <Route path="404" element={<NotFound />} />
         <Route element={<TeacherRoute />}>
+          <Route path="avaliar-trabalhos" element={<WorkEvaluations />} />
           <Route path="avaliar-trabalho/:id" element={<WorkEvaluation />} />
-          <Route path="avaliar-trabalho/novo" element={<WorkEvaluation />} />
         </Route>
       </Route>
 

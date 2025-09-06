@@ -22,7 +22,7 @@ const WorkDetail = () => {
     return (
       <div className="work-detail-container">
         <div className="loading-indicator">
-          {t("common.loading") || "Loading"}...
+          {t("common.loading") || "Loading"}
         </div>
       </div>
     );

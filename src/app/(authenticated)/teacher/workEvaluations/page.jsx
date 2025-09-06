@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Filter, Plus } from "lucide-react";
 import "./page.css";
-import { navigateTo, mapPaginationValues } from "../../../services/utils/utils";
+import {
+  navigateTo,
+  mapPaginationValues,
+} from "../../../../services/utils/utils";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import FiltrarBuscaModal from "../../../components/modal/filtrar-busca/filtrarBuscaModal";
-import { pageAtom, searchAtom, sizeAtom, useMyWorks } from "./useMyWorks";
-import PaginatedResults from "../../../components/paginated-results/paginated-results";
+import FiltrarBuscaModal from "../../../../components/modal/filtrar-busca/filtrarBuscaModal";
+import {
+  pageAtom,
+  searchAtom,
+  sizeAtom,
+  useWorkEvaluations,
+} from "./useWorkEvaluations";
+import PaginatedResults from "../../../../components/paginated-results/paginated-results";
 import { useAtom } from "jotai";
-import { SearchInput } from "../../../components/input";
-import Button from "../../../components/button";
+import { SearchInput } from "../../../../components/input";
+import Button from "../../../../components/button";
 
-const MyWorks = () => {
+const WorkEvaluations = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({});
   const [currentPage, setCurrentPage] = useAtom(pageAtom);
@@ -22,10 +30,9 @@ const MyWorks = () => {
   const currentLang = i18n.language;
 
   const { works, totalPages, totalWorks, isLoading, refetch } =
-    useMyWorks(appliedFilters);
+    useWorkEvaluations(appliedFilters);
 
   const handleApplyFilters = (filters) => {
-    console.log("Applying filters:", filters); // Debug log
     const backendFilters = {};
 
     if (
@@ -37,18 +44,6 @@ const MyWorks = () => {
         .map(([key]) => key.toUpperCase());
       if (selectedTypes.length > 0) {
         backendFilters.workTypes = selectedTypes.join(",");
-      }
-    }
-
-    if (
-      filters.workStatus &&
-      Object.values(filters.workStatus).some((value) => value)
-    ) {
-      const selectedTypes = Object.entries(filters.workStatus)
-        .filter(([key, value]) => value)
-        .map(([key]) => key.toUpperCase());
-      if (selectedTypes.length > 0) {
-        backendFilters.workStatus = selectedTypes.join(",");
       }
     }
 
@@ -73,7 +68,6 @@ const MyWorks = () => {
       backendFilters.order = filters.order;
     }
 
-    console.log("Backend filters:", backendFilters); // Debug log
     setCurrentPage(0);
     setAppliedFilters(backendFilters);
     setIsFilterModalOpen(false);
@@ -97,11 +91,6 @@ const MyWorks = () => {
     }
   };
 
-  const handleNovoTrabalho = () => {
-    const newWorkPath = currentLang === "pt" ? "trabalho/novo" : "work/new";
-    navigateTo(newWorkPath, navigate, currentLang);
-  };
-
   return (
     <div className="container">
       <div className="main-content">
@@ -113,27 +102,23 @@ const MyWorks = () => {
             marginBottom: "2rem",
           }}
         >
-          <h1 className="results-title">{t("Meus Trabalhos")}</h1>
+          <h1 className="results-title">{t("header.rateWorks")}</h1>
         </div>
 
         <div className="filters-section">
           <div className="filter-dropdown">
-            <button
+            <Button
               onClick={(e) => {
                 e.stopPropagation();
                 setIsFilterModalOpen(!isFilterModalOpen);
               }}
               className="filter-button"
+              size="2lg"
             >
               <Filter className="icon" />
               <span>{t("filters.filterSearch")}</span>
-            </button>
+            </Button>
           </div>
-
-          <button onClick={handleNovoTrabalho} className="new-work-button">
-            <Plus className="icon" />
-            {t("Novo Trabalho")}
-          </button>
         </div>
         <div className="search-input-wrapper">
           <SearchInput
@@ -159,11 +144,11 @@ const MyWorks = () => {
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
         onApplyFilters={handleApplyFilters}
-        showStatus={true}
+        showStatus={false}
         setSize={setCurrentSize}
       />
     </div>
   );
 };
 
-export default MyWorks;
+export default WorkEvaluations;

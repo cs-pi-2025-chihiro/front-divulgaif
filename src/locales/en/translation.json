@@ -63,6 +63,13 @@
     "download": "Download PDF",
     "edit": "Edit"
   },
+  "workStatus": {
+    "draft": "Draft",
+    "submitted": "Submitted for Review",
+    "pendingChanges": "Pending Changes",
+    "published": "Published",
+    "rejected": "Rejected"
+  },
   "login": {
     "title": "Login",
     "access": "Access DivulgaIF:",
@@ -141,6 +148,7 @@
     "order": "Order"
   },
   "pagination": {
+    "result": "Result",
     "results": "Results",
     "page": "Page",
     "of": "of",

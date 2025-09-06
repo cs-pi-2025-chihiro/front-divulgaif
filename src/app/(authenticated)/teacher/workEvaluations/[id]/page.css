@@ -41,16 +41,6 @@
   padding: 1.5rem;
 }
 
-/* Mensagem de sucesso */
-.success-message {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background-color: #dcfce7;
-  border: 1px solid #bbf7d0;
-  color: #15803d;
-  border-radius: 0.375rem;
-}
-
 /* Container do formulário */
 .form-container {
   background-color: white;

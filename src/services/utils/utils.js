@@ -61,7 +61,6 @@ export const getWorkTypes = (type, currentLang) => {
 };
 
 export const getWorkStatus = (status, currentLang) => {
-  console.log("status", status);
   switch (status) {
     case "DRAFT":
       return currentLang === "pt" ? "Rascunho" : "Draft";

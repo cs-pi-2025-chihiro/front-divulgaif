@@ -18,6 +18,13 @@ export const listWorks = async (page = 0, size = 8, filters = {}) => {
     });
   }
 
+  if (filters.workStatus) {
+    const workStatusArray = filters.workStatus.split(",");
+    workStatusArray.forEach((status) => {
+      params.append("workStatus.name", status);
+    });
+  }
+
   if (filters.order) {
     params.append(
       "sort",
