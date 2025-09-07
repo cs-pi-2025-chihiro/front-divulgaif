@@ -21,10 +21,9 @@ export const useWorkEvaluations = (appliedFilters = {}) => {
     try {
       const updatedFilters = {
         ...filters,
-        workStatus: WORK_STATUS.SUBMITTED,
+        workStatus: WORK_STATUS.SUBMITTED + "," + WORK_STATUS.PENDING_CHANGES,
       };
 
-      console.log("filters", updatedFilters);
       const response = await listWorks(currentPage, size, updatedFilters);
       return response;
     } catch (err) {

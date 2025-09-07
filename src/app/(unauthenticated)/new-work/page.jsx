@@ -271,7 +271,7 @@ const NewWork = () => {
             </Button>
           )}
 
-          {userIsAuthenticated && isAdmin && (
+          {userIsAuthenticated && (isTeacher || isAdmin) && (
             <Button onClick={handlePublish} disabled={isLoading}>
               {isLoading ? t("common.loading") : t("new-work.publish")}
             </Button>

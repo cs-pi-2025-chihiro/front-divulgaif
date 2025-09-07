@@ -1,5 +1,5 @@
-import { type } from "@testing-library/user-event/dist/type";
-import { useNavigate } from "react-router-dom";
+import { ROLES } from "../../enums/roles";
+import { hasRole } from "../hooks/auth/useAuth";
 
 export function mapPaginationValues(value, setSize) {
   switch (value) {
@@ -75,4 +75,8 @@ export const getWorkStatus = (status, currentLang) => {
     default:
       return currentLang === "pt" ? "Desconhecido" : "Unknown";
   }
+};
+
+export const isTeacher = () => {
+  return hasRole(ROLES.TEACHER);
 };

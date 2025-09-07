@@ -128,17 +128,17 @@ const WorkEvaluations = () => {
             placeholder={t("common.search") + "..."}
           />
         </div>
-
-        <PaginatedResults
-          content={works}
-          totalPages={totalPages}
-          isLoading={isLoading}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalElements={totalWorks}
-          refetch={refetch}
-        />
       </div>
+
+      <PaginatedResults
+        content={works}
+        totalPages={totalPages}
+        isLoading={isLoading}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalElements={totalWorks}
+        refetch={refetch}
+      />
 
       <FiltrarBuscaModal
         isOpen={isFilterModalOpen}

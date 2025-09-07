@@ -12,6 +12,7 @@ import { pageAtom, searchAtom, sizeAtom, useMyWorks } from "./useMyWorks";
 import PaginatedResults from "../../../../components/paginated-results/paginated-results";
 import { useAtom } from "jotai";
 import { SearchInput } from "../../../../components/input";
+import Button from "../../../../components/button";
 
 const MyWorks = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
@@ -118,22 +119,27 @@ const MyWorks = () => {
 
         <div className="filters-section">
           <div className="filter-dropdown">
-            <button
+            <Button
               onClick={(e) => {
                 e.stopPropagation();
                 setIsFilterModalOpen(!isFilterModalOpen);
               }}
               className="filter-button"
+              size="2lg"
             >
               <Filter className="icon" />
               <span>{t("filters.filterSearch")}</span>
-            </button>
+            </Button>
           </div>
 
-          <button onClick={handleNovoTrabalho} className="new-work-button">
+          <Button
+            onClick={handleNovoTrabalho}
+            className="new-work-button"
+            size="2lg"
+          >
             <Plus className="icon" />
             {t("home.newWork")}
-          </button>
+          </Button>
         </div>
         <div className="search-input-wrapper">
           <SearchInput
@@ -143,17 +149,17 @@ const MyWorks = () => {
             placeholder={t("common.search") + "..."}
           />
         </div>
-
-        <PaginatedResults
-          content={works}
-          totalPages={totalPages}
-          isLoading={isLoading}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalElements={totalWorks}
-          refetch={refetch}
-        />
       </div>
+
+      <PaginatedResults
+        content={works}
+        totalPages={totalPages}
+        isLoading={isLoading}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalElements={totalWorks}
+        refetch={refetch}
+      />
 
       <FiltrarBuscaModal
         isOpen={isFilterModalOpen}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeft,
   Save,
@@ -11,30 +12,94 @@ import {
   User,
 } from "lucide-react";
 import "./page.css";
+import { useWorkData } from "../../../../../hooks/useWorkStore";
+import { WORK_TYPES } from "../../../../../enums/workTypes";
+import Button from "../../../../../components/button";
+import { getWorkTypes } from "../../../../../services/utils/utils";
+import { useTranslation } from "react-i18next";
+
+const getDisplayWorkType = (apiType) => {
+  return WORK_TYPES[apiType] || apiType;
+};
 
 const WorkEvaluation = () => {
-  const [currentUser] = useState({
-    id: 1,
-    name: "Pedro",
-    role: "professor",
+  const { id } = useParams();
+  const workId = Number(id);
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language;
+
+  const {
+    workData: storedWork,
+    hasData,
+    isLoading: isLoadingWork,
+    error,
+    loadWork,
+  } = useWorkData(workId);
+
+  const [workData, setWorkData] = useState(() => {
+    if (storedWork) {
+      console.log("storedWork", storedWork);
+      return {
+        id: storedWork.id,
+        image: null,
+        imageUrl: storedWork.imageUrl || null,
+        title: storedWork.title || "",
+        workType: getWorkTypes(storedWork.workType.name, currentLang),
+        authors: storedWork.authors || [],
+        description: storedWork.description || "",
+        abstract: storedWork.abstract || "",
+        links: (storedWork.links || []).map((link) =>
+          typeof link === "string"
+            ? link
+            : link.url || link.title || String(link)
+        ),
+        labels: (storedWork.labels || []).map((label) =>
+          typeof label === "string"
+            ? label
+            : label.name || label.title || String(label)
+        ),
+        status: storedWork.status || "Em Avaliação",
+        feedback: storedWork.feedback || "",
+        teachers: storedWork.teachers || null,
+        date: storedWork.date || null,
+      };
+    }
+    return {
+      id: workId,
+      image: null,
+      imageUrl: null,
+      title: "",
+      workType: "",
+      type: "",
+      authors: [],
+      description: "",
+      abstract: "",
+      links: [],
+      labels: [],
+      status: "Em Avaliação",
+      feedback: "",
+      teachers: null,
+      date: null,
+    };
   });
 
-  const [workData, setWorkData] = useState({
-    id: 123,
-    image: null,
-    title: "Prevendo o Futuro: Algoritmo ML",
-    workType: "Artigo",
-    authors: [{ name: "Carlos", email: "", type: "Aluno" }],
-    description:
-      "Descrição meramente ilustrativa deve conter no máximo 160 palavras para aceitação.",
-    abstract:
-      "Resumo meramente ilustrativo deve conter no máximo 300 palavras para aceitação.",
-    links: ["url1.com", "url2.com"],
-    labels: ["Python", "MySQL"],
-    status: "Em Avaliação",
-    feedback:
-      "Feedback de avaliação ilustrativo deve conter no máximo 160 palavras para aceitação.",
-  });
+  if (isLoadingWork) {
+    return (
+      <div className="work-evaluation-container">
+        <div className="loading-indicator">Carregando...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="work-evaluation-container">
+        <div className="error-message">
+          Erro ao carregar dados do trabalho: {error}
+        </div>
+      </div>
+    );
+  }
 
   const [formData, setFormData] = useState({ ...workData });
   const [authorInput, setAuthorInput] = useState({
@@ -48,6 +113,12 @@ const WorkEvaluation = () => {
   const [showSuccessMessage, setShowSuccessMessage] = useState("");
   const [showAddLabel, setShowAddLabel] = useState(false);
   const [showAddLink, setShowAddLink] = useState(false);
+
+  useEffect(() => {
+    if (workData && workData.id) {
+      setFormData({ ...workData });
+    }
+  }, [workData]);
 
   const [wordCounts, setWordCounts] = useState({
     description: 0,
@@ -69,7 +140,6 @@ const WorkEvaluation = () => {
     });
   }, [formData.description, formData.abstract, formData.feedback]);
 
-  // Manipuladores de eventos
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -77,7 +147,6 @@ const WorkEvaluation = () => {
     }));
   };
 
-  // Upload de imagem
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -133,7 +202,6 @@ const WorkEvaluation = () => {
     }
   };
 
-  // Funções para adicionar label
   const handleAddLabel = () => {
     if (labelInput.trim() && !formData.labels.includes(labelInput.trim())) {
       addToList("labels", labelInput, setLabelInput);
@@ -141,7 +209,6 @@ const WorkEvaluation = () => {
     }
   };
 
-  // Funções para adicionar link
   const handleAddLink = () => {
     if (linkInput.trim() && !formData.links.includes(linkInput.trim())) {
       addToList("links", linkInput, setLinkInput);
@@ -149,7 +216,6 @@ const WorkEvaluation = () => {
     }
   };
 
-  // Simulação de chamadas à API
   const simulateApiCall = async (action) => {
     setIsLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -175,9 +241,6 @@ const WorkEvaluation = () => {
     }
   };
 
-  const canEvaluate =
-    currentUser.role === "professor" && formData.status !== "Rascunho";
-
   return (
     <div className="app-container">
       <div className="main-content">
@@ -188,21 +251,22 @@ const WorkEvaluation = () => {
         <div className="form-container">
           <div className="image-section">
             <div className="image-placeholder">
-              {formData.image ? (
+              {formData.image || formData.imageUrl ? (
                 <>
                   <img
-                    src={formData.image}
+                    src={formData.imageUrl}
                     alt="Trabalho"
                     className="uploaded-image"
                   />
-                  {canEvaluate && (
-                    <button
-                      onClick={() => handleInputChange("image", null)}
-                      className="image-remove-btn"
-                    >
-                      <X size={16} />
-                    </button>
-                  )}
+                  <button
+                    onClick={() => {
+                      handleInputChange("image", null);
+                      handleInputChange("imageUrl", null);
+                    }}
+                    className="image-remove-btn"
+                  >
+                    <X size={16} />
+                  </button>
                 </>
               ) : (
                 <div className="upload-prompt">
@@ -210,45 +274,45 @@ const WorkEvaluation = () => {
                     <Upload className="upload-icon" />
                   </div>
                   <p className="upload-text">Adicionar imagem</p>
-                  {canEvaluate && (
-                    <label className="upload-file-btn">
-                      Selecionar arquivo
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageUpload}
-                        style={{ display: "none" }}
-                      />
-                    </label>
-                  )}
+                  <label className="upload-file-btn">
+                    Selecionar arquivo
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      style={{ display: "none" }}
+                    />
+                  </label>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Tipo do Trabalho */}
           <div className="form-section">
             <label className="form-label">Tipo do Trabalho*</label>
             <div className="work-type-buttons">
-              {["Artigo", "Pesquisa", "Dissertação", "Extensão", "TCC"].map(
-                (type) => (
-                  <button
-                    key={type}
+              {Object.values(WORK_TYPES).map((workType) => {
+                const displayName = getWorkTypes(workType, currentLang);
+                const isActive = formData.workType === displayName;
+                return (
+                  <Button
+                    key={workType}
                     type="button"
-                    onClick={() => handleInputChange("workType", type)}
-                    className={`work-type-btn ${
-                      formData.workType === type ? "active" : ""
-                    }`}
-                    disabled={!canEvaluate}
+                    onClick={() => {
+                      handleInputChange(
+                        "workType",
+                        getWorkTypes(workType, currentLang)
+                      );
+                    }}
+                    className={`work-type-btn ${isActive ? "active" : ""}`}
                   >
-                    {type}
-                  </button>
-                )
-              )}
+                    {displayName}
+                  </Button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Título */}
           <div className="form-section">
             <label className="form-label">Título do Trabalho*</label>
             <input
@@ -256,13 +320,11 @@ const WorkEvaluation = () => {
               value={formData.title}
               onChange={(e) => handleInputChange("title", e.target.value)}
               className="form-input"
-              disabled={!canEvaluate}
               placeholder="Prevendo o Futuro: Algoritmo ML"
               required
             />
           </div>
 
-          {/* Autores */}
           <div className="form-section">
             <label className="form-label">Autores</label>
             <div className="authors-section">
@@ -272,15 +334,13 @@ const WorkEvaluation = () => {
                     <div className="author-info">
                       <User className="author-icon" />
                       <span className="author-name">{author.name}</span>
-                      {canEvaluate && (
-                        <button
-                          type="button"
-                          onClick={() => removeAuthor(index)}
-                          className="remove-btn"
-                        >
-                          <X className="remove-icon" />
-                        </button>
-                      )}
+                      <button
+                        type="button"
+                        onClick={() => removeAuthor(index)}
+                        className="remove-btn"
+                      >
+                        <X className="remove-icon" />
+                      </button>
                     </div>
                   </div>
                   <div className="author-details">
@@ -323,65 +383,59 @@ const WorkEvaluation = () => {
                 </div>
               ))}
 
-              {canEvaluate && (
-                <div className="add-author-form">
-                  <div className="author-inputs">
-                    <div className="author-field">
-                      <input
-                        type="text"
-                        value={authorInput.name}
-                        onChange={(e) =>
-                          setAuthorInput((prev) => ({
-                            ...prev,
-                            name: e.target.value,
-                          }))
-                        }
-                        placeholder="Nome Completo"
-                        className="author-input"
-                      />
-                    </div>
-                    <div className="author-field">
-                      <input
-                        type="email"
-                        value={authorInput.email}
-                        onChange={(e) =>
-                          setAuthorInput((prev) => ({
-                            ...prev,
-                            email: e.target.value,
-                          }))
-                        }
-                        placeholder="Email"
-                        className="author-input"
-                      />
-                    </div>
+              <div className="add-author-form">
+                <div className="author-inputs">
+                  <div className="author-field">
+                    <input
+                      type="text"
+                      value={authorInput.name}
+                      onChange={(e) =>
+                        setAuthorInput((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
+                      placeholder="Nome Completo"
+                      className="author-input"
+                    />
                   </div>
-                  <div className="add-author-footer">
-                    <div className="type-buttons">
-                      {["Aluno", "Professor"].map((type) => (
-                        <button
-                          key={type}
-                          type="button"
-                          onClick={() =>
-                            setAuthorInput((prev) => ({ ...prev, type }))
-                          }
-                          className={`type-btn ${
-                            authorInput.type === type ? "active" : ""
-                          }`}
-                        >
-                          {type}
-                        </button>
-                      ))}
-                    </div>
-                    <button
-                      type="button"
-                      onClick={addAuthor}
-                      className="add-btn"
-                    >
-                      Adicionar
-                    </button>
+                  <div className="author-field">
+                    <input
+                      type="email"
+                      value={authorInput.email}
+                      onChange={(e) =>
+                        setAuthorInput((prev) => ({
+                          ...prev,
+                          email: e.target.value,
+                        }))
+                      }
+                      placeholder="Email"
+                      className="author-input"
+                    />
                   </div>
                 </div>
-              )}
+                <div className="add-author-footer">
+                  <div className="type-buttons">
+                    {["Aluno", "Professor"].map((type) => (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() =>
+                          setAuthorInput((prev) => ({ ...prev, type }))
+                        }
+                        className={`type-btn ${
+                          authorInput.type === type ? "active" : ""
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                  <button type="button" onClick={addAuthor} className="add-btn">
+                    Adicionar
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -393,8 +447,7 @@ const WorkEvaluation = () => {
               value={formData.description}
               onChange={(e) => handleInputChange("description", e.target.value)}
               rows={4}
-              className={`form-textarea ${!canEvaluate ? "disabled" : ""}`}
-              disabled={!canEvaluate}
+              className={`form-textarea`}
               placeholder="Descrição meramente ilustrativa deve conter no máximo 160 palavras para aceitação."
               required
             />
@@ -408,125 +461,59 @@ const WorkEvaluation = () => {
               value={formData.abstract}
               onChange={(e) => handleInputChange("abstract", e.target.value)}
               rows={4}
-              className={`form-textarea ${!canEvaluate ? "disabled" : ""}`}
-              disabled={!canEvaluate}
+              className={`form-textarea`}
               placeholder="Resumo meramente ilustrativo deve conter no máximo 300 palavras para aceitação."
               required
             />
           </div>
 
-          {/* Labels */}
           <div className="form-section">
             <label className="form-label">Labels</label>
             <div className="labels-section">
               <div className="tags-container">
                 {formData.labels.map((label, index) => (
                   <span key={index} className="tag">
-                    {label}
-                    {canEvaluate && (
-                      <button
-                        type="button"
-                        onClick={() => removeFromList("labels", index)}
-                        className="tag-remove"
-                      >
-                        <X className="tag-remove-icon" />
-                      </button>
-                    )}
+                    {typeof label === "string"
+                      ? label
+                      : label.name || label.title || JSON.stringify(label)}
+                    <button
+                      type="button"
+                      onClick={() => removeFromList("labels", index)}
+                      className="tag-remove"
+                    >
+                      <X className="tag-remove-icon" />
+                    </button>
                   </span>
                 ))}
-                {canEvaluate && (
-                  <>
-                    {!showAddLabel ? (
-                      <button
-                        type="button"
-                        className="add-tag-btn"
-                        onClick={() => setShowAddLabel(true)}
-                      >
-                        <Plus className="add-icon" />
-                      </button>
-                    ) : (
-                      <div className="add-input-container">
-                        <input
-                          type="text"
-                          value={labelInput}
-                          onChange={(e) => setLabelInput(e.target.value)}
-                          onKeyPress={(e) =>
-                            e.key === "Enter" && handleAddLabel()
-                          }
-                          placeholder="Nova label"
-                          className="add-input"
-                          autoFocus
-                        />
-                        <button
-                          onClick={handleAddLabel}
-                          className="confirm-btn"
-                        >
-                          ✓
-                        </button>
-                        <button
-                          onClick={() => {
-                            setShowAddLabel(false);
-                            setLabelInput("");
-                          }}
-                          className="cancel-btn"
-                        >
-                          ✕
-                        </button>
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Links */}
-          <div className="form-section">
-            <label className="form-label">Links</label>
-            <div className="links-section">
-              {formData.links.map((link, index) => (
-                <div key={index} className="link-item">
-                  <span className="link-text">{link}</span>
-                  {canEvaluate && (
-                    <button
-                      type="button"
-                      onClick={() => removeFromList("links", index)}
-                      className="link-remove"
-                    >
-                      <X className="link-remove-icon" />
-                    </button>
-                  )}
-                </div>
-              ))}
-              {canEvaluate && (
                 <>
-                  {!showAddLink ? (
+                  {!showAddLabel ? (
                     <button
                       type="button"
-                      className="add-link-btn"
-                      onClick={() => setShowAddLink(true)}
+                      className="add-tag-btn"
+                      onClick={() => setShowAddLabel(true)}
                     >
                       <Plus className="add-icon" />
-                      Adicionar link
                     </button>
                   ) : (
-                    <div className="add-link-container">
+                    <div className="add-input-container">
                       <input
                         type="text"
-                        value={linkInput}
-                        onChange={(e) => setLinkInput(e.target.value)}
-                        onKeyPress={(e) => e.key === "Enter" && handleAddLink()}
-                        placeholder="https://exemplo.com"
-                        className="add-link-input"
+                        value={labelInput}
+                        onChange={(e) => setLabelInput(e.target.value)}
+                        onKeyPress={(e) =>
+                          e.key === "Enter" && handleAddLabel()
+                        }
+                        placeholder="Nova label"
+                        className="add-input"
                         autoFocus
                       />
-                      <button onClick={handleAddLink} className="confirm-btn">
+                      <button onClick={handleAddLabel} className="confirm-btn">
                         ✓
                       </button>
                       <button
                         onClick={() => {
-                          setShowAddLink(false);
-                          setLinkInput("");
+                          setShowAddLabel(false);
+                          setLabelInput("");
                         }}
                         className="cancel-btn"
                       >
@@ -535,11 +522,68 @@ const WorkEvaluation = () => {
                     </div>
                   )}
                 </>
-              )}
+              </div>
             </div>
           </div>
 
-          {/* Feedback */}
+          <div className="form-section">
+            <label className="form-label">Links</label>
+            <div className="links-section">
+              {formData.links.map((link, index) => (
+                <div key={index} className="link-item">
+                  <span className="link-text">
+                    {typeof link === "string"
+                      ? link
+                      : link.url || link.title || JSON.stringify(link)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => removeFromList("links", index)}
+                    className="link-remove"
+                  >
+                    <X className="link-remove-icon" />
+                  </button>
+                </div>
+              ))}
+              <>
+                {!showAddLink ? (
+                  <button
+                    type="button"
+                    className="add-link-btn"
+                    onClick={() => setShowAddLink(true)}
+                  >
+                    <Plus className="add-icon" />
+                    Adicionar link
+                  </button>
+                ) : (
+                  <div className="add-link-container">
+                    <input
+                      type="text"
+                      value={linkInput}
+                      onChange={(e) => setLinkInput(e.target.value)}
+                      onKeyPress={(e) => e.key === "Enter" && handleAddLink()}
+                      placeholder="https://exemplo.com"
+                      className="add-link-input"
+                      autoFocus
+                    />
+                    <button onClick={handleAddLink} className="confirm-btn">
+                      ✓
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowAddLink(false);
+                        setLinkInput("");
+                      }}
+                      className="cancel-btn"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
+              </>
+            </div>
+          </div>
+
           <div className="form-section">
             <label className="form-label">
               Feedback* ({wordCounts.feedback}/160 palavras)
@@ -548,15 +592,13 @@ const WorkEvaluation = () => {
               value={formData.feedback}
               onChange={(e) => handleInputChange("feedback", e.target.value)}
               rows={4}
-              className={`form-textarea ${!canEvaluate ? "disabled" : ""}`}
-              disabled={!canEvaluate}
+              className={`form-textarea`}
               placeholder="Feedback de avaliação ilustrativo deve conter no máximo 160 palavras para aceitação."
               required
             />
           </div>
         </div>
 
-        {/* Footer com botões */}
         <div className="action-buttons">
           <button
             onClick={handleReturn}

@@ -61,7 +61,8 @@
     "additionalLinks": "Additional Links",
     "link": "Link",
     "download": "Download PDF",
-    "edit": "Edit"
+    "edit": "Edit",
+    "evaluate": "Rate Work"
   },
   "workStatus": {
     "draft": "Draft",

@@ -1,21 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../../../components/button";
 import "./page.css";
 import { useWork } from "./useWork";
+import { WORK_STATUS } from "../../../../enums/workStatus";
+import { isTeacher } from "../../../../services/utils/utils";
+import { useWorkNavigation } from "../../../../hooks/useWorkStore";
+
+const canEvaluate = (status) => {
+  return (
+    status === WORK_STATUS.SUBMITTED ||
+    (status === WORK_STATUS.UNDER_REVIEW && isTeacher())
+  );
+};
 
 const WorkDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const workId = Number(id);
 
   const { work, isLoading } = useWork({ id: workId });
+  const { navigateToWorkEvaluation } = useWorkNavigation();
 
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const handleEvaluate = () => {
+    if (work) {
+      navigateToWorkEvaluation(work);
+    }
   };
 
   if (isLoading) {
@@ -130,6 +147,14 @@ const WorkDetail = () => {
               </li>
             ))}
           </ul>
+        </div>
+      )}
+      {canEvaluate(work.status) && (
+        <div className="work-detail-evaluation">
+          <h2>{t("workDetail.evaluation") || "Avaliação"}</h2>
+          <Button variant="primary" size="md" onClick={handleEvaluate}>
+            {t("workDetail.evaluate") || "Avaliar"}
+          </Button>
         </div>
       )}
     </div>
