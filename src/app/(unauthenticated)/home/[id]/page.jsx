@@ -151,7 +151,7 @@ const WorkDetail = () => {
       )}
       {canEvaluate(work.status) && (
         <div className="work-detail-evaluation">
-          <h2>{t("workDetail.evaluation") || "Avaliação"}</h2>
+          <h2>{t("workDetail.evaluate") || "Avaliação"}</h2>
           <Button variant="primary" size="md" onClick={handleEvaluate}>
             {t("workDetail.evaluate") || "Avaliar"}
           </Button>
