@@ -164,8 +164,7 @@ const WorkDetail = () => {
             {work.links.map((link, index) => (
               <li>
                 <a href={link.url} target="_blank" rel="noopener noreferrer">
-                  {link.title ||
-                    `${t("workDetail.link") || "Link"} ${index + 1}`}
+                  {link.name}
                 </a>
               </li>
             ))}
@@ -174,15 +173,14 @@ const WorkDetail = () => {
       )}
       {canEdit && (
         <div className="work-detail-actions">
-          <Button variant="primary" size="lg" onClick={handleEdit}>
+          <Button variant="tertiary" size="lg" onClick={handleEdit}>
             {t("common.edit")}
           </Button>
         </div>
       )}
       {canEvaluate(work.status) && (
         <div className="work-detail-evaluation">
-          <h2>{t("workDetail.evaluate") || "Avaliação"}</h2>
-          <Button variant="primary" size="md" onClick={handleEvaluate}>
+          <Button variant="tertiary" size="lg" onClick={handleEvaluate}>
             {t("workDetail.evaluate") || "Avaliar"}
           </Button>
         </div>

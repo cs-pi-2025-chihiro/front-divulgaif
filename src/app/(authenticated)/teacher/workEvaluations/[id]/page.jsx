@@ -49,9 +49,7 @@ const WorkEvaluation = () => {
         description: storedWork.description || "",
         abstract: storedWork.abstract || "",
         links: (storedWork.links || []).map((link) =>
-          typeof link === "string"
-            ? link
-            : link.url || link.title || String(link)
+          typeof link === "string" ? link : link.url
         ),
         labels: (storedWork.labels || []).map((label) =>
           typeof label === "string"
@@ -532,9 +530,7 @@ const WorkEvaluation = () => {
               {formData.links.map((link, index) => (
                 <div key={index} className="link-item">
                   <span className="link-text">
-                    {typeof link === "string"
-                      ? link
-                      : link.url || link.title || JSON.stringify(link)}
+                    {typeof link === "string" ? link : link.url}
                   </span>
                   <button
                     type="button"
