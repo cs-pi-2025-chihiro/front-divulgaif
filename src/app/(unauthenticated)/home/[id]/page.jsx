@@ -7,6 +7,12 @@ import { useWork } from "./useWork";
 import { WORK_STATUS } from "../../../../enums/workStatus";
 import { isTeacher } from "../../../../services/utils/utils";
 import { useWorkNavigation } from "../../../../hooks/useWorkStore";
+import {
+  hasRole,
+  isAuthenticated,
+  getStoredUser,
+} from "../../../../services/hooks/auth/useAuth";
+import { ROLES } from "../../../../enums/roles";
 
 const canEvaluate = (status) => {
   return (
@@ -23,10 +29,20 @@ const WorkDetail = () => {
   const workId = Number(id);
 
   const { work, isLoading } = useWork({ id: workId });
+  const userIsAuthenticated = isAuthenticated();
+  const isStudent = hasRole(ROLES.STUDENT);
+  const currentUser = getStoredUser();
+
   const { navigateToWorkEvaluation } = useWorkNavigation();
 
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const handleEdit = () => {
+    const currentLang = i18n.language;
+    const editPath = currentLang === "pt" ? "trabalho/editar" : "work/edit";
+    navigate(`/${currentLang}/${editPath}/${workId}`);
   };
 
   const handleEvaluate = () => {
@@ -63,6 +79,13 @@ const WorkDetail = () => {
       </div>
     );
   }
+
+  const isWorkOwner = work?.authors?.some(
+    (author) => author.userId === currentUser?.id
+  );
+
+  const canEdit =
+    userIsAuthenticated && isStudent && currentUser && isWorkOwner;
 
   return (
     <div className="work-detail-container">
@@ -147,6 +170,13 @@ const WorkDetail = () => {
               </li>
             ))}
           </ul>
+        </div>
+      )}
+      {canEdit && (
+        <div className="work-detail-actions">
+          <Button variant="primary" size="lg" onClick={handleEdit}>
+            {t("common.edit")}
+          </Button>
         </div>
       )}
       {canEvaluate(work.status) && (

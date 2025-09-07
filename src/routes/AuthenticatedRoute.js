@@ -3,18 +3,18 @@ import { isAuthenticated, hasRole } from "../services/hooks/auth/useAuth";
 import { useTranslation } from "react-i18next";
 import { ROLES } from "../enums/roles";
 
-const StudentRoute = () => {
+const AuthenticatedRoute = () => {
   const { i18n } = useTranslation();
 
   if (!isAuthenticated()) {
     return <Navigate to={`/${i18n.language}/404`} replace />;
   }
 
-  if (!hasRole(ROLES.STUDENT)) {
+  if (!hasRole(ROLES.STUDENT) && !hasRole(ROLES.TEACHER)) {
     return <Navigate to={`/${i18n.language}/404`} replace />;
   }
 
   return <Outlet />;
 };
 
-export default StudentRoute;
+export default AuthenticatedRoute;
