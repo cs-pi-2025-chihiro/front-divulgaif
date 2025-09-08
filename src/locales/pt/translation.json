@@ -67,7 +67,8 @@
     "additionalLinks": "Links Adicionais",
     "link": "Link",
     "download": "Baixar PDF",
-    "edit": "Editar"
+    "edit": "Editar",
+    "evaluate": "Avaliar Trabalho"
   },
   "workStatus": {
     "draft": "Rascunho",
@@ -192,5 +193,51 @@
     "draftSaved": "Rascunho salvo com sucesso!",
     "sentForReview": "Trabalho enviado para avaliação com sucesso!",
     "published": "Trabalho publicado com sucesso!"
+  },
+  "workEvaluation": {
+    "title": "Avaliação de Trabalho",
+    "loadingWork": "Carregando...",
+    "errorLoading": "Erro ao carregar dados do trabalho:",
+    "imageSection": {
+      "addImage": "Adicionar imagem",
+      "selectFile": "Selecionar arquivo"
+    },
+    "form": {
+      "workType": "Tipo do Trabalho*",
+      "workTitle": "Título do Trabalho*",
+      "workTitlePlaceholder": "Prevendo o Futuro: Algoritmo ML",
+      "authors": "Autores",
+      "description": "Descrição*",
+      "descriptionPlaceholder": "Descrição meramente ilustrativa deve conter no máximo 160 palavras para aceitação.",
+      "descriptionWordCount": "Descrição* ({{count}}/160 palavras)",
+      "labels": "Labels",
+      "newLabel": "Nova label",
+      "links": "Links",
+      "addLink": "Adicionar link",
+      "linkPlaceholder": "https://exemplo.com",
+      "feedback": "Feedback*",
+      "feedbackWordCount": "Feedback* ({{count}}/160 palavras)"
+    },
+    "authors": {
+      "fullName": "Nome Completo",
+      "email": "Email",
+      "type": "Tipo",
+      "student": "Aluno",
+      "teacher": "Professor",
+      "add": "Adicionar"
+    },
+    "actions": {
+      "return": "Devolver",
+      "accept": "Aceitar"
+    },
+    "messages": {
+      "workAccepted": "Trabalho aceito com sucesso!",
+      "workReturned": "Trabalho devolvido com sucesso!"
+    },
+    "status": {
+      "underReview": "Em Avaliação",
+      "accepted": "Aceito",
+      "returned": "Devolvido"
+    }
   }
 }

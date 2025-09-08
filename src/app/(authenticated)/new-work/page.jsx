@@ -97,7 +97,7 @@ const NewWork = () => {
       const workData = getWorkData();
       await saveDraft(workData);
       alert(t("messages.draftSaved") || "Rascunho salvo com sucesso!");
-      
+
       const currentLang = i18n.language;
       navigate(`/${currentLang}`);
     } catch (error) {
@@ -117,7 +117,7 @@ const NewWork = () => {
         t("messages.sentForReview") ||
           "Trabalho enviado para avaliação com sucesso!"
       );
-      
+
       const currentLang = i18n.language;
       navigate(`/${currentLang}`);
     } catch (error) {
@@ -134,7 +134,7 @@ const NewWork = () => {
       const workData = getWorkData();
       await publish(workData);
       alert(t("messages.published") || "Trabalho publicado com sucesso!");
-      
+
       const currentLang = i18n.language;
       navigate(`/${currentLang}`);
     } catch (error) {
@@ -280,7 +280,7 @@ const NewWork = () => {
             </Button>
           )}
 
-          {userIsAuthenticated && isTeacher && (
+          {userIsAuthenticated && (isTeacher || isAdmin) && (
             <Button onClick={handlePublish} disabled={isLoading}>
               {isLoading ? t("common.loading") : t("new-work.publish")}
             </Button>

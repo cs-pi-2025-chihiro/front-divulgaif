@@ -8,6 +8,10 @@ export const ENDPOINTS = {
     UPDATE: "/works/{id}",
     DELETE: "/works/{id}",
     UPLOAD_IMAGE: "/works/upload-image",
+    EDIT: "/works/{id}",
+  },
+  HISTORY: {
+    CREATE: "/history",
   },
   AUTHORS: {
     SEARCH: "/authors/list",

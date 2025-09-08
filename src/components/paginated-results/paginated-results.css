@@ -218,7 +218,7 @@
   }
 
   .work-cards-container-new {
-    grid-template-columns: 1fr;
+    grid-template-columns: 0fr;
     gap: 16px;
   }
 }

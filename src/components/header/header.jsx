@@ -35,7 +35,7 @@ const Header = () => {
 
   const handleRateWorkNavigation = () => {
     const rateWorkPath =
-      currentLang === "pt" ? "avaliar-trabalho/novo" : "rate-work/new";
+      currentLang === "pt" ? "avaliar-trabalhos" : "rate-works";
     navigateTo(rateWorkPath, navigate, currentLang);
   };
 

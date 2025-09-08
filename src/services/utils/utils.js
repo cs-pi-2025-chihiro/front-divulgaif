@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { ROLES } from "../../enums/roles";
+import { hasRole } from "../hooks/auth/useAuth";
 
 export function mapPaginationValues(value, setSize) {
   switch (value) {
@@ -60,7 +61,6 @@ export const getWorkTypes = (type, currentLang) => {
 };
 
 export const getWorkStatus = (status, currentLang) => {
-  console.log("status", status);
   switch (status) {
     case "DRAFT":
       return currentLang === "pt" ? "Rascunho" : "Draft";
@@ -75,6 +75,10 @@ export const getWorkStatus = (status, currentLang) => {
     default:
       return currentLang === "pt" ? "Desconhecido" : "Unknown";
   }
+};
+
+export const isTeacher = () => {
+  return hasRole(ROLES.TEACHER);
 };
 
 export const mapStatusToBackend = (status) => {
@@ -110,7 +114,7 @@ export const formatAuthorsForBackend = (authorsArray) => {
   const existingAuthors = [];
 
   authorsArray.forEach((author) => {
-    if (author.id && !String(author.id).startsWith('new_')) {
+    if (author.id && !String(author.id).startsWith("new_")) {
       existingAuthors.push({ id: author.id });
     } else {
       let name = "";
@@ -154,14 +158,12 @@ export const formatLabelsForBackend = (labelsArray) => {
       typeof label === "string"
         ? label
         : label && typeof label === "object"
-          ? label.label || label.name || String(label)
-          : String(label);
+        ? label.label || label.name || String(label)
+        : String(label);
 
     const labelColor = (label && label.color) || "#3B82F6";
 
-    const colorHex = labelColor.startsWith("#")
-      ? labelColor
-      : `#${labelColor}`;
+    const colorHex = labelColor.startsWith("#") ? labelColor : `#${labelColor}`;
 
     return {
       name: labelName,

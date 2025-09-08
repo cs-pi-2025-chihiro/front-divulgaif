@@ -1,15 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { atom, useAtom } from "jotai";
-import { ENDPOINTS } from "../../../enums/endpoints";
-import { PAGE_SIZE } from "../../../constants";
+import { ENDPOINTS } from "../../../../enums/endpoints";
+import { PAGE_SIZE } from "../../../../constants";
 import { useDebounce } from "@uidotdev/usehooks";
-import { listMyWorks } from "../../../services/works/listMyWorks";
+import { listWorks } from "../../../../services/works/list";
+import { WORK_STATUS } from "../../../../enums/workStatus";
 
 export const pageAtom = atom(0);
 export const sizeAtom = atom(PAGE_SIZE);
 export const searchAtom = atom("");
 
-export const useMyWorks = (appliedFilters = {}) => {
+export const useWorkEvaluations = (appliedFilters = {}) => {
   const [page] = useAtom(pageAtom);
   const [size] = useAtom(sizeAtom);
   const [search] = useAtom(searchAtom);
@@ -18,7 +19,12 @@ export const useMyWorks = (appliedFilters = {}) => {
 
   const fetchWorks = async ({ currentPage, size, filters }) => {
     try {
-      const response = await listMyWorks(currentPage, size, filters);
+      const updatedFilters = {
+        ...filters,
+        workStatus: WORK_STATUS.SUBMITTED + "," + WORK_STATUS.PENDING_CHANGES,
+      };
+
+      const response = await listWorks(currentPage, size, updatedFilters);
       return response;
     } catch (err) {
       throw err;
@@ -47,7 +53,7 @@ export const useMyWorks = (appliedFilters = {}) => {
       page,
       size,
       debouncedSearch,
-      JSON.stringify(appliedFilters), // Serialize filters to ensure proper cache invalidation
+      JSON.stringify(appliedFilters),
     ],
     keepPreviousData: true,
     refetchOnMount: true,
