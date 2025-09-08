@@ -56,7 +56,7 @@ const WorkEvaluation = () => {
             ? label
             : label.name || label.title || String(label)
         ),
-        status: storedWork.status || "Em Avaliação",
+        status: storedWork.status || t("workEvaluation.status.underReview"),
         feedback: storedWork.feedback || "",
         teachers: storedWork.teachers || null,
         date: storedWork.date || null,
@@ -74,7 +74,7 @@ const WorkEvaluation = () => {
       abstract: "",
       links: [],
       labels: [],
-      status: "Em Avaliação",
+      status: t("workEvaluation.status.underReview"),
       feedback: "",
       teachers: null,
       date: null,
@@ -84,7 +84,9 @@ const WorkEvaluation = () => {
   if (isLoadingWork) {
     return (
       <div className="work-evaluation-container">
-        <div className="loading-indicator">Carregando...</div>
+        <div className="loading-indicator">
+          {t("workEvaluation.loadingWork")}
+        </div>
       </div>
     );
   }
@@ -93,7 +95,7 @@ const WorkEvaluation = () => {
     return (
       <div className="work-evaluation-container">
         <div className="error-message">
-          Erro ao carregar dados do trabalho: {error}
+          {t("workEvaluation.errorLoading")} {error}
         </div>
       </div>
     );
@@ -103,7 +105,7 @@ const WorkEvaluation = () => {
   const [authorInput, setAuthorInput] = useState({
     name: "",
     email: "",
-    type: "Aluno",
+    type: t("workEvaluation.authors.student"),
   });
   const [linkInput, setLinkInput] = useState("");
   const [labelInput, setLabelInput] = useState("");
@@ -165,7 +167,11 @@ const WorkEvaluation = () => {
           { ...authorInput, name: authorInput.name.trim() },
         ],
       }));
-      setAuthorInput({ name: "", email: "", type: "Aluno" });
+      setAuthorInput({
+        name: "",
+        email: "",
+        type: t("workEvaluation.authors.student"),
+      });
     }
   };
 
@@ -224,8 +230,11 @@ const WorkEvaluation = () => {
   const handleAccept = async () => {
     const success = await simulateApiCall("accept");
     if (success) {
-      setFormData((prev) => ({ ...prev, status: "Aceito" }));
-      setShowSuccessMessage("Trabalho aceito com sucesso!");
+      setFormData((prev) => ({
+        ...prev,
+        status: t("workEvaluation.status.accepted"),
+      }));
+      setShowSuccessMessage(t("workEvaluation.messages.workAccepted"));
       setTimeout(() => setShowSuccessMessage(""), 5000);
     }
   };
@@ -233,8 +242,11 @@ const WorkEvaluation = () => {
   const handleReturn = async () => {
     const success = await simulateApiCall("return");
     if (success) {
-      setFormData((prev) => ({ ...prev, status: "Devolvido" }));
-      setShowSuccessMessage("Trabalho devolvido com sucesso!");
+      setFormData((prev) => ({
+        ...prev,
+        status: t("workEvaluation.status.returned"),
+      }));
+      setShowSuccessMessage(t("workEvaluation.messages.workReturned"));
       setTimeout(() => setShowSuccessMessage(""), 5000);
     }
   };
@@ -271,9 +283,11 @@ const WorkEvaluation = () => {
                   <div className="upload-icon-container">
                     <Upload className="upload-icon" />
                   </div>
-                  <p className="upload-text">Adicionar imagem</p>
+                  <p className="upload-text">
+                    {t("workEvaluation.imageSection.addImage")}
+                  </p>
                   <label className="upload-file-btn">
-                    Selecionar arquivo
+                    {t("workEvaluation.imageSection.selectFile")}
                     <input
                       type="file"
                       accept="image/*"
@@ -287,7 +301,9 @@ const WorkEvaluation = () => {
           </div>
 
           <div className="form-section">
-            <label className="form-label">Tipo do Trabalho*</label>
+            <label className="form-label">
+              {t("workEvaluation.form.workType")}
+            </label>
             <div className="work-type-buttons">
               {Object.values(WORK_TYPES).map((workType) => {
                 const displayName = getWorkTypes(workType, currentLang);
@@ -312,19 +328,23 @@ const WorkEvaluation = () => {
           </div>
 
           <div className="form-section">
-            <label className="form-label">Título do Trabalho*</label>
+            <label className="form-label">
+              {t("workEvaluation.form.workTitle")}
+            </label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => handleInputChange("title", e.target.value)}
               className="form-input"
-              placeholder="Prevendo o Futuro: Algoritmo ML"
+              placeholder={t("workEvaluation.form.workTitlePlaceholder")}
               required
             />
           </div>
 
           <div className="form-section">
-            <label className="form-label">Autores</label>
+            <label className="form-label">
+              {t("workEvaluation.form.authors")}
+            </label>
             <div className="authors-section">
               {formData.authors.map((author, index) => (
                 <div key={index} className="author-card">
@@ -343,7 +363,9 @@ const WorkEvaluation = () => {
                   </div>
                   <div className="author-details">
                     <div className="author-field">
-                      <label className="field-label">Nome Completo</label>
+                      <label className="field-label">
+                        {t("workEvaluation.authors.fullName")}
+                      </label>
                       <input
                         type="text"
                         value={author.name}
@@ -352,7 +374,9 @@ const WorkEvaluation = () => {
                       />
                     </div>
                     <div className="author-field">
-                      <label className="field-label">Email</label>
+                      <label className="field-label">
+                        {t("workEvaluation.authors.email")}
+                      </label>
                       <input
                         type="email"
                         value={author.email}
@@ -362,14 +386,25 @@ const WorkEvaluation = () => {
                     </div>
                   </div>
                   <div className="author-type-section">
-                    <label className="field-label">Tipo</label>
+                    <label className="field-label">
+                      {t("workEvaluation.authors.type")}
+                    </label>
                     <div className="type-buttons">
-                      {["Aluno", "Professor"].map((type) => (
+                      {[
+                        t("workEvaluation.authors.student"),
+                        t("workEvaluation.authors.teacher"),
+                      ].map((type) => (
                         <button
                           key={type}
                           type="button"
                           className={`type-btn ${
-                            author.type === type ? "active" : ""
+                            author.type === type ||
+                            (author.type === "Aluno" &&
+                              type === t("workEvaluation.authors.student")) ||
+                            (author.type === "Professor" &&
+                              type === t("workEvaluation.authors.teacher"))
+                              ? "active"
+                              : ""
                           }`}
                           disabled
                         >
@@ -393,7 +428,7 @@ const WorkEvaluation = () => {
                           name: e.target.value,
                         }))
                       }
-                      placeholder="Nome Completo"
+                      placeholder={t("workEvaluation.authors.fullName")}
                       className="author-input"
                     />
                   </div>
@@ -407,14 +442,17 @@ const WorkEvaluation = () => {
                           email: e.target.value,
                         }))
                       }
-                      placeholder="Email"
+                      placeholder={t("workEvaluation.authors.email")}
                       className="author-input"
                     />
                   </div>
                 </div>
                 <div className="add-author-footer">
                   <div className="type-buttons">
-                    {["Aluno", "Professor"].map((type) => (
+                    {[
+                      t("workEvaluation.authors.student"),
+                      t("workEvaluation.authors.teacher"),
+                    ].map((type) => (
                       <button
                         key={type}
                         type="button"
@@ -430,7 +468,7 @@ const WorkEvaluation = () => {
                     ))}
                   </div>
                   <button type="button" onClick={addAuthor} className="add-btn">
-                    Adicionar
+                    {t("workEvaluation.authors.add")}
                   </button>
                 </div>
               </div>
@@ -439,34 +477,24 @@ const WorkEvaluation = () => {
 
           <div className="form-section">
             <label className="form-label">
-              Descrição* ({wordCounts.description}/160 palavras)
+              {t("workEvaluation.form.descriptionWordCount", {
+                count: wordCounts.description,
+              })}
             </label>
             <textarea
               value={formData.description}
               onChange={(e) => handleInputChange("description", e.target.value)}
               rows={4}
               className={`form-textarea`}
-              placeholder="Descrição meramente ilustrativa deve conter no máximo 160 palavras para aceitação."
+              placeholder={t("workEvaluation.form.descriptionPlaceholder")}
               required
             />
           </div>
 
           <div className="form-section">
             <label className="form-label">
-              Resumo* ({wordCounts.abstract}/300 palavras)
+              {t("workEvaluation.form.labels")}
             </label>
-            <textarea
-              value={formData.abstract}
-              onChange={(e) => handleInputChange("abstract", e.target.value)}
-              rows={4}
-              className={`form-textarea`}
-              placeholder="Resumo meramente ilustrativo deve conter no máximo 300 palavras para aceitação."
-              required
-            />
-          </div>
-
-          <div className="form-section">
-            <label className="form-label">Labels</label>
             <div className="labels-section">
               <div className="tags-container">
                 {formData.labels.map((label, index) => (
@@ -501,7 +529,7 @@ const WorkEvaluation = () => {
                         onKeyPress={(e) =>
                           e.key === "Enter" && handleAddLabel()
                         }
-                        placeholder="Nova label"
+                        placeholder={t("workEvaluation.form.newLabel")}
                         className="add-input"
                         autoFocus
                       />
@@ -525,7 +553,9 @@ const WorkEvaluation = () => {
           </div>
 
           <div className="form-section">
-            <label className="form-label">Links</label>
+            <label className="form-label">
+              {t("workEvaluation.form.links")}
+            </label>
             <div className="links-section">
               {formData.links.map((link, index) => (
                 <div key={index} className="link-item">
@@ -549,7 +579,7 @@ const WorkEvaluation = () => {
                     onClick={() => setShowAddLink(true)}
                   >
                     <Plus className="add-icon" />
-                    Adicionar link
+                    {t("workEvaluation.form.addLink")}
                   </button>
                 ) : (
                   <div className="add-link-container">
@@ -558,7 +588,7 @@ const WorkEvaluation = () => {
                       value={linkInput}
                       onChange={(e) => setLinkInput(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && handleAddLink()}
-                      placeholder="https://exemplo.com"
+                      placeholder={t("workEvaluation.form.linkPlaceholder")}
                       className="add-link-input"
                       autoFocus
                     />
@@ -582,14 +612,15 @@ const WorkEvaluation = () => {
 
           <div className="form-section">
             <label className="form-label">
-              Feedback* ({wordCounts.feedback}/160 palavras)
+              {t("workEvaluation.form.feedbackWordCount", {
+                count: wordCounts.feedback,
+              })}
             </label>
             <textarea
               value={formData.feedback}
               onChange={(e) => handleInputChange("feedback", e.target.value)}
               rows={4}
               className={`form-textarea`}
-              placeholder="Feedback de avaliação ilustrativo deve conter no máximo 160 palavras para aceitação."
               required
             />
           </div>
@@ -602,15 +633,15 @@ const WorkEvaluation = () => {
             className="btn btn-danger"
           >
             {isLoading && <div className="loading-spinner"></div>}
-            Devolver
+            {t("workEvaluation.actions.return")}
           </button>
           <button
             onClick={handleAccept}
             disabled={isLoading}
-            className="btn btn-primary"
+            className="btn btn-tertiary"
           >
             {isLoading && <div className="loading-spinner"></div>}
-            Aceitar
+            {t("workEvaluation.actions.accept")}
           </button>
         </div>
       </div>

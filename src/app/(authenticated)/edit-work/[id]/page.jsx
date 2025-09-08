@@ -10,7 +10,11 @@ import {
   LinkInput,
 } from "../../../../components/input";
 import WorkTypeSelector from "../../../../components/work-type-selector/WorkTypeSelector";
-import { isAuthenticated, hasRole, getStoredUser } from "../../../../services/hooks/auth/useAuth";
+import {
+  isAuthenticated,
+  hasRole,
+  getStoredUser,
+} from "../../../../services/hooks/auth/useAuth";
 import { useUpdateWork } from "./useUpdateWork";
 import {
   countWords,
@@ -20,7 +24,6 @@ import {
 import { useGetSuggestions } from "../../../../services/hooks/suggestions/useGetSuggestions.js";
 import { getWork } from "../../../../services/works/get";
 import { ROLES } from "../../../../enums/roles";
-
 
 const EditWork = () => {
   const { id } = useParams();
@@ -50,11 +53,16 @@ const EditWork = () => {
         const workId = Number(id);
         const workData = await getWork(workId);
 
-        const isWorkOwner = workData?.authors?.some(author => 
-          author.userId === currentUser?.id
+        const isWorkOwner = workData?.authors?.some(
+          (author) => author.userId === currentUser?.id
         );
 
-        if (!userIsAuthenticated || !isStudent || !currentUser || !isWorkOwner) {
+        if (
+          !userIsAuthenticated ||
+          !isStudent ||
+          !currentUser ||
+          !isWorkOwner
+        ) {
           navigate(-1);
           return;
         }
@@ -63,23 +71,23 @@ const EditWork = () => {
         setDescription(workData.description || "");
         setAbstract(workData.content || "");
         setImageUrl(workData.imageUrl || "");
-        
+
         const mapWorkTypeFromBackend = (backendWorkType) => {
           if (!backendWorkType || !backendWorkType.name) return "";
-          
+
           const typeMap = {
-            "ARTICLE": "ARTICLE",
-            "SEARCH": "RESEARCH",
-            "DISSERTATION": "DISSERTATION",
-            "EXTENSION": "EXTENSION",
-            "FINAL_THESIS": "FINAL_THESIS"
+            ARTICLE: "ARTICLE",
+            SEARCH: "RESEARCH",
+            DISSERTATION: "DISSERTATION",
+            EXTENSION: "EXTENSION",
+            FINAL_THESIS: "FINAL_THESIS",
           };
-          
+
           return typeMap[backendWorkType.name] || "";
         };
-        
+
         setWorkType(mapWorkTypeFromBackend(workData.workType));
-        
+
         setAuthors(workData.authors || []);
         setLabels(workData.labels || []);
         setLinks(workData.links || []);
@@ -93,8 +101,7 @@ const EditWork = () => {
     if (id) {
       fetchWorkData();
     }
-  }, [id]);  // Removendo as outras dependências que estavam causando re-renders
-
+  }, [id]);
 
   const getWorkData = () => ({
     title,
@@ -152,7 +159,7 @@ const EditWork = () => {
       const workData = getWorkData();
       await saveDraft(id, workData);
       alert(t("messages.draftSaved") || "Rascunho salvo com sucesso!");
-      
+
       const currentLang = i18n.language;
       const myWorksPath = currentLang === "pt" ? "meus-trabalhos" : "my-works";
       navigate(`/${currentLang}/${myWorksPath}`);
@@ -180,7 +187,6 @@ const EditWork = () => {
       alert(error.message);
     }
   };
-
 
   const handleWorkTypeChange = (selectedType) => {
     setWorkType(selectedType);
@@ -225,7 +231,10 @@ const EditWork = () => {
       <form onSubmit={handleSubmit} id="edit-work-form">
         <div id="work-type">
           <label>{t("new-work.worktype") + "*"}</label>
-          <WorkTypeSelector onTypeChange={handleWorkTypeChange} selectedType={workType} />
+          <WorkTypeSelector
+            onTypeChange={handleWorkTypeChange}
+            selectedType={workType}
+          />
           {errors.workType && (
             <span className="error-message">{errors.workType}</span>
           )}
@@ -304,11 +313,19 @@ const EditWork = () => {
         </div>
 
         <div id="edit-work-buttons">
-          <Button onClick={handleBack} disabled={isLoading}  className="btn-back">
+          <Button
+            onClick={handleBack}
+            disabled={isLoading}
+            className="btn-back"
+          >
             {t("common.back")}
           </Button>
 
-          <Button onClick={handleSaveDraft} disabled={isLoading} className="btn-save">
+          <Button
+            onClick={handleSaveDraft}
+            disabled={isLoading}
+            className="btn-save"
+          >
             {isLoading ? t("common.loading") : t("common.save")}
           </Button>
 

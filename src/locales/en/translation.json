@@ -188,6 +188,52 @@
     "sentForReview": "Work sent for review successfully!",
     "published": "Work published successfully!"
   },
+  "workEvaluation": {
+    "title": "Work Evaluation",
+    "loadingWork": "Loading...",
+    "errorLoading": "Error loading work data:",
+    "imageSection": {
+      "addImage": "Add image",
+      "selectFile": "Select file"
+    },
+    "form": {
+      "workType": "Work Type*",
+      "workTitle": "Work Title*",
+      "workTitlePlaceholder": "Predicting the Future: ML Algorithm",
+      "authors": "Authors",
+      "description": "Description*",
+      "descriptionPlaceholder": "Illustrative description should contain a maximum of 160 words for acceptance.",
+      "descriptionWordCount": "Description* ({{count}}/160 words)",
+      "labels": "Labels",
+      "newLabel": "New label",
+      "links": "Links",
+      "addLink": "Add link",
+      "linkPlaceholder": "https://example.com",
+      "feedback": "Feedback*",
+      "feedbackWordCount": "Feedback* ({{count}}/160 words)"
+    },
+    "authors": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "type": "Type",
+      "student": "Student",
+      "teacher": "Teacher",
+      "add": "Add"
+    },
+    "actions": {
+      "return": "Return",
+      "accept": "Accept"
+    },
+    "messages": {
+      "workAccepted": "Work accepted successfully!",
+      "workReturned": "Work returned successfully!"
+    },
+    "status": {
+      "underReview": "Under Review",
+      "accepted": "Accepted",
+      "returned": "Returned"
+    }
+  },
   "notFound": {
     "title": "Page Not Found",
     "message": "Oops! The page you're looking for doesn't exist or you don't have permission to access it.",

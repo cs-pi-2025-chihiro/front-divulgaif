@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import useWorkStore from "../storage/work.storage";
+import useWorkStore from "../storage/evaluate.storage";
 import { navigateTo } from "../services/utils/utils";
 
 export const useWorkNavigation = () => {
@@ -50,7 +50,6 @@ export const useWorkData = (workId) => {
         return await fetchAndSetWork(workId);
       } catch (error) {
         console.error("Failed to load work:", error);
-        throw error;
       }
     }
     return workData;
