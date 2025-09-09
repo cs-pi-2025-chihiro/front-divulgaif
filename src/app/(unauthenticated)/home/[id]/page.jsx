@@ -24,7 +24,7 @@ const canEvaluate = (status) => {
 const WorkDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const workId = Number(id);
 
