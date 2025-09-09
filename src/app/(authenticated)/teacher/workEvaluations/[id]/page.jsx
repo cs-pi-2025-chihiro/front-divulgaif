@@ -38,7 +38,6 @@ const WorkEvaluation = () => {
 
   const [workData, setWorkData] = useState(() => {
     if (storedWork) {
-      console.log("storedWork", storedWork);
       return {
         id: storedWork.id,
         image: null,
