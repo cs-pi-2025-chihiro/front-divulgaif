@@ -19,6 +19,18 @@
   gap: 1rem;
 }
 
+.search-input {
+  border-radius: 30px;
+  border: 2px solid var(--dark-green);
+  background: white;
+  color: var(--dark-green);
+  width: 90%;
+  padding: 1rem;
+  margin-right: 1.5rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
 @media (min-width: 768px) {
   .filters-section {
     flex-direction: row;
