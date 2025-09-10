@@ -20,6 +20,14 @@
     "retry": "Please try again later",
     "clearFilters": "Clear filters"
   },
+  "home": {
+    "welcome": "IF Xplore",
+    "description": "Discover academic works from IFPR",
+    "newWork": "New Work",
+    "results": "Results",
+    "previous": "Previous",
+    "next": "Next"
+  },
   "errors": {
     "workNotFound": "Work not found",
     "unexpectedError": "An unexpected error occurred",
@@ -34,9 +42,15 @@
   "workTypes": {
     "article": "Article",
     "dissertation": "Dissertation",
-    "extension": "Extension",
     "research": "Research",
-    "finalThesis": "Final Thesis"
+    "finalThesis": "Final Thesis",
+    "extension": "Extension",
+    "unknown": "Unknown type",
+    "Artigo": "Article",
+    "TCC": "Final Paper",
+    "Projeto": "Project",
+    "Dissertação": "Dissertation",
+    "Tese": "Thesis"
   },
   "workDetail": {
     "authors": "Authors",
@@ -47,15 +61,15 @@
     "additionalLinks": "Additional Links",
     "link": "Link",
     "download": "Download PDF",
-    "edit": "Edit"
+    "edit": "Edit",
+    "evaluate": "Rate Work"
   },
-  "home": {
-    "welcome": "IF Xplore",
-    "description": "Discover academic works from IFPR",
-    "newWork": "New Work",
-    "results": "Results",
-    "previous": "Previous",
-    "next": "Next"
+  "workStatus": {
+    "draft": "Draft",
+    "submitted": "Submitted for Review",
+    "pendingChanges": "Pending Changes",
+    "published": "Published",
+    "rejected": "Rejected"
   },
   "login": {
     "title": "Login",
@@ -63,18 +77,18 @@
     "noAccount": "Don't have an account?",
     "createAccount": "Create an account",
     "forgotPassword": "Forgot password?",
-    "usernamePlaceholder": "Email",
+    "usernamePlaceholder": "Enter your Email",
     "usernameRequired": "Email is required",
     "passwordRequired": "Password is required",
     "submit": "Access",
     "loading": "Loading...",
     "success": "Login successful!",
-    "error": "Login failed. Please check your credentials.",
+    "error": "Login failed. Check your credentials.",
     "loginWith": "Login with:",
     "loginWithSUAP": "Login with SUAP"
   },
   "register": {
-    "title": "Register",
+    "title": "Registration",
     "name": "Name",
     "confirmPassword": "Confirm Password",
     "alreadyHaveAccount": "Already have an account?"
@@ -85,7 +99,8 @@
     "help": "Accessibility and Help",
     "about": "About Us",
     "projectTitle": "IFPR Project",
-    "projectDescription": "An extension project of the Federal Institute of Paraná to democratize access to education."
+    "projectDescription": "An extension project from the Federal Institute of Paraná to democratize access to education.",
+    "version": "Version"
   },
   "header": {
     "home": "Home",
@@ -93,13 +108,15 @@
     "about": "About",
     "contact": "Contact",
     "mainSearch": "Main Search",
-    "myWorks": "My Works"
+    "myWorks": "My Works",
+    "rateWorks": "Rate Works"
   },
   "filters": {
     "title": "Filter Presentation",
-    "workType": "Work types",
-    "labels": "Labels",
-    "addLabel": "Add label",
+    "workType": "Work type",
+    "workStatus": "Work status",
+    "labels": "Keywords",
+    "addLabel": "New Keyword",
     "date": "Date",
     "author": "Author",
     "campus": "Campus",
@@ -120,18 +137,19 @@
     "endDate": "End Date",
     "back": "Back",
     "searchPlaceholder": "Search...",
-    "filterOptions": "Filter options",
+    "filterOptions": "Search filter options",
     "filterDate": "Filter by date",
-    "recent": "Newest",
+    "recent": "Most recent",
     "older": "Oldest",
     "eight": "8 works",
     "twelve": "12 works",
     "twentyfour": "24 works",
     "thirtysix": "36 works",
-    "page-limit": "Page Limit",
+    "page-limit": "Limit per page",
     "order": "Order"
   },
   "pagination": {
+    "result": "Result",
     "results": "Results",
     "page": "Page",
     "of": "of",
@@ -169,5 +187,57 @@
     "draftSaved": "Draft saved successfully!",
     "sentForReview": "Work sent for review successfully!",
     "published": "Work published successfully!"
+  },
+  "workEvaluation": {
+    "title": "Work Evaluation",
+    "loadingWork": "Loading...",
+    "errorLoading": "Error loading work data:",
+    "imageSection": {
+      "addImage": "Add image",
+      "selectFile": "Select file"
+    },
+    "form": {
+      "workType": "Work Type*",
+      "workTitle": "Work Title*",
+      "workTitlePlaceholder": "Predicting the Future: ML Algorithm",
+      "authors": "Authors",
+      "description": "Description*",
+      "descriptionPlaceholder": "Illustrative description should contain a maximum of 160 words for acceptance.",
+      "descriptionWordCount": "Description* ({{count}}/160 words)",
+      "labels": "Labels",
+      "newLabel": "New label",
+      "links": "Links",
+      "addLink": "Add link",
+      "linkPlaceholder": "https://example.com",
+      "feedback": "Feedback*",
+      "feedbackWordCount": "Feedback* ({{count}}/160 words)"
+    },
+    "authors": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "type": "Type",
+      "student": "Student",
+      "teacher": "Teacher",
+      "add": "Add"
+    },
+    "actions": {
+      "return": "Return",
+      "accept": "Accept"
+    },
+    "messages": {
+      "workAccepted": "Work accepted successfully!",
+      "workReturned": "Work returned successfully!"
+    },
+    "status": {
+      "underReview": "Under Review",
+      "accepted": "Accepted",
+      "returned": "Returned"
+    }
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "message": "Oops! The page you're looking for doesn't exist or you don't have permission to access it.",
+    "submessage": "The link might be broken or you may need to log in to access this content.",
+    "goHome": "Go Home"
   }
 }

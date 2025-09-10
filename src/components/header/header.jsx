@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import "./header.css";
 import { useTranslation } from "react-i18next";
 import Button from "../button";
-import { isAuthenticated, logout } from "../../services/hooks/auth/useAuth";
+import {
+  isAuthenticated,
+  logout,
+  hasRole,
+} from "../../services/hooks/auth/useAuth";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaBars } from "react-icons/fa";
 import Drawer from "../drawer/drawer";
 import AuthButton from "../button/auth-button/auth-button";
 import { aboutWebsite } from "../../constants";
+import { navigateTo } from "../../services/utils/utils";
+import { ROLES } from "../../enums/roles";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -17,17 +23,20 @@ const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMobile] = useState(window.innerWidth <= 768);
 
-  const navigateTo = (path) => {
-    const cleanPath = path.startsWith("/") ? path.slice(1) : path;
-    const fullPath = cleanPath
-      ? `/${currentLang}/${cleanPath}`
-      : `/${currentLang}`;
-    navigate(fullPath);
+  const handleMyWorksNavigation = () => {
+    const myWorksPath = currentLang === "pt" ? "meus-trabalhos" : "my-works";
+    navigateTo(myWorksPath, navigate, currentLang);
   };
 
   const handleNewWorkNavigation = () => {
     const newWorkPath = currentLang === "pt" ? "trabalho/novo" : "work/new";
-    navigateTo(newWorkPath);
+    navigateTo(newWorkPath, navigate, currentLang);
+  };
+
+  const handleRateWorkNavigation = () => {
+    const rateWorkPath =
+      currentLang === "pt" ? "avaliar-trabalhos" : "rate-works";
+    navigateTo(rateWorkPath, navigate, currentLang);
   };
 
   const toggleDrawer = () => {
@@ -39,31 +48,27 @@ const Header = () => {
   };
 
   const handleLogin = () => {
-    navigateTo("/login");
+    navigateTo("login", navigate, currentLang);
   };
 
   const handleLogout = () => {
     logout();
+    navigateTo("", navigate, currentLang);
   };
 
   return (
     <>
       <div className="header">
-        <div className="header-left" onClick={() => navigateTo("")}>
+        <div className="header-left" onClick={() => navigate("")}>
           <h1 style={{ cursor: "pointer" }}>DivulgaIF</h1>
         </div>
         <div className="header-center">
-          <a onClick={() => navigateTo("")}>{t("header.mainSearch")}</a>
+          <a onClick={() => navigate("")}>{t("header.mainSearch")}</a>
           {authenticated && (
-            <a
-              onClick={() =>
-                alert("Ainda trabalhando nisso! Still working on this!")
-              }
-            >
-              {" "}
-              {/* TODO: APLICAR ISSO QUANDO TERMINARMOS A PÁGINA */}
-              {t("header.myWorks")}
-            </a>
+            <a onClick={handleMyWorksNavigation}> {t("header.myWorks")}</a>
+          )}
+          {authenticated && hasRole(ROLES.TEACHER) && (
+            <a onClick={handleRateWorkNavigation}> {t("header.rateWorks")}</a>
           )}
           <a style={{ cursor: "pointer" }} onClick={handleNewWorkNavigation}>
             {t("home.newWork")}

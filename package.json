@@ -13,6 +13,7 @@
     "i18next": "^25.1.1",
     "i18next-browser-languagedetector": "^8.1.0",
     "jotai": "^2.9.3",
+    "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-i18next": "^15.5.1",
@@ -20,14 +21,15 @@
     "react-router-dom": "^6.18.0",
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.18",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^5.0.8"
   },
-    "scripts": {
-      "start": "react-scripts start",
-      "build": "react-scripts build",
-      "build:dev": "REACT_APP_ENV=staging react-scripts build",
-      "test": "react-scripts test",
-      "eject": "react-scripts eject"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "build:dev": "REACT_APP_ENV=staging react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

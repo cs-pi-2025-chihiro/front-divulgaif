@@ -1,9 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../../../../components/button";
 import "./page.css";
 import { useWork } from "./useWork";
+import { WORK_STATUS } from "../../../../enums/workStatus";
+import { isTeacher } from "../../../../services/utils/utils";
+import { useWorkNavigation } from "../../../../hooks/useWorkStore";
+import {
+  hasRole,
+  isAuthenticated,
+  getStoredUser,
+} from "../../../../services/hooks/auth/useAuth";
+import { ROLES } from "../../../../enums/roles";
+
+const canEvaluate = (status) => {
+  return (
+    status === WORK_STATUS.SUBMITTED ||
+    (status === WORK_STATUS.UNDER_REVIEW && isTeacher())
+  );
+};
 
 const WorkDetail = () => {
   const { id } = useParams();
@@ -13,16 +29,33 @@ const WorkDetail = () => {
   const workId = Number(id);
 
   const { work, isLoading } = useWork({ id: workId });
+  const userIsAuthenticated = isAuthenticated();
+  const isStudent = hasRole(ROLES.STUDENT);
+  const currentUser = getStoredUser();
+
+  const { navigateToWorkEvaluation } = useWorkNavigation();
 
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const handleEdit = () => {
+    const currentLang = i18n.language;
+    const editPath = currentLang === "pt" ? "trabalho/editar" : "work/edit";
+    navigate(`/${currentLang}/${editPath}/${workId}`);
+  };
+
+  const handleEvaluate = () => {
+    if (work) {
+      navigateToWorkEvaluation(work);
+    }
   };
 
   if (isLoading) {
     return (
       <div className="work-detail-container">
         <div className="loading-indicator">
-          {t("common.loading") || "Loading"}...
+          {t("common.loading") || "Loading"}
         </div>
       </div>
     );
@@ -46,6 +79,13 @@ const WorkDetail = () => {
       </div>
     );
   }
+
+  const isWorkOwner = work?.authors?.some(
+    (author) => author.userId === currentUser?.id
+  );
+
+  const canEdit =
+    userIsAuthenticated && isStudent && currentUser && isWorkOwner;
 
   return (
     <div className="work-detail-container">
@@ -124,12 +164,25 @@ const WorkDetail = () => {
             {work.links.map((link, index) => (
               <li>
                 <a href={link.url} target="_blank" rel="noopener noreferrer">
-                  {link.title ||
-                    `${t("workDetail.link") || "Link"} ${index + 1}`}
+                  {link.name}
                 </a>
               </li>
             ))}
           </ul>
+        </div>
+      )}
+      {canEdit && (
+        <div className="work-detail-actions">
+          <Button variant="tertiary" size="lg" onClick={handleEdit}>
+            {t("common.edit")}
+          </Button>
+        </div>
+      )}
+      {canEvaluate(work.status) && (
+        <div className="work-detail-evaluation">
+          <Button variant="tertiary" size="lg" onClick={handleEvaluate}>
+            {t("workDetail.evaluate") || "Avaliar"}
+          </Button>
         </div>
       )}
     </div>

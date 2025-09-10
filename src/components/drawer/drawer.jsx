@@ -2,8 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaSignOutAlt } from "react-icons/fa";
 import { t } from "i18next";
+import { hasRole, logout } from "../../services/hooks/auth/useAuth";
+import { ROLES } from "../../enums/roles";
+import { navigateTo } from "../../services/utils/utils";
+import { aboutWebsite } from "../../constants";
 
 const DrawerOverlay = styled.div`
   position: fixed;
@@ -91,6 +95,12 @@ const DrawerLink = styled.a`
   padding: 18px 20px;
   font-size: 16px;
   font-weight: 400;
+
+  svg {
+    margin-right: 12px;
+    font-size: 18px;
+  }
+
   cursor: pointer;
   transition: all 0.2s ease;
   border-bottom: 1px solid var(--dark-green);
@@ -134,12 +144,33 @@ const Drawer = ({ isOpen, onClose, isAuthenticated }) => {
   const navigate = useNavigate();
   const currentLang = i18n.language;
 
-  const navigateTo = (path) => {
-    const cleanPath = path.startsWith("/") ? path.slice(1) : path;
-    const fullPath = cleanPath
-      ? `/${currentLang}/${cleanPath}`
-      : `/${currentLang}`;
-    navigate(fullPath);
+  const handleMyWorksNavigation = () => {
+    const myWorksPath = currentLang === "pt" ? "meus-trabalhos" : "my-works";
+    navigateTo(myWorksPath, navigate, currentLang);
+    onClose();
+  };
+
+  const handleNewWorkNavigation = () => {
+    const newWorkPath = currentLang === "pt" ? "trabalho/novo" : "work/new";
+    navigateTo(newWorkPath, navigate, currentLang);
+    onClose();
+  };
+
+  const handleRateWorkNavigation = () => {
+    const rateWorkPath =
+      currentLang === "pt" ? "avaliar-trabalhos" : "rate-works";
+    navigateTo(rateWorkPath, navigate, currentLang);
+    onClose();
+  };
+
+  const handleMainSearchNavigation = () => {
+    navigateTo("", navigate, currentLang);
+    onClose();
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigateTo("", navigate, currentLang);
     onClose();
   };
 
@@ -159,24 +190,40 @@ const Drawer = ({ isOpen, onClose, isAuthenticated }) => {
         <DrawerContent>
           <DrawerSection>
             <div>
-              <DrawerLink onClick={() => navigateTo("")}>
+              <DrawerLink onClick={handleMainSearchNavigation}>
                 {t("header.mainSearch")}
               </DrawerLink>
               {isAuthenticated && (
-                <DrawerLink onClick={() => navigateTo("/meus-trabalhos")}>
+                <DrawerLink onClick={handleMyWorksNavigation}>
                   {t("header.myWorks")}
                 </DrawerLink>
               )}
+              {isAuthenticated && hasRole(ROLES.TEACHER) && (
+                <DrawerLink onClick={handleRateWorkNavigation}>
+                  {t("header.rateWorks")}
+                </DrawerLink>
+              )}
+              <DrawerLink onClick={handleNewWorkNavigation}>
+                {t("home.newWork")}
+              </DrawerLink>
               <DrawerLink
                 onClick={() => {
-                  window.location.href =
-                    "https://chihiro-front.s3.sa-east-1.amazonaws.com/team-chihiro-front/sobre-produto-eduardo/pagina.html";
+                  window.location.href = aboutWebsite;
                 }}
               >
                 {t("header.about")}
               </DrawerLink>
             </div>
           </DrawerSection>
+
+          {isAuthenticated && (
+            <DrawerSection>
+              <DrawerLink onClick={handleLogout}>
+                <FaSignOutAlt />
+                {t("common.logout")}
+              </DrawerLink>
+            </DrawerSection>
+          )}
         </DrawerContent>
       </DrawerContainer>
     </>

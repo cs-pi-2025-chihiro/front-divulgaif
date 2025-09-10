@@ -1,4 +1,4 @@
-import { ENDPOINTS, endpoints } from "../../enums/endpoints";
+import { ENDPOINTS } from "../../enums/endpoints";
 import api from "../utils/api";
 
 export const listWorks = async (page = 0, size = 8, filters = {}) => {
@@ -15,6 +15,13 @@ export const listWorks = async (page = 0, size = 8, filters = {}) => {
     const workTypesArray = filters.workTypes.split(",");
     workTypesArray.forEach((workType) => {
       params.append("workType.name", workType);
+    });
+  }
+
+  if (filters.workStatus) {
+    const workStatusArray = filters.workStatus.split(",");
+    workStatusArray.forEach((status) => {
+      params.append("workStatus.name", status);
     });
   }
 

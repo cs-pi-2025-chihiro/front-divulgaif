@@ -11,16 +11,17 @@ import {
 } from "../../../components/input";
 import WorkTypeSelector from "../../../components/work-type-selector/WorkTypeSelector";
 import { isAuthenticated, hasRole } from "../../../services/hooks/auth/useAuth";
-import { useCreateWork } from "../../../services/works/useCreateWork";
+import { useCreateWork } from "./useCreateWork";
 import {
   countWords,
   validateField,
   validateForm,
 } from "../../../services/utils/validation";
-import { useGetSuggestions } from "../../../services/works/useGetSuggestions.js";
+import { useGetSuggestions } from "../../../services/hooks/suggestions/useGetSuggestions.js";
+import { ROLES } from "../../../enums/roles.js";
 
 const NewWork = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { isLoading, error, saveDraft, submitForReview, publish } =
     useCreateWork();
@@ -37,8 +38,9 @@ const NewWork = () => {
   const [errors, setErrors] = useState({});
 
   const userIsAuthenticated = isAuthenticated();
-  const isAdmin = hasRole("IS_ADMIN");
-  const isStudent = hasRole("IS_STUDENT");
+  const isStudent = hasRole(ROLES.STUDENT);
+  const isTeacher = hasRole(ROLES.TEACHER);
+  const isAdmin = hasRole(ROLES.ADMIN);
 
   const getWorkData = () => ({
     title,
@@ -95,6 +97,9 @@ const NewWork = () => {
       const workData = getWorkData();
       await saveDraft(workData);
       alert(t("messages.draftSaved") || "Rascunho salvo com sucesso!");
+
+      const currentLang = i18n.language;
+      navigate(`/${currentLang}`);
     } catch (error) {
       alert(error.message);
     }
@@ -112,7 +117,9 @@ const NewWork = () => {
         t("messages.sentForReview") ||
           "Trabalho enviado para avaliação com sucesso!"
       );
-      navigate(-1);
+
+      const currentLang = i18n.language;
+      navigate(`/${currentLang}`);
     } catch (error) {
       alert(error.message);
     }
@@ -127,7 +134,9 @@ const NewWork = () => {
       const workData = getWorkData();
       await publish(workData);
       alert(t("messages.published") || "Trabalho publicado com sucesso!");
-      navigate(-1);
+
+      const currentLang = i18n.language;
+      navigate(`/${currentLang}`);
     } catch (error) {
       alert(error.message);
     }
@@ -271,7 +280,7 @@ const NewWork = () => {
             </Button>
           )}
 
-          {userIsAuthenticated && isAdmin && (
+          {userIsAuthenticated && (isTeacher || isAdmin) && (
             <Button onClick={handlePublish} disabled={isLoading}>
               {isLoading ? t("common.loading") : t("new-work.publish")}
             </Button>

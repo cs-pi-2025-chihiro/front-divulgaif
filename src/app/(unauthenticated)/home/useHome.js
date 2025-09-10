@@ -4,6 +4,7 @@ import { atom, useAtom } from "jotai";
 import { ENDPOINTS } from "../../../enums/endpoints";
 import { PAGE_SIZE } from "../../../constants";
 import { useDebounce } from "@uidotdev/usehooks";
+import { WORK_STATUS } from "../../../enums/workStatus";
 
 export const pageAtom = atom(0);
 export const sizeAtom = atom(PAGE_SIZE);
@@ -18,7 +19,12 @@ export const useHome = (appliedFilters = {}) => {
 
   const fetchWorks = async ({ currentPage, size, filters }) => {
     try {
-      const response = await listWorks(currentPage, size, filters);
+      const updatedFilters = {
+        ...filters,
+        workStatus: WORK_STATUS.PUBLISHED,
+      };
+
+      const response = await listWorks(currentPage, size, updatedFilters);
       return response;
     } catch (err) {
       throw err;

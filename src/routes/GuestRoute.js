@@ -6,9 +6,11 @@ const GuestRoute = () => {
   const { i18n } = useTranslation();
 
   if (isAuthenticated()) {
+    // If user is already authenticated, redirect to home
     return <Navigate to={`/${i18n.language}`} replace />;
   }
 
+  // If user is not authenticated, allow access to guest routes (login, register)
   return <Outlet />;
 };
 

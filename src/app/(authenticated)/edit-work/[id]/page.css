@@ -1,0 +1,253 @@
+#edit-work-form {
+  margin: 16px;
+  padding: 16px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+#edit-work-form > div {
+  margin-bottom: 20px;
+}
+
+#work-type .work-type-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  font-size: 16px;
+  margin-left: 5px;
+  margin-bottom: 8px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 12px;
+  font-size: 14px;
+  color: #333;
+  background-color: var(--white-gray);
+  border: 1px solid gray;
+  border-radius: 6px;
+  box-sizing: border-box;
+  resize: vertical;
+  font-family: inherit;
+}
+
+#edit-work-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 24px;
+  padding: 16px 0;
+}
+
+#edit-work-buttons .btn {
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  min-width: 80px;
+  flex: 1;
+  max-width: 120px;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#edit-work-buttons .btn:nth-child(1) {
+  background-color: var(--accent);
+  color: var(--text-dark);
+  border: 1px solid var(--primary);
+}
+
+#edit-work-buttons .btn:nth-child(1):hover {
+  background-color: var(--primary);
+  color: var(--text-light);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+#edit-work-buttons .btn:nth-child(2),
+#edit-work-buttons .btn:nth-child(3) {
+  background-color: var(--primary-green);
+  color: var(--text-light);
+  border: 1px solid var(--primary-green);
+}
+
+#edit-work-buttons .btn:nth-child(2):hover,
+#edit-work-buttons .btn:nth-child(3):hover {
+  background-color: var(--dark-green);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.word-count-info {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+  text-align: right;
+}
+
+.field-error {
+  border-color: #e74c3c !important;
+  background-color: #fff5f5 !important;
+}
+
+.error-message {
+  display: block;
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+@media (min-width: 481px) {
+  #edit-work-form {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  label {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    min-height: 90px;
+    padding: 14px;
+    font-size: 15px;
+    border-radius: 7px;
+  }
+
+  #edit-work-buttons {
+    gap: 10px;
+    margin-top: 28px;
+    padding: 18px 0;
+  }
+
+  #edit-work-buttons .btn {
+    padding: 11px 20px;
+    font-size: 15px;
+    min-width: 100px;
+    max-width: 140px;
+    border-radius: 7px;
+  }
+}
+
+@media (min-width: 769px) {
+  #edit-work-form {
+    margin: 24px auto;
+    padding: 24px;
+    max-width: 1000px;
+  }
+
+  label {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  textarea {
+    min-height: 100px;
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+
+  #edit-work-buttons {
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 32px;
+    padding: 20px 0;
+  }
+
+  #edit-work-buttons .btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    min-width: 120px;
+    max-width: none;
+    flex: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  #edit-work-buttons .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  #work-type .work-type-selector {
+    gap: 15px;
+  }
+}
+
+@media (min-width: 1201px) {
+  #edit-work-form {
+    margin: 32px auto;
+    padding: 32px;
+    max-width: 1200px;
+  }
+
+  #edit-work-form > div {
+    margin-bottom: 28px;
+  }
+
+  label {
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+
+  textarea {
+    min-height: 120px;
+    padding: 18px;
+    font-size: 17px;
+  }
+
+  #edit-work-buttons {
+    margin-top: 40px;
+    padding: 24px 0;
+  }
+
+  #edit-work-buttons .btn {
+    padding: 14px 28px;
+    font-size: 17px;
+    min-width: 140px;
+  }
+}
+
+@media (min-width: 1601px) {
+  #edit-work-form > div {
+    margin-bottom: 32px;
+  }
+
+  label {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  textarea {
+    min-height: 140px;
+    padding: 20px;
+    font-size: 18px;
+  }
+
+  #edit-work-buttons {
+    margin-top: 48px;
+    padding: 28px 0;
+    gap: 20px;
+  }
+
+  #edit-work-buttons .btn {
+    padding: 16px 32px;
+    font-size: 18px;
+    min-width: 160px;
+  }
+
+  #work-type .work-type-selector {
+    gap: 20px;
+  }
+}
