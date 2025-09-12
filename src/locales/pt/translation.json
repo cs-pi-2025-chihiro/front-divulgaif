@@ -235,7 +235,7 @@
       "workReturned": "Trabalho devolvido com sucesso!"
     },
     "status": {
-      "underReview": "Em Avaliação",
+      "underReview": "Submetido",
       "accepted": "Aceito",
       "returned": "Devolvido"
     }

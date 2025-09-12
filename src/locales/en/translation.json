@@ -229,7 +229,7 @@
       "workReturned": "Work returned successfully!"
     },
     "status": {
-      "underReview": "Under Review",
+      "underReview": "Submitted",
       "accepted": "Accepted",
       "returned": "Returned"
     }
