@@ -9,6 +9,8 @@ export const ENDPOINTS = {
     DELETE: "/works/{id}",
     UPLOAD_IMAGE: "/works/upload-image",
     EDIT: "/works/{id}",
+    REQUEST_CHANGES: "/works/request-changes",
+    PUBLISH: "/works/publish",
   },
   HISTORY: {
     CREATE: "/history",
