@@ -16,18 +16,26 @@ export const createWork = async (workData, status = "draft") => {
     if (!workData.workType) {
       throw new Error("Work type is required");
     }
+    const currentUser = JSON.parse(localStorage.getItem("userData") || "{}");
+    
+    if (!currentUser.id) {
+      throw new Error("User not authenticated properly. Please login again.");
+    }
 
     const { newAuthors } = formatAuthorsForBackend(workData.authors || []);
     const workLabels = formatLabelsForBackend(workData.labels || []);
     const workLinks = formatLinksForBackend(workData.links || []);
-
+    const principalLink = workLinks.length > 0 ? workLinks[0].url : "https://exemplo.com";
     const payload = {
       title: workData.title.trim(),
-      description: workData.description?.trim() || "",
-      content:
-        workData.abstractText?.trim() || workData.abstract?.trim() || "",
+      description: workData.description?.trim() || workData.title?.trim() || "Descrição do trabalho",
+      content: workData.abstractText?.trim() || workData.abstract?.trim() || workData.description?.trim() || "Conteúdo do trabalho",
       workType: mapWorkTypeToBackend(workData.workType),
       workStatus: mapStatusToBackend(status),
+      principalLink: principalLink,
+      metaTag: workData.title?.trim()?.toLowerCase().replace(/\s+/g, '-') || "trabalho",
+      imageUrl: workData.imageUrl || "https://placehold.co/400x300?text=Sem+Imagem",
+      teacherId: currentUser.id || 1,
     };
 
     if (newAuthors.length > 0) {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { updateWork } from "../../../../services/works/updateWork";
+import { updateWork } from "../../../services/works/updateWork";
 
 export const useUpdateWork = () => {
   const [isLoading, setIsLoading] = useState(false);
