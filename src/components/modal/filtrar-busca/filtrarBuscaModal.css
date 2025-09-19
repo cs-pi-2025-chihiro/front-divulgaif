@@ -210,8 +210,6 @@
 }
 
 .remove-label {
-  background: none;
-  border: none;
   color: var(--dark-green);
   cursor: pointer;
   font-size: 16px;
@@ -222,6 +220,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.remove-label-btn {
+  color: red;
+  font-size: larger;
 }
 
 .label-input {
