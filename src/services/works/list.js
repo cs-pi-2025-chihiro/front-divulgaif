@@ -11,6 +11,10 @@ export const listWorks = async (page = 0, size = 8, filters = {}) => {
     params.append("title", filters.search);
   }
 
+   if (filters.search) {
+    params.append("description", filters.search);  
+  }
+
   if (filters.workTypes) {
     const workTypesArray = filters.workTypes.split(",");
     workTypesArray.forEach((workType) => {
