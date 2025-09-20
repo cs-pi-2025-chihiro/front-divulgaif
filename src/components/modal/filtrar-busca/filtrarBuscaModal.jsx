@@ -107,8 +107,9 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, showStatus }) => {
     }));
   };
 
-  const handleAddLabel = (e) => {
-    if (e.key === "Enter" && newLabel.trim()) {
+  // Função modificada para adicionar label através do botão
+  const handleAddLabel = () => {
+    if (newLabel.trim()) {
       const trimmedLabel = newLabel.trim();
       if (!localFilters.labels.includes(trimmedLabel)) {
         setLocalFilters((prevFilters) => ({
@@ -191,14 +192,23 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, showStatus }) => {
           <section className="filter-section">
             <h3 className="section-title">{t("filters.labels")}</h3>
             <div className="labels-container">
-              <Input
-                type="text"
-                className="label-Input"
-                placeholder={t("filters.addLabel")}
-                value={newLabel}
-                onChange={(e) => setNewLabel(e.target.value)}
-                onKeyPress={handleAddLabel}
-              />
+              <div className="label-input-container">
+                <Input
+                  type="text"
+                  className="label-Input"
+                  placeholder={t("filters.addLabel")}
+                  value={newLabel}
+                  onChange={(e) => setNewLabel(e.target.value)}
+                />
+                <Button
+                  className="add-label-btn"
+                  onClick={handleAddLabel}
+                  disabled={!newLabel.trim()}
+                  aria-label="Add label"
+                >
+                  +
+                </Button>
+              </div>
               {localFilters.labels.length > 0 && (
                 <div className="labels-list">
                   {localFilters.labels.map((label, index) => (

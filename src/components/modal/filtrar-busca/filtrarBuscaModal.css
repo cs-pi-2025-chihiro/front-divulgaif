@@ -192,6 +192,47 @@
   gap: 12px;
 }
 
+/* Novo container para o input e botão + */
+.label-input-container {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  height: 44px;
+}
+
+/* Novo estilo para o botão + */
+.add-label-btn {
+  padding: 0;
+  border: 1px solid var(--dark-green);
+  border-radius: 6px;
+  background: var(--dark-green);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 44px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.add-label-btn:hover:not(:disabled) {
+  background: var(--lighter-green);
+  border-color: var(--lighter-green);
+  color: black;
+}
+
+.add-label-btn:disabled {
+  background: #666;
+  border-color: #666;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
 .labels-list {
   display: flex;
   flex-wrap: wrap;
@@ -228,10 +269,13 @@
 }
 
 .label-input {
+  flex: 1;
   padding: 8px 12px;
   border: 1px solid var(--dark-green);
   border-radius: 6px;
   font-size: 14px;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .label-input:focus {
@@ -386,5 +430,10 @@
   .pagination-btn {
     width: 100%;
     text-align: center;
+  }
+
+  /* Responsivo para o container do input de label */
+  .label-input-container {
+    margin-left: 1rem;
   }
 }
