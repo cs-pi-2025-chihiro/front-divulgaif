@@ -35,7 +35,7 @@ const useSuap = () => {
   const navigate = useNavigate();
   const { i18n } = useTranslation();
 
-  const SUAP_PROVIDER = process.env.DIVULGAIF_REACT_APP_SUAP_PROVIDER;
+  const SUAP_PROVIDER = process.env.REACT_APP_SUAP_PROVIDER;
 
   const loginWithSuap = () => {
     const authUrl = new URL(ENDPOINTS.SUAP.OAUTH);
