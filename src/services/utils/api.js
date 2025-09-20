@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../../constants";
+import { ENDPOINTS } from "../../enums/endpoints";
 
 export const api = axios.create({
   baseURL: BASE_URL,
@@ -32,7 +33,7 @@ const refreshToken = async () => {
 
   try {
     const response = await axios.post(
-      `${BASE_URL}/auth/refresh-token`,
+      `${BASE_URL}${ENDPOINTS.AUTH.REFRESH}`,
 
       {
         refreshToken: currentRefreshToken,

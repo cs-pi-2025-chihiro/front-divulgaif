@@ -210,13 +210,16 @@
       "description": "Descrição*",
       "descriptionPlaceholder": "Descrição meramente ilustrativa deve conter no máximo 160 palavras para aceitação.",
       "descriptionWordCount": "Descrição* ({{count}}/160 palavras)",
+      "abstractWordCount": "Resumo* ({{count}}/500 palavras)",
+      "abstractPlaceholder": "Digite o resumo ou sumário...",
       "labels": "Labels",
       "newLabel": "Nova label",
       "links": "Links",
       "addLink": "Adicionar link",
       "linkPlaceholder": "https://exemplo.com",
       "feedback": "Feedback*",
-      "feedbackWordCount": "Feedback* ({{count}}/160 palavras)"
+      "feedbackWordCount": "Feedback* ({{count}}/160 palavras)",
+      "feedbackPlaceholder": "Forneça feedback para o estudante..."
     },
     "authors": {
       "fullName": "Nome Completo",
@@ -235,9 +238,13 @@
       "workReturned": "Trabalho devolvido com sucesso!"
     },
     "status": {
-      "underReview": "Em Avaliação",
+      "underReview": "Submetido",
       "accepted": "Aceito",
       "returned": "Devolvido"
+    },
+    "feedback": {
+      "required": "Feedback é obrigatório para solicitar mudanças",
+      "error": "Erro ao solicitar mudanças"
     }
   }
 }

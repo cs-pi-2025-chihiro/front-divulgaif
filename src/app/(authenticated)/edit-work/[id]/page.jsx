@@ -44,7 +44,6 @@ const EditWork = () => {
   const [errors, setErrors] = useState({});
 
   const userIsAuthenticated = isAuthenticated();
-  const isStudent = hasRole(ROLES.STUDENT);
   const currentUser = getStoredUser();
 
   useEffect(() => {
@@ -53,16 +52,7 @@ const EditWork = () => {
         const workId = Number(id);
         const workData = await getWork(workId);
 
-        const isWorkOwner = workData?.authors?.some(
-          (author) => author.userId === currentUser?.id
-        );
-
-        if (
-          !userIsAuthenticated ||
-          !isStudent ||
-          !currentUser ||
-          !isWorkOwner
-        ) {
+        if (!userIsAuthenticated || !currentUser) {
           navigate(-1);
           return;
         }
@@ -93,8 +83,6 @@ const EditWork = () => {
         setLinks(workData.links || []);
       } catch (error) {
         console.error("Failed to fetch work data:", error);
-        alert("Failed to load work data. Please try again.");
-        navigate(-1);
       }
     };
 
@@ -329,7 +317,7 @@ const EditWork = () => {
             {isLoading ? t("common.loading") : t("common.save")}
           </Button>
 
-          {userIsAuthenticated && isStudent && (
+          {userIsAuthenticated && (
             <Button type="submit" disabled={isLoading} className="btn-send">
               {isLoading ? t("common.loading") : t("new-work.send")}
             </Button>

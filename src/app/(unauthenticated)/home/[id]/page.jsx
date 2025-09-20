@@ -85,7 +85,7 @@ const WorkDetail = () => {
   );
 
   const canEdit =
-    userIsAuthenticated && isStudent && currentUser && isWorkOwner;
+    (userIsAuthenticated && currentUser && isWorkOwner) || isTeacher();
 
   return (
     <div className="work-detail-container">
@@ -110,7 +110,6 @@ const WorkDetail = () => {
           </div>
         )}
       </div>
-
       <div className="work-detail-image-container">
         <div className="image-carousel">
           <img
@@ -171,20 +170,20 @@ const WorkDetail = () => {
           </ul>
         </div>
       )}
-      {canEdit && (
-        <div className="work-detail-actions">
-          <Button variant="tertiary" size="lg" onClick={handleEdit}>
-            {t("common.edit")}
-          </Button>
-        </div>
-      )}
-      {canEvaluate(work.status) && (
-        <div className="work-detail-evaluation">
+      <div className="work-detail-actions">
+        {canEdit && (
+          <>
+            <Button variant="tertiary" size="lg" onClick={handleEdit}>
+              {t("common.edit")}
+            </Button>
+          </>
+        )}
+        {canEvaluate(work.status) && (
           <Button variant="tertiary" size="lg" onClick={handleEvaluate}>
             {t("workDetail.evaluate") || "Avaliar"}
           </Button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

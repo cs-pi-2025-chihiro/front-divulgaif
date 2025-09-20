@@ -3,44 +3,29 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import api from "../../../services/utils/api";
 import { ENDPOINTS, endpoints } from "../../../enums/endpoints";
+import { SUAP_CREDENTIALS } from "../../../constants";
 
 const createSuapUser = async (suapUserData) => {
-  await api.post(
-    ENDPOINTS.USERS.CREATE,
-    {
-      name: suapUserData.nome_registro,
-      email: suapUserData.email,
-      secondaryEmail: suapUserData.email_secundario,
-      ra: suapUserData.identificacao,
-      avatarUrl: suapUserData.foto,
-      userType: suapUserData.tipo_usuario,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  await api.post(ENDPOINTS.USERS.CREATE, {
+    name: suapUserData.nome_registro,
+    email: suapUserData.email,
+    secondaryEmail: suapUserData.email_secundario,
+    ra: suapUserData.identificacao,
+    avatarUrl: suapUserData.foto,
+    userType: suapUserData.tipo_usuario,
+  });
 };
 
 const loginSuapUser = async (suapData, provider) => {
-  const response = await api.post(
-    "/auth/oauth-login",
-    {
-      userData: {
-        identificacao: suapData.identificacao,
-        nome: suapData.nome_registro,
-        email: suapData.email,
-        tipoUsuario: suapData.tipo_usuario,
-      },
-      provider,
+  const response = await api.post(ENDPOINTS.AUTH.OAUTH_LOGIN, {
+    userData: {
+      identificacao: suapData.identificacao,
+      nome: suapData.nome_registro,
+      email: suapData.email,
+      tipoUsuario: suapData.tipo_usuario,
     },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+    provider,
+  });
   return response.data;
 };
 
@@ -50,20 +35,14 @@ const useSuap = () => {
   const navigate = useNavigate();
   const { i18n } = useTranslation();
 
-  const SUAP_CONFIG = {
-    clientId: "1aJjdqqzsur8URjIDDnRyz5TMoVrOfA0MQQhYdCu",
-    redirectUri: `${window.location.origin}`,
-    scope: "identificacao email",
-  };
-
-  const SUAP_PROVIDER = "SUAP";
+  const SUAP_PROVIDER = process.env.DIVULGAIF_REACT_APP_SUAP_PROVIDER;
 
   const loginWithSuap = () => {
     const authUrl = new URL(ENDPOINTS.SUAP.OAUTH);
     authUrl.searchParams.append("response_type", "token");
-    authUrl.searchParams.append("client_id", SUAP_CONFIG.clientId);
-    authUrl.searchParams.append("redirect_uri", SUAP_CONFIG.redirectUri);
-    authUrl.searchParams.append("scope", SUAP_CONFIG.scope);
+    authUrl.searchParams.append("client_id", SUAP_CREDENTIALS.clientId);
+    authUrl.searchParams.append("redirect_uri", window.location.origin);
+    authUrl.searchParams.append("scope", SUAP_CREDENTIALS.scope);
 
     window.location.href = authUrl.toString();
   };

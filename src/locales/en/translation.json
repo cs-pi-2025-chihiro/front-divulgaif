@@ -204,13 +204,16 @@
       "description": "Description*",
       "descriptionPlaceholder": "Illustrative description should contain a maximum of 160 words for acceptance.",
       "descriptionWordCount": "Description* ({{count}}/160 words)",
+      "abstractWordCount": "Abstract* ({{count}}/500 words)",
+      "abstractPlaceholder": "Enter the abstract or summary...",
       "labels": "Labels",
       "newLabel": "New label",
       "links": "Links",
       "addLink": "Add link",
       "linkPlaceholder": "https://example.com",
       "feedback": "Feedback*",
-      "feedbackWordCount": "Feedback* ({{count}}/160 words)"
+      "feedbackWordCount": "Feedback* ({{count}}/160 words)",
+      "feedbackPlaceholder": "Provide feedback for the student..."
     },
     "authors": {
       "fullName": "Full Name",
@@ -229,9 +232,13 @@
       "workReturned": "Work returned successfully!"
     },
     "status": {
-      "underReview": "Under Review",
+      "underReview": "Submitted",
       "accepted": "Accepted",
       "returned": "Returned"
+    },
+    "feedback": {
+      "required": "Feedback is required to request changes",
+      "error": "Error occurred while requesting changes"
     }
   },
   "notFound": {
