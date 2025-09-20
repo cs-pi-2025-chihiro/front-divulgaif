@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import api from "../../../services/utils/api";
+import { ENDPOINTS } from "../../../enums/endpoints";
 
 const loginUser = async (credentials) => {
   const response = await api.post(ENDPOINTS.AUTH.LOGIN, credentials);
