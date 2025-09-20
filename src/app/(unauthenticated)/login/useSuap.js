@@ -39,6 +39,7 @@ const useSuap = () => {
 
   const loginWithSuap = () => {
     const authUrl = new URL(ENDPOINTS.SUAP.OAUTH);
+    console.log("Checking SUAP Credentials:", SUAP_CREDENTIALS);
     authUrl.searchParams.append("response_type", "token");
     authUrl.searchParams.append("client_id", SUAP_CREDENTIALS.clientId);
     authUrl.searchParams.append("redirect_uri", window.location.origin);
