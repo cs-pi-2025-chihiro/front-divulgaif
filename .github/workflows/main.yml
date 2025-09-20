@@ -26,9 +26,9 @@ jobs:
 
       - name: Build React app
         env:
-          REACT_APP_SUAP_CLIENT_ID: 1aJjdqqzsur8URjIDDnRyz5TMoVrOfA0MQQhYdCu
-          REACT_APP_SUAP_SCOPE: "identificacao email"
-          REACT_APP_SUAP_PROVIDER: cHJvdmVkb3IgZGEgYXBpIGRvIHN1YXAgZG8gZGl2dWxnYWlmLmNvbS5iciBtdWl0byB0b3AgZGVtYWlzIGVtIHNlIHRhIGRvaWRv
+          REACT_APP_SUAP_CLIENT_ID: ${{ secrets.REACT_APP_SUAP_CLIENT_ID }}
+          REACT_APP_SUAP_SCOPE: ${{ secrets.REACT_APP_SUAP_SCOPE }}
+          REACT_APP_SUAP_PROVIDER: ${{ secrets.REACT_APP_SUAP_PROVIDER }}
         run: |
           if [[ $GITHUB_REF == refs/heads/main ]]; then
             npm run build
