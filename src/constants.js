@@ -14,3 +14,9 @@ export const BASE_URL = (() => {
 export const PAGE_SIZE = 8;
 export const aboutWebsite =
   "https://chihiro-front.s3.sa-east-1.amazonaws.com/team-chihiro-front/sobre-produto-eduardo/pagina.html";
+
+export const SUAP_CREDENTIALS = {
+  clientId: process.env.DIVULGAIF_REACT_APP_SUAP_CLIENT_ID,
+  scope: process.env.DIVULGAIF_REACT_APP_SUAP_SCOPE,
+  provider: process.env.DIVULGAIF_REACT_APP_SUAP_PROVIDER,
+};

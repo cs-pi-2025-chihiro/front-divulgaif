@@ -12,6 +12,12 @@ export const ENDPOINTS = {
     REQUEST_CHANGES: "/works/request-changes",
     PUBLISH: "/works/publish",
   },
+  AUTH: {
+    LOGIN: "/auth/login",
+    OAUTH_LOGIN: "/auth/oauth-login",
+    REFRESH: "/auth/refresh",
+    ME: "/auth/me",
+  },
   HISTORY: {
     CREATE: "/history",
   },
