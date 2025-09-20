@@ -15,7 +15,7 @@ export const ENDPOINTS = {
   AUTH: {
     LOGIN: "/auth/login",
     OAUTH_LOGIN: "/auth/oauth-login",
-    REFRESH: "/auth/refresh",
+    REFRESH: "/auth/refresh-token",
     ME: "/auth/me",
   },
   HISTORY: {

@@ -54,11 +54,7 @@ export const listMyWorks = async (page = 0, size = 8, filters = {}) => {
     params.append("endDate", filters.endDate);
   }
 
-  const result = await api.get(ENDPOINTS.WORKS.LIST_MY_WORKS + "?" + params, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const result = await api.get(ENDPOINTS.WORKS.LIST_MY_WORKS + "?" + params);
 
   return result;
 };

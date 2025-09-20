@@ -6,22 +6,14 @@ import { ENDPOINTS, endpoints } from "../../../enums/endpoints";
 import { SUAP_CREDENTIALS } from "../../../constants";
 
 const createSuapUser = async (suapUserData) => {
-  await api.post(
-    ENDPOINTS.USERS.CREATE,
-    {
-      name: suapUserData.nome_registro,
-      email: suapUserData.email,
-      secondaryEmail: suapUserData.email_secundario,
-      ra: suapUserData.identificacao,
-      avatarUrl: suapUserData.foto,
-      userType: suapUserData.tipo_usuario,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  await api.post(ENDPOINTS.USERS.CREATE, {
+    name: suapUserData.nome_registro,
+    email: suapUserData.email,
+    secondaryEmail: suapUserData.email_secundario,
+    ra: suapUserData.identificacao,
+    avatarUrl: suapUserData.foto,
+    userType: suapUserData.tipo_usuario,
+  });
 };
 
 const loginSuapUser = async (suapData, provider) => {
