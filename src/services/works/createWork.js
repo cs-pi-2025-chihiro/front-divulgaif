@@ -1,22 +1,15 @@
 import { api } from "../utils/api";
 import { ENDPOINTS } from "../../enums/endpoints";
-import { 
-  mapStatusToBackend, 
-  mapWorkTypeToBackend, 
-  formatAuthorsForBackend, 
-  formatLabelsForBackend, 
-  formatLinksForBackend 
+import {
+  mapStatusToBackend,
+  mapWorkTypeToBackend,
+  formatAuthorsForBackend,
+  formatLabelsForBackend,
+  formatLinksForBackend,
 } from "../utils/utils";
 
 export const createWork = async (workData, status = "draft") => {
   try {
-    if (!workData.title?.trim()) {
-      throw new Error("Title is required");
-    }
-    if (!workData.workType) {
-      throw new Error("Work type is required");
-    }
-
     const { newAuthors } = formatAuthorsForBackend(workData.authors || []);
     const workLabels = formatLabelsForBackend(workData.labels || []);
     const workLinks = formatLinksForBackend(workData.links || []);
@@ -24,8 +17,7 @@ export const createWork = async (workData, status = "draft") => {
     const payload = {
       title: workData.title.trim(),
       description: workData.description?.trim() || "",
-      content:
-        workData.abstractText?.trim() || workData.abstract?.trim() || "",
+      content: workData.abstractText?.trim() || workData.abstract?.trim() || "",
       workType: mapWorkTypeToBackend(workData.workType),
       workStatus: mapStatusToBackend(status),
     };
@@ -43,48 +35,6 @@ export const createWork = async (workData, status = "draft") => {
     const response = await api.post(ENDPOINTS.WORKS.CREATE, payload);
     return response.data;
   } catch (error) {
-    const status = error.response?.status;
-    const data = error.response?.data;
-    let errorMessage = "Error creating work. Please try again.";
-
-    if (error.response) {
-      if (status === 400) {
-        errorMessage =
-          data.message ||
-          data.error ||
-          "Invalid data. Please check required fields.";
-      } else if (status === 401) {
-        errorMessage = "Session expired. Please log in again.";
-      } else if (status === 403) {
-        errorMessage = "You don't have permission to perform this action.";
-      } else if (status === 404) {
-        if (data.error && data.error.includes("User with id")) {
-          errorMessage =
-            "Internal error: user not found. All authors will be created as new users.";
-        } else if (data.error && data.error.includes("WorkType")) {
-          errorMessage =
-            "Invalid work type. Please check if the selected type is valid.";
-        } else {
-          errorMessage =
-            "Resource not found. Please check the submitted data.";
-        }
-      } else if (status >= 500) {
-        errorMessage =
-          "Internal server error. Please try again later.";
-      }
-
-      if (data.details || data.errors) {
-        const details = data.details || data.errors;
-        if (typeof details === "object") {
-          const errorDetails = Object.values(details).flat().join(", ");
-          errorMessage += ` Details: ${errorDetails}`;
-        }
-      }
-    } else if (error.request) {
-      errorMessage =
-        "Connection error. Please check your internet and try again.";
-    }
-
-    throw new Error(errorMessage);
+    throw new Error(error.response.data.error);
   }
 };
