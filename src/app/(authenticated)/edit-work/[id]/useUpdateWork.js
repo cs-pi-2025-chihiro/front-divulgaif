@@ -18,7 +18,7 @@ export const useUpdateWork = () => {
       const result = await updateWork(workId, workData, status);
       return result;
     } catch (error) {
-      setError(error.message);
+      setError(error.response.data.error);
       throw error;
     } finally {
       setIsLoading(false);

@@ -13,6 +13,7 @@ export const createWork = async (workData, status = "draft") => {
     const { newAuthors } = formatAuthorsForBackend(workData.authors || []);
     const workLabels = formatLabelsForBackend(workData.labels || []);
     const workLinks = formatLinksForBackend(workData.links || []);
+    const studentIds = workData.studentIds || [];
 
     const payload = {
       title: workData.title.trim(),
@@ -24,6 +25,9 @@ export const createWork = async (workData, status = "draft") => {
 
     if (newAuthors.length > 0) {
       payload.newAuthors = newAuthors;
+    }
+    if (studentIds.length > 0) {
+      payload.studentIds = studentIds;
     }
     if (workLabels.length > 0) {
       payload.workLabels = workLabels;
