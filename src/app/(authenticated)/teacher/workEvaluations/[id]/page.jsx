@@ -193,13 +193,6 @@ const WorkEvaluation = () => {
     }));
   };
 
-  const handleKeyPress = (e, field, value, setter) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      addToList(field, value, setter);
-    }
-  };
-
   const handleAddLabel = () => {
     if (labelInput.trim() && !formData.labels.includes(labelInput.trim())) {
       addToList("labels", labelInput, setLabelInput);
@@ -223,11 +216,10 @@ const WorkEvaluation = () => {
           status: t("workEvaluation.status.accepted"),
         }));
         setShowSuccessMessage(t("workEvaluation.messages.workAccepted"));
-        setTimeout(() => setShowSuccessMessage(""), 5000);
+        navigateTo("/", navigate, currentLang);
       }
     } catch (error) {
       console.error("Error publishing work:", error);
-      // You might want to show an error message to the user
     }
   };
 
