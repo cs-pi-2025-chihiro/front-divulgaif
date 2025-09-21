@@ -31,6 +31,7 @@ const NewWork = () => {
   const [authors, setAuthors] = useState([]);
   const [labels, setLabels] = useState([]);
   const [links, setLinks] = useState([]);
+  const [studentIds, setStudentIds] = useState([]);
   const [workType, setWorkType] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -46,6 +47,7 @@ const NewWork = () => {
     title,
     description,
     abstractText: abstract,
+    studentIds,
     authors: authors,
     labels: labels,
     links: links,
@@ -167,6 +169,12 @@ const NewWork = () => {
 
   const handleAuthorsChange = (newAuthors) => {
     setAuthors(newAuthors);
+    const newStudentIds = newAuthors
+      .filter((author) => author.id)
+      .map((author) => author.id);
+
+    setStudentIds(newStudentIds);
+
     validateSingleField("authors", newAuthors);
   };
 
