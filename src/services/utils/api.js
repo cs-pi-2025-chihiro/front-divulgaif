@@ -43,10 +43,6 @@ const refreshToken = async () => {
     }
   } catch (error) {
     console.error("Token refresh failed:", error);
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("userData");
-    localStorage.removeItem("userRoles");
   }
 
   return null;
@@ -82,6 +78,23 @@ export const setupInterceptors = (i18n) => {
         if (newAccessToken) {
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
           return api(originalRequest);
+        } else {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          localStorage.removeItem("userData");
+          localStorage.removeItem("userRoles");
+
+          const sessionExpiredMessage = i18n.t("common.sessionExpired");
+          alert(sessionExpiredMessage);
+
+          const currentPath = window.location.pathname;
+          const currentLang = currentPath.startsWith("/en") ? "en" : "pt";
+
+          setTimeout(() => {
+            window.location.href = `/${currentLang}/login`;
+          }, 1000);
+
+          return Promise.reject(error);
         }
       }
 

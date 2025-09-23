@@ -39,6 +39,12 @@ export const createWork = async (workData, status = "draft") => {
     const response = await api.post(ENDPOINTS.WORKS.CREATE, payload);
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.error);
+    if (error.response?.status === 401) throw error;
+    else {
+      throw new Error(
+        error.response?.data?.error ||
+          "An error occurred while creating the work"
+      );
+    }
   }
 };
