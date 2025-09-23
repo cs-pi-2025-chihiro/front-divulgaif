@@ -13,7 +13,6 @@ export const useCreateWork = () => {
       const result = await createWork(workData, status);
       return result;
     } catch (error) {
-      setError(error.message);
       throw error;
     } finally {
       setIsLoading(false);
@@ -21,7 +20,8 @@ export const useCreateWork = () => {
   };
 
   const saveDraft = (workData) => handleCreateWork(workData, "draft");
-  const submitForReview = (workData) => handleCreateWork(workData, "under_review");
+  const submitForReview = (workData) =>
+    handleCreateWork(workData, "under_review");
   const publish = (workData) => handleCreateWork(workData, "published");
 
   return {
