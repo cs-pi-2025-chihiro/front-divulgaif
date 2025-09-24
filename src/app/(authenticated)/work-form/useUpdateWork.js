@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { updateWork } from "../../../../services/works/updateWork";
-import { WORK_STATUS } from "../../../../enums/workStatus";
+import { updateWork } from "../../../services/works/updateWork";
+import { WORK_STATUS } from "../../../enums/workStatus";
 
 export const useUpdateWork = () => {
   const [isLoading, setIsLoading] = useState(false);

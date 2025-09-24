@@ -7,9 +7,11 @@ import {
   formatLabelsForBackend,
   formatLinksForBackend,
 } from "../utils/utils";
+import { getStoredUser } from "../hooks/auth/useAuth";
 
 export const createWork = async (workData, status = "draft") => {
   try {
+    const currentUser = getStoredUser();
     const { newAuthors } = formatAuthorsForBackend(workData.authors || []);
     const workLabels = formatLabelsForBackend(workData.labels || []);
     const workLinks = formatLinksForBackend(workData.links || []);
@@ -24,7 +26,7 @@ export const createWork = async (workData, status = "draft") => {
       principalLink: principalLink,
       metaTag: workData.title?.trim()?.toLowerCase().replace(/\s+/g, '-') || "trabalho",
       imageUrl: workData.imageUrl || "https://placehold.co/400x300?text=Sem+Imagem",
-      teacherId: currentUser.id || 1,
+      teacherId: currentUser ? currentUser.id : 1,
     };
 
     if (newAuthors.length > 0) {
@@ -47,7 +49,7 @@ export const createWork = async (workData, status = "draft") => {
     else {
       throw new Error(
         error.response?.data?.error ||
-          "An error occurred while creating the work"
+        "An error occurred while creating the work"
       );
     }
   }
