@@ -84,16 +84,7 @@ const WorkFormPage = () => {
       try {
         const workData = await getWork(Number(workId));
 
-        const isWorkOwner = workData?.authors?.some(
-          (author) => author.userId === currentUser?.id
-        );
-
-        if (
-          !userIsAuthenticated ||
-          !isStudent ||
-          !currentUser ||
-          !isWorkOwner
-        ) {
+        if (!userIsAuthenticated || !currentUser) {
           navigate(-1);
           return;
         }
@@ -277,7 +268,6 @@ const WorkFormPage = () => {
     }
   };
 
-  // Field change handlers
   const handleWorkTypeChange = (selectedType) => {
     setWorkType(selectedType);
     validateSingleField("workType", selectedType);

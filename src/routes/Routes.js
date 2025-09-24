@@ -40,6 +40,7 @@ function AppRoutes() {
         </Route>
         <Route element={<AuthenticatedRoute />}>
           <Route path="my-works" element={<MyWorks />} />
+          <Route path="work/edit/:id" element={<EditWork />} />
         </Route>
         <Route path="404" element={<NotFound />} />
         <Route element={<TeacherRoute />}>
@@ -61,6 +62,7 @@ function AppRoutes() {
         </Route>
         <Route element={<AuthenticatedRoute />}>
           <Route path="meus-trabalhos" element={<MyWorks />} />
+          <Route path="trabalho/editar/:id" element={<EditWork />} />
         </Route>
         <Route path="404" element={<NotFound />} />
         <Route element={<TeacherRoute />}>

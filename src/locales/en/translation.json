@@ -15,10 +15,12 @@
     "edit": "Edit",
     "save": "Save",
     "cancel": "Cancel",
+    "clearForm": "Clear Form",
     "notAvailable": "Not available",
     "noDescription": "No description available",
     "retry": "Please try again later",
-    "clearFilters": "Clear filters"
+    "clearFilters": "Clear filters",
+    "sessionExpired": "Session expired. Redirecting to login..."
   },
   "home": {
     "welcome": "IF Xplore",
@@ -33,7 +35,16 @@
     "unexpectedError": "An unexpected error occurred",
     "workTypeRequired": "Work type is required.",
     "titleRequired": "Work title is required.",
+    "titleTooShort": "Title must be at least 3 characters long.",
+    "titleTooLong": "Title must be at most 200 characters long.",
     "authorsRequired": "Authors field cannot be empty.",
+    "descriptionTooLong": "Description must be at most 160 words.",
+    "abstractTooLong": "Abstract must be at most 300 words.",
+    "invalidUrl": "One or more links are invalid.",
+    "validationFailed": "Please fix the errors in the form:",
+    "requiredFieldsMissing": "Required fields are missing:",
+    "minimumDataRequired": "Fill in at least one field to save the draft.",
+    "descriptionRequired": "Description is required.",
     "saveDraftError": "Error saving draft. Please try again.",
     "submitError": "Error submitting work. Please try again.",
     "publishError": "Error publishing work. Please try again.",
@@ -186,7 +197,10 @@
   "messages": {
     "draftSaved": "Draft saved successfully!",
     "sentForReview": "Work sent for review successfully!",
-    "published": "Work published successfully!"
+    "published": "Work published successfully!",
+    "dataRestored": "Form data has been automatically restored.",
+    "confirmClearForm": "Are you sure you want to clear all form data?",
+    "formCleared": "Form cleared successfully!"
   },
   "workEvaluation": {
     "title": "Work Evaluation",
@@ -204,13 +218,16 @@
       "description": "Description*",
       "descriptionPlaceholder": "Illustrative description should contain a maximum of 160 words for acceptance.",
       "descriptionWordCount": "Description* ({{count}}/160 words)",
+      "abstractWordCount": "Abstract* ({{count}}/500 words)",
+      "abstractPlaceholder": "Enter the abstract or summary...",
       "labels": "Labels",
       "newLabel": "New label",
       "links": "Links",
       "addLink": "Add link",
       "linkPlaceholder": "https://example.com",
       "feedback": "Feedback*",
-      "feedbackWordCount": "Feedback* ({{count}}/160 words)"
+      "feedbackWordCount": "Feedback* ({{count}}/160 words)",
+      "feedbackPlaceholder": "Provide feedback for the student..."
     },
     "authors": {
       "fullName": "Full Name",
@@ -229,9 +246,13 @@
       "workReturned": "Work returned successfully!"
     },
     "status": {
-      "underReview": "Under Review",
+      "underReview": "Submitted",
       "accepted": "Accepted",
       "returned": "Returned"
+    },
+    "feedback": {
+      "required": "Feedback is required to request changes",
+      "error": "Error occurred while requesting changes"
     }
   },
   "notFound": {
