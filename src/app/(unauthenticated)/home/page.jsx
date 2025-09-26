@@ -11,6 +11,7 @@ import useSuap from "../login/useSuap";
 import { pageAtom, searchAtom, sizeAtom, useHome } from "./useHome";
 import { useAtom } from "jotai";
 import { mapPaginationValues } from "../../../services/utils/utils";
+import Loader from "../../../components/loader";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -97,6 +98,7 @@ const Home = () => {
 
   return (
     <div className="ifexplore-container">
+      {isLoading && <Loader />}
       <div className="ifexplore-search-container">
         <h1 className="ifexplore-title">{t("home.welcome")}</h1>
         <div className="search-bar-container">
