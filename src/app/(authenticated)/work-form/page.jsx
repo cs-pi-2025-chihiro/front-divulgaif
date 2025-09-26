@@ -65,7 +65,7 @@ const WorkFormPage = () => {
   const [authors, setAuthors] = useState([]);
   const [labels, setLabels] = useState([]);
   const [links, setLinks] = useState([]);
-  const [studentIds, setStudentIds] = useState([]); // 1. Adicionar estado studentIds
+  const [studentIds, setStudentIds] = useState([]);
   const [workType, setWorkType] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -83,6 +83,13 @@ const WorkFormPage = () => {
 
   const isLoading = isLoadingData || isCreating || isUpdating;
   const error = createError || updateError;
+
+  useEffect(() => {
+    if (isEditMode) {
+    } else if (currentUser) {
+      setAuthors([{ id: currentUser.id, name: currentUser.name, email: currentUser.email }]);
+    }
+  }, [isEditMode, currentUser]);
 
   useEffect(() => {
     if (!isEditMode && hasCachedData()) {
@@ -166,7 +173,6 @@ const WorkFormPage = () => {
 
         setWorkType(mapWorkTypeFromBackend(workData.workType));
 
-        // 4. Popular authors e studentIds no modo de edição
         const fetchedAuthors = workData.authors || [];
         setAuthors(fetchedAuthors);
         setStudentIds(fetchedAuthors.filter(author => author.id).map(author => author.id));
@@ -189,7 +195,7 @@ const WorkFormPage = () => {
     title,
     description,
     abstractText: abstract,
-    studentIds, // 3. Incluir studentIds nos dados do trabalho
+    studentIds,
     authors: authors,
     labels: labels,
     links: links,
@@ -419,7 +425,6 @@ const WorkFormPage = () => {
     validateSingleField("abstractText", value);
   };
 
-  // 2. Atualizar handleAuthorsChange para popular studentIds
   const handleAuthorsChange = (newAuthors) => {
     setAuthors(newAuthors);
     const newStudentIds = newAuthors
@@ -443,7 +448,6 @@ const WorkFormPage = () => {
   return (
     <div className="work-form-page">
       <form onSubmit={handleSubmit} className="work-form">
-        {/* ... O resto do seu JSX permanece o mesmo ... */}
         <div id="work-type" className="work-form-field">
           <label>{t("new-work.worktype") + "*"}</label>
           <WorkTypeSelector
@@ -476,6 +480,8 @@ const WorkFormPage = () => {
             authors={authors}
             setAuthors={handleAuthorsChange}
             getSuggestions={getAuthorSuggestions}
+            currentUser={currentUser}
+            mode={mode}
           />
           {errors.authors && (
             <span className="error-message">{errors.authors}</span>

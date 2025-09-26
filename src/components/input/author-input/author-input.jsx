@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "./author-input.css";
 
-const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
+const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
@@ -64,6 +64,9 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
   };
 
   const removeAuthor = (authorToRemove) => {
+    if (mode === 'create' && currentUser && authorToRemove.id === currentUser.id) {
+      return;
+    }
     setAuthors(authors.filter((author) => author.id !== authorToRemove.id));
   };
 
@@ -92,6 +95,7 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
                 type="button"
                 className="remove-tag-button"
                 onClick={() => removeAuthor(author)}
+                disabled={mode === 'create' && currentUser && author.id === currentUser.id}
               >
                 &times;
               </button>
@@ -147,18 +151,16 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
             <div className="type-buttons">
               <button
                 type="button"
-                className={`type-button ${
-                  newAuthor.type === "student" ? "active" : ""
-                }`}
+                className={`type-button ${newAuthor.type === "student" ? "active" : ""
+                  }`}
                 onClick={() => setNewAuthor({ ...newAuthor, type: "student" })}
               >
                 {t("new-work.student")}
               </button>
               <button
                 type="button"
-                className={`type-button ${
-                  newAuthor.type === "teacher" ? "active" : ""
-                }`}
+                className={`type-button ${newAuthor.type === "teacher" ? "active" : ""
+                  }`}
                 onClick={() => setNewAuthor({ ...newAuthor, type: "teacher" })}
               >
                 {t("new-work.teacher")}
