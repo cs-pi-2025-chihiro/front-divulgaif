@@ -18,7 +18,7 @@ import Loader from "../../../../components/loader";
 const MyWorks = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({});
-  const [currentPage, setCurrentPage] = useAtom(pageAto);
+  const [currentPage, setCurrentPage] = useAtom(pageAtom);
   const [currentSize, setCurrentSize] = useAtom(sizeAtom);
   const [search, setSearch] = useAtom(searchAtom);
   const { t, i18n } = useTranslation();
