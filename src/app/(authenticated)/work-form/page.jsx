@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./page.css";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -25,38 +25,47 @@ import { getWork } from "../../../services/works/get";
 import { useCreateWork } from "./useCreateWork";
 import { useUpdateWork } from "./useUpdateWork";
 import { ROLES } from "../../../enums/roles";
+import useFormCacheStore from "../../../storage/formCache.storage";
 
 const WorkFormPage = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const [searchParams] = useSearchParams();
-  
-  const mode = searchParams.get('mode') || (id ? 'edit' : 'create');
+
+  const mode = searchParams.get("mode") || (id ? "edit" : "create");
   const isEditMode = mode === 'edit' && id !== undefined && id !== null && id !== "";
   const workId = id;
-  
+
   const { getLabelSuggestions, getLinkSuggestions, getAuthorSuggestions } =
     useGetSuggestions();
 
-  const { 
-    isLoading: isCreating, 
-    error: createError, 
-    saveDraft: saveDraftCreate, 
-    submitForReview: submitForReviewCreate, 
-    publish: publishCreate 
+  const {
+    isLoading: isCreating,
+    error: createError,
+    saveDraft: saveDraftCreate,
+    submitForReview: submitForReviewCreate,
+    publish: publishCreate,
   } = useCreateWork();
-  
-  const { 
-    isLoading: isUpdating, 
-    error: updateError, 
-    saveDraft: saveDraftUpdate, 
-    submitForReview: submitForReviewUpdate 
+
+  const {
+    isLoading: isUpdating,
+    error: updateError,
+    saveDraft: saveDraftUpdate,
+    submitForReview: submitForReviewUpdate,
   } = useUpdateWork();
+
+  const {
+    saveFormData,
+    getCachedFormData,
+    clearFormData,
+    hasCachedData,
+  } = useFormCacheStore();
 
   const [authors, setAuthors] = useState([]);
   const [labels, setLabels] = useState([]);
   const [links, setLinks] = useState([]);
+  const [studentIds, setStudentIds] = useState([]); // 1. Adicionar estado studentIds
   const [workType, setWorkType] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -64,15 +73,62 @@ const WorkFormPage = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [errors, setErrors] = useState({});
   const [isLoadingData, setIsLoadingData] = useState(false);
+  const [showValidationErrors, setShowValidationErrors] = useState(false);
 
   const userIsAuthenticated = isAuthenticated();
   const isStudent = hasRole(ROLES.STUDENT);
   const isTeacher = hasRole(ROLES.TEACHER);
   const isAdmin = hasRole(ROLES.ADMIN);
-  const currentUser = getStoredUser();
+  const currentUser = useMemo(() => getStoredUser(), []);
 
   const isLoading = isLoadingData || isCreating || isUpdating;
   const error = createError || updateError;
+
+  useEffect(() => {
+    if (!isEditMode && hasCachedData()) {
+      const cachedData = getCachedFormData();
+      if (cachedData) {
+        setAuthors(cachedData.authors || []);
+        setLabels(cachedData.labels || []);
+        setLinks(cachedData.links || []);
+        setStudentIds(cachedData.studentIds || []);
+        setWorkType(cachedData.workType || "");
+        setTitle(cachedData.title || "");
+        setDescription(cachedData.description || "");
+        setAbstract(cachedData.abstractText || "");
+      }
+    }
+  }, [isEditMode, hasCachedData, getCachedFormData]);
+
+  useEffect(() => {
+    if (!isEditMode) {
+      const formData = {
+        authors,
+        labels,
+        links,
+        studentIds,
+        workType,
+        title,
+        description,
+        abstractText: abstract,
+      };
+
+      if (workType || title || authors.length > 0 || description || abstract) {
+        saveFormData(formData);
+      }
+    }
+  }, [
+    authors,
+    labels,
+    links,
+    studentIds,
+    workType,
+    title,
+    description,
+    abstract,
+    saveFormData,
+    isEditMode,
+  ]);
 
   useEffect(() => {
     const fetchWorkData = async () => {
@@ -109,7 +165,12 @@ const WorkFormPage = () => {
         };
 
         setWorkType(mapWorkTypeFromBackend(workData.workType));
-        setAuthors(workData.authors || []);
+
+        // 4. Popular authors e studentIds no modo de edição
+        const fetchedAuthors = workData.authors || [];
+        setAuthors(fetchedAuthors);
+        setStudentIds(fetchedAuthors.filter(author => author.id).map(author => author.id));
+
         setLabels(workData.labels || []);
         setLinks(workData.links || []);
       } catch (error) {
@@ -122,12 +183,13 @@ const WorkFormPage = () => {
     };
 
     fetchWorkData();
-  }, [workId, isEditMode, navigate, searchParams]);
+  }, [workId, isEditMode, navigate, searchParams, userIsAuthenticated, currentUser]);
 
   const getWorkData = () => ({
     title,
     description,
     abstractText: abstract,
+    studentIds, // 3. Incluir studentIds nos dados do trabalho
     authors: authors,
     labels: labels,
     links: links,
@@ -149,24 +211,78 @@ const WorkFormPage = () => {
     return Object.keys(fieldErrors).length === 0;
   };
 
-  const validateCompleteForm = () => {
+  const validateCompleteForm = (showErrors = true) => {
     const workData = getWorkData();
     const formErrors = validateForm(workData, t);
 
     setErrors(formErrors);
 
     if (Object.keys(formErrors).length > 0) {
-      const errorMessages = Object.values(formErrors).join("\n");
-      alert(errorMessages);
+      if (showErrors) {
+        setShowValidationErrors(true);
+        const errorMessages = Object.values(formErrors).join("\n");
+        alert(
+          (t("errors.validationFailed") ||
+            "Por favor, corrija os erros no formulário:") +
+          "\n\n" +
+          errorMessages
+        );
+      }
       return false;
     }
 
+    setShowValidationErrors(false);
     return true;
+  };
+
+  const validateRequiredFields = (showErrors = true) => {
+    const workData = getWorkData();
+    const requiredErrors = {};
+
+    if (!workData.workType) {
+      requiredErrors.workType =
+        t("errors.workTypeRequired") || "O tipo do trabalho é obrigatório.";
+    }
+
+    if (!workData.title || workData.title.trim() === "") {
+      requiredErrors.title =
+        t("errors.titleRequired") || "O título do trabalho é obrigatório.";
+    }
+
+    if (!workData.authors || workData.authors.length === 0) {
+      requiredErrors.authors =
+        t("errors.authorsRequired") ||
+        "O campo de autores não pode estar vazio.";
+    }
+
+    if (!workData.description || workData.description.trim() === "") {
+      requiredErrors.description =
+        t("errors.descriptionRequired") ||
+        "O campo de descrição não pode estar vazio.";
+    }
+
+    setErrors(requiredErrors);
+
+    if (Object.keys(requiredErrors).length > 0) {
+      if (showErrors) {
+        setShowValidationErrors(true);
+        const errorMessages = Object.values(requiredErrors).join("\n");
+        alert(
+          (t("errors.requiredFieldsMissing") ||
+            "Campos obrigatórios não preenchidos:") +
+          "\n\n" +
+          errorMessages
+        );
+      }
+      return false;
+    }
+
+    return validateCompleteForm(showErrors);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateCompleteForm()) {
+    if (validateRequiredFields()) {
       handleSendForReview();
     }
   };
@@ -185,76 +301,61 @@ const WorkFormPage = () => {
   };
 
   const handleSaveDraft = async () => {
-    console.log('Debug - handleSaveDraft called, isLoading:', isLoading);
-    
-    if (isLoading) {
-      console.log('Debug - Already loading, skipping');
-      return;
-    }
+    const workData = getWorkData();
+    if (!validateRequiredFields(true)) return;
 
     try {
-      const workData = getWorkData();
-      console.log('Debug - Work data for save:', workData);
-      
       if (isEditMode) {
         if (!workId) {
           throw new Error(t("errors.invalidWorkId") || "Invalid work ID. Cannot update work.");
         }
-        console.log('Debug - Calling saveDraftUpdate with workId:', workId);
         await saveDraftUpdate(workId, workData);
       } else {
-        console.log('Debug - Calling saveDraftCreate');
         await saveDraftCreate(workData);
       }
-      
+
       alert(t("messages.draftSaved") || "Draft saved successfully!");
+      if (!isEditMode) clearFormData();
       navigate(getSuccessRedirectPath());
     } catch (error) {
-      console.error('Debug - Error in handleSaveDraft:', error);
-      alert(error.message);
+      if (error.response?.status !== 401) {
+        alert(error.message);
+      }
     }
   };
 
   const handleSendForReview = async () => {
-    console.log('Debug - handleSendForReview called, isLoading:', isLoading);
-    
-    if (isLoading) {
-      console.log('Debug - Already loading, skipping');
-      return;
-    }
-
-    if (!validateCompleteForm()) {
+    if (!validateRequiredFields(true)) {
       return;
     }
 
     try {
       const workData = getWorkData();
-      console.log('Debug - Work data for review:', workData);
-      
+
       if (isEditMode) {
         if (!workId) {
           throw new Error(t("errors.invalidWorkId") || "Invalid work ID. Cannot update work.");
         }
-        console.log('Debug - Calling submitForReviewUpdate with workId:', workId);
         await submitForReviewUpdate(workId, workData);
       } else {
-        console.log('Debug - Calling submitForReviewCreate');
         await submitForReviewCreate(workData);
       }
-      
+
       alert(
         t("messages.sentForReview") ||
-          "Work sent for review successfully!"
+        "Work sent for review successfully!"
       );
+      if (!isEditMode) clearFormData();
       navigate(getSuccessRedirectPath());
     } catch (error) {
-      console.error('Debug - Error in handleSendForReview:', error);
-      alert(error.message);
+      if (error.response?.status !== 401) {
+        alert(error.message);
+      }
     }
   };
 
   const handlePublish = async () => {
-    if (!validateCompleteForm()) {
+    if (!validateRequiredFields()) {
       return;
     }
 
@@ -262,9 +363,36 @@ const WorkFormPage = () => {
       const workData = getWorkData();
       await publishCreate(workData);
       alert(t("messages.published") || "Work published successfully!");
+      if (!isEditMode) clearFormData();
       navigate(getSuccessRedirectPath());
     } catch (error) {
-      alert(error.message);
+      if (error.response?.status !== 401) {
+        alert(error.message);
+      }
+    }
+  };
+
+  const handleFieldBlur = (fieldName, value) => {
+    validateSingleField(fieldName, value);
+  };
+
+  const handleClearForm = () => {
+    if (
+      window.confirm(
+        t("messages.confirmClearForm") ||
+        "Tem certeza que deseja limpar todos os dados do formulário?"
+      )
+    ) {
+      setAuthors([]);
+      setLabels([]);
+      setLinks([]);
+      setStudentIds([]);
+      setWorkType("");
+      setTitle("");
+      setDescription("");
+      setAbstract("");
+      setErrors({});
+      clearFormData();
     }
   };
 
@@ -291,8 +419,14 @@ const WorkFormPage = () => {
     validateSingleField("abstractText", value);
   };
 
+  // 2. Atualizar handleAuthorsChange para popular studentIds
   const handleAuthorsChange = (newAuthors) => {
     setAuthors(newAuthors);
+    const newStudentIds = newAuthors
+      .filter((author) => author.id)
+      .map((author) => author.id);
+
+    setStudentIds(newStudentIds);
     validateSingleField("authors", newAuthors);
   };
 
@@ -309,12 +443,11 @@ const WorkFormPage = () => {
   return (
     <div className="work-form-page">
       <form onSubmit={handleSubmit} className="work-form">
-        {/* TODO: Implement image upload for works */}
-
-        <div className="work-form-field">
+        {/* ... O resto do seu JSX permanece o mesmo ... */}
+        <div id="work-type" className="work-form-field">
           <label>{t("new-work.worktype") + "*"}</label>
-          <WorkTypeSelector 
-            onTypeChange={handleWorkTypeChange} 
+          <WorkTypeSelector
+            onTypeChange={handleWorkTypeChange}
             selectedType={workType}
           />
           {errors.workType && (
@@ -322,11 +455,12 @@ const WorkFormPage = () => {
           )}
         </div>
 
-        <div className="work-form-field">
+        <div id="work-title" className="work-form-field">
           <label>{t("new-work.worktitle") + "*"}</label>
           <Input
             value={title}
             onChange={handleTitleChange}
+            onBlur={() => handleFieldBlur("title", title)}
             placeholder={t("new-work.worktitle")}
             className={errors.title ? "field-error" : ""}
             required
@@ -336,7 +470,7 @@ const WorkFormPage = () => {
           )}
         </div>
 
-        <div className="work-form-field">
+        <div id="work-authors" className="work-form-field">
           <label>{t("new-work.workauthors")}</label>
           <AuthorInput
             authors={authors}
@@ -348,12 +482,13 @@ const WorkFormPage = () => {
           )}
         </div>
 
-        <div className="work-form-field">
+        <div id="work-description" className="work-form-field">
           <label>{t("new-work.workdescription")}</label>
           <div className="word-count-info">{countWords(description)}/160</div>
           <textarea
             value={description}
             onChange={handleDescriptionChange}
+            onBlur={() => handleFieldBlur("description", description)}
             placeholder={t("new-work.workdescription")}
             className={errors.description ? "field-error" : ""}
           />
@@ -362,12 +497,13 @@ const WorkFormPage = () => {
           )}
         </div>
 
-        <div className="work-form-field">
+        <div id="work-abstract" className="work-form-field">
           <label>{t("new-work.workabstract")}</label>
           <div className="word-count-info">{countWords(abstract)}/300</div>
           <textarea
             value={abstract}
             onChange={handleAbstractChange}
+            onBlur={() => handleFieldBlur("abstractText", abstract)}
             placeholder={t("new-work.workabstract")}
             className={errors.abstractText ? "field-error" : ""}
           />
@@ -376,7 +512,7 @@ const WorkFormPage = () => {
           )}
         </div>
 
-        <div className="work-form-field">
+        <div id="work-labels" className="work-form-field">
           <label>Labels</label>
           <LabelInput
             labels={labels}
@@ -385,13 +521,16 @@ const WorkFormPage = () => {
           />
         </div>
 
-        <div className="work-form-field">
+        <div id="work-links" className="work-form-field">
           <label>Links</label>
           <LinkInput
             links={links}
             setLinks={handleLinksChange}
             getSuggestions={getLinkSuggestions}
           />
+          {errors.links && (
+            <span className="error-message">{errors.links}</span>
+          )}
         </div>
 
         <div className="work-form-buttons">
@@ -399,19 +538,19 @@ const WorkFormPage = () => {
             {t("common.back") || "Back"}
           </Button>
 
-          <Button variant="primary" onClick={handleSaveDraft} disabled={isLoading}>
-            {isLoading ? (t("common.loading") || "Loading...") : (t("common.save") || "Save")}
+          <Button onClick={handleSaveDraft} disabled={isLoading}>
+            {isLoading ? t("common.loading") : t("common.save")}
           </Button>
 
           {userIsAuthenticated && isStudent && (
-            <Button variant="primary" type="submit" disabled={isLoading}>
-              {isLoading ? (t("common.loading") || "Loading...") : (t("new-work.send") || "Send")}
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? t("common.loading") : t("new-work.send")}
             </Button>
           )}
 
           {userIsAuthenticated && (isTeacher || isAdmin) && !isEditMode && (
-            <Button variant="tertiary" onClick={handlePublish} disabled={isLoading}>
-              {isLoading ? (t("common.loading") || "Loading...") : (t("new-work.publish") || "Publish")}
+            <Button onClick={handlePublish} disabled={isLoading}>
+              {isLoading ? t("common.loading") : t("new-work.publish")}
             </Button>
           )}
         </div>
