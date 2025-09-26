@@ -436,4 +436,55 @@
   .label-input-container {
     margin-left: 1rem;
   }
+
+ /* Adicionar estas classes ao final do arquivo filtrarBuscaModal.css */
+
+.loading-suggestions {
+  padding: 8px;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  margin-top: 8px;
 }
+
+.suggestions-box {
+  background-color: white;
+  border: 2px solid var(--dark-green);
+  border-radius: 8px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.suggestions-header {
+  background-color: var(--dark-green);
+  color: white;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.suggestions-list {
+  max-height: 120px;
+  overflow-y: auto;
+  background-color: white;
+}
+
+.suggestion-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+  font-size: 14px;
+  background-color: white;
+}
+
+.suggestion-item:hover {
+  background-color: #f8f9fa;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}}

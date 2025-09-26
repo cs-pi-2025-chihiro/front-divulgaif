@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "./filter-input.css";
 
-const FilterInput = ({ labels, setLabels, getSuggestions }) => {
+const FilterInput = ({ selectedFilters, setSelectedFilters, getSuggestions }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
@@ -31,9 +31,7 @@ const FilterInput = ({ labels, setLabels, getSuggestions }) => {
       try {
         const suggestions = await getSuggestions(value);
         const filtered = suggestions.filter(
-          (suggestion) =>
-            !labels.some((label) => label.id === suggestion.id) &&
-            suggestion.name.toLowerCase().includes(value.toLowerCase())
+          (suggestion) => !selectedFilters.some((filter) => filter.id === suggestion.id)
         );
         setFilteredSuggestions(filtered);
       } catch (error) {
@@ -47,27 +45,27 @@ const FilterInput = ({ labels, setLabels, getSuggestions }) => {
     }
   };
 
-  const addLabelFromSuggestion = (label) => {
-    setLabels([...labels, label]);
+  const addFilterFromSuggestion = (filter) => {
+    setSelectedFilters([...selectedFilters, filter]);
     setInputValue("");
     setFilteredSuggestions([]);
   };
 
-  const removeLabel = (labelToRemove) => {
-    setLabels(labels.filter((label) => label.id !== labelToRemove.id));
+  const removeFilter = (filterToRemove) => {
+    setSelectedFilters(selectedFilters.filter((filter) => filter.id !== filterToRemove.id));
   };
 
   return (
-    <div className="custom-autocomplete-container" ref={containerRef}>
-      <div className="autocomplete-main-box">
-        <div className="tags-container">
-          {labels.map((label) => (
-            <div key={label.id} className="label-tag">
-              {label.name}
+    <div className="custom-filter-container" ref={containerRef}>
+      <div className="filter-main-box">
+        <div className="filter-tags-container">
+          {selectedFilters.map((filter) => (
+            <div key={filter.id} className="filter-label-tag">
+              {filter.name}
               <button
                 type="button"
-                className="remove-tag-button"
-                onClick={() => removeLabel(label)}
+                className="remove-filter-button"
+                onClick={() => removeFilter(filter)}
               >
                 &times;
               </button>
@@ -75,23 +73,23 @@ const FilterInput = ({ labels, setLabels, getSuggestions }) => {
           ))}
           <input
             type="text"
-            className="autocomplete-input"
+            className="filter-input"
             value={inputValue}
             onChange={handleInputChange}
-            placeholder={t("new-work.filterLabels")}
+            placeholder={t("filter.searchLabel")}
           />
           {isLoading && (
-            <div className="loading-indicator">{t("new-work.loading")}...</div>
+            <div className="filter-loading-indicator">{t("filter.loading")}...</div>
           )}
         </div>
       </div>
 
       {filteredSuggestions.length > 0 && (
-        <ul className="suggestions-list">
+        <ul className="filter-suggestions-list">
           {filteredSuggestions.map((suggestion) => (
             <li
               key={suggestion.id}
-              onClick={() => addLabelFromSuggestion(suggestion)}
+              onClick={() => addFilterFromSuggestion(suggestion)}
             >
               {suggestion.name}
             </li>
