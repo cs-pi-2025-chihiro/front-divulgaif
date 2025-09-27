@@ -10,7 +10,6 @@ import {
 
 export const createWork = async (workData, status = "draft") => {
   try {
-    console.log("wworkData", workData);
     const workLabels = formatLabelsForBackend(workData.labels || []);
     const workLinks = formatLinksForBackend(workData.links || []);
     const studentIds = workData.studentIds || [];
