@@ -39,7 +39,7 @@ const EditWork = () => {
   const [workType, setWorkType] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [abstract, setAbstract] = useState("");
+  const [content, setContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [errors, setErrors] = useState({});
 
@@ -59,7 +59,7 @@ const EditWork = () => {
 
         setTitle(workData.title || "");
         setDescription(workData.description || "");
-        setAbstract(workData.content || "");
+        setContent(workData.content || "");
         setImageUrl(workData.imageUrl || "");
 
         const mapWorkTypeFromBackend = (backendWorkType) => {
@@ -94,7 +94,7 @@ const EditWork = () => {
   const getWorkData = () => ({
     title,
     description,
-    abstractText: abstract,
+    content: content,
     authors: authors,
     labels: labels,
     links: links,
@@ -193,10 +193,10 @@ const EditWork = () => {
     validateSingleField("description", value);
   };
 
-  const handleAbstractChange = (e) => {
+  const handleContentChange = (e) => {
     const value = e.target.value;
-    setAbstract(value);
-    validateSingleField("abstractText", value);
+    setContent(value);
+    validateSingleField("content", value);
   };
 
   const handleAuthorsChange = (newAuthors) => {
@@ -269,16 +269,16 @@ const EditWork = () => {
         </div>
 
         <div id="work-abstract">
-          <label className="new-work-label">{t("new-work.workabstract")}</label>
-          <div className="word-count-info">{countWords(abstract)}/300</div>
+          <label className="new-work-label">{t("new-work.workcontent")}</label>
+          <div className="word-count-info">{countWords(content)}/300</div>
           <textarea
-            value={abstract}
-            onChange={handleAbstractChange}
-            placeholder={t("new-work.workabstract")}
-            className={errors.abstractText ? "field-error" : ""}
+            value={content}
+            onChange={handleContentChange}
+            placeholder={t("new-work.workcontent")}
+            className={errors.content ? "field-error" : ""}
           ></textarea>
-          {errors.abstractText && (
-            <span className="error-message">{errors.abstractText}</span>
+          {errors.content && (
+            <span className="error-message">{errors.content}</span>
           )}
         </div>
 
