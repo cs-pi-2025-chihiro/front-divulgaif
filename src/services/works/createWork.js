@@ -10,7 +10,6 @@ import {
 
 export const createWork = async (workData, status = "draft") => {
   try {
-    const { newAuthors } = formatAuthorsForBackend(workData.authors || []);
     const workLabels = formatLabelsForBackend(workData.labels || []);
     const workLinks = formatLinksForBackend(workData.links || []);
     const studentIds = workData.studentIds || [];
@@ -18,13 +17,13 @@ export const createWork = async (workData, status = "draft") => {
     const payload = {
       title: workData.title.trim(),
       description: workData.description?.trim() || "",
-      content: workData.abstractText?.trim() || workData.abstract?.trim() || "",
+      content: workData.content?.trim() || workData.content?.trim() || "",
       workType: mapWorkTypeToBackend(workData.workType),
       workStatus: mapStatusToBackend(status),
     };
 
-    if (newAuthors.length > 0) {
-      payload.newAuthors = newAuthors;
+    if (workData.newAuthors.length > 0) {
+      payload.newAuthors = workData.newAuthors;
     }
     if (studentIds.length > 0) {
       payload.studentIds = studentIds;
