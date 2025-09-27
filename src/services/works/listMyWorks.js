@@ -8,7 +8,7 @@ export const listMyWorks = async (page = 0, size = 8, filters = {}) => {
   });
 
   if (filters.search) {
-    params.append("title", filters.search);
+    params.append("search", filters.search);  
   }
 
   if (filters.workTypes) {
