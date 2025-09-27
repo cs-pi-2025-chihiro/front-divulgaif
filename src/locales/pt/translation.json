@@ -51,7 +51,10 @@
     "saveDraftError": "Erro ao salvar rascunho. Tente novamente.",
     "submitError": "Erro ao enviar trabalho. Tente novamente.",
     "publishError": "Erro ao publicar trabalho. Tente novamente.",
-    "NoWorksFound": "Nenhum trabalho encontrado."
+    "NoWorksFound": "Nenhum trabalho encontrado.",
+    "authorNameEmailRequired": "Nome e email do autor são obrigatórios.",
+    "duplicateAuthorEmail": "Um autor com este email já existe.",
+    "authorTypeRequired": "Por favor, selecione um tipo (estudante ou professor) para o novo autor."
   },
   "workTypes": {
     "article": "Artigo",

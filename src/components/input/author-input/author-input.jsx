@@ -7,7 +7,12 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
   const [inputValue, setInputValue] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [newAuthor, setNewAuthor] = useState({ name: "", email: "" });
+
+  const [newAuthor, setNewAuthor] = useState({
+    name: "",
+    email: "",
+    type: null,
+  });
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -64,7 +69,7 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
   };
 
   const addNewAuthorManually = () => {
-    if (newAuthor.name.trim() && newAuthor.email.trim()) {
+    if (newAuthor.name.trim() && newAuthor.email.trim() && newAuthor.type) {
       if (
         authors.some(
           (a) =>
@@ -78,16 +83,29 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
         );
         return;
       }
+
       setAuthors([
         ...authors,
-        { name: newAuthor.name.trim(), email: newAuthor.email.trim() },
+        {
+          name: newAuthor.name.trim(),
+          email: newAuthor.email.trim(),
+          type: newAuthor.type,
+        },
       ]);
-      setNewAuthor({ name: "", email: "" });
+
+      setNewAuthor({ name: "", email: "", type: null });
     } else {
-      alert(
-        t("errors.authorNameEmailRequired") ||
-          "Please provide both name and email for the new author."
-      );
+      if (!newAuthor.type) {
+        alert(
+          t("errors.authorTypeRequired") ||
+            "Please select a type (student or teacher) for the new author."
+        );
+      } else {
+        alert(
+          t("errors.authorNameEmailRequired") ||
+            "Please provide both name and email for the new author."
+        );
+      }
     }
   };
 

@@ -45,7 +45,10 @@
     "saveDraftError": "Error saving draft. Please try again.",
     "submitError": "Error submitting work. Please try again.",
     "publishError": "Error publishing work. Please try again.",
-    "NoWorksFound": "No works Found with these filters."
+    "NoWorksFound": "No works Found with these filters.",
+    "authorNameEmailRequired": "Author name and email are required.",
+    "duplicateAuthorEmail": "An author with this email already exists.",
+    "authorTypeRequired": "Please select a type (student or teacher) for the new author."
   },
   "workTypes": {
     "article": "Article",
