@@ -54,7 +54,8 @@
     "NoWorksFound": "Nenhum trabalho encontrado.",
     "authorNameEmailRequired": "Nome e email do autor são obrigatórios.",
     "duplicateAuthorEmail": "Um autor com este email já existe.",
-    "authorTypeRequired": "Por favor, selecione um tipo (estudante ou professor) para o novo autor."
+    "authorTypeRequired": "Por favor, selecione um tipo (estudante ou professor) para o novo autor.",
+    "contentTooLong": "O conteúdo deve ter no máximo 300 palavras."
   },
   "workTypes": {
     "article": "Artigo",
@@ -226,8 +227,8 @@
       "description": "Descrição*",
       "descriptionPlaceholder": "Descrição meramente ilustrativa deve conter no máximo 160 palavras para aceitação.",
       "descriptionWordCount": "Descrição* ({{count}}/160 palavras)",
-      "abstractWordCount": "Resumo* ({{count}}/500 palavras)",
-      "abstractPlaceholder": "Digite o resumo ou sumário...",
+      "contentWordCount": "Conteúdo* ({{count}}/500 palavras)",
+      "contentPlaceholder": "Digite o conteúdo...",
       "labels": "Labels",
       "newLabel": "Nova label",
       "links": "Links",

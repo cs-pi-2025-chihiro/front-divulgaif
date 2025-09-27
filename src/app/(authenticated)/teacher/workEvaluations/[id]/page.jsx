@@ -32,7 +32,7 @@ const WorkEvaluation = () => {
         workType: getWorkTypes(storedWork.workType.name, currentLang),
         authors: storedWork.authors || [],
         description: storedWork.description || "",
-        abstract: storedWork.content || "",
+        content: storedWork.content || "",
         links: (storedWork.links || []).map((link) =>
           typeof link === "string" ? link : link.url
         ),
@@ -56,7 +56,7 @@ const WorkEvaluation = () => {
       type: "",
       authors: [],
       description: "",
-      abstract: "",
+      content: "",
       links: [],
       labels: [],
       status: t("workEvaluation.status.underReview"),
@@ -116,7 +116,7 @@ const WorkEvaluation = () => {
 
   const [wordCounts, setWordCounts] = useState({
     description: 0,
-    abstract: 0,
+    content: 0,
     feedback: 0,
   });
 
@@ -125,14 +125,14 @@ const WorkEvaluation = () => {
       description: formData.description.trim()
         ? formData.description.trim().split(/\s+/).length
         : 0,
-      abstract: formData.abstract.trim()
-        ? formData.abstract.trim().split(/\s+/).length
+      content: formData.content.trim()
+        ? formData.content.trim().split(/\s+/).length
         : 0,
       feedback: formData.feedback.trim()
         ? formData.feedback.trim().split(/\s+/).length
         : 0,
     });
-  }, [formData.description, formData.abstract, formData.feedback]);
+  }, [formData.description, formData.content, formData.feedback]);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -506,18 +506,18 @@ const WorkEvaluation = () => {
 
           <div className="form-section">
             <label className="form-label">
-              {t("workEvaluation.form.abstractWordCount", {
-                count: wordCounts.abstract,
+              {t("workEvaluation.form.contentWordCount", {
+                count: wordCounts.content,
               })}
             </label>
             <textarea
-              value={formData.abstract}
-              onChange={(e) => handleInputChange("abstract", e.target.value)}
+              value={formData.content}
+              onChange={(e) => handleInputChange("content", e.target.value)}
               rows={4}
               className={`form-textarea`}
               placeholder={t(
-                "workEvaluation.form.abstractPlaceholder",
-                "Enter the abstract or summary..."
+                "workEvaluation.form.contentPlaceholder",
+                "Enter the content..."
               )}
             />
           </div>

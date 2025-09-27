@@ -42,12 +42,12 @@ export const validateField = (fieldName, value, t) => {
           "A descrição deve ter no máximo 160 palavras";
       }
       break;
-    case "abstractText":
-      const abstractWordCount = countWords(value);
-      if (abstractWordCount > 300) {
-        errors.abstractText =
-          t("errors.abstractTooLong") ||
-          "O resumo deve ter no máximo 300 palavras";
+    case "content":
+      const contentWordCount = countWords(value);
+      if (contentWordCount > 300) {
+        errors.content =
+          t("errors.contentTooLong") ||
+          "O conteúdo deve ter no máximo 300 palavras";
       }
       break;
     case "links":
