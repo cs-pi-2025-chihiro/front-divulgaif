@@ -28,13 +28,8 @@ const NewWork = () => {
     useCreateWork();
   const { getLabelSuggestions, getLinkSuggestions, getAuthorSuggestions } =
     useGetSuggestions();
-  const {
-    saveFormData,
-    getCachedFormData,
-    clearFormData,
-    hasCachedData,
-    updateCachedField,
-  } = useFormCacheStore();
+  const { saveFormData, getCachedFormData, clearFormData, hasCachedData } =
+    useFormCacheStore();
 
   const [authors, setAuthors] = useState([]);
   const [labels, setLabels] = useState([]);
@@ -43,7 +38,7 @@ const NewWork = () => {
   const [workType, setWorkType] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [abstract, setAbstract] = useState("");
+  const [content, setContent] = useState("");
   const [errors, setErrors] = useState({});
   const [showValidationErrors, setShowValidationErrors] = useState(false);
 
@@ -63,7 +58,7 @@ const NewWork = () => {
         setWorkType(cachedData.workType || "");
         setTitle(cachedData.title || "");
         setDescription(cachedData.description || "");
-        setAbstract(cachedData.abstractText || "");
+        setContent(cachedData.content || "");
       }
     }
   }, [hasCachedData, getCachedFormData, clearFormData, t]);
@@ -77,10 +72,10 @@ const NewWork = () => {
       workType,
       title,
       description,
-      abstractText: abstract,
+      content: content,
     };
 
-    if (workType || title || authors.length > 0 || description || abstract) {
+    if (workType || title || authors.length > 0 || description || content) {
       saveFormData(formData);
     }
   }, [
@@ -91,20 +86,30 @@ const NewWork = () => {
     workType,
     title,
     description,
-    abstract,
+    content,
     saveFormData,
   ]);
 
-  const getWorkData = () => ({
-    title,
-    description,
-    abstractText: abstract,
-    studentIds,
-    authors: authors,
-    labels: labels,
-    links: links,
-    workType,
-  });
+  const getWorkData = () => {
+    const studentIds = authors
+      .filter((author) => author.id)
+      .map((author) => author.id);
+
+    const newAuthors = authors
+      .filter((author) => !author.id)
+      .map(({ name, email }) => ({ name, email }));
+
+    return {
+      title,
+      description,
+      content,
+      studentIds,
+      newAuthors,
+      workLabels: labels,
+      workLinks: links,
+      workType,
+    };
+  };
 
   const validateSingleField = (fieldName, value) => {
     const fieldErrors = validateField(fieldName, value, t);
@@ -144,54 +149,9 @@ const NewWork = () => {
     return true;
   };
 
-  const validateRequiredFields = (showErrors = true) => {
-    const workData = getWorkData();
-    const requiredErrors = {};
-
-    if (!workData.workType) {
-      requiredErrors.workType =
-        t("errors.workTypeRequired") || "O tipo do trabalho é obrigatório.";
-    }
-
-    if (!workData.title || workData.title.trim() === "") {
-      requiredErrors.title =
-        t("errors.titleRequired") || "O título do trabalho é obrigatório.";
-    }
-
-    if (!workData.authors || workData.authors.length === 0) {
-      requiredErrors.authors =
-        t("errors.authorsRequired") ||
-        "O campo de autores não pode estar vazio.";
-    }
-
-    if (!workData.description || workData.description.trim() === "") {
-      requiredErrors.description =
-        t("errors.descriptionRequired") ||
-        "O campo de descrição não pode estar vazio.";
-    }
-
-    setErrors(requiredErrors);
-
-    if (Object.keys(requiredErrors).length > 0) {
-      if (showErrors) {
-        setShowValidationErrors(true);
-        const errorMessages = Object.values(requiredErrors).join("\n");
-        alert(
-          (t("errors.requiredFieldsMissing") ||
-            "Campos obrigatórios não preenchidos:") +
-            "\n\n" +
-            errorMessages
-        );
-      }
-      return false;
-    }
-
-    return validateCompleteForm(showErrors);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateRequiredFields()) {
+    if (validateCompleteForm()) {
       handleSendForReview();
     }
   };
@@ -201,10 +161,8 @@ const NewWork = () => {
   };
 
   const handleSaveDraft = async () => {
-    const workData = getWorkData();
-    if (!validateRequiredFields(true)) return;
-
     try {
+      const workData = getWorkData();
       await saveDraft(workData);
       alert(t("messages.draftSaved") || "Rascunho salvo com sucesso!");
 
@@ -220,7 +178,7 @@ const NewWork = () => {
   };
 
   const handleSendForReview = async () => {
-    if (!validateRequiredFields(true)) {
+    if (!validateCompleteForm(true)) {
       return;
     }
 
@@ -244,7 +202,7 @@ const NewWork = () => {
   };
 
   const handlePublish = async () => {
-    if (!validateRequiredFields()) {
+    if (!validateCompleteForm()) {
       return;
     }
 
@@ -281,20 +239,14 @@ const NewWork = () => {
     validateSingleField("description", value);
   };
 
-  const handleAbstractChange = (e) => {
+  const handleContentChange = (e) => {
     const value = e.target.value;
-    setAbstract(value);
-    validateSingleField("abstractText", value);
+    setContent(value);
+    validateSingleField("content", value);
   };
 
   const handleAuthorsChange = (newAuthors) => {
     setAuthors(newAuthors);
-    const newStudentIds = newAuthors
-      .filter((author) => author.id)
-      .map((author) => author.id);
-
-    setStudentIds(newStudentIds);
-
     validateSingleField("authors", newAuthors);
   };
 
@@ -310,26 +262,6 @@ const NewWork = () => {
 
   const handleFieldBlur = (fieldName, value) => {
     validateSingleField(fieldName, value);
-  };
-
-  const handleClearForm = () => {
-    if (
-      window.confirm(
-        t("messages.confirmClearForm") ||
-          "Tem certeza que deseja limpar todos os dados do formulário?"
-      )
-    ) {
-      setAuthors([]);
-      setLabels([]);
-      setLinks([]);
-      setStudentIds([]);
-      setWorkType("");
-      setTitle("");
-      setDescription("");
-      setAbstract("");
-      setErrors({});
-      clearFormData();
-    }
   };
 
   return (
@@ -388,17 +320,17 @@ const NewWork = () => {
         </div>
 
         <div id="work-abstract">
-          <label className="new-work-label">{t("new-work.workabstract")}</label>
-          <div className="word-count-info">{countWords(abstract)}/300</div>
+          <label className="new-work-label">{t("new-work.workcontent")}</label>
+          <div className="word-count-info">{countWords(content)}/300</div>
           <textarea
-            value={abstract}
-            onChange={handleAbstractChange}
-            onBlur={() => handleFieldBlur("abstractText", abstract)}
-            placeholder={t("new-work.workabstract")}
-            className={errors.abstractText ? "field-error" : ""}
+            value={content}
+            onChange={handleContentChange}
+            onBlur={() => handleFieldBlur("content", content)}
+            placeholder={t("new-work.workcontent")}
+            className={errors.content ? "field-error" : ""}
           ></textarea>
-          {errors.abstractText && (
-            <span className="error-message">{errors.abstractText}</span>
+          {errors.content && (
+            <span className="error-message">{errors.content}</span>
           )}
         </div>
 
