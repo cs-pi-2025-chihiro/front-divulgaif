@@ -48,7 +48,8 @@
     "NoWorksFound": "No works Found with these filters.",
     "authorNameEmailRequired": "Author name and email are required.",
     "duplicateAuthorEmail": "An author with this email already exists.",
-    "authorTypeRequired": "Please select a type (student or teacher) for the new author."
+    "authorTypeRequired": "Please select a type (student or teacher) for the new author.",
+    "contentTooLong": "Content must be at most 300 words."
   },
   "workTypes": {
     "article": "Article",
@@ -68,6 +69,7 @@
     "advisor": "Advisor",
     "publishDate": "Publication Date",
     "abstract": "Abstract",
+    "content": "Content",
     "keywords": "Keywords",
     "additionalLinks": "Additional Links",
     "link": "Link",
@@ -219,8 +221,8 @@
       "description": "Description*",
       "descriptionPlaceholder": "Illustrative description should contain a maximum of 160 words for acceptance.",
       "descriptionWordCount": "Description* ({{count}}/160 words)",
-      "abstractWordCount": "Abstract* ({{count}}/500 words)",
-      "abstractPlaceholder": "Enter the abstract or summary...",
+      "contentWordCount": "Content* ({{count}}/500 words)",
+      "contentPlaceholder": "Enter the content...",
       "labels": "Labels",
       "newLabel": "New label",
       "links": "Links",
