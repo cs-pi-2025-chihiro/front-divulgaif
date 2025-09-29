@@ -100,6 +100,19 @@
   background-color: #fff5f5 !important;
 }
 
+#work-image .image-upload-container.field-error .image-upload-area {
+  border-color: #e74c3c !important;
+  background-color: #fff5f5 !important;
+}
+
+.info-message {
+  display: block;
+  color: #3498db;
+  font-size: 12px;
+  margin-top: 4px;
+  font-style: italic;
+}
+
 .error-message {
   display: block;
   color: #e74c3c;

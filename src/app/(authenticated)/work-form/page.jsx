@@ -10,6 +10,7 @@ import {
   LinkInput,
 } from "../../../components/input";
 import WorkTypeSelector from "../../../components/work-type-selector/WorkTypeSelector";
+import ImageUpload from "../../../components/image-upload/ImageUpload";
 import {
   isAuthenticated,
   hasRole,
@@ -24,6 +25,7 @@ import { useGetSuggestions } from "../../../services/hooks/suggestions/useGetSug
 import { getWork } from "../../../services/works/get";
 import { useCreateWork } from "./useCreateWork";
 import { useUpdateWork } from "./useUpdateWork";
+import { useImageUpload } from "./useImageUpload";
 import { ROLES } from "../../../enums/roles";
 import useFormCacheStore from "../../../storage/formCache.storage";
 
@@ -56,6 +58,12 @@ const WorkFormPage = () => {
   } = useUpdateWork();
 
   const {
+    handleImageUpload,
+    isUploading,
+    uploadError,
+  } = useImageUpload();
+
+  const {
     saveFormData,
     getCachedFormData,
     clearFormData,
@@ -71,6 +79,7 @@ const WorkFormPage = () => {
   const [description, setDescription] = useState("");
   const [abstract, setAbstract] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [errors, setErrors] = useState({});
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [showValidationErrors, setShowValidationErrors] = useState(false);
@@ -81,8 +90,8 @@ const WorkFormPage = () => {
   const isAdmin = hasRole(ROLES.ADMIN);
   const currentUser = useMemo(() => getStoredUser(), []);
 
-  const isLoading = isLoadingData || isCreating || isUpdating;
-  const error = createError || updateError;
+  const isLoading = isLoadingData || isCreating || isUpdating || isUploading;
+  const error = createError || updateError || uploadError;
 
   useEffect(() => {
     if (isEditMode) {
@@ -103,6 +112,7 @@ const WorkFormPage = () => {
         setTitle(cachedData.title || "");
         setDescription(cachedData.description || "");
         setAbstract(cachedData.abstractText || "");
+        setImageUrl(cachedData.imageUrl || "");
       }
     }
   }, [isEditMode, hasCachedData, getCachedFormData]);
@@ -118,9 +128,10 @@ const WorkFormPage = () => {
         title,
         description,
         abstractText: abstract,
+        imageUrl,
       };
 
-      if (workType || title || authors.length > 0 || description || abstract) {
+      if (workType || title || authors.length > 0 || description || abstract || imageUrl) {
         saveFormData(formData);
       }
     }
@@ -133,6 +144,7 @@ const WorkFormPage = () => {
     title,
     description,
     abstract,
+    imageUrl,
     saveFormData,
     isEditMode,
   ]);
@@ -307,10 +319,21 @@ const WorkFormPage = () => {
   };
 
   const handleSaveDraft = async () => {
-    const workData = getWorkData();
     if (!validateRequiredFields(true)) return;
 
     try {
+      let finalImageUrl = imageUrl;
+
+      if (selectedImageFile) {
+        finalImageUrl = await handleImageUpload(selectedImageFile);
+        setImageUrl(finalImageUrl);
+      }
+
+      const workData = {
+        ...getWorkData(),
+        imageUrl: finalImageUrl
+      };
+
       if (isEditMode) {
         if (!workId) {
           throw new Error(t("errors.invalidWorkId") || "Invalid work ID. Cannot update work.");
@@ -336,7 +359,16 @@ const WorkFormPage = () => {
     }
 
     try {
-      const workData = getWorkData();
+      let finalImageUrl = imageUrl;
+      if (selectedImageFile) {
+        finalImageUrl = await handleImageUpload(selectedImageFile);
+        setImageUrl(finalImageUrl);
+      }
+
+      const workData = {
+        ...getWorkData(),
+        imageUrl: finalImageUrl
+      };
 
       if (isEditMode) {
         if (!workId) {
@@ -366,7 +398,17 @@ const WorkFormPage = () => {
     }
 
     try {
-      const workData = getWorkData();
+      let finalImageUrl = imageUrl;
+      if (selectedImageFile) {
+        finalImageUrl = await handleImageUpload(selectedImageFile);
+        setImageUrl(finalImageUrl);
+      }
+
+      const workData = {
+        ...getWorkData(),
+        imageUrl: finalImageUrl
+      };
+
       await publishCreate(workData);
       alert(t("messages.published") || "Work published successfully!");
       if (!isEditMode) clearFormData();
@@ -397,6 +439,8 @@ const WorkFormPage = () => {
       setTitle("");
       setDescription("");
       setAbstract("");
+      setImageUrl("");
+      setSelectedImageFile(null);
       setErrors({});
       clearFormData();
     }
@@ -445,9 +489,34 @@ const WorkFormPage = () => {
     validateSingleField("links", newLinks);
   };
 
+  const handleImageChange = (file) => {
+    setSelectedImageFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="work-form-page">
       <form onSubmit={handleSubmit} className="work-form">
+        <div id="work-image" className="work-form-field">
+          <ImageUpload
+            onImageChange={handleImageChange}
+            initialImageUrl={imageUrl}
+            disabled={isUploading}
+            className={errors.image ? "field-error" : ""}
+          />
+          {isUploading && (
+            <span className="info-message">{t("new-work.uploadingImage") || "Fazendo upload da imagem..."}</span>
+          )}
+          {uploadError && (
+            <span className="error-message">{uploadError}</span>
+          )}
+        </div>
+        
         <div id="work-type" className="work-form-field">
           <label>{t("new-work.worktype") + "*"}</label>
           <WorkTypeSelector
