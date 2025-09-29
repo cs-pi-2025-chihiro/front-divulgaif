@@ -25,13 +25,13 @@ export const createWork = async (workData, status = "draft") => {
     if (workData.newAuthors.length > 0) {
       payload.newAuthors = workData.newAuthors;
     }
-    if (studentIds.length > 0) {
+    if (studentIds && studentIds.length > 0) {
       payload.studentIds = studentIds;
     }
-    if (workLabels.length > 0) {
+    if (workLabels && workLabels.length > 0) {
       payload.workLabels = workLabels;
     }
-    if (workLinks.length > 0) {
+    if (workLinks && workLinks.length > 0) {
       payload.workLinks = workLinks;
     }
 
