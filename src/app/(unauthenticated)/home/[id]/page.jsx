@@ -123,8 +123,16 @@ const WorkDetail = () => {
         <h2>{t("workDetail.abstract") || "Resumo"}</h2>
         <p className="work-detail-abstract">
           {work.description ||
-            t("common.noDescription") ||
+            t("common.notAvailable") ||
             "Nenhuma descrição disponível"}
+        </p>
+      </div>
+      <div className="work-detail-description">
+        <h2>{t("workDetail.content") || "Conteúdo"}</h2>
+        <p className="work-detail-abstract">
+          {work.content ||
+            t("common.notAvailable") ||
+            "Nenhum conteúdo disponível"}
         </p>
       </div>
       <div className="work-detail-content">

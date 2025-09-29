@@ -58,8 +58,8 @@ export const useWorkEvaluation = () => {
       payload.description = formData.description;
     }
 
-    if (formData.abstract !== storedWork?.content) {
-      payload.content = formData.abstract;
+    if (formData.content !== storedWork?.content) {
+      payload.content = formData.content;
     }
 
     if (formData.imageUrl !== storedWork?.imageUrl) {

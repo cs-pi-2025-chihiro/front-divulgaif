@@ -7,19 +7,13 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
   const [inputValue, setInputValue] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const [newAuthor, setNewAuthor] = useState({
     name: "",
     email: "",
-    type: "student",
+    type: null,
   });
   const containerRef = useRef(null);
-
-  useEffect(() => {
-    setNewAuthor((prev) => ({
-      ...prev,
-      type: "student",
-    }));
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -47,7 +41,7 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
         );
         setFilteredSuggestions(filtered);
       } catch (error) {
-        console.error("Erro ao buscar sugestões:", error);
+        console.error("Error fetching suggestions:", error);
         setFilteredSuggestions([]);
       } finally {
         setIsLoading(false);
@@ -58,7 +52,9 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
   };
 
   const addAuthorFromSuggestion = (author) => {
-    setAuthors([...authors, author]);
+    if (!authors.some((a) => a.id === author.id)) {
+      setAuthors([...authors, author]);
+    }
     setInputValue("");
     setFilteredSuggestions([]);
   };
@@ -76,10 +72,43 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
   };
 
   const addNewAuthorManually = () => {
-    if (newAuthor.name && newAuthor.email) {
-      const newAuthorData = { ...newAuthor, id: `new_${Date.now()}` };
-      setAuthors([...authors, newAuthorData]);
-      setNewAuthor({ name: "", email: "", type: "student" });
+    if (newAuthor.name.trim() && newAuthor.email.trim() && newAuthor.type) {
+      if (
+        authors.some(
+          (a) =>
+            a.email &&
+            a.email.toLowerCase() === newAuthor.email.trim().toLowerCase()
+        )
+      ) {
+        alert(
+          t("errors.duplicateAuthorEmail") ||
+            "An author with this email already exists."
+        );
+        return;
+      }
+
+      setAuthors([
+        ...authors,
+        {
+          name: newAuthor.name.trim(),
+          email: newAuthor.email.trim(),
+          type: newAuthor.type,
+        },
+      ]);
+
+      setNewAuthor({ name: "", email: "", type: null });
+    } else {
+      if (!newAuthor.type) {
+        alert(
+          t("errors.authorTypeRequired") ||
+            "Please select a type (student or teacher) for the new author."
+        );
+      } else {
+        alert(
+          t("errors.authorNameEmailRequired") ||
+            "Please provide both name and email for the new author."
+        );
+      }
     }
   };
 
@@ -87,9 +116,8 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
     <div className="custom-autocomplete-container" ref={containerRef}>
       <div className="autocomplete-main-box">
         <div className="tags-container">
-          {authors.map((author) => (
-            <div key={author.id} className="author-tag">
-              <span className="author-icon">👤</span>
+          {authors.map((author, index) => (
+            <div key={author.id || author.email} className="author-tag">
               {author.name}
               <button
                 type="button"
@@ -118,7 +146,7 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
         <ul className="suggestions-list">
           {filteredSuggestions.map((s) => (
             <li key={s.id} onClick={() => addAuthorFromSuggestion(s)}>
-              {s.name}
+              {s.name} ({s.email})
             </li>
           ))}
         </ul>

@@ -20,7 +20,7 @@ export const uploadImage = async (file) => {
     throw new Error(
       error.response?.data?.message || 
       error.response?.data?.error || 
-      "Erro ao fazer upload da imagem"
+      `Erro ao fazer upload da imagem: ${error.message}`
     );
   }
 };

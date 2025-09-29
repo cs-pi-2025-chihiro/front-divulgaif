@@ -300,7 +300,7 @@ const WorkFormPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateRequiredFields()) {
+    if (validateCompleteForm()) {
       handleSendForReview();
     }
   };
@@ -354,7 +354,7 @@ const WorkFormPage = () => {
   };
 
   const handleSendForReview = async () => {
-    if (!validateRequiredFields(true)) {
+    if (!validateCompleteForm(true)) {
       return;
     }
 
@@ -393,7 +393,7 @@ const WorkFormPage = () => {
   };
 
   const handlePublish = async () => {
-    if (!validateRequiredFields()) {
+    if (!validateCompleteForm()) {
       return;
     }
 
@@ -461,6 +461,12 @@ const WorkFormPage = () => {
     const value = e.target.value;
     setDescription(value);
     validateSingleField("description", value);
+  };
+
+  const handleContentChange = (e) => {
+    const value = e.target.value;
+    setContent(value);
+    validateSingleField("content", value);
   };
 
   const handleAbstractChange = (e) => {
