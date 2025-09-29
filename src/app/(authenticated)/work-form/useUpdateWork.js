@@ -18,10 +18,13 @@ export const useUpdateWork = () => {
       const result = await updateWork(workId, workData, status);
       return result;
     } catch (error) {
-      setError(error.response.data.error);
+      if (error.response && error.response.data && error.response.data.error) {
+        setError(error.response.data.error);
+      } else {
+        setError(error.message || "An unexpected error occurred.");
+      }
+      console.log("error: ", error);
       throw error;
-    } finally {
-      setIsLoading(false);
     }
   };
 
