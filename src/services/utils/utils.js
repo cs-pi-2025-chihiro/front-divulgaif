@@ -84,13 +84,12 @@ export const isTeacher = () => {
 export const mapStatusToBackend = (status) => {
   const statusMap = {
     draft: "DRAFT",
-    under_review: "SUBMITTED",
     submitted: "SUBMITTED",
     published: "PUBLISHED",
     pending_changes: "PENDING_CHANGES",
     rejected: "REJECTED",
   };
-  return statusMap[status] || "DRAFT";
+  return statusMap[status?.toLowerCase()] || "DRAFT";
 };
 
 export const mapWorkTypeToBackend = (workType) => {

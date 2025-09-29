@@ -27,18 +27,18 @@ export const updateWork = async (workId, workData, status = "draft") => {
     payload.imageUrl = workData.imageUrl;
   }
 
-  if (newAuthors.length > 0) {
+  if (newAuthors && newAuthors.length > 0) {
     payload.newAuthors = newAuthors;
   }
-  if (existingAuthors.length > 0) {
+  if (existingAuthors && existingAuthors.length > 0) {
     payload.authors = existingAuthors;
   } else {
     payload.authors = [];
   }
-  if (workLabels.length > 0) {
+  if (workLabels && workLabels.length > 0) {
     payload.workLabels = workLabels;
   }
-  if (workLinks.length > 0) {
+  if (workLinks && workLinks.length > 0) {
     payload.workLinks = workLinks;
   }
 
