@@ -49,7 +49,9 @@
     "authorNameEmailRequired": "Author name and email are required.",
     "duplicateAuthorEmail": "An author with this email already exists.",
     "authorTypeRequired": "Please select a type (student or teacher) for the new author.",
-    "contentTooLong": "Content must be at most 300 words."
+    "contentTooLong": "Content must be at most 300 words.",
+    "requiredFieldsMissing": "Please fill in all required fields.",
+    "descriptionRequired": "Description is required."
   },
   "workTypes": {
     "article": "Article",

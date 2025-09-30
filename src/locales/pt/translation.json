@@ -55,7 +55,9 @@
     "authorNameEmailRequired": "Nome e email do autor são obrigatórios.",
     "duplicateAuthorEmail": "Um autor com este email já existe.",
     "authorTypeRequired": "Por favor, selecione um tipo (estudante ou professor) para o novo autor.",
-    "contentTooLong": "O conteúdo deve ter no máximo 300 palavras."
+    "contentTooLong": "O conteúdo deve ter no máximo 300 palavras.",
+    "requiredFieldsMissing": "Por favor, preencha todos os campos obrigatórios.",
+    "descriptionRequired": "A descrição é obrigatória."
   },
   "workTypes": {
     "article": "Artigo",
