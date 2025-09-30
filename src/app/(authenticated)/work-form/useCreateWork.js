@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createWork } from "../../../services/works/createWork";
+import { WORK_STATUS } from "../../../enums/workStatus";
 
 export const useCreateWork = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,10 +20,11 @@ export const useCreateWork = () => {
     }
   };
 
-  const saveDraft = (workData) => handleCreateWork(workData, "draft");
+  const saveDraft = (workData) => handleCreateWork(workData, WORK_STATUS.DRAFT);
   const submitForReview = (workData) =>
-    handleCreateWork(workData, "under_review");
-  const publish = (workData) => handleCreateWork(workData, "published");
+    handleCreateWork(workData, WORK_STATUS.SUBMITTED);
+  const publish = (workData) =>
+    handleCreateWork(workData, WORK_STATUS.PUBLISHED);
 
   return {
     isLoading,

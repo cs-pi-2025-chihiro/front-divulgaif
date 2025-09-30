@@ -27,13 +27,6 @@ export const validateField = (fieldName, value, t) => {
           "O título deve ter no máximo 200 caracteres.";
       }
       break;
-    case "authors":
-      if (!value || value.length === 0) {
-        errors.authors =
-          t("errors.authorsRequired") ||
-          "O campo de autores não pode estar vazio.";
-      }
-      break;
     case "description":
       const descriptionWordCount = countWords(value);
       if (descriptionWordCount > 160) {
@@ -48,16 +41,6 @@ export const validateField = (fieldName, value, t) => {
         errors.content =
           t("errors.contentTooLong") ||
           "O conteúdo deve ter no máximo 300 palavras";
-      }
-      break;
-    case "links":
-      if (value && value.length > 0) {
-        value.forEach((link, index) => {
-          if (link.url && !isValidUrl(link.url)) {
-            errors.links =
-              t("errors.invalidUrl") || "Um ou mais links são inválidos.";
-          }
-        });
       }
       break;
     default:

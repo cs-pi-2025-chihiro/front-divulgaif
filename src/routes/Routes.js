@@ -35,10 +35,8 @@ function AppRoutes() {
         </Route>
         <Route path="work/:id" element={<WorkDetail />} />
         <Route path="work/new" element={<WorkFormPage />} />
-        <Route element={<StudentRoute />}>
-          <Route path="work/edit/:id" element={<WorkFormPage />} />
-        </Route>
         <Route element={<AuthenticatedRoute />}>
+          <Route path="work/edit/:id" element={<WorkFormPage />} />
           <Route path="my-works" element={<MyWorks />} />
         </Route>
         <Route path="404" element={<NotFound />} />
@@ -56,10 +54,8 @@ function AppRoutes() {
         </Route>
         <Route path="trabalho/:id" element={<WorkDetail />} />
         <Route path="trabalho/novo" element={<WorkFormPage />} />
-        <Route element={<StudentRoute />}>
-          <Route path="trabalho/editar/:id" element={<WorkFormPage />} />
-        </Route>
         <Route element={<AuthenticatedRoute />}>
+          <Route path="trabalho/editar/:id" element={<WorkFormPage />} />
           <Route path="meus-trabalhos" element={<MyWorks />} />
         </Route>
         <Route path="404" element={<NotFound />} />

@@ -22,8 +22,6 @@ const publish = async ({ workId, evaluationData }) => {
 };
 
 export const useWorkEvaluation = () => {
-  const currentUser = getStoredUser();
-
   const requestChangesMutation = useMutation({
     mutationFn: requestChanges,
     mutationKey: [ENDPOINTS.WORKS.REQUEST_CHANGES],

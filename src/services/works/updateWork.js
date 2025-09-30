@@ -9,11 +9,12 @@ import {
 } from "../utils/utils";
 
 export const updateWork = async (workId, workData, status = "draft") => {
-  const { newAuthors, existingAuthors } = formatAuthorsForBackend(
-    workData.authors || []
-  );
+  const { newAuthors } = formatAuthorsForBackend(workData.authors || []);
   const workLabels = formatLabelsForBackend(workData.labels || []);
   const workLinks = formatLinksForBackend(workData.links || []);
+  const studentIds = workData.studentIds || [];
+  const principalLink =
+    workLinks.length > 0 ? workLinks[0].url : "https://exemplo.com";
 
   const payload = {
     title: workData.title.trim(),
@@ -21,24 +22,20 @@ export const updateWork = async (workId, workData, status = "draft") => {
     content: workData.content?.trim() || workData.content?.trim() || "",
     workType: mapWorkTypeToBackend(workData.workType),
     workStatus: mapStatusToBackend(status),
+    imageUrl: workData.imageUrl || undefined,
+    principalLink,
   };
 
-  if (workData.imageUrl) {
-    payload.imageUrl = workData.imageUrl;
-  }
-
-  if (newAuthors.length > 0) {
+  if (newAuthors && newAuthors.length > 0) {
     payload.newAuthors = newAuthors;
   }
-  if (existingAuthors.length > 0) {
-    payload.authors = existingAuthors;
-  } else {
-    payload.authors = [];
+  if (studentIds && studentIds.length > 0) {
+    payload.studentIds = studentIds;
   }
-  if (workLabels.length > 0) {
+  if (workLabels && workLabels.length > 0) {
     payload.workLabels = workLabels;
   }
-  if (workLinks.length > 0) {
+  if (workLinks && workLinks.length > 0) {
     payload.workLinks = workLinks;
   }
 

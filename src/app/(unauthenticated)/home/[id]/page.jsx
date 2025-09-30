@@ -85,7 +85,11 @@ const WorkDetail = () => {
   );
 
   const canEdit =
-    (userIsAuthenticated && currentUser && isWorkOwner) || isTeacher();
+    (userIsAuthenticated &&
+      currentUser &&
+      isWorkOwner &&
+      work.status !== WORK_STATUS.SUBMITTED) ||
+    isTeacher();
 
   return (
     <div className="work-detail-container">

@@ -36,7 +36,8 @@ const WorkFormPage = () => {
   const [searchParams] = useSearchParams();
 
   const mode = searchParams.get("mode") || (id ? "edit" : "create");
-  const isEditMode = mode === 'edit' && id !== undefined && id !== null && id !== "";
+  const isEditMode =
+    mode === "edit" && id !== undefined && id !== null && id !== "";
   const workId = id;
 
   const { getLabelSuggestions, getLinkSuggestions, getAuthorSuggestions } =
@@ -57,18 +58,10 @@ const WorkFormPage = () => {
     submitForReview: submitForReviewUpdate,
   } = useUpdateWork();
 
-  const {
-    handleImageUpload,
-    isUploading,
-    uploadError,
-  } = useImageUpload();
+  const { handleImageUpload, isUploading, uploadError } = useImageUpload();
 
-  const {
-    saveFormData,
-    getCachedFormData,
-    clearFormData,
-    hasCachedData,
-  } = useFormCacheStore();
+  const { saveFormData, getCachedFormData, clearFormData, hasCachedData } =
+    useFormCacheStore();
 
   const [authors, setAuthors] = useState([]);
   const [labels, setLabels] = useState([]);
@@ -77,7 +70,7 @@ const WorkFormPage = () => {
   const [workType, setWorkType] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [abstract, setAbstract] = useState("");
+  const [content, setContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [errors, setErrors] = useState({});
@@ -96,13 +89,20 @@ const WorkFormPage = () => {
   useEffect(() => {
     if (isEditMode) {
     } else if (currentUser) {
-      setAuthors([{ id: currentUser.id, name: currentUser.name, email: currentUser.email }]);
+      setAuthors([
+        {
+          id: currentUser.id,
+          name: currentUser.name,
+          email: currentUser.email,
+        },
+      ]);
     }
   }, [isEditMode, currentUser]);
 
   useEffect(() => {
     if (!isEditMode && hasCachedData()) {
       const cachedData = getCachedFormData();
+      console.log("Restoring cached form data:", cachedData);
       if (cachedData) {
         setAuthors(cachedData.authors || []);
         setLabels(cachedData.labels || []);
@@ -111,7 +111,7 @@ const WorkFormPage = () => {
         setWorkType(cachedData.workType || "");
         setTitle(cachedData.title || "");
         setDescription(cachedData.description || "");
-        setAbstract(cachedData.abstractText || "");
+        setContent(cachedData.content || "");
         setImageUrl(cachedData.imageUrl || "");
       }
     }
@@ -127,11 +127,18 @@ const WorkFormPage = () => {
         workType,
         title,
         description,
-        abstractText: abstract,
+        content,
         imageUrl,
       };
 
-      if (workType || title || authors.length > 0 || description || abstract || imageUrl) {
+      if (
+        workType ||
+        title ||
+        authors.length > 0 ||
+        description ||
+        content ||
+        imageUrl
+      ) {
         saveFormData(formData);
       }
     }
@@ -143,7 +150,7 @@ const WorkFormPage = () => {
     workType,
     title,
     description,
-    abstract,
+    content,
     imageUrl,
     saveFormData,
     isEditMode,
@@ -166,7 +173,7 @@ const WorkFormPage = () => {
 
         setTitle(workData.title || "");
         setDescription(workData.description || "");
-        setAbstract(workData.content || "");
+        setContent(workData.content || "");
         setImageUrl(workData.imageUrl || "");
 
         const mapWorkTypeFromBackend = (backendWorkType) => {
@@ -186,8 +193,13 @@ const WorkFormPage = () => {
         setWorkType(mapWorkTypeFromBackend(workData.workType));
 
         const fetchedAuthors = workData.authors || [];
+        console.log("workData.authors", workData.authors);
         setAuthors(fetchedAuthors);
-        setStudentIds(fetchedAuthors.filter(author => author.id).map(author => author.id));
+        setStudentIds(
+          fetchedAuthors
+            .filter((author) => author.id)
+            .map((author) => author.id)
+        );
 
         setLabels(workData.labels || []);
         setLinks(workData.links || []);
@@ -201,12 +213,19 @@ const WorkFormPage = () => {
     };
 
     fetchWorkData();
-  }, [workId, isEditMode, navigate, searchParams, userIsAuthenticated, currentUser]);
+  }, [
+    workId,
+    isEditMode,
+    navigate,
+    searchParams,
+    userIsAuthenticated,
+    currentUser,
+  ]);
 
   const getWorkData = () => ({
     title,
     description,
-    abstractText: abstract,
+    content,
     studentIds,
     authors: authors,
     labels: labels,
@@ -242,8 +261,8 @@ const WorkFormPage = () => {
         alert(
           (t("errors.validationFailed") ||
             "Por favor, corrija os erros no formulário:") +
-          "\n\n" +
-          errorMessages
+            "\n\n" +
+            errorMessages
         );
       }
       return false;
@@ -288,8 +307,8 @@ const WorkFormPage = () => {
         alert(
           (t("errors.requiredFieldsMissing") ||
             "Campos obrigatórios não preenchidos:") +
-          "\n\n" +
-          errorMessages
+            "\n\n" +
+            errorMessages
         );
       }
       return false;
@@ -331,12 +350,14 @@ const WorkFormPage = () => {
 
       const workData = {
         ...getWorkData(),
-        imageUrl: finalImageUrl
+        imageUrl: finalImageUrl,
       };
 
       if (isEditMode) {
         if (!workId) {
-          throw new Error(t("errors.invalidWorkId") || "Invalid work ID. Cannot update work.");
+          throw new Error(
+            t("errors.invalidWorkId") || "Invalid work ID. Cannot update work."
+          );
         }
         await saveDraftUpdate(workId, workData);
       } else {
@@ -367,12 +388,14 @@ const WorkFormPage = () => {
 
       const workData = {
         ...getWorkData(),
-        imageUrl: finalImageUrl
+        imageUrl: finalImageUrl,
       };
 
       if (isEditMode) {
         if (!workId) {
-          throw new Error(t("errors.invalidWorkId") || "Invalid work ID. Cannot update work.");
+          throw new Error(
+            t("errors.invalidWorkId") || "Invalid work ID. Cannot update work."
+          );
         }
         await submitForReviewUpdate(workId, workData);
       } else {
@@ -380,8 +403,7 @@ const WorkFormPage = () => {
       }
 
       alert(
-        t("messages.sentForReview") ||
-        "Work sent for review successfully!"
+        t("messages.sentForReview") || "Work sent for review successfully!"
       );
       if (!isEditMode) clearFormData();
       navigate(getSuccessRedirectPath());
@@ -406,7 +428,7 @@ const WorkFormPage = () => {
 
       const workData = {
         ...getWorkData(),
-        imageUrl: finalImageUrl
+        imageUrl: finalImageUrl,
       };
 
       await publishCreate(workData);
@@ -422,28 +444,6 @@ const WorkFormPage = () => {
 
   const handleFieldBlur = (fieldName, value) => {
     validateSingleField(fieldName, value);
-  };
-
-  const handleClearForm = () => {
-    if (
-      window.confirm(
-        t("messages.confirmClearForm") ||
-        "Tem certeza que deseja limpar todos os dados do formulário?"
-      )
-    ) {
-      setAuthors([]);
-      setLabels([]);
-      setLinks([]);
-      setStudentIds([]);
-      setWorkType("");
-      setTitle("");
-      setDescription("");
-      setAbstract("");
-      setImageUrl("");
-      setSelectedImageFile(null);
-      setErrors({});
-      clearFormData();
-    }
   };
 
   const handleWorkTypeChange = (selectedType) => {
@@ -469,16 +469,10 @@ const WorkFormPage = () => {
     validateSingleField("content", value);
   };
 
-  const handleAbstractChange = (e) => {
-    const value = e.target.value;
-    setAbstract(value);
-    validateSingleField("abstractText", value);
-  };
-
   const handleAuthorsChange = (newAuthors) => {
     setAuthors(newAuthors);
     const newStudentIds = newAuthors
-      .filter((author) => author.id)
+      .filter((author) => author.id && author.id !== currentUser.id)
       .map((author) => author.id);
 
     setStudentIds(newStudentIds);
@@ -499,8 +493,7 @@ const WorkFormPage = () => {
     setSelectedImageFile(file);
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-      };
+      reader.onload = (e) => {};
       reader.readAsDataURL(file);
     }
   };
@@ -516,13 +509,13 @@ const WorkFormPage = () => {
             className={errors.image ? "field-error" : ""}
           />
           {isUploading && (
-            <span className="info-message">{t("new-work.uploadingImage") || "Fazendo upload da imagem..."}</span>
+            <span className="info-message">
+              {t("new-work.uploadingImage") || "Fazendo upload da imagem..."}
+            </span>
           )}
-          {uploadError && (
-            <span className="error-message">{uploadError}</span>
-          )}
+          {uploadError && <span className="error-message">{uploadError}</span>}
         </div>
-        
+
         <div id="work-type" className="work-form-field">
           <label>{t("new-work.worktype") + "*"}</label>
           <WorkTypeSelector
@@ -579,17 +572,17 @@ const WorkFormPage = () => {
         </div>
 
         <div id="work-abstract" className="work-form-field">
-          <label>{t("new-work.workabstract")}</label>
-          <div className="word-count-info">{countWords(abstract)}/300</div>
+          <label>{t("new-work.workcontent")}</label>
+          <div className="word-count-info">{countWords(content)}/300</div>
           <textarea
-            value={abstract}
-            onChange={handleAbstractChange}
-            onBlur={() => handleFieldBlur("abstractText", abstract)}
+            value={content}
+            onChange={handleContentChange}
+            onBlur={() => handleFieldBlur("content", content)}
             placeholder={t("new-work.workabstract")}
-            className={errors.abstractText ? "field-error" : ""}
+            className={errors.content ? "field-error" : ""}
           />
-          {errors.abstractText && (
-            <span className="error-message">{errors.abstractText}</span>
+          {errors.content && (
+            <span className="error-message">{errors.content}</span>
           )}
         </div>
 

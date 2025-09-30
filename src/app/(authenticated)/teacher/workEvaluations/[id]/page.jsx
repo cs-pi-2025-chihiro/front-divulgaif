@@ -20,7 +20,6 @@ const WorkEvaluation = () => {
     hasData,
     isLoading: isLoadingWork,
     error,
-    loadWork,
   } = useWorkData(workId);
   const [workData, setWorkData] = useState(() => {
     if (storedWork) {
@@ -71,8 +70,6 @@ const WorkEvaluation = () => {
     publishWork,
     isRequestChangesLoading,
     isPublishLoading,
-    buildRequestChangesPayload,
-    mapWorkTypeToBackend,
   } = useWorkEvaluation();
 
   if (isLoadingWork) {

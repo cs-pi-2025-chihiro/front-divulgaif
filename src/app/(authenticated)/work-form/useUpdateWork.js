@@ -15,6 +15,7 @@ export const useUpdateWork = () => {
     setError(null);
 
     try {
+      console.log("Updating work with data:", workData, "Status:", status);
       const result = await updateWork(workId, workData, status);
       return result;
     } catch (error) {
