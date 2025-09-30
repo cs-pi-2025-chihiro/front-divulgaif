@@ -255,8 +255,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, showStatus }) => {
               )}
               {suggestions.length > 0 && (
                 <div className="suggestions-box">
-                  <div className="suggestions-header">Sugestões:</div>
-                  <div className="suggestions-list">
+                  <div className="suggestions-list-label">
                     {suggestions.map((suggestion) => (
                       <div
                         key={suggestion.id}

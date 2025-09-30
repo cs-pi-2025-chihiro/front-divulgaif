@@ -432,12 +432,9 @@
     text-align: center;
   }
 
-  /* Responsivo para o container do input de label */
   .label-input-container {
     margin-left: 1rem;
   }
-
- /* Adicionar estas classes ao final do arquivo filtrarBuscaModal.css */
 
 .loading-suggestions {
   padding: 8px;
@@ -451,8 +448,6 @@
   background-color: white;
   border: 2px solid var(--dark-green);
   border-radius: 8px;
-  margin-top: 8px;
-  margin-bottom: 12px;
   overflow: hidden;
 }
 
@@ -466,9 +461,7 @@
   letter-spacing: 0.5px;
 }
 
-.suggestions-list {
-  max-height: 120px;
-  overflow-y: auto;
+.suggestions-list-label {
   background-color: white;
 }
 
