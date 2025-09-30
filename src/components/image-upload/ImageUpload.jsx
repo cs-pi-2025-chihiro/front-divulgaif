@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "./ImageUpload.css";
 
-const ImageUpload = ({ onImageChange, className = "" }) => {
+const ImageUpload = ({ onImageChange, className = "", initialImageUrl = null, disabled = false }) => {
   const { t } = useTranslation();
   const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState(initialImageUrl);
   const [dragActive, setDragActive] = useState(false);
+
+  useEffect(() => {
+    if (initialImageUrl && !imagePreview) {
+      setImagePreview(initialImageUrl);
+    }
+  }, [initialImageUrl]);
 
   const handleImageChange = (file) => {
     if (file && file.type.startsWith("image/")) {
@@ -60,12 +66,12 @@ const ImageUpload = ({ onImageChange, className = "" }) => {
   return (
     <div className={`image-upload-container ${className}`}>
       <div
-        className={`image-upload-area ${dragActive ? "drag-active" : ""}`}
-        onDragEnter={handleDrag}
-        onDragLeave={handleDrag}
-        onDragOver={handleDrag}
-        onDrop={handleDrop}
-        onClick={() => document.getElementById("image-input").click()}
+        className={`image-upload-area ${dragActive ? "drag-active" : ""} ${disabled ? "disabled" : ""}`}
+        onDragEnter={!disabled ? handleDrag : undefined}
+        onDragLeave={!disabled ? handleDrag : undefined}
+        onDragOver={!disabled ? handleDrag : undefined}
+        onDrop={!disabled ? handleDrop : undefined}
+        onClick={!disabled ? () => document.getElementById("image-input").click() : undefined}
       >
         {imagePreview ? (
           <div className="image-preview-container">
@@ -93,6 +99,7 @@ const ImageUpload = ({ onImageChange, className = "" }) => {
           type="file"
           accept="image/*"
           onChange={handleFileSelect}
+          disabled={disabled}
           style={{ display: "none" }}
         />
       </div>

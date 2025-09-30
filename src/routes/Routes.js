@@ -9,8 +9,7 @@ import LanguageRoute from "./LanguageRoute";
 import GuestRoute from "./GuestRoute";
 import StudentRoute from "./StudentRoute";
 import AuthenticatedRoute from "./AuthenticatedRoute";
-import NewWork from "../app/(authenticated)/new-work/page";
-import EditWork from "../app/(authenticated)/edit-work/[id]/page";
+import WorkFormPage from "../app/(authenticated)/work-form/page";
 import TeacherRoute from "./TeacherRoute";
 import MyWorks from "../app/(authenticated)/student/my-works/page";
 import WorkEvaluation from "../app/(authenticated)/teacher/workEvaluations/[id]/page";
@@ -35,10 +34,10 @@ function AppRoutes() {
           <Route path="register" element={<RegisterPage />} />
         </Route>
         <Route path="work/:id" element={<WorkDetail />} />
-        <Route path="work/new" element={<NewWork />} />
+        <Route path="work/new" element={<WorkFormPage />} />
         <Route element={<AuthenticatedRoute />}>
+          <Route path="work/edit/:id" element={<WorkFormPage />} />
           <Route path="my-works" element={<MyWorks />} />
-          <Route path="work/edit/:id" element={<EditWork />} />
         </Route>
         <Route path="404" element={<NotFound />} />
         <Route element={<TeacherRoute />}>
@@ -54,10 +53,10 @@ function AppRoutes() {
           <Route path="register" element={<RegisterPage />} />
         </Route>
         <Route path="trabalho/:id" element={<WorkDetail />} />
-        <Route path="trabalho/novo" element={<NewWork />} />
+        <Route path="trabalho/novo" element={<WorkFormPage />} />
         <Route element={<AuthenticatedRoute />}>
+          <Route path="trabalho/editar/:id" element={<WorkFormPage />} />
           <Route path="meus-trabalhos" element={<MyWorks />} />
-          <Route path="trabalho/editar/:id" element={<EditWork />} />
         </Route>
         <Route path="404" element={<NotFound />} />
         <Route element={<TeacherRoute />}>
