@@ -435,6 +435,7 @@
   .label-input-container {
     margin-left: 1rem;
   }
+}
 
 .loading-suggestions {
   padding: 8px;
@@ -445,10 +446,13 @@
 }
 
 .suggestions-box {
-  background-color: white;
-  border: 2px solid var(--dark-green);
-  border-radius: 8px;
-  overflow: hidden;
+  left: 1rem;
+  right: 1rem;
+  background: white;
+  border: 1px solid #d1d1d1;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .suggestions-header {
@@ -462,22 +466,14 @@
 }
 
 .suggestions-list-label {
-  background-color: white;
+  left: 1rem;
+  right: 1rem;
+  border: 1px solid #d1d1d1;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.suggestion-item {
-  padding: 10px 12px;
-  cursor: pointer;
-  border-bottom: 1px solid #f0f0f0;
-  transition: background-color 0.2s ease;
-  font-size: 14px;
-  background-color: white;
+.suggestion-item-label{
+  background-color: black;
 }
-
-.suggestion-item:hover {
-  background-color: #f8f9fa;
-}
-
-.suggestion-item:last-child {
-  border-bottom: none;
-}}
