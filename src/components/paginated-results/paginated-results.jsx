@@ -131,7 +131,7 @@ const PaginatedResults = ({
                 authors={work.authors}
                 description={work.description}
                 labels={work.labels}
-                date={work.date}
+                approvedAt={work.approvedAt}
                 imageUrl={work.imageUrl}
               />
             </div>

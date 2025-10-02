@@ -7,7 +7,7 @@ const WorkCard = ({
   id,
   title,
   authors,
-  date,
+  approvedAt,
   labels,
   description,
   imageUrl = "/default-image.jpg",
@@ -64,7 +64,7 @@ const WorkCard = ({
               </span>
             ))}
         </div>
-        <span className="work-card-date">{date}</span>
+        <span className="work-card-date">{approvedAt}</span>
       </div>
 
       <div className="work-card-labels">
