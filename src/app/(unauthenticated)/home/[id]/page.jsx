@@ -33,6 +33,8 @@ const WorkDetail = () => {
   const isStudent = hasRole(ROLES.STUDENT);
   const currentUser = getStoredUser();
 
+  console.log("Work data:", work);
+
   const { navigateToWorkEvaluation } = useWorkNavigation();
 
   const handleGoBack = () => {
@@ -46,9 +48,7 @@ const WorkDetail = () => {
   };
 
   const handleEvaluate = () => {
-    if (work) {
-      navigateToWorkEvaluation(work);
-    }
+    if (work) navigateToWorkEvaluation(work);
   };
 
   if (isLoading) {
@@ -150,8 +150,8 @@ const WorkDetail = () => {
 
           <h2>{t("workDetail.publishDate") || "Data de Publicação"}</h2>
           <p className="work-detail-date">
-            {work.date
-              ? new Date(work.date).toLocaleDateString(i18n.language)
+            {work.approvedAt
+              ? new Date(work.approvedAt).toLocaleDateString(i18n.language)
               : t("common.notAvailable") || "Não disponível"}
           </p>
         </div>

@@ -43,7 +43,7 @@ const WorkEvaluation = () => {
         status: storedWork.status || t("workEvaluation.status.underReview"),
         feedback: storedWork.feedback || "",
         teachers: storedWork.teachers || null,
-        date: storedWork.date || null,
+        approvedAt: storedWork.approvedAt || null,
       };
     }
     return {
