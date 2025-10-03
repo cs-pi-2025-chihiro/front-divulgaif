@@ -13,7 +13,7 @@ import PaginatedResults from "../../../../components/paginated-results/paginated
 import { useAtom } from "jotai";
 import { SearchInput } from "../../../../components/input";
 import Button from "../../../../components/button";
-import Loader from "../../../../components/loader";
+
 
 const MyWorks = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
@@ -106,7 +106,7 @@ const MyWorks = () => {
 
   return (
     <div className="container">
-      {isLoading && <Loader />}
+
       <div className="main-content">
         <div
           className="filters-section"
