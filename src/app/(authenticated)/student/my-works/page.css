@@ -71,11 +71,6 @@
   background-color: #1a252f;
 }
 
-.icon {
-  width: 1rem;
-  height: 1rem;
-}
-
 .chevron {
   transition: transform 0.2s;
 }
