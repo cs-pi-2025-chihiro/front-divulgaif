@@ -3,11 +3,16 @@ import "./filtrarBuscaModal.css";
 import { t } from "i18next";
 import Button from "../../button";
 import { Input } from "../../input";
+import { useGetSuggestions } from "../../../services/hooks/suggestions/useGetSuggestions";
 
 const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, showStatus }) => {
   const initialFocusRef = useRef(null);
   const returnFocusRef = useRef(null);
   const [newLabel, setNewLabel] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { getLabelSuggestions } = useGetSuggestions();
+  
   const [localFilters, setLocalFilters] = useState({
     workType: {
       article: false,
@@ -107,8 +112,43 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, showStatus }) => {
     }));
   };
 
-  const handleAddLabel = (e) => {
-    if (e.key === "Enter" && newLabel.trim()) {
+  // Função modificada para incluir autocomplete
+  const handleLabelInputChange = async (e) => {
+    const value = e.target.value;
+    setNewLabel(value);
+
+    if (value && value.length >= 2) {
+      setIsLoading(true);
+      try {
+        const result = await getLabelSuggestions(value);
+        const filtered = result.filter(
+          (suggestion) => !localFilters.labels.includes(suggestion.name)
+        );
+        setSuggestions(filtered);
+      } catch (error) {
+        console.error("Error fetching label suggestions:", error);
+        setSuggestions([]);
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  // Função para adicionar label da sugestão
+  const handleAddLabelFromSuggestion = (selectedLabel) => {
+    setLocalFilters((prevFilters) => ({
+      ...prevFilters,
+      labels: [...prevFilters.labels, selectedLabel.name],
+    }));
+    setNewLabel("");
+    setSuggestions([]);
+  };
+
+  // Função modificada para adicionar label através do botão
+  const handleAddLabel = () => {
+    if (newLabel.trim()) {
       const trimmedLabel = newLabel.trim();
       if (!localFilters.labels.includes(trimmedLabel)) {
         setLocalFilters((prevFilters) => ({
@@ -117,6 +157,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, showStatus }) => {
         }));
       }
       setNewLabel("");
+      setSuggestions([]);
     }
   };
 
@@ -135,6 +176,7 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, showStatus }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Escape") {
       onClose();
+      setSuggestions([]);
     }
   };
 
@@ -191,14 +233,41 @@ const FiltrarBuscaModal = ({ isOpen, onClose, onApplyFilters, showStatus }) => {
           <section className="filter-section">
             <h3 className="section-title">{t("filters.labels")}</h3>
             <div className="labels-container">
-              <Input
-                type="text"
-                className="label-Input"
-                placeholder={t("filters.addLabel")}
-                value={newLabel}
-                onChange={(e) => setNewLabel(e.target.value)}
-                onKeyPress={handleAddLabel}
-              />
+              <div className="label-input-container">
+                <Input
+                  type="text"
+                  className="label-Input"
+                  placeholder={t("filters.addLabel")}
+                  value={newLabel}
+                  onChange={handleLabelInputChange}
+                />
+                <Button
+                  className="add-label-btn"
+                  onClick={handleAddLabel}
+                  disabled={!newLabel.trim()}
+                  aria-label="Add label"
+                >
+                  +
+                </Button>
+              </div>
+              {isLoading && (
+                <div className="loading-suggestions">Carregando sugestões...</div>
+              )}
+              {suggestions.length > 0 && (
+                <div className="suggestions-box">
+                  <div className="suggestions-list-label">
+                    {suggestions.map((suggestion) => (
+                      <div
+                        key={suggestion.id}
+                        className="suggestion-item"
+                        onClick={() => handleAddLabelFromSuggestion(suggestion)}
+                      >
+                        {suggestion.name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               {localFilters.labels.length > 0 && (
                 <div className="labels-list">
                   {localFilters.labels.map((label, index) => (
