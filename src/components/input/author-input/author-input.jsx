@@ -60,7 +60,7 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
   };
 
   const removeAuthor = (authorToRemove) => {
-    if (mode === 'create' && currentUser && authorToRemove.id === currentUser.id) {
+    if ((mode === 'create' || mode === 'edit') && currentUser && authorToRemove.id === currentUser.id) {
       return;
     }
     setAuthors(authors.filter((author) => author.id !== authorToRemove.id));
@@ -123,7 +123,7 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
                 type="button"
                 className="remove-tag-button"
                 onClick={() => removeAuthor(author)}
-                disabled={mode === 'create' && currentUser && author.id === currentUser.id}
+                disabled={(mode === 'create' || mode === 'edit') && currentUser && author.id === currentUser.id}
               >
                 &times;
               </button>
