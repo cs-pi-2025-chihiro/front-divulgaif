@@ -33,6 +33,8 @@ const WorkDetail = () => {
   const isStudent = hasRole(ROLES.STUDENT);
   const currentUser = getStoredUser();
 
+  console.log("Work data:", work);
+
   const { navigateToWorkEvaluation } = useWorkNavigation();
 
   const handleGoBack = () => {
@@ -46,9 +48,7 @@ const WorkDetail = () => {
   };
 
   const handleEvaluate = () => {
-    if (work) {
-      navigateToWorkEvaluation(work);
-    }
+    if (work) navigateToWorkEvaluation(work);
   };
 
   if (isLoading) {
@@ -85,7 +85,11 @@ const WorkDetail = () => {
   );
 
   const canEdit =
-    (userIsAuthenticated && currentUser && isWorkOwner) || isTeacher();
+    (userIsAuthenticated &&
+      currentUser &&
+      isWorkOwner &&
+      work.status !== WORK_STATUS.SUBMITTED) ||
+    isTeacher();
 
   return (
     <div className="work-detail-container">
@@ -123,8 +127,16 @@ const WorkDetail = () => {
         <h2>{t("workDetail.abstract") || "Resumo"}</h2>
         <p className="work-detail-abstract">
           {work.description ||
-            t("common.noDescription") ||
+            t("common.notAvailable") ||
             "Nenhuma descrição disponível"}
+        </p>
+      </div>
+      <div className="work-detail-description">
+        <h2>{t("workDetail.content") || "Conteúdo"}</h2>
+        <p className="work-detail-abstract">
+          {work.content ||
+            t("common.notAvailable") ||
+            "Nenhum conteúdo disponível"}
         </p>
       </div>
       <div className="work-detail-content">
@@ -138,8 +150,8 @@ const WorkDetail = () => {
 
           <h2>{t("workDetail.publishDate") || "Data de Publicação"}</h2>
           <p className="work-detail-date">
-            {work.date
-              ? new Date(work.date).toLocaleDateString(i18n.language)
+            {work.approvedAt
+              ? new Date(work.approvedAt).toLocaleDateString(i18n.language)
               : t("common.notAvailable") || "Não disponível"}
           </p>
         </div>

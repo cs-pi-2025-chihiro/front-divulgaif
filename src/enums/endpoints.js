@@ -40,4 +40,7 @@ export const ENDPOINTS = {
   USERS: {
     CREATE: "/users",
   },
+  STORAGE: {
+    UPLOAD: "/storage",
+  },
 };

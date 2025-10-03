@@ -47,7 +47,7 @@ export const useMyWorks = (appliedFilters = {}) => {
       page,
       size,
       debouncedSearch,
-      JSON.stringify(appliedFilters), // Serialize filters to ensure proper cache invalidation
+      JSON.stringify(appliedFilters),
     ],
     keepPreviousData: true,
     refetchOnMount: true,

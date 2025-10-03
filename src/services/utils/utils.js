@@ -84,13 +84,12 @@ export const isTeacher = () => {
 export const mapStatusToBackend = (status) => {
   const statusMap = {
     draft: "DRAFT",
-    under_review: "SUBMITTED",
     submitted: "SUBMITTED",
     published: "PUBLISHED",
     pending_changes: "PENDING_CHANGES",
     rejected: "REJECTED",
   };
-  return statusMap[status] || "DRAFT";
+  return statusMap[status?.toLowerCase()] || "DRAFT";
 };
 
 export const mapWorkTypeToBackend = (workType) => {
@@ -110,46 +109,15 @@ export const isValidEmail = (email) => {
 };
 
 export const formatAuthorsForBackend = (authorsArray) => {
-  const newAuthors = [];
-  const existingAuthors = [];
+  const newAuthors = authorsArray
+    .filter((author) => !author.id)
+    .map(({ name, email }) => ({ name, email }));
 
-  authorsArray.forEach((author) => {
-    if (author.id && !String(author.id).startsWith("new_")) {
-      existingAuthors.push({ id: author.id });
-    } else {
-      let name = "";
-      let email = "";
+  const studentIds = authorsArray
+    .filter((author) => author.id)
+    .map((author) => author.id);
 
-      if (typeof author === "string") {
-        if (author.includes("<") && author.includes(">")) {
-          const match = author.match(/^(.+?)\s*<(.+?)>$/);
-          if (match) {
-            name = match[1].trim();
-            email = match[2].trim();
-          } else {
-            name = author.trim();
-          }
-        } else if (author.includes("@")) {
-          name = author.split("@")[0].trim();
-          email = author.trim();
-        } else {
-          name = author.trim();
-        }
-      } else if (typeof author === "object") {
-        name = author.name || author.label || "";
-        email = author.email || "";
-      }
-
-      if (name) {
-        if (!email || !isValidEmail(email)) {
-          email = `${name.toLowerCase().replace(/\s+/g, ".")}@external.com`;
-        }
-        newAuthors.push({ name, email });
-      }
-    }
-  });
-
-  return { newAuthors, existingAuthors };
+  return { newAuthors, studentIds };
 };
 
 export const formatLabelsForBackend = (labelsArray) => {

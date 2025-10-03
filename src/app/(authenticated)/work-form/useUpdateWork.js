@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { updateWork } from "../../../../services/works/updateWork";
-import { WORK_STATUS } from "../../../../enums/workStatus";
+import { updateWork } from "../../../services/works/updateWork";
+import { WORK_STATUS } from "../../../enums/workStatus";
 
 export const useUpdateWork = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,13 +15,17 @@ export const useUpdateWork = () => {
     setError(null);
 
     try {
+      console.log("Updating work with data:", workData, "Status:", status);
       const result = await updateWork(workId, workData, status);
       return result;
     } catch (error) {
-      setError(error.response.data.error);
+      if (error.response && error.response.data && error.response.data.error) {
+        setError(error.response.data.error);
+      } else {
+        setError(error.message || "An unexpected error occurred.");
+      }
+      console.log("error: ", error);
       throw error;
-    } finally {
-      setIsLoading(false);
     }
   };
 
