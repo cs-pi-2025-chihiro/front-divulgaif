@@ -1,3 +1,5 @@
+import useFormCacheStore from "../../../storage/formCache.storage";
+
 export const getStoredUser = () => {
   try {
     const userData = localStorage.getItem("userData");
@@ -44,4 +46,6 @@ export const logout = () => {
   localStorage.removeItem("userData");
 
   localStorage.removeItem("userRoles");
+
+  useFormCacheStore.getState().clearFormData();
 };

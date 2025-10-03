@@ -15,10 +15,12 @@
     "edit": "Edit",
     "save": "Save",
     "cancel": "Cancel",
+    "clearForm": "Clear Form",
     "notAvailable": "Not available",
     "noDescription": "No description available",
     "retry": "Please try again later",
-    "clearFilters": "Clear filters"
+    "clearFilters": "Clear filters",
+    "sessionExpired": "Session expired. Redirecting to login..."
   },
   "home": {
     "welcome": "IF Xplore",
@@ -33,11 +35,23 @@
     "unexpectedError": "An unexpected error occurred",
     "workTypeRequired": "Work type is required.",
     "titleRequired": "Work title is required.",
+    "titleTooShort": "Title must be at least 3 characters long.",
+    "titleTooLong": "Title must be at most 200 characters long.",
     "authorsRequired": "Authors field cannot be empty.",
+    "descriptionTooLong": "Description must be at most 160 words.",
+    "abstractTooLong": "Abstract must be at most 300 words.",
+    "invalidUrl": "One or more links are invalid.",
+    "validationFailed": "Please fix the errors in the form:",
     "saveDraftError": "Error saving draft. Please try again.",
     "submitError": "Error submitting work. Please try again.",
     "publishError": "Error publishing work. Please try again.",
-    "NoWorksFound": "No works Found with these filters."
+    "NoWorksFound": "No works Found with these filters.",
+    "authorNameEmailRequired": "Author name and email are required.",
+    "duplicateAuthorEmail": "An author with this email already exists.",
+    "authorTypeRequired": "Please select a type (student or teacher) for the new author.",
+    "contentTooLong": "Content must be at most 300 words.",
+    "requiredFieldsMissing": "Please fill in all required fields.",
+    "descriptionRequired": "Description is required."
   },
   "workTypes": {
     "article": "Article",
@@ -57,6 +71,7 @@
     "advisor": "Advisor",
     "publishDate": "Publication Date",
     "abstract": "Abstract",
+    "content": "Content",
     "keywords": "Keywords",
     "additionalLinks": "Additional Links",
     "link": "Link",
@@ -162,11 +177,13 @@
     "workimage": "Work Image",
     "uploadimage": "Select an image",
     "dragdropimage": "Or drag and drop an file",
+    "uploadingImage": "Uploading image...",
     "worktype": "Work Type",
     "worktitle": "Title",
     "workauthors": "Authors",
     "workdescription": "Description",
     "workabstract": "Abstract",
+    "workcontent": "Content",
     "labels": "Labels",
     "links": "Links",
     "words": "words",
@@ -186,7 +203,10 @@
   "messages": {
     "draftSaved": "Draft saved successfully!",
     "sentForReview": "Work sent for review successfully!",
-    "published": "Work published successfully!"
+    "published": "Work published successfully!",
+    "dataRestored": "Form data has been automatically restored.",
+    "confirmClearForm": "Are you sure you want to clear all form data?",
+    "formCleared": "Form cleared successfully!"
   },
   "workEvaluation": {
     "title": "Work Evaluation",
@@ -204,13 +224,16 @@
       "description": "Description*",
       "descriptionPlaceholder": "Illustrative description should contain a maximum of 160 words for acceptance.",
       "descriptionWordCount": "Description* ({{count}}/160 words)",
+      "contentWordCount": "Content* ({{count}}/500 words)",
+      "contentPlaceholder": "Enter the content...",
       "labels": "Labels",
       "newLabel": "New label",
       "links": "Links",
       "addLink": "Add link",
       "linkPlaceholder": "https://example.com",
       "feedback": "Feedback*",
-      "feedbackWordCount": "Feedback* ({{count}}/160 words)"
+      "feedbackWordCount": "Feedback* ({{count}}/160 words)",
+      "feedbackPlaceholder": "Provide feedback for the student..."
     },
     "authors": {
       "fullName": "Full Name",
@@ -229,9 +252,13 @@
       "workReturned": "Work returned successfully!"
     },
     "status": {
-      "underReview": "Under Review",
+      "underReview": "Submitted",
       "accepted": "Accepted",
       "returned": "Returned"
+    },
+    "feedback": {
+      "required": "Feedback is required to request changes",
+      "error": "Error occurred while requesting changes"
     }
   },
   "notFound": {

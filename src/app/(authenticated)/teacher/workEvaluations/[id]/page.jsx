@@ -1,41 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  ArrowLeft,
-  Save,
-  Send,
-  RotateCcw,
-  Upload,
-  X,
-  Plus,
-  Menu,
-  User,
-} from "lucide-react";
+import { Upload, X, Plus, Menu, User } from "lucide-react";
 import "./page.css";
 import { useWorkData } from "../../../../../hooks/useWorkStore";
 import { WORK_TYPES } from "../../../../../enums/workTypes";
 import Button from "../../../../../components/button";
-import { getWorkTypes } from "../../../../../services/utils/utils";
+import { getWorkTypes, navigateTo } from "../../../../../services/utils/utils";
 import { useTranslation } from "react-i18next";
-
-const getDisplayWorkType = (apiType) => {
-  return WORK_TYPES[apiType] || apiType;
-};
+import { useWorkEvaluation } from "./useWorkEvaluation";
 
 const WorkEvaluation = () => {
   const { id } = useParams();
   const workId = Number(id);
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const currentLang = i18n.language;
-
   const {
     workData: storedWork,
     hasData,
     isLoading: isLoadingWork,
     error,
-    loadWork,
   } = useWorkData(workId);
-
   const [workData, setWorkData] = useState(() => {
     if (storedWork) {
       return {
@@ -46,7 +31,7 @@ const WorkEvaluation = () => {
         workType: getWorkTypes(storedWork.workType.name, currentLang),
         authors: storedWork.authors || [],
         description: storedWork.description || "",
-        abstract: storedWork.abstract || "",
+        content: storedWork.content || "",
         links: (storedWork.links || []).map((link) =>
           typeof link === "string" ? link : link.url
         ),
@@ -58,7 +43,7 @@ const WorkEvaluation = () => {
         status: storedWork.status || t("workEvaluation.status.underReview"),
         feedback: storedWork.feedback || "",
         teachers: storedWork.teachers || null,
-        date: storedWork.date || null,
+        approvedAt: storedWork.approvedAt || null,
       };
     }
     return {
@@ -70,7 +55,7 @@ const WorkEvaluation = () => {
       type: "",
       authors: [],
       description: "",
-      abstract: "",
+      content: "",
       links: [],
       labels: [],
       status: t("workEvaluation.status.underReview"),
@@ -79,6 +64,13 @@ const WorkEvaluation = () => {
       date: null,
     };
   });
+
+  const {
+    requestChangesWithData,
+    publishWork,
+    isRequestChangesLoading,
+    isPublishLoading,
+  } = useWorkEvaluation();
 
   if (isLoadingWork) {
     return (
@@ -108,10 +100,10 @@ const WorkEvaluation = () => {
   });
   const [linkInput, setLinkInput] = useState("");
   const [labelInput, setLabelInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState("");
   const [showAddLabel, setShowAddLabel] = useState(false);
   const [showAddLink, setShowAddLink] = useState(false);
+  const [feedbackError, setFeedbackError] = useState("");
 
   useEffect(() => {
     if (workData && workData.id) {
@@ -121,7 +113,7 @@ const WorkEvaluation = () => {
 
   const [wordCounts, setWordCounts] = useState({
     description: 0,
-    abstract: 0,
+    content: 0,
     feedback: 0,
   });
 
@@ -130,14 +122,14 @@ const WorkEvaluation = () => {
       description: formData.description.trim()
         ? formData.description.trim().split(/\s+/).length
         : 0,
-      abstract: formData.abstract.trim()
-        ? formData.abstract.trim().split(/\s+/).length
+      content: formData.content.trim()
+        ? formData.content.trim().split(/\s+/).length
         : 0,
       feedback: formData.feedback.trim()
         ? formData.feedback.trim().split(/\s+/).length
         : 0,
     });
-  }, [formData.description, formData.abstract, formData.feedback]);
+  }, [formData.description, formData.content, formData.feedback]);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -198,13 +190,6 @@ const WorkEvaluation = () => {
     }));
   };
 
-  const handleKeyPress = (e, field, value, setter) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      addToList(field, value, setter);
-    }
-  };
-
   const handleAddLabel = () => {
     if (labelInput.trim() && !formData.labels.includes(labelInput.trim())) {
       addToList("labels", labelInput, setLabelInput);
@@ -219,34 +204,60 @@ const WorkEvaluation = () => {
     }
   };
 
-  const simulateApiCall = async (action) => {
-    setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsLoading(false);
-    return true;
-  };
-
   const handleAccept = async () => {
-    const success = await simulateApiCall("accept");
-    if (success) {
-      setFormData((prev) => ({
-        ...prev,
-        status: t("workEvaluation.status.accepted"),
-      }));
-      setShowSuccessMessage(t("workEvaluation.messages.workAccepted"));
-      setTimeout(() => setShowSuccessMessage(""), 5000);
+    try {
+      const success = await publishWork(workId);
+      if (success) {
+        setFormData((prev) => ({
+          ...prev,
+          status: t("workEvaluation.status.accepted"),
+        }));
+        setShowSuccessMessage(t("workEvaluation.messages.workAccepted"));
+        navigateTo("/", navigate, currentLang);
+      }
+    } catch (error) {
+      console.error("Error publishing work:", error);
     }
   };
 
   const handleReturn = async () => {
-    const success = await simulateApiCall("return");
-    if (success) {
-      setFormData((prev) => ({
-        ...prev,
-        status: t("workEvaluation.status.returned"),
-      }));
-      setShowSuccessMessage(t("workEvaluation.messages.workReturned"));
-      setTimeout(() => setShowSuccessMessage(""), 5000);
+    try {
+      setFeedbackError("");
+
+      if (!formData.feedback.trim()) {
+        setFeedbackError(
+          t(
+            "workEvaluation.feedback.required",
+            "Feedback is required to request changes"
+          )
+        );
+        return;
+      }
+
+      const success = await requestChangesWithData(
+        workId,
+        formData,
+        storedWork,
+        currentLang
+      );
+
+      if (success) {
+        setFormData((prev) => ({
+          ...prev,
+          status: t("workEvaluation.status.returned"),
+        }));
+        setShowSuccessMessage(t("workEvaluation.messages.workReturned"));
+        setTimeout(() => setShowSuccessMessage(""), 5000);
+        navigateTo("/", navigate, currentLang);
+      }
+    } catch (error) {
+      console.error("Error requesting changes:", error);
+      setFeedbackError(
+        t(
+          "workEvaluation.feedback.error",
+          "Error occurred while requesting changes"
+        )
+      );
     }
   };
 
@@ -492,6 +503,24 @@ const WorkEvaluation = () => {
 
           <div className="form-section">
             <label className="form-label">
+              {t("workEvaluation.form.contentWordCount", {
+                count: wordCounts.content,
+              })}
+            </label>
+            <textarea
+              value={formData.content}
+              onChange={(e) => handleInputChange("content", e.target.value)}
+              rows={4}
+              className={`form-textarea`}
+              placeholder={t(
+                "workEvaluation.form.contentPlaceholder",
+                "Enter the content..."
+              )}
+            />
+          </div>
+
+          <div className="form-section">
+            <label className="form-label">
               {t("workEvaluation.form.labels")}
             </label>
             <div className="labels-section">
@@ -617,29 +646,48 @@ const WorkEvaluation = () => {
             </label>
             <textarea
               value={formData.feedback}
-              onChange={(e) => handleInputChange("feedback", e.target.value)}
+              onChange={(e) => {
+                handleInputChange("feedback", e.target.value);
+                if (feedbackError) setFeedbackError("");
+              }}
               rows={4}
-              className={`form-textarea`}
+              className={`form-textarea ${feedbackError ? "error" : ""}`}
+              placeholder={t(
+                "workEvaluation.form.feedbackPlaceholder",
+                "Provide feedback for the student..."
+              )}
               required
             />
+            {feedbackError && (
+              <span
+                className="error-message"
+                style={{
+                  color: "red",
+                  fontSize: "0.875rem",
+                  marginTop: "0.25rem",
+                }}
+              >
+                {feedbackError}
+              </span>
+            )}
           </div>
         </div>
 
         <div className="action-buttons">
           <button
             onClick={handleReturn}
-            disabled={isLoading}
+            disabled={isRequestChangesLoading || isPublishLoading}
             className="btn btn-danger"
           >
-            {isLoading && <div className="loading-spinner"></div>}
+            {isRequestChangesLoading && <div className="loading-spinner"></div>}
             {t("workEvaluation.actions.return")}
           </button>
           <button
             onClick={handleAccept}
-            disabled={isLoading}
+            disabled={isRequestChangesLoading || isPublishLoading}
             className="btn btn-tertiary"
           >
-            {isLoading && <div className="loading-spinner"></div>}
+            {isPublishLoading && <div className="loading-spinner"></div>}
             {t("workEvaluation.actions.accept")}
           </button>
         </div>

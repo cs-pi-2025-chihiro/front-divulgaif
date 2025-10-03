@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createWork } from "../../../services/works/createWork";
+import { WORK_STATUS } from "../../../enums/workStatus";
 
 export const useCreateWork = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,16 +14,17 @@ export const useCreateWork = () => {
       const result = await createWork(workData, status);
       return result;
     } catch (error) {
-      setError(error.message);
       throw error;
     } finally {
       setIsLoading(false);
     }
   };
 
-  const saveDraft = (workData) => handleCreateWork(workData, "draft");
-  const submitForReview = (workData) => handleCreateWork(workData, "under_review");
-  const publish = (workData) => handleCreateWork(workData, "published");
+  const saveDraft = (workData) => handleCreateWork(workData, WORK_STATUS.DRAFT);
+  const submitForReview = (workData) =>
+    handleCreateWork(workData, WORK_STATUS.SUBMITTED);
+  const publish = (workData) =>
+    handleCreateWork(workData, WORK_STATUS.PUBLISHED);
 
   return {
     isLoading,

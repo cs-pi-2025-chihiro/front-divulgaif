@@ -192,6 +192,47 @@
   gap: 12px;
 }
 
+/* Novo container para o input e botão + */
+.label-input-container {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  height: 44px;
+}
+
+/* Novo estilo para o botão + */
+.add-label-btn {
+  padding: 0;
+  border: 1px solid var(--dark-green);
+  border-radius: 6px;
+  background: var(--dark-green);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 44px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.add-label-btn:hover:not(:disabled) {
+  background: var(--lighter-green);
+  border-color: var(--lighter-green);
+  color: black;
+}
+
+.add-label-btn:disabled {
+  background: #666;
+  border-color: #666;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
 .labels-list {
   display: flex;
   flex-wrap: wrap;
@@ -210,8 +251,6 @@
 }
 
 .remove-label {
-  background: none;
-  border: none;
   color: var(--dark-green);
   cursor: pointer;
   font-size: 16px;
@@ -224,11 +263,19 @@
   justify-content: center;
 }
 
+.remove-label-btn {
+  color: red;
+  font-size: larger;
+}
+
 .label-input {
+  flex: 1;
   padding: 8px 12px;
   border: 1px solid var(--dark-green);
   border-radius: 6px;
   font-size: 14px;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .label-input:focus {
@@ -384,4 +431,65 @@
     width: 100%;
     text-align: center;
   }
+
+  .label-input-container {
+    margin-left: 1rem;
+  }
+}
+
+.loading-suggestions {
+  padding: 8px;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  margin-top: 8px;
+}
+
+.suggestions-box {
+  left: 1rem;
+  right: 1rem;
+  background: white;
+  border: 1px solid #d1d1d1;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions-header {
+  background-color: var(--dark-green);
+  color: white;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.suggestions-list-label {
+  left: 1rem;
+  right: 1rem;
+  border: 1px solid #d1d1d1;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 4px 0;
+}
+
+.suggestion-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background-color: #f5f5f5;
+}
+
+.suggestion-item-label{
+  background-color: black;
 }

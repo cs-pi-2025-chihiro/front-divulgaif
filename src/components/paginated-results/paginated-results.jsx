@@ -114,34 +114,35 @@ const PaginatedResults = ({
         </div>
       </div>
 
-      {isLoading ? (
-        <div className="work-cards-container-new">
-          {Array.from({ length: pageSize }).map((_, index) => (
-            <LoadingCard key={`loading-${index}`} />
-          ))}
-        </div>
-      ) : content.length > 0 ? (
-        <div className="work-cards-container-new">
-          {content.map((work) => (
-            <div style={{ marginBottom: "40px" }} key={work.id}>
-              <WorkCard
-                key={work.id}
-                id={work.id}
-                title={work.title}
-                authors={work.authors}
-                description={work.description}
-                labels={work.labels}
-                date={work.date}
-                imageUrl={work.imageUrl}
-              />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="no-results-container">
-          <p className="no-results-text">{t("errors.NoWorksFound")}</p>
-        </div>
-      )}
+      <div className="work-cards-container-new">
+        {isLoading && (
+          <div className="paginated-results-loader-overlay">
+            <div className="paginated-results-spinner"></div>
+          </div>
+        )}
+        {content.length > 0
+          ? content.map((work) => (
+              <div style={{ marginBottom: "40px" }} key={work.id}>
+                <WorkCard
+                  key={work.id}
+                  id={work.id}
+                  title={work.title}
+                  authors={work.authors}
+                  description={work.description}
+                  labels={work.labels}
+                  approvedAt={work.approvedAt}
+                  imageUrl={work.imageUrl}
+                />
+              </div>
+            ))
+          : !isLoading && (
+              <div className="no-results-container">
+                <div className="no-results-text">
+                  {t("errors.NoWorksFound")}
+                </div>
+              </div>
+            )}
+      </div>
     </div>
   );
 };

@@ -8,7 +8,7 @@ export const listWorks = async (page = 0, size = 8, filters = {}) => {
   });
 
   if (filters.search) {
-    params.append("title", filters.search);
+    params.append("search", filters.search);  
   }
 
   if (filters.workTypes) {
@@ -54,11 +54,7 @@ export const listWorks = async (page = 0, size = 8, filters = {}) => {
     params.append("endDate", filters.endDate);
   }
 
-  const result = await api.get(ENDPOINTS.WORKS.LIST + "?" + params, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const result = await api.get(ENDPOINTS.WORKS.LIST + "?" + params);
 
   return result;
 };

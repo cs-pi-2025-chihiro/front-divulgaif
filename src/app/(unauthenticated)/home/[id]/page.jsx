@@ -33,6 +33,8 @@ const WorkDetail = () => {
   const isStudent = hasRole(ROLES.STUDENT);
   const currentUser = getStoredUser();
 
+  console.log("Work data:", work);
+
   const { navigateToWorkEvaluation } = useWorkNavigation();
 
   const handleGoBack = () => {
@@ -46,9 +48,7 @@ const WorkDetail = () => {
   };
 
   const handleEvaluate = () => {
-    if (work) {
-      navigateToWorkEvaluation(work);
-    }
+    if (work) navigateToWorkEvaluation(work);
   };
 
   if (isLoading) {
@@ -85,7 +85,11 @@ const WorkDetail = () => {
   );
 
   const canEdit =
-    userIsAuthenticated && isStudent && currentUser && isWorkOwner;
+    (userIsAuthenticated &&
+      currentUser &&
+      isWorkOwner &&
+      work.status !== WORK_STATUS.SUBMITTED) ||
+    isTeacher();
 
   return (
     <div className="work-detail-container">
@@ -110,7 +114,6 @@ const WorkDetail = () => {
           </div>
         )}
       </div>
-
       <div className="work-detail-image-container">
         <div className="image-carousel">
           <img
@@ -124,8 +127,16 @@ const WorkDetail = () => {
         <h2>{t("workDetail.abstract") || "Resumo"}</h2>
         <p className="work-detail-abstract">
           {work.description ||
-            t("common.noDescription") ||
+            t("common.notAvailable") ||
             "Nenhuma descrição disponível"}
+        </p>
+      </div>
+      <div className="work-detail-description">
+        <h2>{t("workDetail.content") || "Conteúdo"}</h2>
+        <p className="work-detail-abstract">
+          {work.content ||
+            t("common.notAvailable") ||
+            "Nenhum conteúdo disponível"}
         </p>
       </div>
       <div className="work-detail-content">
@@ -139,8 +150,8 @@ const WorkDetail = () => {
 
           <h2>{t("workDetail.publishDate") || "Data de Publicação"}</h2>
           <p className="work-detail-date">
-            {work.date
-              ? new Date(work.date).toLocaleDateString(i18n.language)
+            {work.approvedAt
+              ? new Date(work.approvedAt).toLocaleDateString(i18n.language)
               : t("common.notAvailable") || "Não disponível"}
           </p>
         </div>
@@ -171,20 +182,20 @@ const WorkDetail = () => {
           </ul>
         </div>
       )}
-      {canEdit && (
-        <div className="work-detail-actions">
-          <Button variant="tertiary" size="lg" onClick={handleEdit}>
-            {t("common.edit")}
-          </Button>
-        </div>
-      )}
-      {canEvaluate(work.status) && (
-        <div className="work-detail-evaluation">
+      <div className="work-detail-actions">
+        {canEdit && (
+          <>
+            <Button variant="tertiary" size="lg" onClick={handleEdit}>
+              {t("common.edit")}
+            </Button>
+          </>
+        )}
+        {canEvaluate(work.status) && (
           <Button variant="tertiary" size="lg" onClick={handleEvaluate}>
             {t("workDetail.evaluate") || "Avaliar"}
           </Button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

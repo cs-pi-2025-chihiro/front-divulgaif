@@ -15,10 +15,12 @@
     "edit": "Editar",
     "save": "Salvar",
     "cancel": "Cancelar",
+    "clearForm": "Limpar Formulário",
     "notAvailable": "Não disponível",
     "noDescription": "Nenhuma descrição disponível",
     "retry": "Por favor, tente novamente mais tarde",
-    "clearFilters": "Limpar filtros"
+    "clearFilters": "Limpar filtros",
+    "sessionExpired": "Sessão expirada. Faça login para salvar seu trabalho."
   },
   "home": {
     "welcome": "IF Xplore",
@@ -39,11 +41,23 @@
     "unexpectedError": "Ocorreu um erro inesperado",
     "workTypeRequired": "O tipo do trabalho é obrigatório.",
     "titleRequired": "O título do trabalho é obrigatório.",
+    "titleTooShort": "O título deve ter pelo menos 3 caracteres.",
+    "titleTooLong": "O título deve ter no máximo 200 caracteres.",
     "authorsRequired": "O campo de autores não pode estar vazio.",
+    "descriptionTooLong": "A descrição deve ter no máximo 160 palavras.",
+    "abstractTooLong": "O resumo deve ter no máximo 300 palavras.",
+    "invalidUrl": "Um ou mais links são inválidos.",
+    "validationFailed": "Por favor, corrija os erros no formulário:",
     "saveDraftError": "Erro ao salvar rascunho. Tente novamente.",
     "submitError": "Erro ao enviar trabalho. Tente novamente.",
     "publishError": "Erro ao publicar trabalho. Tente novamente.",
-    "NoWorksFound": "Nenhum trabalho encontrado."
+    "NoWorksFound": "Nenhum trabalho encontrado.",
+    "authorNameEmailRequired": "Nome e email do autor são obrigatórios.",
+    "duplicateAuthorEmail": "Um autor com este email já existe.",
+    "authorTypeRequired": "Por favor, selecione um tipo (estudante ou professor) para o novo autor.",
+    "contentTooLong": "O conteúdo deve ter no máximo 300 palavras.",
+    "requiredFieldsMissing": "Por favor, preencha todos os campos obrigatórios.",
+    "descriptionRequired": "A descrição é obrigatória."
   },
   "workTypes": {
     "article": "Artigo",
@@ -63,6 +77,7 @@
     "advisor": "Professor Responsável",
     "publishDate": "Data de Publicação",
     "abstract": "Resumo",
+    "content": "Conteúdo",
     "keywords": "Palavras-chaves",
     "additionalLinks": "Links Adicionais",
     "link": "Link",
@@ -168,11 +183,13 @@
     "workimage": "Imagem do Trabalho",
     "uploadimage": "Selecione uma imagem",
     "dragdropimage": "Ou arraste e solte um arquivo",
+    "uploadingImage": "Fazendo upload da imagem...",
     "worktype": "Tipo do Trabalho",
     "worktitle": "Título",
     "workauthors": "Autores",
     "workdescription": "Descrição",
     "workabstract": "Resumo",
+    "workcontent": "Conteúdo",
     "labels": "Labels",
     "links": "Links",
     "words": "palavras",
@@ -192,7 +209,10 @@
   "messages": {
     "draftSaved": "Rascunho salvo com sucesso!",
     "sentForReview": "Trabalho enviado para avaliação com sucesso!",
-    "published": "Trabalho publicado com sucesso!"
+    "published": "Trabalho publicado com sucesso!",
+    "dataRestored": "Dados do formulário foram restaurados automaticamente.",
+    "confirmClearForm": "Tem certeza que deseja limpar todos os dados do formulário?",
+    "formCleared": "Formulário limpo com sucesso!"
   },
   "workEvaluation": {
     "title": "Avaliação de Trabalho",
@@ -210,13 +230,16 @@
       "description": "Descrição*",
       "descriptionPlaceholder": "Descrição meramente ilustrativa deve conter no máximo 160 palavras para aceitação.",
       "descriptionWordCount": "Descrição* ({{count}}/160 palavras)",
+      "contentWordCount": "Conteúdo* ({{count}}/500 palavras)",
+      "contentPlaceholder": "Digite o conteúdo...",
       "labels": "Labels",
       "newLabel": "Nova label",
       "links": "Links",
       "addLink": "Adicionar link",
       "linkPlaceholder": "https://exemplo.com",
       "feedback": "Feedback*",
-      "feedbackWordCount": "Feedback* ({{count}}/160 palavras)"
+      "feedbackWordCount": "Feedback* ({{count}}/160 palavras)",
+      "feedbackPlaceholder": "Forneça feedback para o estudante..."
     },
     "authors": {
       "fullName": "Nome Completo",
@@ -235,9 +258,13 @@
       "workReturned": "Trabalho devolvido com sucesso!"
     },
     "status": {
-      "underReview": "Em Avaliação",
+      "underReview": "Submetido",
       "accepted": "Aceito",
       "returned": "Devolvido"
+    },
+    "feedback": {
+      "required": "Feedback é obrigatório para solicitar mudanças",
+      "error": "Erro ao solicitar mudanças"
     }
   }
 }

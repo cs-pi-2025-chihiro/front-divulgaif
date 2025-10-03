@@ -2,24 +2,18 @@ import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "./author-input.css";
 
-const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
+const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const [newAuthor, setNewAuthor] = useState({
     name: "",
     email: "",
-    type: "student",
+    type: null,
   });
   const containerRef = useRef(null);
-
-  useEffect(() => {
-    setNewAuthor((prev) => ({
-      ...prev,
-      type: "student",
-    }));
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -47,7 +41,7 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
         );
         setFilteredSuggestions(filtered);
       } catch (error) {
-        console.error("Erro ao buscar sugestões:", error);
+        console.error("Error fetching suggestions:", error);
         setFilteredSuggestions([]);
       } finally {
         setIsLoading(false);
@@ -58,12 +52,17 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
   };
 
   const addAuthorFromSuggestion = (author) => {
-    setAuthors([...authors, author]);
+    if (!authors.some((a) => a.id === author.id)) {
+      setAuthors([...authors, author]);
+    }
     setInputValue("");
     setFilteredSuggestions([]);
   };
 
   const removeAuthor = (authorToRemove) => {
+    if ((mode === 'create' || mode === 'edit') && currentUser && authorToRemove.id === currentUser.id) {
+      return;
+    }
     setAuthors(authors.filter((author) => author.id !== authorToRemove.id));
   };
 
@@ -73,10 +72,43 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
   };
 
   const addNewAuthorManually = () => {
-    if (newAuthor.name && newAuthor.email) {
-      const newAuthorData = { ...newAuthor, id: `new_${Date.now()}` };
-      setAuthors([...authors, newAuthorData]);
-      setNewAuthor({ name: "", email: "", type: "student" });
+    if (newAuthor.name.trim() && newAuthor.email.trim() && newAuthor.type) {
+      if (
+        authors.some(
+          (a) =>
+            a.email &&
+            a.email.toLowerCase() === newAuthor.email.trim().toLowerCase()
+        )
+      ) {
+        alert(
+          t("errors.duplicateAuthorEmail") ||
+            "An author with this email already exists."
+        );
+        return;
+      }
+
+      setAuthors([
+        ...authors,
+        {
+          name: newAuthor.name.trim(),
+          email: newAuthor.email.trim(),
+          type: newAuthor.type,
+        },
+      ]);
+
+      setNewAuthor({ name: "", email: "", type: null });
+    } else {
+      if (!newAuthor.type) {
+        alert(
+          t("errors.authorTypeRequired") ||
+            "Please select a type (student or teacher) for the new author."
+        );
+      } else {
+        alert(
+          t("errors.authorNameEmailRequired") ||
+            "Please provide both name and email for the new author."
+        );
+      }
     }
   };
 
@@ -84,14 +116,14 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
     <div className="custom-autocomplete-container" ref={containerRef}>
       <div className="autocomplete-main-box">
         <div className="tags-container">
-          {authors.map((author) => (
-            <div key={author.id} className="author-tag">
-              <span className="author-icon">👤</span>
+          {authors.map((author, index) => (
+            <div key={author.id || author.email} className="author-tag">
               {author.name}
               <button
                 type="button"
                 className="remove-tag-button"
                 onClick={() => removeAuthor(author)}
+                disabled={(mode === 'create' || mode === 'edit') && currentUser && author.id === currentUser.id}
               >
                 &times;
               </button>
@@ -114,7 +146,7 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
         <ul className="suggestions-list">
           {filteredSuggestions.map((s) => (
             <li key={s.id} onClick={() => addAuthorFromSuggestion(s)}>
-              {s.name}
+              {s.name} ({s.email})
             </li>
           ))}
         </ul>
@@ -147,18 +179,16 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions }) => {
             <div className="type-buttons">
               <button
                 type="button"
-                className={`type-button ${
-                  newAuthor.type === "student" ? "active" : ""
-                }`}
+                className={`type-button ${newAuthor.type === "student" ? "active" : ""
+                  }`}
                 onClick={() => setNewAuthor({ ...newAuthor, type: "student" })}
               >
                 {t("new-work.student")}
               </button>
               <button
                 type="button"
-                className={`type-button ${
-                  newAuthor.type === "teacher" ? "active" : ""
-                }`}
+                className={`type-button ${newAuthor.type === "teacher" ? "active" : ""
+                  }`}
                 onClick={() => setNewAuthor({ ...newAuthor, type: "teacher" })}
               >
                 {t("new-work.teacher")}

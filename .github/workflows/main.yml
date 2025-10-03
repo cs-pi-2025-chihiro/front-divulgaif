@@ -25,6 +25,10 @@ jobs:
           npm install
 
       - name: Build React app
+        env:
+          REACT_APP_SUAP_CLIENT_ID: ${{ secrets.REACT_APP_SUAP_CLIENT_ID }}
+          REACT_APP_SUAP_SCOPE: ${{ secrets.REACT_APP_SUAP_SCOPE }}
+          REACT_APP_SUAP_PROVIDER: ${{ secrets.REACT_APP_SUAP_PROVIDER }}
         run: |
           if [[ $GITHUB_REF == refs/heads/main ]]; then
             npm run build
