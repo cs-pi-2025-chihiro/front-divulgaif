@@ -76,7 +76,7 @@ const AuthorInput = ({
 
   const removeAuthor = (authorToRemove) => {
     if (
-      mode === "create" &&
+      (mode === "create" || mode === "edit") &&
       currentUser &&
       authorToRemove.id === currentUser.id
     ) {
@@ -143,7 +143,7 @@ const AuthorInput = ({
                 className="remove-tag-button"
                 onClick={() => removeAuthor(author)}
                 disabled={
-                  mode === "create" &&
+                  (mode === "create" || mode === "edit") &&
                   currentUser &&
                   author.id === currentUser.id
                 }
