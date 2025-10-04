@@ -30,10 +30,7 @@ const WorkDetail = () => {
 
   const { work, isLoading } = useWork({ id: workId });
   const userIsAuthenticated = isAuthenticated();
-  const isStudent = hasRole(ROLES.STUDENT);
   const currentUser = getStoredUser();
-
-  console.log("Work data:", work);
 
   const { navigateToWorkEvaluation } = useWorkNavigation();
 

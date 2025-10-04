@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import "./page.css";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -102,7 +102,6 @@ const WorkFormPage = () => {
   useEffect(() => {
     if (!isEditMode && hasCachedData()) {
       const cachedData = getCachedFormData();
-      console.log("Restoring cached form data:", cachedData);
       if (cachedData) {
         setAuthors(cachedData.authors || []);
         setLabels(cachedData.labels || []);
@@ -193,7 +192,6 @@ const WorkFormPage = () => {
         setWorkType(mapWorkTypeFromBackend(workData.workType));
 
         const fetchedAuthors = workData.authors || [];
-        console.log("workData.authors", workData.authors);
         setAuthors(fetchedAuthors);
         setStudentIds(
           fetchedAuthors
@@ -479,15 +477,15 @@ const WorkFormPage = () => {
     validateSingleField("authors", newAuthors);
   };
 
-  const handleLabelsChange = (newLabels) => {
+  const handleLabelsChange = useCallback((newLabels) => {
     setLabels(newLabels);
     validateSingleField("labels", newLabels);
-  };
+  }, []);
 
-  const handleLinksChange = (newLinks) => {
+  const handleLinksChange = useCallback((newLinks) => {
     setLinks(newLinks);
     validateSingleField("links", newLinks);
-  };
+  }, []);
 
   const handleImageChange = (file) => {
     setSelectedImageFile(file);
