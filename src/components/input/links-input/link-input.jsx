@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useDebounce } from "@uidotdev/usehooks";
 import "./link-input.css";
 
 const LinkInput = ({ links, setLinks, getSuggestions }) => {
@@ -8,6 +9,8 @@ const LinkInput = ({ links, setLinks, getSuggestions }) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const containerRef = useRef(null);
+
+  const debouncedInputValue = useDebounce(inputValue, 250);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -22,27 +25,34 @@ const LinkInput = ({ links, setLinks, getSuggestions }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleInputChange = async (e) => {
-    const value = e.target.value;
-    setInputValue(value);
-
-    if (value && value.length >= 2) {
-      setIsLoading(true);
-      try {
-        const suggestions = await getSuggestions(value);
-        const filtered = suggestions.filter(
-          (suggestion) => !links.some((link) => link.id === suggestion.id)
-        );
-        setFilteredSuggestions(filtered);
-      } catch (error) {
-        console.error("Erro ao buscar sugestões:", error);
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (debouncedInputValue && debouncedInputValue.length >= 2) {
+        setIsLoading(true);
+        try {
+          const suggestions = await getSuggestions(debouncedInputValue);
+          const filtered = suggestions.filter(
+            (suggestion) => !links.some((link) => link.id === suggestion.id)
+          );
+          setFilteredSuggestions(filtered);
+        } catch (error) {
+          console.error("Erro ao buscar sugestões:", error);
+          setFilteredSuggestions([]);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
         setFilteredSuggestions([]);
-      } finally {
         setIsLoading(false);
       }
-    } else {
-      setFilteredSuggestions([]);
-    }
+    };
+
+    fetchSuggestions();
+  }, [debouncedInputValue, getSuggestions, links]);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
   };
 
   const addLinkFromSuggestion = (link) => {
@@ -106,9 +116,6 @@ const LinkInput = ({ links, setLinks, getSuggestions }) => {
             onChange={handleInputChange}
             placeholder={t("new-work.searchLink")}
           />
-          {isLoading && (
-            <div className="loading-indicator">{t("new-work.loading")}...</div>
-          )}
         </div>
 
         <div className="add-link-button-container">

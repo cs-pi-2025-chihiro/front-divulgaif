@@ -1,12 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useDebounce } from "@uidotdev/usehooks";
 import "./author-input.css";
 
-const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode }) => {
+const AuthorInput = ({
+  authors,
+  setAuthors,
+  getSuggestions,
+  currentUser,
+  mode,
+}) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const debouncedInputValue = useDebounce(inputValue, 250);
 
   const [newAuthor, setNewAuthor] = useState({
     name: "",
@@ -28,27 +37,33 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleInputChange = async (e) => {
-    const value = e.target.value;
-    setInputValue(value);
-
-    if (value && value.length >= 2) {
-      setIsLoading(true);
-      try {
-        const suggestions = await getSuggestions(value);
-        const filtered = suggestions.filter(
-          (s) => !authors.some((a) => a.id === s.id)
-        );
-        setFilteredSuggestions(filtered);
-      } catch (error) {
-        console.error("Error fetching suggestions:", error);
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (debouncedInputValue && debouncedInputValue.length >= 2) {
+        setIsLoading(true);
+        try {
+          const suggestions = await getSuggestions(debouncedInputValue);
+          const filtered = suggestions.filter(
+            (s) => !authors.some((a) => a.id === s.id)
+          );
+          setFilteredSuggestions(filtered);
+        } catch (error) {
+          setFilteredSuggestions([]);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
         setFilteredSuggestions([]);
-      } finally {
         setIsLoading(false);
       }
-    } else {
-      setFilteredSuggestions([]);
-    }
+    };
+
+    fetchSuggestions();
+  }, [debouncedInputValue, getSuggestions, authors]);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
   };
 
   const addAuthorFromSuggestion = (author) => {
@@ -60,7 +75,11 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
   };
 
   const removeAuthor = (authorToRemove) => {
-    if ((mode === 'create' || mode === 'edit') && currentUser && authorToRemove.id === currentUser.id) {
+    if (
+      (mode === "create" || mode === "edit") &&
+      currentUser &&
+      authorToRemove.id === currentUser.id
+    ) {
       return;
     }
     setAuthors(authors.filter((author) => author.id !== authorToRemove.id));
@@ -123,7 +142,11 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
                 type="button"
                 className="remove-tag-button"
                 onClick={() => removeAuthor(author)}
-                disabled={(mode === 'create' || mode === 'edit') && currentUser && author.id === currentUser.id}
+                disabled={
+                  (mode === "create" || mode === "edit") &&
+                  currentUser &&
+                  author.id === currentUser.id
+                }
               >
                 &times;
               </button>
@@ -136,9 +159,6 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
             onChange={handleInputChange}
             placeholder={t("new-work.searchAuthor")}
           />
-          {isLoading && (
-            <div className="loading-indicator">{t("new-work.loading")}...</div>
-          )}
         </div>
       </div>
 
@@ -179,16 +199,18 @@ const AuthorInput = ({ authors, setAuthors, getSuggestions, currentUser, mode })
             <div className="type-buttons">
               <button
                 type="button"
-                className={`type-button ${newAuthor.type === "student" ? "active" : ""
-                  }`}
+                className={`type-button ${
+                  newAuthor.type === "student" ? "active" : ""
+                }`}
                 onClick={() => setNewAuthor({ ...newAuthor, type: "student" })}
               >
                 {t("new-work.student")}
               </button>
               <button
                 type="button"
-                className={`type-button ${newAuthor.type === "teacher" ? "active" : ""
-                  }`}
+                className={`type-button ${
+                  newAuthor.type === "teacher" ? "active" : ""
+                }`}
                 onClick={() => setNewAuthor({ ...newAuthor, type: "teacher" })}
               >
                 {t("new-work.teacher")}

@@ -101,9 +101,10 @@
   background-color: #f5f5f5;
 }
 
-.loading-indicator {
+.loading-suggestions {
+  padding: 8px;
   font-size: 12px;
   color: #666;
   font-style: italic;
-  padding: 5px;
+  margin-top: 8px;
 }
