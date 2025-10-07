@@ -45,7 +45,6 @@ export const createWork = async (workData, status = "draft") => {
   } catch (error) {
     if (error.response?.status === 401) throw error;
     else {
-      console.log("Error creating work:", error);
       throw new Error(
         error.response?.data?.error ||
           "An error occurred while creating the work"

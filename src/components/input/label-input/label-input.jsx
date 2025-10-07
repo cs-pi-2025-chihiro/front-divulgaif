@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useDebounce } from "@uidotdev/usehooks";
 import "./label-input.css";
 
 const LabelInput = ({ labels, setLabels, getSuggestions }) => {
@@ -9,40 +10,36 @@ const LabelInput = ({ labels, setLabels, getSuggestions }) => {
   const [isLoading, setIsLoading] = useState(false);
   const containerRef = useRef(null);
 
+  const debouncedInputValue = useDebounce(inputValue, 250);
+
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target)
-      ) {
+    const fetchSuggestions = async () => {
+      if (debouncedInputValue && debouncedInputValue.length >= 2) {
+        setIsLoading(true);
+        try {
+          const suggestions = await getSuggestions(debouncedInputValue);
+          const filtered = suggestions.filter(
+            (suggestion) => !labels.some((label) => label.id === suggestion.id)
+          );
+          setFilteredSuggestions(filtered);
+        } catch (error) {
+          console.error("Erro ao buscar sugestões:", error);
+          setFilteredSuggestions([]);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
         setFilteredSuggestions([]);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleInputChange = async (e) => {
-    const value = e.target.value;
-    setInputValue(value);
-
-    if (value && value.length >= 2) {
-      setIsLoading(true);
-      try {
-        const suggestions = await getSuggestions(value);
-        const filtered = suggestions.filter(
-          (suggestion) => !labels.some((label) => label.id === suggestion.id)
-        );
-        setFilteredSuggestions(filtered);
-      } catch (error) {
-        console.error("Erro ao buscar sugestões:", error);
-        setFilteredSuggestions([]);
-      } finally {
         setIsLoading(false);
       }
-    } else {
-      setFilteredSuggestions([]);
-    }
+    };
+
+    fetchSuggestions();
+  }, [debouncedInputValue, getSuggestions, labels]);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
   };
 
   const addLabelFromSuggestion = (label) => {
@@ -98,9 +95,6 @@ const LabelInput = ({ labels, setLabels, getSuggestions }) => {
             onChange={handleInputChange}
             placeholder={t("new-work.searchLabel")}
           />
-          {isLoading && (
-            <div className="loading-indicator">{t("new-work.loading")}...</div>
-          )}
         </div>
 
         <div className="add-input-button-container">
