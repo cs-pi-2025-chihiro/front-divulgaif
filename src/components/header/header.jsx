@@ -13,7 +13,7 @@ import Drawer from "../drawer/drawer";
 import AuthButton from "../button/auth-button/auth-button";
 import { aboutWebsite } from "../../constants";
 import { navigateTo } from "../../services/utils/utils";
-import { ROLES } from "../../enums/roles";
+
 
 const Header = () => {
   const { t, i18n } = useTranslation();
