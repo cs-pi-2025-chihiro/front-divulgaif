@@ -28,6 +28,8 @@ export const ENDPOINTS = {
   LABELS: {
     LIST: "/labels/list",
     CREATE: "/labels",
+    UPDATE: "/labels/{id}",
+    DELETE: "/labels/{id}",
   },
   LINKS: {
     LIST: "/links/list",
