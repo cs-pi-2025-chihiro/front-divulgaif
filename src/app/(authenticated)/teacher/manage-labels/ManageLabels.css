@@ -1,0 +1,171 @@
+.manage-labels-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: var(--font-primary, "Montserrat", sans-serif);
+}
+
+.labels-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--green-beige, #dad7cd);
+}
+
+.labels-header h1 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--dark-green, #2a4e33);
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.labels-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.search-wrapper {
+    flex-grow: 1;
+    min-width: 250px;
+}
+
+.labels-search-input {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    padding-left: 2.5rem;
+    font-size: 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--green-beige, #dad7cd);
+    background-color: var(--white-gray, #f8f8f8);
+}
+
+.labels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.label-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white-gray, #f8f8f8);
+    border: 1px solid var(--green-beige, #dad7cd);
+    border-radius: 8px;
+    padding: 1rem;
+    transition: box-shadow 0.2s ease-in-out;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.label-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.label-card-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    overflow: hidden;
+}
+
+.label-icon {
+    color: var(--primary-green, #063f28);
+    flex-shrink: 0;
+}
+
+.label-name {
+    font-weight: 500;
+    color: var(--text-dark, #333);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.label-count,
+.label-date {
+    font-size: 0.8rem;
+    color: var(--gray, #666);
+    margin-left: 0.5rem;
+    white-space: nowrap;
+}
+
+.label-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.label-card-actions .btn-ghost {
+    color: var(--gray, #666);
+    padding: 0.3rem;
+}
+
+.label-card-actions .btn-ghost:hover {
+    color: var(--dark-green, #2a4e33);
+    background-color: var(--green-beige, #dad7cd);
+}
+
+.pagination-controls-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--green-beige, #dad7cd);
+    color: var(--gray, #666);
+    font-size: 0.9rem;
+}
+
+.pagination-controls-labels>div {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.error-message {
+    color: #e74c3c;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .manage-labels-container {
+        padding: 1rem;
+    }
+
+    .labels-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .labels-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .labels-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .labels-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .pagination-controls-labels {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+    }
+}
