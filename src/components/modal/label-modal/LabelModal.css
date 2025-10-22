@@ -1,0 +1,36 @@
+.label-modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 0;
+}
+
+.label-modal-content label {
+    font-weight: 500;
+    color: var(--primary-beige);
+}
+
+.label-modal-input {
+    width: 95%;
+    padding: 0.75rem;
+    border: 1px solid var(--green-beige);
+    border-radius: var(--border-radius, 5px);
+    font-size: 1rem;
+    background-color: var(--primary-beige);
+    color: var(--text-dark);
+}
+
+.label-modal-input.input-error {
+    border-color: #e74c3c;
+    background-color: #fff5f5;
+}
+
+.label-modal-error {
+    color: #e74c3c;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.modal-footer {
+    padding-top: 1rem;
+}
