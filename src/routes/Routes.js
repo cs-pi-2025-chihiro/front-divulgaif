@@ -15,7 +15,7 @@ import MyWorks from "../app/(authenticated)/student/my-works/page";
 import WorkEvaluation from "../app/(authenticated)/teacher/workEvaluations/[id]/page";
 import WorkEvaluations from "../app/(authenticated)/teacher/workEvaluations/page";
 import Links from "../app/(authenticated)/teacher/links/page.jsx";
-import NewLink from "../app/(authenticated)/teacher/links/novo-links/page.jsx";
+import NewLink from "../app/(authenticated)/teacher/links/novo-links/page.js";
 
 
 
