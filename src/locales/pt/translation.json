@@ -130,7 +130,8 @@
     "contact": "Contato",
     "mainSearch": "Busca Principal",
     "myWorks": "Meus Trabalhos",
-    "rateWorks": "Avaliar Trabalhos"
+    "rateWorks": "Avaliar Trabalhos",
+    "links": "Links" 
   },
   "filters": {
     "title": "Filtrar Apresentação",
