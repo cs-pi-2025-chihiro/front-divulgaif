@@ -140,7 +140,7 @@ const NewLink = () => {
             disabled={isLoading}
           >
             <ArrowLeft size={18} />
-            {t("Cancelado" ) || "Cancel"}
+            {t("Cancelar" ) || "Cancel"}
           </button>
           <button
             type="submit"
@@ -150,7 +150,7 @@ const NewLink = () => {
             <Save size={18} />
             {isLoading
               ? t("Salvando") || "Saving..."
-              : t("Salvo") || "Save"}
+              : t("Salvar") || "Save"}
           </button>
         </div>
       </form>
