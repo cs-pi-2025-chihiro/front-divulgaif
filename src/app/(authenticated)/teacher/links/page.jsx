@@ -53,13 +53,13 @@ const Links = () => {
   };
 
   const handleDeleteLink = async (linkId) => {
-    if (window.confirm(t("common.confirmDelete") || "Are you sure?")) {
+    if (window.confirm(t("Delete") || "Are you sure?")) {
       try {
         await deleteLink(linkId);
         refetch();
       } catch (error) {
         console.error("Error deleting link:", error);
-        alert(t("common.errorDeleting") || "Error deleting link");
+        alert(t("Deleting") || "Error deleting link");
       }
     }
   };
@@ -98,7 +98,7 @@ const Links = () => {
             size="2lg"
           >
             <Plus className="icon" />
-            <span>{t("common.create") || "Create"}</span>
+            <span>{t("Adicionar") || "Criar"}</span>
           </Button>
         </div>
 
@@ -145,7 +145,7 @@ const Links = () => {
                   {link.url}
                 </a>
                 <p className="link-date">
-                  {t("common.createdAt") || "Created at"}:{" "}
+                  {t("Criado em ") || "Created at"}:{" "}
                   {formatDate(link.createdAt)}
                 </p>
               </div>
