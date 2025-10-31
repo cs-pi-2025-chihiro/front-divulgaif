@@ -84,7 +84,7 @@ const NewLink = () => {
       <div className="form-header">
         <h1 className="form-title">{t("Novo link") || "New Link"}</h1>
         <p className="form-description">
-          {t("common.newLinkDescription") ||
+          {t("Nova descrição") ||
             "Create a new link to share with your students"}
         </p>
       </div>
@@ -100,7 +100,7 @@ const NewLink = () => {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="title" className="form-label">
-            {t("common.title") || "Title"}
+            {t("Título") || "Title"}
             <span style={{ color: "#dc3545" }}>*</span>
           </label>
           <input
@@ -109,7 +109,7 @@ const NewLink = () => {
             name="title"
             value={formData.title}
             onChange={handleInputChange}
-            placeholder={t("common.enterTitle") || "Enter link title"}
+            placeholder={t("Adicione o título") || "Enter link title"}
             className="form-input"
             disabled={isLoading}
           />
@@ -117,7 +117,7 @@ const NewLink = () => {
 
         <div className="form-group">
           <label htmlFor="url" className="form-label">
-            {t("common.url") || "URL"}
+            {t("URL") || "URL"}
             <span style={{ color: "#dc3545" }}>*</span>
           </label>
           <input
@@ -126,7 +126,7 @@ const NewLink = () => {
             name="url"
             value={formData.url}
             onChange={handleInputChange}
-            placeholder={t("common.enterUrl") || "https://example.com"}
+            placeholder={t("Adicione URL") || "https://example.com"}
             className="form-input"
             disabled={isLoading}
           />
@@ -140,7 +140,7 @@ const NewLink = () => {
             disabled={isLoading}
           >
             <ArrowLeft size={18} />
-            {t("common.cancel" ) || "Cancel"}
+            {t("Cancelado" ) || "Cancel"}
           </button>
           <button
             type="submit"
@@ -149,8 +149,8 @@ const NewLink = () => {
           >
             <Save size={18} />
             {isLoading
-              ? t("common.saving") || "Saving..."
-              : t("common.save") || "Save"}
+              ? t("Salvando") || "Saving..."
+              : t("Salvo") || "Save"}
           </button>
         </div>
       </form>
