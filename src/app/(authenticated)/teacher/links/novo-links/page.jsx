@@ -47,7 +47,7 @@ const NewLink = () => {
     try {
       new URL(formData.url);
     } catch (err) {
-      setError(t("common.invalidUrl") || "Invalid URL format");
+      setError(t("URL inválido") || "Invalid URL format");
       return;
     }
 
@@ -67,7 +67,7 @@ const NewLink = () => {
       }, 1500);
     } catch (err) {
       setError(
-        err.message || t("common.errorCreating") || "Error creating link"
+        err.message || t("Erro ao criar o link") || "Error creating link"
       );
     } finally {
       setIsLoading(false);
@@ -82,7 +82,7 @@ const NewLink = () => {
   return (
     <div className="form-container">
       <div className="form-header">
-        <h1 className="form-title">{t("common.newLink") || "New Link"}</h1>
+        <h1 className="form-title">{t("Novo link") || "New Link"}</h1>
         <p className="form-description">
           {t("common.newLinkDescription") ||
             "Create a new link to share with your students"}
@@ -91,7 +91,7 @@ const NewLink = () => {
 
       {success && (
         <div className="success-message">
-          {t("common.linkCreated") || "Link created successfully!"}
+          {t("Link criado") || "Link created successfully!"}
         </div>
       )}
 
