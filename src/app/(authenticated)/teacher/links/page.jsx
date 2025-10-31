@@ -120,7 +120,7 @@ const Links = () => {
         <div className="empty-state">
           <ExternalLink className="empty-state-icon" />
           <h2 className="empty-state-title">
-            {t("Nenhum link encontrado") || "No links found"}
+            {t("Nenhum link encontrado") || "No links foun"}
           </h2>
           <p className="empty-state-text">
             {t("Nenhuma descrição encontrada") ||
