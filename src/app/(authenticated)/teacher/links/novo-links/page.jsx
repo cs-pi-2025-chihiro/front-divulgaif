@@ -39,7 +39,7 @@ const NewLink = () => {
     }
 
     if (!formData.url.trim()) {
-      setError(t("common.urlRequired") || "URL is required");
+      setError(t("URL necessário") || "URL is required");
       return;
     }
 
