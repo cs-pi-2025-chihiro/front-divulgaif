@@ -120,10 +120,10 @@ const Links = () => {
         <div className="empty-state">
           <ExternalLink className="empty-state-icon" />
           <h2 className="empty-state-title">
-            {t("common.noLinks") || "No links found"}
+            {t("Nenhum link encontrado") || "No links found"}
           </h2>
           <p className="empty-state-text">
-            {t("common.noLinksDescription") ||
+            {t("Nenhuma descrição encontrada") ||
               "Create a new link to get started"}
           </p>
         </div>
@@ -160,7 +160,7 @@ const Links = () => {
                 <button
                   className="action-button delete-button"
                   onClick={() => handleDeleteLink(link.id)}
-                  title={t("common.delete") || "Delete"}
+                  title={t("Deletar") || "Delete"}
                 >
                   <Trash2 size={16} />
                 </button>
