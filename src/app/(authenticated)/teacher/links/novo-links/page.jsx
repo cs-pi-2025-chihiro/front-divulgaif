@@ -34,7 +34,7 @@ const NewLink = () => {
     setSuccess(false);
 
     if (!formData.title.trim()) {
-      setError(t("common.titleRequired") || "Title is required");
+      setError(t("Título necessário") || "Title is required");
       return;
     }
 
