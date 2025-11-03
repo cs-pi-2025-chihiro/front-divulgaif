@@ -20,7 +20,8 @@
     "noDescription": "Nenhuma descrição disponível",
     "retry": "Por favor, tente novamente mais tarde",
     "clearFilters": "Limpar filtros",
-    "sessionExpired": "Sessão expirada. Faça login para salvar seu trabalho."
+    "sessionExpired": "Sessão expirada. Faça login para salvar seu trabalho.",
+    "delete": "Excluir"
   },
   "home": {
     "welcome": "IF Xplore",
@@ -130,7 +131,8 @@
     "contact": "Contato",
     "mainSearch": "Busca Principal",
     "myWorks": "Meus Trabalhos",
-    "rateWorks": "Avaliar Trabalhos"
+    "rateWorks": "Avaliar Trabalhos",
+    "manageAuthors": "Gerenciar Autores"
   },
   "filters": {
     "title": "Filtrar Apresentação",
@@ -177,7 +179,8 @@
     "previousPage": "Ir para página anterior",
     "nextPage": "Ir para próxima página",
     "currentPage": "Página {{current}} de {{total}}",
-    "resultsFound": "{{count}} resultados encontrados"
+    "resultsFound": "{{count}} resultados encontrados",
+    "showing": "Mostrando"
   },
   "new-work": {
     "workimage": "Imagem do Trabalho",
@@ -247,7 +250,21 @@
       "type": "Tipo",
       "student": "Aluno",
       "teacher": "Professor",
-      "add": "Adicionar"
+      "add": "Adicionar",
+      "title": "Gerenciar Autores",
+      "searchPlaceholder": "Buscar autores por nome ou email...",
+      "noAuthorsFound": "Nenhum autor encontrado",
+      "authors": "autores",
+      "registered": "Cadastrado",
+      "notRegistered": "Sem Cadastro",
+      "editAuthor": "Editar Autor",
+      "deleteAuthor": "Excluir Autor",
+      "deleteConfirmation": "Tem certeza que deseja excluir o autor {{name}}? Esta ação não pode ser desfeita.",
+      "name": "Nome",
+      "updateSuccess": "Autor atualizado com sucesso!",
+      "updateError": "Erro ao atualizar autor",
+      "deleteSuccess": "Autor excluído com sucesso!",
+      "deleteError": "Erro ao excluir autor"
     },
     "actions": {
       "return": "Devolver",

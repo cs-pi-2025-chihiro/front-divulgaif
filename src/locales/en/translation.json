@@ -20,7 +20,8 @@
     "noDescription": "No description available",
     "retry": "Please try again later",
     "clearFilters": "Clear filters",
-    "sessionExpired": "Session expired. Redirecting to login..."
+    "sessionExpired": "Session expired. Redirecting to login...",
+    "delete": "Delete"
   },
   "home": {
     "welcome": "IF Xplore",
@@ -124,7 +125,8 @@
     "contact": "Contact",
     "mainSearch": "Main Search",
     "myWorks": "My Works",
-    "rateWorks": "Rate Works"
+    "rateWorks": "Rate Works",
+    "manageAuthors": "Manage Authors"
   },
   "filters": {
     "title": "Filter Presentation",
@@ -171,7 +173,8 @@
     "previousPage": "Go to previous page",
     "nextPage": "Go to next page",
     "currentPage": "Page {{current}} of {{total}}",
-    "resultsFound": "{{count}} results found"
+    "resultsFound": "{{count}} results found",
+    "showing": "Showing"
   },
   "new-work": {
     "workimage": "Work Image",
@@ -241,7 +244,21 @@
       "type": "Type",
       "student": "Student",
       "teacher": "Teacher",
-      "add": "Add"
+      "add": "Add",
+      "title": "Manage Authors",
+      "searchPlaceholder": "Search authors by name or email...",
+      "noAuthorsFound": "No authors found",
+      "authors": "authors",
+      "registered": "Registered",
+      "notRegistered": "Not Registered",
+      "editAuthor": "Edit Author",
+      "deleteAuthor": "Delete Author",
+      "deleteConfirmation": "Are you sure you want to delete the author {{name}}? This action cannot be undone.",
+      "name": "Name",
+      "updateSuccess": "Author updated successfully!",
+      "updateError": "Error updating author",
+      "deleteSuccess": "Author deleted successfully!",
+      "deleteError": "Error deleting author"
     },
     "actions": {
       "return": "Return",
