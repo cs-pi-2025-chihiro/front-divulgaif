@@ -266,5 +266,18 @@
     "message": "Oops! The page you're looking for doesn't exist or you don't have permission to access it.",
     "submessage": "The link might be broken or you may need to log in to access this content.",
     "goHome": "Go Home"
+  },
+  "dashboard": {
+    "loading": "Loading dashboard data...",
+    "error": "Error loading dashboard data:",
+    "status": {
+      "published": "Published",
+      "pendingChanges": "Returned",
+      "submitted": "Submitted"
+    },
+    "charts": {
+      "frequentLabels": "Frequent Labels",
+      "mostWorks": "Most Works"
+    }
   }
 }

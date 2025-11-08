@@ -266,5 +266,18 @@
       "required": "Feedback é obrigatório para solicitar mudanças",
       "error": "Erro ao solicitar mudanças"
     }
+  },
+  "dashboard": {
+    "loading": "Carregando dados do dashboard...",
+    "error": "Erro ao carregar dados do dashboard:",
+    "status": {
+      "published": "Publicados",
+      "pendingChanges": "Retornados",
+      "submitted": "Submetidos"
+    },
+    "charts": {
+      "frequentLabels": "Labels Frequentes",
+      "mostWorks": "Mais Trabalhos"
+    }
   }
 }
