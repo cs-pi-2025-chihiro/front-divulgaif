@@ -1,0 +1,46 @@
+.stat-card {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f1f5f9;
+}
+
+.stat-card-icon {
+  flex-shrink: 0;
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: #334b3f;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card-icon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: white;
+}
+
+.stat-card-content {
+  margin-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-card-status {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.stat-card-total {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1;
+}
