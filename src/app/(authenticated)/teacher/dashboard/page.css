@@ -1,0 +1,245 @@
+.dashboard-container {
+  margin-top: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #111827;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1550px;
+}
+
+.stats-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1.5rem;
+}
+
+.dashboard-loading,
+.dashboard-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+.dashboard-loading-text {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.dashboard-error-content {
+  text-align: center;
+  color: #ef4444;
+}
+
+.dashboard-retry-button {
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #2563eb;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dashboard-retry-button:hover {
+  background-color: #1d4ed8;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f1f5f9;
+}
+
+.stat-card-icon {
+  flex-shrink: 0;
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: #334b3f;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card-icon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: white;
+}
+
+.stat-card-content {
+  margin-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-card-status {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.stat-card-total {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1;
+}
+
+.bar-list-card {
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, #86efac 0%, #4ade80 50%, #a7f3d0 100%);
+  box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1),
+    0 4px 6px -2px rgba(16, 185, 129, 0.05);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.bar-list-card-content {
+  padding: 2rem;
+  background-color: white;
+  border-radius: 1rem;
+  flex-grow: 1;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.bar-list-card-title {
+  margin-bottom: 2rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.bar-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.bar-list-item {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+}
+
+.bar-list-name {
+  flex-shrink: 0;
+  width: 6rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.bar-list-bar-container {
+  width: 100%;
+  background-color: #f1f5f9;
+  border-radius: 9999px;
+  height: 0.75rem;
+  position: relative;
+}
+
+.bar-list-bar {
+  background-color: #334b3f;
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.5s ease-out;
+}
+
+.bar-list-value {
+  flex-shrink: 0;
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: #111827;
+  min-width: 2.5rem;
+  text-align: right;
+}
+
+@media (max-width: 1280px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .chart-column:last-child {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    justify-items: center;
+  }
+
+  .chart-column:last-child {
+    grid-column: auto;
+  }
+
+  .stats-column {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .stat-card {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .dashboard-grid {
+    max-width: 400px;
+  }
+
+  .bar-list-card {
+    padding: 1rem;
+    max-width: 400px;
+  }
+
+  .bar-list-card-content {
+    padding: 1.5rem;
+  }
+
+  .stats-column {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-card {
+    width: 100%;
+    max-width: 350px;
+  }
+}

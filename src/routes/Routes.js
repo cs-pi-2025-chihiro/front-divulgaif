@@ -14,6 +14,7 @@ import TeacherRoute from "./TeacherRoute";
 import MyWorks from "../app/(authenticated)/student/my-works/page";
 import WorkEvaluation from "../app/(authenticated)/teacher/workEvaluations/[id]/page";
 import WorkEvaluations from "../app/(authenticated)/teacher/workEvaluations/page";
+import Dashboard from "../app/(authenticated)/teacher/dashboard/page";
 
 function AppRoutes() {
   const DefaultLanguageRedirect = () => {
@@ -43,6 +44,7 @@ function AppRoutes() {
         <Route element={<TeacherRoute />}>
           <Route path="rate-works" element={<WorkEvaluations />} />
           <Route path="rate-work/:id" element={<WorkEvaluation />} />
+          <Route path="dashboard" element={<Dashboard />} />
         </Route>
       </Route>
 
@@ -62,6 +64,7 @@ function AppRoutes() {
         <Route element={<TeacherRoute />}>
           <Route path="avaliar-trabalhos" element={<WorkEvaluations />} />
           <Route path="avaliar-trabalho/:id" element={<WorkEvaluation />} />
+          <Route path="dashboard" element={<Dashboard />} />
         </Route>
       </Route>
 

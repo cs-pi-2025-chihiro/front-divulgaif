@@ -1,0 +1,37 @@
+.bar-list-item {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+}
+
+.bar-list-name {
+  flex-shrink: 0;
+  width: 6rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.bar-list-bar-container {
+  width: 100%;
+  background-color: #f1f5f9;
+  border-radius: 9999px;
+  height: 0.75rem;
+  position: relative;
+}
+
+.bar-list-bar {
+  background-color: #334b3f;
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.5s ease-out;
+}
+
+.bar-list-value {
+  flex-shrink: 0;
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: #111827;
+  min-width: 2.5rem;
+  text-align: right;
+}

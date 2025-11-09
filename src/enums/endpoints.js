@@ -18,6 +18,9 @@ export const ENDPOINTS = {
     REFRESH: "/auth/refresh-token",
     ME: "/auth/me",
   },
+  DASHBOARD: {
+    GET: "/dashboards",
+  },
   HISTORY: {
     CREATE: "/history",
   },
