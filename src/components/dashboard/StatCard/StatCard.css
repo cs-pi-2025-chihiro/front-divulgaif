@@ -40,6 +40,7 @@
 }
 
 .stat-card-total {
-  font-size: 1.5rem;
+  font-size: 1.125rem;
   color: #1e293b;
+  word-break: break-word;
 }
