@@ -26,12 +26,8 @@
 .stats-column {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 1.5rem;
-}
-
-.chart-column {
-  height: 100%;
 }
 
 .dashboard-loading,
