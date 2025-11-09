@@ -1,0 +1,33 @@
+.dashboard-overview {
+  width: 100%;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.stats-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.chart-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .stats-column {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

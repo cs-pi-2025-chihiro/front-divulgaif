@@ -29,18 +29,18 @@
 .stat-card-content {
   margin-left: 1.25rem;
   display: flex;
+  justify-content: start;
+  align-items: start;
   flex-direction: column;
 }
 
 .stat-card-status {
-  font-size: 1rem;
-  font-weight: 500;
   margin-bottom: 0.25rem;
+  color: #64748b;
 }
 
 .stat-card-total {
-  font-size: 2rem;
-  font-weight: 800;
+  font-size: 1.125rem;
   color: #1e293b;
-  line-height: 1;
+  word-break: break-word;
 }
