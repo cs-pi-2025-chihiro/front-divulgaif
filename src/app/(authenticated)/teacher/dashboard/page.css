@@ -1,33 +1,12 @@
 .dashboard-container {
-  margin-top: 2rem;
+  margin: 2rem auto;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-}
-
-.dashboard-title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-  color: #111827;
-}
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  align-items: stretch;
-  width: 100%;
   max-width: 1550px;
-}
-
-.stats-column {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 1.5rem;
+  padding: 0 2rem;
 }
 
 .dashboard-loading,
@@ -63,53 +42,6 @@
 
 .dashboard-retry-button:hover {
   background-color: #1d4ed8;
-}
-
-.stat-card {
-  display: flex;
-  align-items: center;
-  padding: 1.5rem;
-  background-color: white;
-  border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
-    0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  border: 1px solid #f1f5f9;
-}
-
-.stat-card-icon {
-  flex-shrink: 0;
-  width: 3.5rem;
-  height: 3.5rem;
-  background-color: #334b3f;
-  border-radius: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.stat-card-icon svg {
-  width: 1.75rem;
-  height: 1.75rem;
-  color: white;
-}
-
-.stat-card-content {
-  margin-left: 1.25rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.stat-card-status {
-  font-size: 1rem;
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-}
-
-.stat-card-total {
-  font-size: 2rem;
-  font-weight: 800;
-  color: #1e293b;
-  line-height: 1;
 }
 
 .bar-list-card {
@@ -241,5 +173,55 @@
   .stat-card {
     width: 100%;
     max-width: 350px;
+  }
+}
+
+.dashboard-expanded-section {
+  width: 100%;
+  max-width: 1550px;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.expanded-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #334b3f;
+  margin-bottom: 1rem;
+}
+
+.detailed-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.detailed-chart-container {
+  min-height: 300px;
+}
+
+.chart-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Responsive adjustments for new section */
+@media (max-width: 1024px) {
+  .detailed-stats-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2x2 grid on tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .detailed-stats-grid {
+    grid-template-columns: 1fr; /* Stack on mobile */
   }
 }

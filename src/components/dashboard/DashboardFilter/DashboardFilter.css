@@ -1,0 +1,58 @@
+:root {
+  --filter-green: #334e41;
+  --filter-beige: #e2dfd7; /* Light tan for borders/inactive text */
+  --filter-bg: #ffffff;
+}
+
+.dashboard-filter-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.filter-toggle-group {
+  display: flex;
+  background: var(--filter-bg);
+  border: 2px solid var(--filter-beige); /* The outer light border */
+  border-radius: 999px; /* Full pill shape */
+  overflow: hidden; /* Ensures active child doesn't bleed out corners */
+  padding: 0;
+}
+
+.filter-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem; /* Increased gap between text and icon */
+  padding: 0.75rem 2rem; /* adjusted padding for a wider, shorter look */
+  border: none;
+  background: transparent;
+  font-weight: 400; /* Lighter font weight matches the image better */
+  font-size: 1.1rem;
+  color: var(--filter-beige); /* Default inactive color */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 150px;
+  white-space: nowrap;
+}
+
+/* The icon itself needs to match the text color */
+.filter-toggle-btn .toggle-btn-icon {
+  color: var(--filter-beige);
+  transition: all 0.2s ease;
+}
+
+.filter-toggle-btn:hover:not(.active) {
+  color: #b0ada5; /* Slightly darker beige on hover */
+}
+
+.filter-toggle-btn.active {
+  background: var(--filter-green);
+  color: white;
+  font-weight: 400;
+}
+
+/* Ensure the active icon also turns white */
+.filter-toggle-btn.active .toggle-btn-icon {
+  color: white;
+}

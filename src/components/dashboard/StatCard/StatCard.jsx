@@ -1,10 +1,26 @@
-import { CheckCheck, Clock, RefreshCw } from "lucide-react";
+import {
+  CheckCheck,
+  Clock,
+  RefreshCw,
+  Users,
+  Globe,
+  Trophy,
+  Tag,
+  TrendingUp,
+  TrendingDown,
+} from "lucide-react";
 import "./StatCard.css";
 
 export const iconMap = {
   CheckCheck: (props) => <CheckCheck {...props} />,
   RefreshCw: (props) => <RefreshCw {...props} />,
   Clock: (props) => <Clock {...props} />,
+  Users: (props) => <Users {...props} />,
+  Globe: (props) => <Globe {...props} />,
+  Trophy: (props) => <Trophy {...props} />,
+  Tag: (props) => <Tag {...props} />,
+  TrendingUp: (props) => <TrendingUp {...props} />,
+  TrendingDown: (props) => <TrendingDown {...props} />,
 };
 
 const StatCard = ({ status, total, icon }) => {

@@ -20,6 +20,8 @@ export const ENDPOINTS = {
   },
   DASHBOARD: {
     GET: "/dashboards",
+    GET_AUTHORS: "/dashboards/authors",
+    GET_LABELS: "/dashboards/labels",
   },
   HISTORY: {
     CREATE: "/history",

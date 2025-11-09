@@ -270,6 +270,13 @@
   "dashboard": {
     "loading": "Loading dashboard data...",
     "error": "Error loading dashboard data:",
+    "detailedAnalysis": "Detailed Analysis",
+    "loadingAuthors": "Loading authors data...",
+    "loadingLabels": "Loading labels data...",
+    "toggles": {
+      "labels": "Labels",
+      "authors": "Authors"
+    },
     "status": {
       "published": "Published",
       "pendingChanges": "Returned",
@@ -277,7 +284,17 @@
     },
     "charts": {
       "frequentLabels": "Frequent Labels",
-      "mostWorks": "Most Works"
+      "mostWorks": "Most Works",
+      "detailedAuthors": "Detailed Authors",
+      "detailedLabels": "Detailed Labels"
+    },
+    "stats": {
+      "internos": "Internal Authors",
+      "externos": "External Authors",
+      "mostCited": "Most Cited",
+      "quantityOfLabels": "Number of Labels",
+      "mostUsedLabel": "Most Used Label",
+      "leastUsedLabel": "Least Used Label"
     }
   }
 }
