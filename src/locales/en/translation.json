@@ -124,7 +124,8 @@
     "contact": "Contact",
     "mainSearch": "Main Search",
     "myWorks": "My Works",
-    "rateWorks": "Rate Works"
+    "rateWorks": "Rate Works",
+    "dashboard": "Dashboard"
   },
   "filters": {
     "title": "Filter Presentation",

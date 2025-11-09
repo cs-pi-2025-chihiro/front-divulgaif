@@ -33,8 +33,7 @@
   align-items: start;
   flex-direction: column;
 }
-
-.stat-card-status {
+k .stat-card-status {
   margin-bottom: 0.25rem;
   color: #64748b;
 }
