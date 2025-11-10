@@ -27,7 +27,10 @@ const LabelModal = ({ isOpen, onClose, onSave, labelData, mode = 'create' }) => 
             return;
         }
         setError('');
-        onSave({ ...labelData, name: name.trim() });
+        const dataToSave = mode === 'edit' && labelData?.id 
+            ? { id: labelData.id, name: name.trim() } 
+            : { name: name.trim() };
+        onSave(dataToSave);
     };
 
     const title = mode === 'edit' ? t('labels.modal.editTitle', 'Edit Label') : t('labels.modal.createTitle', 'Create New Label');
