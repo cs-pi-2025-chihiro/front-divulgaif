@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDebounce } from "@uidotdev/usehooks";
-import { Search, Edit, Trash2, Plus, ChevronLeft, ChevronRight, Tag, Filter } from 'lucide-react';
+import { Search, Edit, Trash2, Plus, ChevronLeft, ChevronRight, Tag, Filter, BarChart3 } from 'lucide-react';
 
 import './ManageLabels.css';
 import { searchLabels, createLabel, updateLabel, deleteLabel } from '../../../../services/labels/list'; 
@@ -36,7 +36,7 @@ const ManageLabels = () => {
     const labels = data?.content ?? [];
     const totalPages = data?.totalPages ?? 0;
     const totalLabels = data?.totalElements ?? 0;
-    const pageNumber = data?.number ?? 0; 
+    const pageNumber = data?.number ?? 0;
 
     const createMutation = useMutation({
         mutationFn: createLabel,
@@ -135,6 +135,21 @@ const ManageLabels = () => {
                         className="labels-search-input"
                     />
                 </div>
+                <Button onClick={() => {}} variant="secondary" size="md">
+                    <Filter size={18} /> {t('labels.filter', 'Filtrar Labels')}
+                </Button>
+            </div>
+
+            <div className="labels-stats">
+                <div className="stat-card">
+                    <div className="stat-icon">
+                        <BarChart3 size={24} />
+                    </div>
+                    <div className="stat-content">
+                        <div className="stat-label">{t('labels.stats.quantity', 'Quantidade')}</div>
+                        <div className="stat-value">{totalLabels}</div>
+                    </div>
+                </div>
             </div>
 
             {(isLoading || isFetching) && <p>{t('common.loading', 'Loading...')}</p>}
@@ -148,7 +163,12 @@ const ManageLabels = () => {
                                 <div key={label.id} className="label-card">
                                     <div className="label-card-content">
                                         <Tag size={20} className="label-icon" />
-                                        <span className="label-name">{label.name}</span>
+                                        <div>
+                                            <div className="label-name">{label.name}</div>
+                                            {label.workCount !== undefined && (
+                                                <div className="label-count">({label.workCount})</div>
+                                            )}
+                                        </div>
                                     </div>
                                     <div className="label-card-actions">
                                         <Button variant="ghost" size="sm" onClick={() => openEditModal(label)} aria-label={t('common.edit')}>
