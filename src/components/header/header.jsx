@@ -39,6 +39,10 @@ const Header = () => {
     navigateTo(rateWorkPath, navigate, currentLang);
   };
 
+  const handleDashboardNavigation = () => {
+    navigateTo("dashboard", navigate, currentLang);
+  };
+
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
@@ -69,6 +73,9 @@ const Header = () => {
           )}
           {authenticated && hasRole(ROLES.TEACHER) && (
             <a onClick={handleRateWorkNavigation}> {t("header.rateWorks")}</a>
+          )}
+          {authenticated && hasRole(ROLES.TEACHER) && (
+            <a onClick={handleDashboardNavigation}> Dashboard</a>
           )}
           <a style={{ cursor: "pointer" }} onClick={handleNewWorkNavigation}>
             {t("home.newWork")}
