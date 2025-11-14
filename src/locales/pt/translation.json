@@ -132,6 +132,7 @@
     "mainSearch": "Busca Principal",
     "myWorks": "Meus Trabalhos",
     "rateWorks": "Avaliar Trabalhos",
+    "dashboard": "Dashboard",
     "manageAuthors": "Gerenciar Autores"
   },
   "filters": {
@@ -282,6 +283,36 @@
     "feedback": {
       "required": "Feedback é obrigatório para solicitar mudanças",
       "error": "Erro ao solicitar mudanças"
+    }
+  },
+  "dashboard": {
+    "loading": "Carregando dados do dashboard...",
+    "error": "Erro ao carregar dados do dashboard:",
+    "detailedAnalysis": "Análise Detalhada",
+    "loadingAuthors": "Carregando dados dos autores...",
+    "loadingLabels": "Carregando dados das labels...",
+    "toggles": {
+      "labels": "Labels",
+      "authors": "Autores"
+    },
+    "status": {
+      "published": "Publicados",
+      "pendingChanges": "Retornados",
+      "submitted": "Submetidos"
+    },
+    "charts": {
+      "frequentLabels": "Labels Frequentes",
+      "mostWorks": "Mais Trabalhos",
+      "detailedAuthors": "Autores Detalhados",
+      "detailedLabels": "Labels Detalhadas"
+    },
+    "stats": {
+      "internos": "Autores Internos",
+      "externos": "Autores Externos",
+      "mostCited": "Mais Citado",
+      "quantityOfLabels": "Quantidade de Labels",
+      "mostUsedLabel": "Label Mais Usada",
+      "leastUsedLabel": "Label Menos Usada"
     }
   }
 }

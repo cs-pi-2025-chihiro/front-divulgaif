@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { FaTimes, FaSignOutAlt } from "react-icons/fa";
+import { FaTimes, FaSignOutAlt, FaChartBar } from "react-icons/fa";
 import { t } from "i18next";
 import { hasRole, logout } from "../../services/hooks/auth/useAuth";
 import { ROLES } from "../../enums/roles";
@@ -163,6 +163,12 @@ const Drawer = ({ isOpen, onClose, isAuthenticated }) => {
     onClose();
   };
 
+  const handleDashboardNavigation = () => {
+    const dashboardPath = "dashboard";
+    navigateTo(dashboardPath, navigate, currentLang);
+    onClose();
+  };
+
   const handleMainSearchNavigation = () => {
     navigateTo("", navigate, currentLang);
     onClose();
@@ -201,6 +207,11 @@ const Drawer = ({ isOpen, onClose, isAuthenticated }) => {
               {isAuthenticated && hasRole(ROLES.TEACHER) && (
                 <DrawerLink onClick={handleRateWorkNavigation}>
                   {t("header.rateWorks")}
+                </DrawerLink>
+              )}
+              {isAuthenticated && hasRole(ROLES.TEACHER) && (
+                <DrawerLink onClick={handleDashboardNavigation}>
+                  {t("header.dashboard")}
                 </DrawerLink>
               )}
               <DrawerLink onClick={handleNewWorkNavigation}>

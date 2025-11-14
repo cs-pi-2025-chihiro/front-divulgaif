@@ -85,7 +85,7 @@ const WorkDetail = () => {
     (userIsAuthenticated &&
       currentUser &&
       isWorkOwner &&
-      work.status !== WORK_STATUS.SUBMITTED) ||
+      work.workStatus.name !== WORK_STATUS.PUBLISHED) ||
     isTeacher();
 
   return (
