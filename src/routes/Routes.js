@@ -45,9 +45,9 @@ function AppRoutes() {
         <Route element={<TeacherRoute />}>
           <Route path="rate-works" element={<WorkEvaluations />} />
           <Route path="rate-work/:id" element={<WorkEvaluation />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />    
+          <Route path="labels" element={<ManageLabels />} />
         </Route>
-        <Route path="labels" element={<ManageLabels />} />
       </Route>
 
       <Route path="/pt" element={<LanguageRoute lang="pt" />}>
@@ -66,8 +66,8 @@ function AppRoutes() {
         <Route element={<TeacherRoute />}>
           <Route path="avaliar-trabalhos" element={<WorkEvaluations />} />
           <Route path="avaliar-trabalho/:id" element={<WorkEvaluation />} />
-          <Route path="labels" element={<ManageLabels />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="labels" element={<ManageLabels />} />
         </Route>
       </Route>
 
