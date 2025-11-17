@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { setupInterceptors } from "../services/utils/api";
+import { NotificationProvider } from "../components/notification/NotificationProvider"; // ⬅️ ADICIONE
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,15 +27,15 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <div className="App">
-          <Header />
-
-          <AppRoutes />
-
-          <Footer />
-        </div>
-      </BrowserRouter>
+      <NotificationProvider> 
+        <BrowserRouter>
+          <div className="App">
+            <Header />
+            <AppRoutes />
+            <Footer />
+          </div>
+        </BrowserRouter>
+      </NotificationProvider> 
     </QueryClientProvider>
   );
 }
