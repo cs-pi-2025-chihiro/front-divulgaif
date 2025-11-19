@@ -210,6 +210,28 @@
     "publish": "Publicar",
     "send": "Enviar"
   },
+  "labels": {
+    "title": "Labels",
+    "addNew": "Adicionar Nova Label",
+    "searchPlaceholder": "Buscar label...",
+    "filter": "Filtrar label",
+    "noLabelsFound": "Nenhuma label encontrada.",
+    "total": "label",
+    "confirmDelete": "Tem certeza que deseja excluir esta label?",
+    "modal": {
+      "createTitle": "Criar Nova Label",
+      "editTitle": "Editar Label",
+      "nameLabel": "Nome da Label",
+      "namePlaceholder": "Digite o nome da label",
+      "nameRequired": "O nome da label não pode estar vazio."
+    },
+    "errors": {
+      "loadFailed": "Falha ao carregar labels: ",
+      "createFailed": "Falha ao criar label: ",
+      "updateFailed": "Falha ao atualizar label: ",
+      "deleteFailed": "Falha ao excluir label: "
+    }
+  },
   "messages": {
     "draftSaved": "Rascunho salvo com sucesso!",
     "sentForReview": "Trabalho enviado para avaliação com sucesso!",
