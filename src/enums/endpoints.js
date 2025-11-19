@@ -29,6 +29,8 @@ export const ENDPOINTS = {
   AUTHORS: {
     SEARCH: "/authors/list",
     CREATE: "/authors",
+    UPDATE: "/authors/{id}",
+    DELETE: "/authors/{id}",
   },
   LABELS: {
     LIST: "/labels/list",

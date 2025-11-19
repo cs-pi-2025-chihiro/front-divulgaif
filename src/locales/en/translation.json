@@ -268,20 +268,40 @@
       "student": "Student",
       "teacher": "Teacher",
       "add": "Add",
+      "addNew": "Add New Author",
       "title": "Manage Authors",
       "searchPlaceholder": "Search authors by name or email...",
       "noAuthorsFound": "No authors found",
       "authors": "authors",
+      "total": "authors",
       "registered": "Registered",
       "notRegistered": "Not Registered",
       "editAuthor": "Edit Author",
       "deleteAuthor": "Delete Author",
       "deleteConfirmation": "Are you sure you want to delete the author {{name}}? This action cannot be undone.",
+      "confirmDelete": "Are you sure you want to delete this author?",
       "name": "Name",
       "updateSuccess": "Author updated successfully!",
       "updateError": "Error updating author",
       "deleteSuccess": "Author deleted successfully!",
-      "deleteError": "Error deleting author"
+      "deleteError": "Error deleting author",
+      "modal": {
+        "createTitle": "Create New Author",
+        "editTitle": "Edit Author",
+        "nameLabel": "Author Name",
+        "emailLabel": "Author Email",
+        "namePlaceholder": "Enter author name",
+        "emailPlaceholder": "Enter author email",
+        "nameRequired": "Author name cannot be empty.",
+        "emailRequired": "Author email cannot be empty.",
+        "emailInvalid": "Please enter a valid email address."
+      },
+      "errors": {
+        "createFailed": "Failed to create author: ",
+        "updateFailed": "Failed to update author: ",
+        "deleteFailed": "Failed to delete author: ",
+        "loadFailed": "Failed to load authors: "
+      }
     },
     "actions": {
       "return": "Return",
@@ -333,6 +353,7 @@
       "externos": "External Authors",
       "mostCited": "Most Cited",
       "quantityOfLabels": "Number of Labels",
+      "quantityOfAuthors": "Number of Authors",
       "mostUsedLabel": "Most Used Label",
       "leastUsedLabel": "Least Used Label"
     }

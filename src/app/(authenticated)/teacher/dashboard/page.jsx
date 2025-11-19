@@ -57,7 +57,6 @@ const Dashboard = () => {
         detailedList={detailedList}
       />
 
-      {/* ⬇️ ADICIONE ESTA SEÇÃO DE AUTORES */}
       {activeDetailView === "authors" && (
         <div className="dashboard-authors-section">
           <AuthorsManagement />
