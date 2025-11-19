@@ -18,6 +18,11 @@ export const ENDPOINTS = {
     REFRESH: "/auth/refresh-token",
     ME: "/auth/me",
   },
+  DASHBOARD: {
+    GET: "/dashboards",
+    GET_AUTHORS: "/dashboards/authors",
+    GET_LABELS: "/dashboards/labels",
+  },
   HISTORY: {
     CREATE: "/history",
   },
@@ -28,6 +33,8 @@ export const ENDPOINTS = {
   LABELS: {
     LIST: "/labels/list",
     CREATE: "/labels",
+    UPDATE: "/labels/{id}",
+    DELETE: "/labels/{id}",
   },
     LINKS: {
     LIST: "/links/list",
