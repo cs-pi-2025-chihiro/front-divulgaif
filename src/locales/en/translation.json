@@ -201,6 +201,28 @@
     "publish": "Publish",
     "send": "Send"
   },
+  "labels": {
+    "title": "Labels",
+    "addNew": "Add New Label",
+    "searchPlaceholder": "Search labels...",
+    "filter": "Filter Labels",
+    "noLabelsFound": "No labels found.",
+    "total": "labels",
+    "confirmDelete": "Are you sure you want to delete this label?",
+    "modal": {
+      "createTitle": "Create New Label",
+      "editTitle": "Edit Label",
+      "nameLabel": "Label Name",
+      "namePlaceholder": "Enter label name",
+      "nameRequired": "Label name cannot be empty."
+    },
+    "errors": {
+      "loadFailed": "Failed to load labels: ",
+      "createFailed": "Failed to create label: ",
+      "updateFailed": "Failed to update label: ",
+      "deleteFailed": "Failed to delete label: "
+    }
+  },
   "messages": {
     "draftSaved": "Draft saved successfully!",
     "sentForReview": "Work sent for review successfully!",
