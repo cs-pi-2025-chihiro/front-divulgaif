@@ -7,7 +7,7 @@ import {
 } from "../../../../services/utils/utils";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import FiltrarBuscaModal from "../../../../components/modal/filtrar-busca/filtrarBuscaModa";
+import FiltrarBuscaModal from "../../../../components/modal/filtrar-busca/filtrarBuscaModal";
 import {
   pageAtom,
   searchAtom,
