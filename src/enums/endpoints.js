@@ -36,9 +36,11 @@ export const ENDPOINTS = {
     UPDATE: "/labels/{id}",
     DELETE: "/labels/{id}",
   },
-  LINKS: {
+    LINKS: {
     LIST: "/links/list",
     CREATE: "/links",
+    UPDATE: "/links/{id}",
+    DELETE: "/links/{id}",
   },
   SUAP: {
     OAUTH: "https://suap.ifpr.edu.br/o/authorize/",

@@ -45,7 +45,7 @@ function AppRoutes() {
         <Route element={<TeacherRoute />}>
           <Route path="rate-works" element={<WorkEvaluations />} />
           <Route path="rate-work/:id" element={<WorkEvaluation />} />
-          <Route path="dashboard" element={<Dashboard />} />    
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="labels" element={<ManageLabels />} />
         </Route>
       </Route>
