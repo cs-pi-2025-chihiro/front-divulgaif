@@ -33,6 +33,13 @@ const Header = () => {
     navigateTo(newWorkPath, navigate, currentLang);
   };
 
+    
+  const handleLinksNavigation = () => {
+    const linksPath = currentLang === "pt" ? "links" : "links"; 
+    navigateTo(linksPath, navigate, currentLang);
+  };
+
+
   const handleRateWorkNavigation = () => {
     const rateWorkPath =
       currentLang === "pt" ? "avaliar-trabalhos" : "rate-works";
@@ -67,6 +74,14 @@ const Header = () => {
           {authenticated && (
             <a onClick={handleMyWorksNavigation}> {t("header.myWorks")}</a>
           )}
+                    {}
+
+          {authenticated && hasRole(ROLES.TEACHER) && (
+            <a onClick={handleLinksNavigation}> {t("header.links") || "Links"}</a>
+          )}
+
+          {}
+
           {authenticated && hasRole(ROLES.TEACHER) && (
             <a onClick={handleRateWorkNavigation}> {t("header.rateWorks")}</a>
           )}
