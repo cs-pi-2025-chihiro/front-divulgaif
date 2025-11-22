@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft, Save } from "lucide-react";
 import "./page.css";
-import { createLink } from "../../../../../services/links/list";
-import Button from "../../../../../components/button";
-import { navigateTo } from "../../../../../services/utils/utils";
+import { createLink } from "../../../services/links/list";
+import Button from "../../button";
+import { navigateTo } from "../../../services/utils/utils";
 
 const NewLink = () => {
   const [formData, setFormData] = useState({
@@ -59,7 +59,7 @@ const NewLink = () => {
       });
       setSuccess(true);
       setFormData({ title: "", url: "" });
-      
+
       // Redirect to links page after 1.5 seconds
       setTimeout(() => {
         const linksPath = currentLang === "pt" ? "links" : "links";
@@ -140,7 +140,7 @@ const NewLink = () => {
             disabled={isLoading}
           >
             <ArrowLeft size={18} />
-            {t("Cancelar" ) || "Cancel"}
+            {t("Cancelar") || "Cancel"}
           </button>
           <button
             type="submit"
@@ -148,9 +148,7 @@ const NewLink = () => {
             disabled={isLoading}
           >
             <Save size={18} />
-            {isLoading
-              ? t("Salvando") || "Saving..."
-              : t("Salvar") || "Save"}
+            {isLoading ? t("Salvando") || "Saving..." : t("Salvar") || "Save"}
           </button>
         </div>
       </form>

@@ -173,10 +173,10 @@ const AuthorsManagement = () => {
                   <p className="author-email-dashboard">{author.email}</p>
                   <span
                     className={`author-badge ${
-                      (author.userId || author.type === "CADASTRADO") ? "cadastrado" : "sem"
+                      author.type?.toLowerCase() || "sem"
                     }`}
                   >
-                    {(author.userId || author.type === "CADASTRADO")
+                    {author.type === "CADASTRADO"
                       ? t("authors.registered")
                       : t("authors.notRegistered")}
                   </span>

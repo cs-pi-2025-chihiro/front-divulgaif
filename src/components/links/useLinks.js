@@ -1,6 +1,6 @@
 import { atom, useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { searchLinks } from "../../../../services/links/list";
+import { searchLinks } from "../../services/links/list";
 
 export const pageAtom = atom(0);
 export const sizeAtom = atom(20);

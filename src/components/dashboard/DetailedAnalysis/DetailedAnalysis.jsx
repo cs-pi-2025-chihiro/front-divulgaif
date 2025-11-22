@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import StatCard from "../StatCard";
 import BarListCard from "../BarListCard";
 import DashboardFilter from "../DashboardFilter/DashboardFilter";
 import "./DetailedAnalysis.css";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useDebounce } from "@uidotdev/usehooks";
 import {
   Edit,
   Trash2,
@@ -15,134 +13,53 @@ import {
   Tag,
   User,
 } from "lucide-react";
-import {
-  searchLabels,
-  createLabel,
-  updateLabel,
-  deleteLabel,
-} from "../../../services/labels/list";
 
 import Button from "../../../components/button";
 import { SearchInput } from "../../../components/input";
 import LabelModal from "../../../components/modal/label-modal/LabelModal";
 
-import { ENDPOINTS } from "../../../enums/endpoints";
 import "../../../app/(authenticated)/teacher/manage-labels/ManageLabels.css";
 import AuthorsManagement from "../../../app/(authenticated)/teacher/dashboard/authors/page";
+import LinksManagement from "../../../app/(authenticated)/teacher/dashboard/links/page";
 
 const DetailedAnalysis = ({
   activeDetailView,
   onToggleDetailView,
-  isDetailedLoading,
-  detailedStats,
-  detailedList,
+  dashboardHook,
 }) => {
   const { t } = useTranslation();
 
-  const queryClient = useQueryClient();
-  const LABELS_QUERY_KEY = "dashboard_labels";
+  const {
+    isDetailedLoading,
+    detailedStats,
+    labels,
+    totalLabelsPages,
+    totalLabels,
+    labelsPageNumber,
+    isLabelsGridLoading,
+    isLabelsGridFetching,
+    labelsGridError,
+    searchTerm,
+    setSearchTerm,
+    currentPage,
+    setCurrentPage,
+    createLabel,
+    updateLabel,
+    deleteLabel,
+  } = dashboardHook;
 
-  const DEFAULT_PAGE_SIZE = 20;
-
-  // Common state
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
-
-  // Labels state
   const [isLabelModalOpen, setIsLabelModalOpen] = useState(false);
   const [currentLabel, setCurrentLabel] = useState(null);
   const [labelModalMode, setLabelModalMode] = useState("create");
 
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
-  // Labels query
-  const {
-    data: labelsData,
-    isLoading: isLabelsGridLoading,
-    error: labelsGridError,
-    isFetching: isLabelsGridFetching,
-  } = useQuery({
-    queryKey: [LABELS_QUERY_KEY, currentPage, pageSize, debouncedSearchTerm],
-    queryFn: () => searchLabels(debouncedSearchTerm, currentPage, pageSize),
-    placeholderData: (previousData) => previousData,
-    staleTime: 5 * 60 * 1000,
-    enabled: activeDetailView === "labels",
-  });
-
-  const labels = labelsData?.content ?? [];
-  const totalLabelsPages = labelsData?.totalPages ?? 0;
-  const totalLabels = labelsData?.totalElements ?? 0;
-  const labelsPageNumber = labelsData?.number ?? 0;
-
-  // Dynamic values for labels view
   const totalPages = totalLabelsPages;
   const pageNumber = labelsPageNumber;
 
-  // Label mutations
-  const createLabelMutation = useMutation({
-    mutationFn: createLabel,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [LABELS_QUERY_KEY] });
-      queryClient.invalidateQueries({
-        queryKey: [ENDPOINTS.DASHBOARD.GET_LABELS],
-      });
-      queryClient.invalidateQueries({ queryKey: [ENDPOINTS.DASHBOARD.GET] });
-      closeLabelModal();
-    },
-    onError: (err) => {
-      console.error("Failed to create label:", err);
-      alert(
-        t("labels.errors.createFailed", "Failed to create label: ") +
-          err.message
-      );
-    },
-  });
-
-  const updateLabelMutation = useMutation({
-    mutationFn: (labelData) => updateLabel(labelData.id, labelData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [LABELS_QUERY_KEY] });
-      queryClient.invalidateQueries({
-        queryKey: [ENDPOINTS.DASHBOARD.GET_LABELS],
-      });
-      queryClient.invalidateQueries({ queryKey: [ENDPOINTS.DASHBOARD.GET] });
-      closeLabelModal();
-    },
-    onError: (err) => {
-      console.error("Failed to update label:", err);
-      alert(
-        t("labels.errors.updateFailed", "Failed to update label: ") +
-          err.message
-      );
-    },
-  });
-
-  const deleteLabelMutation = useMutation({
-    mutationFn: deleteLabel,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [LABELS_QUERY_KEY] });
-      queryClient.invalidateQueries({
-        queryKey: [ENDPOINTS.DASHBOARD.GET_LABELS],
-      });
-      queryClient.invalidateQueries({ queryKey: [ENDPOINTS.DASHBOARD.GET] });
-    },
-    onError: (err) => {
-      console.error("Failed to delete label:", err);
-      alert(
-        t("labels.errors.deleteFailed", "Failed to delete label: ") +
-          err.message
-      );
-    },
-  });
-
-  // Handlers
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
     setCurrentPage(0);
   };
 
-  // Label handlers
   const openCreateLabelModal = () => {
     setCurrentLabel(null);
     setLabelModalMode("create");
@@ -162,9 +79,11 @@ const DetailedAnalysis = ({
 
   const handleSaveLabel = (labelData) => {
     if (labelModalMode === "create") {
-      createLabelMutation.mutate(labelData);
+      createLabel(labelData);
+      closeLabelModal();
     } else {
-      updateLabelMutation.mutate(labelData);
+      updateLabel(labelData);
+      closeLabelModal();
     }
   };
 
@@ -174,7 +93,7 @@ const DetailedAnalysis = ({
         t("labels.confirmDelete", "Are you sure you want to delete this label?")
       )
     ) {
-      deleteLabelMutation.mutate(labelId);
+      deleteLabel(labelId);
     }
   };
 
@@ -185,12 +104,6 @@ const DetailedAnalysis = ({
   const handleNextPage = () => {
     setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
   };
-
-  // Reset page when switching views
-  React.useEffect(() => {
-    setCurrentPage(0);
-    setSearchTerm("");
-  }, [activeDetailView]);
 
   const quantityStatTotal =
     activeDetailView === "labels"
@@ -207,80 +120,65 @@ const DetailedAnalysis = ({
           {t("dashboard.detailedAnalysis")}
         </h2>
 
-        <div className="detailed-stats-grid">
-          <DashboardFilter
-            activeView={activeDetailView}
-            onToggle={onToggleDetailView}
-          />
-          {isDetailedLoading ? (
-            <div className="dashboard-loading">
-              <div className="dashboard-loading-text">
-                {activeDetailView === "authors"
-                  ? t("dashboard.loadingAuthors")
-                  : t("dashboard.loadingLabels")}
+        <DashboardFilter
+          activeView={activeDetailView}
+          onToggle={onToggleDetailView}
+        />
+
+        {activeDetailView !== "links" && (
+          <div className="detailed-stats-grid">
+            {isDetailedLoading ? (
+              <div className="dashboard-loading">
+                <div className="dashboard-loading-text">
+                  {activeDetailView === "authors"
+                    ? t("dashboard.loadingAuthors")
+                    : t("dashboard.loadingLabels")}
+                </div>
               </div>
-            </div>
-          ) : activeDetailView === "authors" ? (
-            <>
-              <StatCard
-                status={t("dashboard.stats.internos")}
-                total={detailedStats?.internalAuthorsCount || 0}
-                icon="Users"
-              />
-              <StatCard
-                status={t("dashboard.stats.externos")}
-                total={detailedStats?.externalAuthorsCount || 0}
-                icon="Globe"
-              />
-              <StatCard
-                status={t("dashboard.stats.mostCited")}
-                total={detailedStats?.mostCitedAuthor || "-"}
-                icon="Trophy"
-              />
-            </>
-          ) : activeDetailView === "labels" ? (
-            <>
-              <StatCard
-                status={t("dashboard.stats.quantityOfLabels")}
-                total={quantityStatTotal}
-                icon="Tag"
-              />
-              <StatCard
-                status={t("dashboard.stats.mostUsedLabel")}
-                total={detailedStats?.mostUsedLabel || "-"}
-                icon="TrendingUp"
-              />
-              <StatCard
-                status={t("dashboard.stats.leastUsedLabel")}
-                total={detailedStats?.leastUsedLabel || "-"}
-                icon="TrendingDown"
-              />
-            </>
-          ) : (
-            <>
-              <StatCard
-                status={t("dashboard.stats.quantityOfAuthors")}
-                total={quantityStatTotal}
-                icon="Users"
-              />
-              <StatCard
-                status={t("dashboard.stats.internos")}
-                total={detailedStats?.internalAuthorsCount || 0}
-                icon="UserCheck"
-              />
-              <StatCard
-                status={t("dashboard.stats.externos")}
-                total={detailedStats?.externalAuthorsCount || 0}
-                icon="Globe"
-              />
-            </>
-          )}
-        </div>
+            ) : activeDetailView === "authors" ? (
+              <>
+                <StatCard
+                  status={t("dashboard.stats.internos")}
+                  total={detailedStats?.internalAuthorsCount || 0}
+                  icon="Users"
+                />
+                <StatCard
+                  status={t("dashboard.stats.externos")}
+                  total={detailedStats?.externalAuthorsCount || 0}
+                  icon="Globe"
+                />
+                <StatCard
+                  status={t("dashboard.stats.mostCited")}
+                  total={detailedStats?.mostCitedAuthor || "-"}
+                  icon="Trophy"
+                />
+              </>
+            ) : activeDetailView === "labels" ? (
+              <>
+                <StatCard
+                  status={t("dashboard.stats.quantityOfLabels")}
+                  total={quantityStatTotal}
+                  icon="Tag"
+                />
+                <StatCard
+                  status={t("dashboard.stats.mostUsedLabel")}
+                  total={detailedStats?.mostUsedLabel || "-"}
+                  icon="TrendingUp"
+                />
+                <StatCard
+                  status={t("dashboard.stats.leastUsedLabel")}
+                  total={detailedStats?.leastUsedLabel || "-"}
+                  icon="TrendingDown"
+                />
+              </>
+            ) : null}
+          </div>
+        )}
 
         <div className="detailed-chart-container">
           {activeDetailView === "authors" ? (
             <AuthorsManagement />
-          ) : (
+          ) : activeDetailView === "labels" ? (
             <div className="labels-crud-container">
               <div className="labels-controls">
                 <div className="search-wrapper">
@@ -396,7 +294,9 @@ const DetailedAnalysis = ({
                 </>
               )}
             </div>
-          )}
+          ) : activeDetailView === "links" ? (
+            <LinksManagement />
+          ) : null}
         </div>
       </div>
 

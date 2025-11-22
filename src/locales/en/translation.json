@@ -292,9 +292,12 @@
     "detailedAnalysis": "Detailed Analysis",
     "loadingAuthors": "Loading authors data...",
     "loadingLabels": "Loading labels data...",
+    "loadingLinks": "Loading links data...",
+    "linksComingSoon": "Links management coming soon...",
     "toggles": {
       "labels": "Labels",
-      "authors": "Authors"
+      "authors": "Authors",
+      "links": "Links"
     },
     "status": {
       "published": "Published",
@@ -314,7 +317,10 @@
       "quantityOfLabels": "Number of Labels",
       "quantityOfAuthors": "Number of Authors",
       "mostUsedLabel": "Most Used Label",
-      "leastUsedLabel": "Least Used Label"
+      "leastUsedLabel": "Least Used Label",
+      "totalLinks": "Total Links",
+      "activeLinks": "Active Links",
+      "mostUsedLink": "Most Used Link"
     }
   },
   "authors": {
@@ -358,6 +364,30 @@
       "updateFailed": "Failed to update author: ",
       "deleteFailed": "Failed to delete author: ",
       "loadFailed": "Failed to load authors: "
+    }
+  },
+  "links": {
+    "addNew": "Add New Link",
+    "searchPlaceholder": "Search links...",
+    "noLinksFound": "No links found.",
+    "total": "links",
+    "confirmDelete": "Are you sure you want to delete this link?",
+    "createTitle": "Create New Link",
+    "editTitle": "Edit Link",
+    "create": "Create",
+    "update": "Update",
+    "form": {
+      "title": "Title",
+      "url": "URL"
+    },
+    "errors": {
+      "titleRequired": "Title is required",
+      "urlRequired": "URL is required",
+      "invalidUrl": "Invalid URL format",
+      "createFailed": "Failed to create link: ",
+      "updateFailed": "Failed to update link: ",
+      "deleteFailed": "Failed to delete link: ",
+      "loadFailed": "Failed to load links: "
     }
   }
 }

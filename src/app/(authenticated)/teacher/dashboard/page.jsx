@@ -9,16 +9,15 @@ const Dashboard = () => {
   const { t } = useTranslation();
   const [activeDetailView, setActiveDetailView] = useState("labels");
 
+  const dashboardHook = useDashboard(activeDetailView);
+
   const {
     isLoading,
     error,
     totalWorksByStatus,
     totalPublishedWorksByLabel,
     totalPublishedWorksByAuthor,
-    isDetailedLoading,
-    detailedStats,
-    detailedList,
-  } = useDashboard(activeDetailView);
+  } = dashboardHook;
 
   if (isLoading) {
     return (
@@ -51,9 +50,7 @@ const Dashboard = () => {
       <DetailedAnalysis
         activeDetailView={activeDetailView}
         onToggleDetailView={setActiveDetailView}
-        isDetailedLoading={isDetailedLoading}
-        detailedStats={detailedStats}
-        detailedList={detailedList}
+        dashboardHook={dashboardHook}
       />
     </div>
   );

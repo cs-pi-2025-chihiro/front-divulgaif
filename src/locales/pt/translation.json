@@ -292,9 +292,12 @@
     "detailedAnalysis": "Análise Detalhada",
     "loadingAuthors": "Carregando dados dos autores...",
     "loadingLabels": "Carregando dados das labels...",
+    "loadingLinks": "Carregando dados dos links...",
+    "linksComingSoon": "Gerenciamento de links em breve...",
     "toggles": {
       "labels": "Labels",
-      "authors": "Autores"
+      "authors": "Autores",
+      "links": "Links"
     },
     "status": {
       "published": "Publicados",
@@ -314,7 +317,10 @@
       "quantityOfLabels": "Quantidade de Labels",
       "quantityOfAuthors": "Quantidade de Autores",
       "mostUsedLabel": "Label Mais Usada",
-      "leastUsedLabel": "Label Menos Usada"
+      "leastUsedLabel": "Label Menos Usada",
+      "totalLinks": "Total de Links",
+      "activeLinks": "Links Ativos",
+      "mostUsedLink": "Link Mais Usado"
     }
   },
   "authors": {
@@ -358,6 +364,30 @@
       "updateFailed": "Falha ao atualizar autor: ",
       "deleteFailed": "Falha ao excluir autor: ",
       "loadFailed": "Falha ao carregar autores: "
+    }
+  },
+  "links": {
+    "addNew": "Adicionar Novo Link",
+    "searchPlaceholder": "Buscar links...",
+    "noLinksFound": "Nenhum link encontrado.",
+    "total": "links",
+    "confirmDelete": "Tem certeza de que deseja excluir este link?",
+    "createTitle": "Criar Novo Link",
+    "editTitle": "Editar Link",
+    "create": "Criar",
+    "update": "Atualizar",
+    "form": {
+      "title": "Título",
+      "url": "URL"
+    },
+    "errors": {
+      "titleRequired": "Título é obrigatório",
+      "urlRequired": "URL é obrigatória",
+      "invalidUrl": "Formato de URL inválido",
+      "createFailed": "Falha ao criar link: ",
+      "updateFailed": "Falha ao atualizar link: ",
+      "deleteFailed": "Falha ao excluir link: ",
+      "loadFailed": "Falha ao carregar links: "
     }
   }
 }

@@ -1,24 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Filter, Plus, ExternalLink, Edit2, Trash2 } from "lucide-react";
 import "./page.css";
-import {
-  navigateTo,
-  mapPaginationValues,
-} from "../../../../services/utils/utils";
+import { navigateTo, mapPaginationValues } from "../../services/utils/utils";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import {
-  pageAtom,
-  searchAtom,
-  sizeAtom,
-  useLinks,
-} from "./useLinks";
+import { pageAtom, searchAtom, sizeAtom, useLinks } from "./useLinks";
 import { useAtom } from "jotai";
-import { SearchInput } from "../../../../components/input";
-import Button from "../../../../components/button";
-import { deleteLink } from "../../../../services/links/list";
+import { SearchInput } from "../input";
+import Button from "../button";
+import { deleteLink } from "../../services/links/list";
 
-const Links = () => {
+const LinksManagement = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({});
   const [currentPage, setCurrentPage] = useAtom(pageAtom);
@@ -180,12 +172,14 @@ const Links = () => {
             {t("common.previous") || "Previous"}
           </button>
           <span className="pagination-info">
-            {t("common.page") || "Page"} {currentPage + 1} {t("common.of") || "of"}{" "}
-            {totalPages}
+            {t("common.page") || "Page"} {currentPage + 1}{" "}
+            {t("common.of") || "of"} {totalPages}
           </span>
           <button
             className="pagination-button"
-            onClick={() => setCurrentPage(Math.min(totalPages - 1, currentPage + 1))}
+            onClick={() =>
+              setCurrentPage(Math.min(totalPages - 1, currentPage + 1))
+            }
             disabled={currentPage === totalPages - 1}
           >
             {t("common.next") || "Next"}
@@ -196,4 +190,4 @@ const Links = () => {
   );
 };
 
-export default Links;
+export default LinksManagement;

@@ -126,11 +126,9 @@ const AuthorsPage = () => {
                     <h3>{author.name}</h3>
                     <p className="author-email">{author.email}</p>
                     <span
-                      className={`author-type ${
-                        (author.userId || author.type === "CADASTRADO") ? "cadastrado" : "sem"
-                      }`}
+                      className={`author-type ${author.type?.toLowerCase()}`}
                     >
-                      {(author.userId || author.type === "CADASTRADO")
+                      {author.type === "CADASTRADO"
                         ? t("authors.registered")
                         : t("authors.notRegistered")}
                     </span>

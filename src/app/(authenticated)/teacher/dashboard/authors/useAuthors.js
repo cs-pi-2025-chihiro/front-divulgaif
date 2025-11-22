@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  getAuthors,
+  listAuthors,
   updateAuthorById,
   deleteAuthorById,
 } from "../../../../../services/authors/authorService";
@@ -31,7 +31,7 @@ export const useAuthors = () => {
         params.name = searchTerm;
       }
 
-      const response = await getAuthors(params);
+      const response = await listAuthors(params);
       setAuthors(response.content);
       setTotalPages(response.totalPages);
       setTotalElements(response.totalElements);
