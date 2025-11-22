@@ -20,7 +20,8 @@
     "noDescription": "Nenhuma descrição disponível",
     "retry": "Por favor, tente novamente mais tarde",
     "clearFilters": "Limpar filtros",
-    "sessionExpired": "Sessão expirada. Faça login para salvar seu trabalho."
+    "sessionExpired": "Sessão expirada. Faça login para salvar seu trabalho.",
+    "delete": "Excluir"
   },
   "home": {
     "welcome": "IF Xplore",
@@ -131,7 +132,8 @@
     "mainSearch": "Busca Principal",
     "myWorks": "Meus Trabalhos",
     "rateWorks": "Avaliar Trabalhos",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "manageAuthors": "Gerenciar Autores"
   },
   "filters": {
     "title": "Filtrar Apresentação",
@@ -178,7 +180,9 @@
     "previousPage": "Ir para página anterior",
     "nextPage": "Ir para próxima página",
     "currentPage": "Página {{current}} de {{total}}",
-    "resultsFound": "{{count}} resultados encontrados"
+    "resultsFound": "{{count}} resultados encontrados",
+    "showing": "Mostrando",
+    "itemsPerPage": "Itens por página:"
   },
   "new-work": {
     "workimage": "Imagem do Trabalho",
@@ -264,14 +268,6 @@
       "feedbackWordCount": "Feedback* ({{count}}/160 palavras)",
       "feedbackPlaceholder": "Forneça feedback para o estudante..."
     },
-    "authors": {
-      "fullName": "Nome Completo",
-      "email": "Email",
-      "type": "Tipo",
-      "student": "Aluno",
-      "teacher": "Professor",
-      "add": "Adicionar"
-    },
     "actions": {
       "return": "Devolver",
       "accept": "Aceitar"
@@ -316,8 +312,52 @@
       "externos": "Autores Externos",
       "mostCited": "Mais Citado",
       "quantityOfLabels": "Quantidade de Labels",
+      "quantityOfAuthors": "Quantidade de Autores",
       "mostUsedLabel": "Label Mais Usada",
       "leastUsedLabel": "Label Menos Usada"
+    }
+  },
+  "authors": {
+    "fullName": "Nome Completo",
+    "email": "Email",
+    "type": "Tipo",
+    "student": "Aluno",
+    "teacher": "Professor",
+    "add": "Adicionar",
+    "addNew": "Adicionar Novo Autor",
+    "title": "Gerenciar Autores",
+    "searchPlaceholder": "Buscar autores por nome ou email...",
+    "filterButton": "Filtrar Autores",
+    "noAuthorsFound": "Nenhum autor encontrado",
+    "authors": "autores",
+    "total": "autores",
+    "registered": "Cadastrado",
+    "notRegistered": "Sem Cadastro",
+    "editAuthor": "Editar Autor",
+    "deleteAuthor": "Excluir Autor",
+    "deleteConfirmation": "Tem certeza que deseja excluir o autor {{name}}? Esta ação não pode ser desfeita.",
+    "confirmDelete": "Tem certeza que deseja excluir este autor?",
+    "name": "Nome",
+    "updateSuccess": "Autor atualizado com sucesso!",
+    "updateError": "Erro ao atualizar autor",
+    "deleteSuccess": "Autor excluído com sucesso!",
+    "deleteError": "Erro ao excluir autor",
+    "modal": {
+      "createTitle": "Criar Novo Autor",
+      "editTitle": "Editar Autor",
+      "nameLabel": "Nome do Autor",
+      "emailLabel": "Email do Autor",
+      "namePlaceholder": "Digite o nome do autor",
+      "emailPlaceholder": "Digite o email do autor",
+      "nameRequired": "O nome do autor não pode estar vazio.",
+      "emailRequired": "O email do autor não pode estar vazio.",
+      "emailInvalid": "Por favor, insira um endereço de email válido."
+    },
+    "errors": {
+      "createFailed": "Falha ao criar autor: ",
+      "updateFailed": "Falha ao atualizar autor: ",
+      "deleteFailed": "Falha ao excluir autor: ",
+      "loadFailed": "Falha ao carregar autores: "
     }
   }
 }
