@@ -1,9 +1,12 @@
 import { useState } from "react";
 import {
-  listAuthors,
+  getAuthors,
   updateAuthorById,
   deleteAuthorById,
 } from "../../../../../services/authors/authorService";
+
+export const AUTHORS_PAGE_SIZE_OPTIONS = [10, 20, 50];
+export const DEFAULT_AUTHORS_PAGE_SIZE = 10;
 
 export const useAuthors = () => {
   const [authors, setAuthors] = useState([]);
@@ -12,6 +15,7 @@ export const useAuthors = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [pageSize, setPageSize] = useState(DEFAULT_AUTHORS_PAGE_SIZE);
   const [searchTerm, setSearchTerm] = useState("");
 
   const fetchAuthors = async () => {
@@ -20,14 +24,14 @@ export const useAuthors = () => {
     try {
       const params = {
         page: currentPage,
-        size: 9, // 3x3 grid
+        size: pageSize,
       };
 
       if (searchTerm) {
         params.name = searchTerm;
       }
 
-      const response = await listAuthors(params);
+      const response = await getAuthors(params);
       setAuthors(response.content);
       setTotalPages(response.totalPages);
       setTotalElements(response.totalElements);
@@ -74,6 +78,8 @@ export const useAuthors = () => {
     totalElements,
     currentPage,
     setCurrentPage,
+    pageSize,
+    setPageSize,
     searchTerm,
     setSearchTerm,
     fetchAuthors,

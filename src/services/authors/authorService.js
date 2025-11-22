@@ -1,5 +1,23 @@
 import api from "../utils/api";
 
+export const getAuthors = async (params = {}) => {
+  try {
+    const queryParams = new URLSearchParams();
+    
+    Object.keys(params).forEach((key) => {
+      if (params[key] !== undefined && params[key] !== null && params[key] !== "") {
+        queryParams.append(key, params[key]);
+      }
+    });
+
+    const response = await api.get(`/authors?${queryParams.toString()}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting authors:", error);
+    throw error;
+  }
+};
+
 export const listAuthors = async (params = {}) => {
   try {
     const queryParams = new URLSearchParams();

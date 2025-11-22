@@ -18,7 +18,8 @@
   display: flex;
   gap: 1rem;
   flex: 1;
-  max-width: 600px;
+  max-width: 800px;
+  align-items: center;
 }
 
 .authors-search-input {
@@ -57,6 +58,35 @@
 
 .filter-icon {
   font-size: 1.1rem;
+}
+
+.page-size-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.page-size-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #666;
+}
+
+.page-size-select {
+  padding: 0.5rem 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background-color: white;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  min-width: 70px;
+}
+
+.page-size-select:focus {
+  outline: none;
+  border-color: #334b3f;
 }
 
 .pagination-controls-top {
@@ -172,6 +202,10 @@
 .author-info-dashboard {
   flex: 1;
   margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80px;
 }
 
 .author-name-dashboard {
@@ -252,6 +286,21 @@
   color: #666;
   font-size: 0.9rem;
   font-weight: 500;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.page-indicator {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 /* Form Styles */
@@ -305,7 +354,13 @@
 /* Responsive */
 @media (max-width: 1200px) {
   .authors-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, 300px);
+    gap: 1.2rem;
+  }
+
+  .author-card-dashboard {
+    width: 300px;
+    height: 270px;
   }
 }
 
@@ -317,18 +372,41 @@
   .authors-header {
     flex-direction: column;
     align-items: stretch;
+    gap: 1.5rem;
   }
 
   .search-filter-container {
     max-width: 100%;
     flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-size-selector {
+    justify-content: space-between;
+  }
+
+  .pagination-controls-top {
+    justify-content: center;
   }
 
   .authors-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, 280px);
+    gap: 1rem;
   }
 
   .author-card-dashboard {
+    width: 280px;
+    height: 260px;
     padding: 1.25rem;
+  }
+
+  .pagination-footer {
+    padding-top: 1rem;
+  }
+
+  .pagination-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
   }
 }

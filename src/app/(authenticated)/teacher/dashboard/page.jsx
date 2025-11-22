@@ -4,7 +4,6 @@ import { useDashboard } from "./useDashboard";
 import "./page.css";
 import DashboardOverview from "../../../../components/dashboard/DashboardOverview";
 import DetailedAnalysis from "../../../../components/dashboard/DetailedAnalysis";
-import AuthorsManagement from "./authors/page"; // ⬅️ ADICIONE ESTE IMPORT
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -56,12 +55,6 @@ const Dashboard = () => {
         detailedStats={detailedStats}
         detailedList={detailedList}
       />
-
-      {activeDetailView === "authors" && (
-        <div className="dashboard-authors-section">
-          <AuthorsManagement />
-        </div>
-      )}
     </div>
   );
 };

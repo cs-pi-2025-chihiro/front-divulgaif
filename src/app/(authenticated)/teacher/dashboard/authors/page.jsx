@@ -5,7 +5,7 @@ import { Input, SearchInput } from "../../../../../components/input";
 import Button from "../../../../../components/button";
 import Modal from "../../../../../components/modal/modal";
 import { useNotification } from "../../../../../components/notification/NotificationProvider";
-import { useAuthors } from "./useAuthors";
+import { useAuthors, AUTHORS_PAGE_SIZE_OPTIONS } from "./useAuthors";
 
 const AuthorsManagement = () => {
   const { t } = useTranslation();
@@ -16,6 +16,8 @@ const AuthorsManagement = () => {
     totalPages,
     currentPage,
     setCurrentPage,
+    pageSize,
+    setPageSize,
     totalElements,
     searchTerm,
     setSearchTerm,
@@ -34,7 +36,7 @@ const AuthorsManagement = () => {
 
   useEffect(() => {
     fetchAuthors();
-  }, [currentPage, searchTerm]);
+  }, [currentPage, pageSize, searchTerm]);
 
   const handleEditClick = (author) => {
     setSelectedAuthor(author);
@@ -78,6 +80,11 @@ const AuthorsManagement = () => {
     setCurrentPage(0);
   };
 
+  const handlePageSizeChange = (e) => {
+    setPageSize(Number(e.target.value));
+    setCurrentPage(0);
+  };
+
   const goToPreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
@@ -100,6 +107,23 @@ const AuthorsManagement = () => {
             placeholder={t("authors.searchPlaceholder")}
             className="authors-search-input"
           />
+          <div className="page-size-selector">
+            <label htmlFor="page-size" className="page-size-label">
+              {t("pagination.itemsPerPage", "Items per page:")}
+            </label>
+            <select
+              id="page-size"
+              value={pageSize}
+              onChange={handlePageSizeChange}
+              className="page-size-select"
+            >
+              {AUTHORS_PAGE_SIZE_OPTIONS.map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+          </div>
           <button className="filter-authors-button">
             <span className="filter-icon">⚙</span>
             {t("authors.filterButton", "Filtrar Autores")}
@@ -149,10 +173,10 @@ const AuthorsManagement = () => {
                   <p className="author-email-dashboard">{author.email}</p>
                   <span
                     className={`author-badge ${
-                      author.type?.toLowerCase() || "sem"
+                      (author.userId || author.type === "CADASTRADO") ? "cadastrado" : "sem"
                     }`}
                   >
-                    {author.type === "CADASTRADO"
+                    {(author.userId || author.type === "CADASTRADO")
                       ? t("authors.registered")
                       : t("authors.notRegistered")}
                   </span>
@@ -181,13 +205,39 @@ const AuthorsManagement = () => {
         )}
       </div>
 
-      <div className="pagination-footer">
-        <span className="pagination-info">
-          {t("pagination.showing")} {currentPage * 9 + 1} -{" "}
-          {Math.min((currentPage + 1) * 9, totalElements)} {t("pagination.of")}{" "}
-          {totalElements}
-        </span>
-      </div>
+      {totalPages > 1 && (
+        <div className="pagination-footer">
+          <span className="pagination-info">
+            {t("pagination.showing")} {currentPage * pageSize + 1} -{" "}
+            {Math.min((currentPage + 1) * pageSize, totalElements)}{" "}
+            {t("pagination.of")} {totalElements} {t("authors.authors")}
+          </span>
+          <div className="pagination-controls">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+              disabled={currentPage === 0}
+            >
+              {t("pagination.previousPage", "Previous")}
+            </Button>
+            <span className="page-indicator">
+              {t("pagination.page")} {currentPage + 1} {t("pagination.of")}{" "}
+              {totalPages}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                setCurrentPage(Math.min(totalPages - 1, currentPage + 1))
+              }
+              disabled={currentPage >= totalPages - 1}
+            >
+              {t("pagination.nextPage", "Next")}
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Edit Modal */}
       <Modal

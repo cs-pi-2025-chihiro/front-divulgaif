@@ -125,8 +125,12 @@ const AuthorsPage = () => {
                   <div className="author-info">
                     <h3>{author.name}</h3>
                     <p className="author-email">{author.email}</p>
-                    <span className={`author-type ${author.type?.toLowerCase()}`}>
-                      {author.type === "CADASTRADO"
+                    <span
+                      className={`author-type ${
+                        (author.userId || author.type === "CADASTRADO") ? "cadastrado" : "sem"
+                      }`}
+                    >
+                      {(author.userId || author.type === "CADASTRADO")
                         ? t("authors.registered")
                         : t("authors.notRegistered")}
                     </span>
@@ -154,8 +158,8 @@ const AuthorsPage = () => {
             <div className="pagination-section">
               <div className="pagination-info">
                 {t("pagination.showing")} {currentPage * 8 + 1} -{" "}
-                {Math.min((currentPage + 1) * 8, totalElements)} {t("pagination.of")}{" "}
-                {totalElements} {t("authors.authors")}
+                {Math.min((currentPage + 1) * 8, totalElements)}{" "}
+                {t("pagination.of")} {totalElements} {t("authors.authors")}
               </div>
               <div className="pagination-controls">
                 <Button
@@ -167,7 +171,8 @@ const AuthorsPage = () => {
                   &lt;
                 </Button>
                 <span className="page-indicator">
-                  {t("pagination.page")} {currentPage + 1} {t("pagination.of")} {totalPages}
+                  {t("pagination.page")} {currentPage + 1} {t("pagination.of")}{" "}
+                  {totalPages}
                 </span>
                 <Button
                   variant="outline"
