@@ -303,7 +303,6 @@
   font-weight: 500;
 }
 
-/* Form Styles */
 .edit-author-form {
   display: flex;
   flex-direction: column;
@@ -318,7 +317,7 @@
 
 .form-group label {
   font-weight: 500;
-  color: #2c3e50;
+  color: white;
   font-size: 0.9rem;
 }
 

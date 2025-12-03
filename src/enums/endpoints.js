@@ -17,6 +17,8 @@ export const ENDPOINTS = {
     OAUTH_LOGIN: "/auth/oauth-login",
     REFRESH: "/auth/refresh-token",
     ME: "/auth/me",
+    FORGOT_PASSWORD: "/auth/forgot-password",
+    RESET_PASSWORD: "/auth/reset-password",
   },
   DASHBOARD: {
     GET: "/dashboards",
@@ -38,7 +40,7 @@ export const ENDPOINTS = {
     UPDATE: "/labels/{id}",
     DELETE: "/labels/{id}",
   },
-    LINKS: {
+  LINKS: {
     LIST: "/links/list",
     CREATE: "/links",
     UPDATE: "/links/{id}",

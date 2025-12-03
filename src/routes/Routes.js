@@ -2,6 +2,8 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "../app/(unauthenticated)/home/page";
 import LoginPage from "../app/(unauthenticated)/login/page";
 import RegisterPage from "../app/(unauthenticated)/register/page";
+import ForgotPasswordPage from "../app/(unauthenticated)/forgot-password/page";
+import ChangePasswordPage from "../app/(unauthenticated)/change-password/page";
 import WorkDetail from "../app/(unauthenticated)/home/[id]/page";
 import NotFound from "../app/(unauthenticated)/404/page";
 import { useTranslation } from "react-i18next";
@@ -34,6 +36,8 @@ function AppRoutes() {
         <Route element={<GuestRoute />}>
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          <Route path="forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="change-password" element={<ChangePasswordPage />} />
         </Route>
         <Route path="work/:id" element={<WorkDetail />} />
         <Route path="work/new" element={<WorkFormPage />} />
@@ -55,6 +59,8 @@ function AppRoutes() {
         <Route element={<GuestRoute />}>
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          <Route path="esqueci-senha" element={<ForgotPasswordPage />} />
+          <Route path="alterar-senha" element={<ChangePasswordPage />} />
         </Route>
         <Route path="trabalho/:id" element={<WorkDetail />} />
         <Route path="trabalho/novo" element={<WorkFormPage />} />

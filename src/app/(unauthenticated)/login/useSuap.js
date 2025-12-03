@@ -4,17 +4,7 @@ import { useTranslation } from "react-i18next";
 import api from "../../../services/utils/api";
 import { ENDPOINTS, endpoints } from "../../../enums/endpoints";
 import { SUAP_CREDENTIALS } from "../../../constants";
-
-const createSuapUser = async (suapUserData) => {
-  await api.post(ENDPOINTS.USERS.CREATE, {
-    name: suapUserData.nome_registro,
-    email: suapUserData.email,
-    secondaryEmail: suapUserData.email_secundario,
-    ra: suapUserData.identificacao,
-    avatarUrl: suapUserData.foto,
-    userType: suapUserData.tipo_usuario,
-  });
-};
+import { createSuap } from "../../../services/users/createSuap";
 
 const loginSuapUser = async (suapData, provider) => {
   const response = await api.post(ENDPOINTS.AUTH.OAUTH_LOGIN, {
@@ -104,7 +94,7 @@ const useSuap = () => {
       }
 
       try {
-        await createSuapUser(suapUserData);
+        await createSuap(suapUserData);
       } catch (error) {
         console.error("error:", error);
       }
