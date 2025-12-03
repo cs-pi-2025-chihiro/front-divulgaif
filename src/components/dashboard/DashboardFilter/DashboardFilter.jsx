@@ -15,7 +15,6 @@ const DashboardFilter = ({ activeView, onToggle }) => {
           onClick={() => onToggle("authors")}
         >
           {t("dashboard.toggles.authors")}
-          {/* Fill added to match the solid look of the target image icons slightly better */}
           <BookOpen size={20} className="toggle-btn-icon" strokeWidth={1.5} />
         </button>
         <button
@@ -25,7 +24,6 @@ const DashboardFilter = ({ activeView, onToggle }) => {
           onClick={() => onToggle("labels")}
         >
           {t("dashboard.toggles.labels")}
-          {/* Fill added to match the solid look of the target image icons slightly better */}
           <Tags
             size={20}
             className="toggle-btn-icon"

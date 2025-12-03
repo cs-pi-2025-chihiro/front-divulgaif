@@ -124,7 +124,7 @@ body {
 }
 
 input {
-  width: 90%;
+  width: 93%;
   padding: 0.75rem;
   border: none;
   border-radius: var(--border-radius);
@@ -182,4 +182,43 @@ input {
 
 .suap-button:hover {
   opacity: 0.9;
+}
+
+.forgot-password-link-container {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.forgot-password-text {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.forgot-password-link {
+  color: var(--primary-beige);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}
+
+.register-link-container {
+  text-align: center;
+}
+
+.register-text {
+  font-size: 1.1rem;
+  color: white;
+}
+
+.register-link {
+  color: var(--primary-beige);
+  text-decoration: none;
+  font-weight: 1000;
+}
+
+.register-link:hover {
+  text-decoration: underline;
 }
