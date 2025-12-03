@@ -1,0 +1,173 @@
+:root {
+  --border-radius: 5px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.forgot-password-page .header {
+  display: none;
+}
+
+.divulgaif-forgot-password-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  background-color: var(--primary-green);
+  color: var(--text-light);
+  width: 100%;
+}
+
+.forgot-password-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.forgot-password-header-with-favicon {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.forgot-password-header {
+  text-align: center;
+}
+
+.main-title {
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin: 0;
+  font-family: "Montserrat";
+  color: var(--primary-beige);
+}
+
+.forgot-password-form-container {
+  background-color: var(--form-bg);
+  border-radius: 8px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 380px;
+}
+
+@media (max-width: 480px) {
+  .forgot-password-form-container {
+    background-color: var(--form-bg);
+    border-radius: 8px;
+    padding: 2rem;
+    width: 70%;
+    max-width: 380px;
+  }
+
+  .forgot-password-header-with-favicon {
+    flex-direction: column;
+  }
+}
+
+.forgot-password-heading {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin: 0;
+  color: white;
+  text-align: center;
+}
+
+.forgot-password-subheading {
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0.5rem 0 1.5rem;
+  color: white;
+  text-align: center;
+}
+
+.forgot-password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+}
+
+.form-group input {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-green);
+}
+
+.input-error {
+  border-color: #e74c3c !important;
+}
+
+.error-text {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin: 0.25rem 0 0 0;
+}
+
+.form-group-button {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.forgot-password-button-small {
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+}
+
+.message {
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.back-to-login-container {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.back-to-login-text {
+  font-size: 0.95rem;
+  color: white;
+  margin: 0;
+}
+
+.login-link {
+  color: var(--primary-beige);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}

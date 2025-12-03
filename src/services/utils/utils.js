@@ -19,6 +19,7 @@ export function mapPaginationValues(value, setSize) {
 }
 
 export function navigateTo(path, navigate, currentLang = "pt") {
+  console.log("Navigating to:", path, "with language:", currentLang);
   const cleanPath = path.startsWith("/") ? path.slice(1) : path;
   const fullPath = cleanPath
     ? `/${currentLang}/${cleanPath}`

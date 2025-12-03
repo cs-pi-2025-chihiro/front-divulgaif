@@ -172,6 +172,29 @@ const LoginPage = () => {
                 </div>
               )}
             </div>
+            <div className="forgot-password-link-container">
+              <p className="forgot-password-text">
+                <a
+                  href={`/${i18n.language}/${
+                    i18n.language === "pt" ? "esqueci-senha" : "forgot-password"
+                  }`}
+                  className="forgot-password-link"
+                >
+                  {t("login.forgotPassword", "Esqueceu sua senha?")}
+                </a>
+              </p>
+            </div>
+            <div className="register-link-container">
+              <p className="register-text">
+                {t("login.noAccount", "Não tem uma conta?")}{" "}
+                <a
+                  href={`/${i18n.language}/register`}
+                  className="register-link"
+                >
+                  {t("common.register", "Cadastrar")}
+                </a>
+              </p>
+            </div>
           </form>
         </div>
       </div>

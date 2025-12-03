@@ -4,9 +4,7 @@ import { ENDPOINTS } from "../../enums/endpoints";
 export const searchLinks = async (searchTerm = "", page = 0, size = 20) => {
   try {
     const params = new URLSearchParams();
-    if (searchTerm) {
-      params.append("title.like", searchTerm);
-    }
+    if (searchTerm) params.append("name.like", searchTerm);
     params.append("page", page);
     params.append("size", size);
 
