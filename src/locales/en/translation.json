@@ -25,11 +25,116 @@
   },
   "home": {
     "welcome": "IF Xplore",
+    "subtitle": "Platform for sharing academic works from IFPR",
     "description": "Discover academic works from IFPR",
     "newWork": "New Work",
     "results": "Results",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "recentWorks": "Recent Works",
+    "features": {
+      "title": "Why use DivulgaIF?",
+      "discover": {
+        "title": "Discover Works",
+        "description": "Explore a vast collection of academic works produced by IFPR students and professors."
+      },
+      "share": {
+        "title": "Share Knowledge",
+        "description": "Publish your works and contribute to the institute's academic community."
+      },
+      "search": {
+        "title": "Advanced Search",
+        "description": "Use smart filters to find exactly what you're looking for."
+      },
+      "connect": {
+        "title": "Connect",
+        "description": "Find collaborators and get inspired by other researchers' work."
+      }
+    },
+    "stats": {
+      "works": "Published Works",
+      "authors": "Authors",
+      "areas": "Knowledge Areas"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "description": "DivulgaIF is an open-source community platform, developed by the academic community for the academic community. Our goal is to democratize access to knowledge produced at the Federal Institute of Paraná, allowing everyone to discover, share, and be inspired by academic works freely.",
+      "values": {
+        "transparency": "Transparency",
+        "transparencyDesc": "Free and open access to the knowledge produced.",
+        "collaboration": "Collaboration",
+        "collaborationDesc": "We foster the exchange of ideas and experiences.",
+        "innovation": "Innovation",
+        "innovationDesc": "We encourage creativity and critical thinking."
+      }
+    },
+    "howItWorks": {
+      "title": "How It Works?",
+      "step1": {
+        "title": "Sign Up",
+        "description": "Create your account using your institutional email or SUAP."
+      },
+      "step2": {
+        "title": "Publish",
+        "description": "Add your academic works with description and tags."
+      },
+      "step3": {
+        "title": "Share",
+        "description": "Your work will be visible to the entire IFPR community."
+      }
+    },
+    "community": {
+      "title": "A Platform Made by the Community, for the Community",
+      "intro": "DivulgaIF is an open-source project developed by IFPR students and professors. Our mission is to create a space where everyone can discover and share knowledge openly and accessibly.",
+      "openAccess": {
+        "title": "Open Access",
+        "description": "All published works are freely available for consultation, promoting free access to scientific and academic knowledge."
+      },
+      "openSource": {
+        "title": "Open Source",
+        "description": "Our platform is open source, allowing the community to contribute with improvements and adaptations to better meet academic needs."
+      },
+      "collaborative": {
+        "title": "Collaborative",
+        "description": "Built by IFPR's academic community, DivulgaIF is the result of joint work by students, professors, and researchers."
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "question1": "Who can use DivulgaIF?",
+      "answer1": "IFPR students, professors, and researchers can use the platform.",
+      "question2": "Do I need to pay to publish?",
+      "answer2": "No! DivulgaIF is completely free for the entire academic community.",
+      "question3": "How do I publish my work?",
+      "answer3": "Just log in, click 'New Work' and fill in the requested information.",
+      "question4": "Can I edit my work after publishing?",
+      "answer4": "Yes, you can edit or remove your works at any time."
+    },
+    "ifpr": {
+      "title": "An IFPR Project",
+      "description": "DivulgaIF was born at the Federal Institute of Paraná as a student initiative to revolutionize how we share and discover academic knowledge. Developed by students and guided by professors, this project represents IFPR's commitment to innovation and open access to education.",
+      "feature1": {
+        "title": "Academic Project",
+        "description": "Developed as an extension and research project by IFPR students."
+      },
+      "feature2": {
+        "title": "Open Source",
+        "description": "Fully open code available for the community to contribute."
+      },
+      "feature3": {
+        "title": "Constantly Evolving",
+        "description": "Always improving with feedback from the academic community."
+      },
+      "badge": {
+        "title": "Federal Institute of Paraná",
+        "description": "Education, Science and Technology to transform the future through shared knowledge."
+      }
+    },
+    "cta": {
+      "title": "Ready to get started?",
+      "description": "Join the DivulgaIF community and share your knowledge.",
+      "button": "Publish Work"
+    }
   },
   "errors": {
     "workNotFound": "Work not found",

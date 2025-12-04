@@ -15,8 +15,6 @@ const PaginatedResults = ({
   refetch,
 }) => {
   const { t } = useTranslation();
-  const pageSize = PAGE_SIZE;
-
   const goToPreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
@@ -28,28 +26,6 @@ const PaginatedResults = ({
     setCurrentPage(currentPage + 1);
     refetch();
   };
-
-  const LoadingCard = () => (
-    <div className="loading-card-new">
-      <div className="loading-image"></div>
-      <div className="loading-content">
-        <div className="loading-title-section">
-          <div className="loading-title"></div>
-          <div className="loading-link"></div>
-        </div>
-        <div className="loading-description"></div>
-        <div className="loading-authors-date">
-          <div className="loading-authors"></div>
-          <div className="loading-date"></div>
-        </div>
-        <div className="loading-labels">
-          <div className="loading-label"></div>
-          <div className="loading-label"></div>
-          <div className="loading-label"></div>
-        </div>
-      </div>
-    </div>
-  );
 
   return (
     <div className="ifexplore-results-new">
