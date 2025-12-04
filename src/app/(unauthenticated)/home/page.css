@@ -258,14 +258,18 @@
   color: white;
   border: none;
   border-radius: 4px;
-  width: 30px;
+  width: 30px !important;
   height: 30px;
+  min-width: 30px !important;
+  max-width: 30px !important;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.3s;
+  padding: 0 !important;
+  flex-shrink: 0;
 }
 
 .pagination-button:hover {
@@ -996,5 +1000,17 @@
 
   .faq-item {
     padding: 1.5rem;
+  }
+
+  .pagination-controls {
+    gap: 0.3rem;
+  }
+
+  .pagination-button {
+    width: 40px !important;
+    height: 40px;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    flex-shrink: 0;
   }
 }

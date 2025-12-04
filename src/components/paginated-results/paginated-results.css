@@ -45,14 +45,18 @@
   color: white;
   border: none;
   border-radius: 6px;
-  width: 32px;
+  width: 32px !important;
   height: 32px;
+  min-width: 32px !important;
+  max-width: 32px !important;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.3s ease;
+  padding: 0 !important;
+  flex-shrink: 0;
 }
 
 .pagination-button:hover:not(:disabled) {
@@ -260,13 +264,24 @@
     padding: 1rem 0.5rem;
   }
 
+  .results-header {
+    width: 95%;
+  }
+
+  .pagination-controls {
+    gap: 0.5rem;
+  }
+
   .pagination-info {
-    margin: 0 0.5rem;
-    font-size: 0.8rem;
+    margin: 0 0.25rem;
+    font-size: 0.75rem;
   }
 
   .pagination-button {
-    width: 28px;
-    height: 28px;
+    width: 40px !important;
+    height: 40px;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    flex-shrink: 0;
   }
 }
