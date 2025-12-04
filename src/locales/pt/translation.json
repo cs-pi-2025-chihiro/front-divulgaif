@@ -25,11 +25,116 @@
   },
   "home": {
     "welcome": "IF Xplore",
+    "subtitle": "Plataforma de divulgação de trabalhos acadêmicos do IFPR",
     "description": "Descubra trabalhos acadêmicos do IFPR",
     "newWork": "Novo Trabalho",
     "results": "Resultados",
     "previous": "Anterior",
-    "next": "Próximo"
+    "next": "Próximo",
+    "recentWorks": "Trabalhos Recentes",
+    "features": {
+      "title": "Por que usar o DivulgaIF?",
+      "discover": {
+        "title": "Descubra Trabalhos",
+        "description": "Explore uma vasta coleção de trabalhos acadêmicos produzidos por estudantes e professores do IFPR."
+      },
+      "share": {
+        "title": "Compartilhe Conhecimento",
+        "description": "Publique seus trabalhos e contribua para a comunidade acadêmica do instituto."
+      },
+      "search": {
+        "title": "Busca Avançada",
+        "description": "Utilize filtros inteligentes para encontrar exatamente o que você procura."
+      },
+      "connect": {
+        "title": "Conecte-se",
+        "description": "Encontre colaboradores e inspire-se com o trabalho de outros pesquisadores."
+      }
+    },
+    "stats": {
+      "works": "Trabalhos Publicados",
+      "authors": "Autores",
+      "areas": "Áreas de Conhecimento"
+    },
+    "mission": {
+      "title": "Nossa Missão",
+      "description": "O DivulgaIF é uma plataforma comunitária de código aberto, desenvolvida pela comunidade acadêmica para a comunidade acadêmica. Nosso objetivo é democratizar o acesso ao conhecimento produzido no Instituto Federal do Paraná, permitindo que todos possam descobrir, compartilhar e se inspirar com trabalhos acadêmicos de forma livre e gratuita.",
+      "values": {
+        "transparency": "Transparência",
+        "transparencyDesc": "Acesso livre e aberto ao conhecimento produzido.",
+        "collaboration": "Colaboração",
+        "collaborationDesc": "Fomentamos a troca de ideias e experiências.",
+        "innovation": "Inovação",
+        "innovationDesc": "Incentivamos a criatividade e o pensamento crítico."
+      }
+    },
+    "howItWorks": {
+      "title": "Como Funciona?",
+      "step1": {
+        "title": "Cadastre-se",
+        "description": "Crie sua conta usando seu email institucional ou SUAP."
+      },
+      "step2": {
+        "title": "Publique",
+        "description": "Adicione seus trabalhos acadêmicos com descrição e tags."
+      },
+      "step3": {
+        "title": "Compartilhe",
+        "description": "Seu trabalho ficará visível para toda a comunidade IFPR."
+      }
+    },
+    "community": {
+      "title": "Uma Plataforma Feita pela Comunidade, para a Comunidade",
+      "intro": "O DivulgaIF é um projeto de código aberto desenvolvido por estudantes e professores do IFPR. Nossa missão é criar um espaço onde todos possam descobrir e compartilhar conhecimento de forma aberta e acessível.",
+      "openAccess": {
+        "title": "Acesso Aberto",
+        "description": "Todos os trabalhos publicados estão disponíveis gratuitamente para consulta, promovendo o livre acesso ao conhecimento científico e acadêmico."
+      },
+      "openSource": {
+        "title": "Código Aberto",
+        "description": "Nossa plataforma é open source, permitindo que a comunidade contribua com melhorias e adaptações para atender melhor às necessidades acadêmicas."
+      },
+      "collaborative": {
+        "title": "Colaborativo",
+        "description": "Construído pela comunidade acadêmica do IFPR, o DivulgaIF é resultado do trabalho conjunto de estudantes, professores e pesquisadores."
+      }
+    },
+    "faq": {
+      "title": "Perguntas Frequentes",
+      "question1": "Quem pode usar o DivulgaIF?",
+      "answer1": "Estudantes, professores e pesquisadores do IFPR podem usar a plataforma.",
+      "question2": "É necessário pagar para publicar?",
+      "answer2": "Não! O DivulgaIF é totalmente gratuito para toda a comunidade acadêmica.",
+      "question3": "Como faço para publicar meu trabalho?",
+      "answer3": "Basta fazer login, clicar em 'Novo Trabalho' e preencher as informações solicitadas.",
+      "question4": "Posso editar meu trabalho depois de publicado?",
+      "answer4": "Sim, você pode editar ou remover seus trabalhos a qualquer momento."
+    },
+    "ifpr": {
+      "title": "Um Projeto do IFPR",
+      "description": "O DivulgaIF nasceu no Instituto Federal do Paraná como uma iniciativa estudantil para revolucionar a forma como compartilhamos e descobrimos conhecimento acadêmico. Desenvolvido por alunos e orientado por professores, este projeto representa o compromisso do IFPR com a inovação e o acesso aberto à educação.",
+      "feature1": {
+        "title": "Projeto Acadêmico",
+        "description": "Desenvolvido como projeto de extensão e pesquisa pelos alunos do IFPR."
+      },
+      "feature2": {
+        "title": "Open Source",
+        "description": "Código totalmente aberto e disponível para a comunidade contribuir."
+      },
+      "feature3": {
+        "title": "Em Constante Evolução",
+        "description": "Sempre melhorando com feedback da comunidade acadêmica."
+      },
+      "badge": {
+        "title": "Instituto Federal do Paraná",
+        "description": "Educação, Ciência e Tecnologia para transformar o futuro através do conhecimento compartilhado."
+      }
+    },
+    "cta": {
+      "title": "Pronto para começar?",
+      "description": "Junte-se à comunidade DivulgaIF e compartilhe seu conhecimento.",
+      "button": "Publicar Trabalho"
+    }
   },
   "notFound": {
     "title": "Página Não Encontrada",
