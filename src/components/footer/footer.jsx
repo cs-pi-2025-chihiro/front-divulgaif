@@ -60,7 +60,7 @@ const Footer = () => {
             {t("footer.help")} | {t("footer.about")}
           </p>
           <p>© DivulgaIF | {t("footer.rights")}</p>
-          <p>{t("footer.version")} 1.0.0</p>
+          <p>{t("footer.version")} 1.0.0loc</p>
         </div>
       </div>
 
