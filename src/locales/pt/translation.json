@@ -108,7 +108,7 @@
       "question3": "Como faço para publicar meu trabalho?",
       "answer3": "Basta fazer login, clicar em 'Novo Trabalho' e preencher as informações solicitadas.",
       "question4": "Posso editar meu trabalho depois de publicado?",
-      "answer4": "Sim, você pode editar ou remover seus trabalhos a qualquer momento."
+      "answer4": "Não, você não pode editar ou remover seus trabalhos depois de publicados."
     },
     "ifpr": {
       "title": "Um Projeto do IFPR",
