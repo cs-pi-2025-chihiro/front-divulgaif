@@ -273,7 +273,7 @@ const Home = () => {
               <p>
                 {t(
                   "home.faq.answer4",
-                  "Sim, você pode editar ou remover seus trabalhos a qualquer momento."
+                  "Não, você não pode editar ou remover seus trabalhos depois de publicados."
                 )}
               </p>
             </div>
