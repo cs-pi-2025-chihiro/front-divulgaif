@@ -56,8 +56,11 @@
   },
   "jest": {
     "transformIgnorePatterns": [
-      "node_modules/(?!(@uidotdev/usehooks)/)"
+      "node_modules/(?!(axios|@uidotdev/usehooks)/)"
     ],
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs"
+    },
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
       "!src/index.js",
