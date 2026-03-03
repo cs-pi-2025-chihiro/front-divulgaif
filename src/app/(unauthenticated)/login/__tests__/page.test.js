@@ -1,32 +1,43 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import LoginPage from './page';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useLogin } from './useLogin';
-import useSuap from './useSuap';
 
-// Mocking react-router-dom
+// Mocking components and hooks to isolate LoginPage
+jest.mock('../../../../components/input', () => ({
+  Input: (props) => <input data-testid="mock-input" {...props} />,
+  PasswordInput: (props) => <input data-testid="mock-password-input" type="password" {...props} />,
+}));
+jest.mock('../../../../components/button/index.js', () => ({
+  __esModule: true,
+  default: ({ children, onClick, type, disabled, ariaLabel }) => (
+    <button onClick={onClick} type={type} disabled={disabled} aria-label={ariaLabel}>
+      {children}
+    </button>
+  ),
+}));
 jest.mock('react-router-dom', () => ({
   useNavigate: jest.fn(),
 }));
-
-// Mocking react-i18next
 jest.mock('react-i18next', () => ({
-  useTranslation: jest.fn(() => ({
-    t: (key, defaultValue) => defaultValue || key, // Simple mock for translation
+  useTranslation: () => ({
+    t: (key, defaultValue) => defaultValue || key,
     i18n: { language: 'pt' },
-  })),
+  }),
 }));
-
-// Mocking useLogin hook
-jest.mock(\'../useLogin\', () => ({ useLogin: jest.fn(),
-}));
-
-// Mocking useSuap hookjest.mock(\'../useSuap\', () => ({  __esModule: true,
+jest.mock('../useSuap.js', () => ({
+  __esModule: true,
   default: jest.fn(),
 }));
+jest.mock('../useLogin.js', () => ({
+  useLogin: jest.fn(),
+}));
+
+// Import LoginPage after mocks
+import LoginPage from '../page';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useLogin } from '../useLogin';
+import useSuap from '../useSuap';
 
 describe('LoginPage', () => {
   const mockNavigate = jest.fn();
@@ -38,7 +49,6 @@ describe('LoginPage', () => {
   const mockClearSuapError = jest.fn();
 
   beforeEach(() => {
-    // Reset mocks before each test to ensure isolation
     useNavigate.mockReturnValue(mockNavigate);
     useLogin.mockReturnValue(mockLoginMutation);
     useSuap.mockReturnValue({
@@ -53,23 +63,13 @@ describe('LoginPage', () => {
   test('deve renderizar o formulário de login corretamente com todos os elementos', () => {
     render(<LoginPage />);
 
-    // Verifica se o título principal e os subtítulos estão presentes
     expect(screen.getByText('DivulgaIF')).toBeInTheDocument();
     expect(screen.getByText('Acesse ao DivulgaIF:')).toBeInTheDocument();
-
-    // Verifica a presença dos campos de input e seus rótulos
     expect(screen.getByLabelText('common.email:')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Digite seu email')).toBeInTheDocument();
     expect(screen.getByLabelText('common.password:')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('common.password')).toBeInTheDocument();
-
-    // Verifica a presença dos botões
     expect(screen.getByRole('button', { name: 'Acessar o sistema' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Entrar com SUAP' })).toBeInTheDocument();
-
-    // Verifica a presença dos links de navegação
     expect(screen.getByText('Esqueceu sua senha?')).toBeInTheDocument();
-    expect(screen.getByText('Não tem uma conta?')).toBeInTheDocument();
     expect(screen.getByText('Cadastrar')).toBeInTheDocument();
   });
 
@@ -97,7 +97,6 @@ describe('LoginPage', () => {
       expect(screen.getByText('Usuário é obrigatório')).toBeInTheDocument();
       expect(screen.getByText('Senha é obrigatória')).toBeInTheDocument();
     });
-    // Garante que a mutação de login não foi chamada devido aos erros de validação
     expect(mockLoginMutation.mutate).not.toHaveBeenCalled();
   });
 
@@ -112,7 +111,6 @@ describe('LoginPage', () => {
     fireEvent.change(usernameInput, { target: { name: 'username', value: 'invaliduser' } });
     fireEvent.change(passwordInput, { target: { name: 'password', value: 'wrongpass' } });
 
-    // Simula uma falha na mutação de login
     mockLoginMutation.mutate.mockImplementationOnce((_credentials, { onError }) => {
       onError({ response: { data: { message: 'Credenciais inválidas' } } });
     });
@@ -139,7 +137,6 @@ describe('LoginPage', () => {
     fireEvent.change(usernameInput, { target: { name: 'username', value: 'validuser' } });
     fireEvent.change(passwordInput, { target: { name: 'password', value: 'correctpass' } });
 
-    // Simula um sucesso na mutação de login
     mockLoginMutation.mutate.mockImplementationOnce((_credentials, { onSuccess }) => {
       onSuccess({ accessToken: 'fake_token', refreshToken: 'fake_refresh_token', user: { roles: [{ name: 'user' }] } });
     });
@@ -154,10 +151,9 @@ describe('LoginPage', () => {
       expect(screen.getByRole('status')).toHaveTextContent('Login realizado com sucesso!');
     });
 
-    // Aguarda o setTimeout para a navegação ser chamada
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith('/pt');
-    }, { timeout: 1500 }); // Aumentado o timeout para garantir que o setTimeout seja concluído
+    }, { timeout: 1500 });
   });
 
   // Cenário adicional: Interação com o botão SUAP

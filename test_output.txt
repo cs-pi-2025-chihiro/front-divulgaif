@@ -1,0 +1,12 @@
+
+> divulgaif-front@0.1.0 test
+> node scripts/test.js src/app/(unauthenticated)/login/__tests__/page.test.js --watchAll=false
+
+No tests found, exiting with code 1
+Run with `--passWithNoTests` to exit with code 0
+In /home/ubuntu/front-divulgaif
+  124 files checked.
+  testMatch: /home/ubuntu/front-divulgaif/src/**/__tests__/**/*.{js,jsx,ts,tsx}, /home/ubuntu/front-divulgaif/src/**/*.{spec,test}.{js,jsx,ts,tsx} - 2 matches
+  testPathIgnorePatterns: /node_modules/ - 124 matches
+  testRegex:  - 0 matches
+Pattern: src/app/(unauthenticated)/login/__tests__/page.test.js - 0 matches
