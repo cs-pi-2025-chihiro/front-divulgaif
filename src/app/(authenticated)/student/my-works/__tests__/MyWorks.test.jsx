@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 jest.mock('../useMyWorks');
+
 jest.mock('jotai', () => ({
   ...jest.requireActual('jotai'),
   useAtom: jest.fn(),
@@ -19,6 +20,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('react-i18next');
+
 jest.mock('../../../../../services/utils/utils', () => ({
   navigateTo: jest.fn(),
   mapPaginationValues: jest.fn(),
@@ -36,7 +38,7 @@ jest.mock('../../../../../components/modal/filtrar-busca/filtrarBuscaModal', () 
   };
 });
 
-describe('Página Meus Trabalhos - Testes de Interface', () => {
+describe('Página Meus Trabalhos - Testes Adicionais', () => {
   const mockNavigate = jest.fn();
   const mockSetCurrentPage = jest.fn();
   const mockSetCurrentSize = jest.fn();
@@ -59,7 +61,7 @@ describe('Página Meus Trabalhos - Testes de Interface', () => {
       description: 'Descrição do trabalho 2',
       labels: ['Testes'],
       approvedAt: '2024-03-02',
-    }
+    },
   ];
 
   beforeEach(() => {
@@ -100,94 +102,75 @@ describe('Página Meus Trabalhos - Testes de Interface', () => {
     });
   });
 
-  test('deve renderizar os componentes principais da página', () => {
+  //////////////////
+  
+  test('deve aplicar filtros e fechar o modal', () => {
     render(<MyWorks />);
 
-    expect(screen.getByText('Meus Trabalhos')).toBeInTheDocument();
-    expect(screen.getByText('Filtrar Trabalhos')).toBeInTheDocument();
-    expect(screen.getByText('Novo Trabalho')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Buscar...')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Filtrar Trabalhos'));
+    expect(screen.getByTestId('filter-modal')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText('Aplicar'));
+
+    // Após aplicar, o modal deve fechar e a página deve ser resetada
+    expect(screen.queryByTestId('filter-modal')).not.toBeInTheDocument();
+    expect(mockSetCurrentPage).toHaveBeenCalledWith(0);
   });
 
-  test('deve renderizar a lista de trabalhos quando populada', () => {
+  
+  test('deve exibir os autores dos trabalhos', () => {
     render(<MyWorks />);
 
-    expect(screen.getByText('Trabalho de Teste 1')).toBeInTheDocument();
-    expect(screen.getByText('Trabalho de Teste 2')).toBeInTheDocument();
-    expect(screen.getByText('2 resultados')).toBeInTheDocument();
+    expect(screen.getByText('Autor 1')).toBeInTheDocument();
+    expect(screen.getByText('Autor 2')).toBeInTheDocument();
   });
 
-  test('deve exibir mensagem de erro quando a lista de trabalhos está vazia', () => {
+  
+  test('deve exibir as labels dos trabalhos', () => {
+    render(<MyWorks />);
+
+    expect(screen.getByText('IA')).toBeInTheDocument();
+    expect(screen.getByText('React')).toBeInTheDocument();
+    expect(screen.getByText('Testes')).toBeInTheDocument();
+  });
+
+  
+  test('deve exibir a descrição dos trabalhos', () => {
+    render(<MyWorks />);
+
+    expect(screen.getByText('Descrição do trabalho 1')).toBeInTheDocument();
+    expect(screen.getByText('Descrição do trabalho 2')).toBeInTheDocument();
+  });
+
+
+  test('deve fechar o modal ao clicar no botão fechar', () => {
+    render(<MyWorks />);
+
+    fireEvent.click(screen.getByText('Filtrar Trabalhos'));
+    expect(screen.getByTestId('filter-modal')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText('Fechar'));
+
+    expect(screen.queryByTestId('filter-modal')).not.toBeInTheDocument();
+  });
+
+  test('deve mostrar texto singular quando houver apenas 1 resultado', () => {
     useMyWorks.mockReturnValue({
-      works: [],
-      totalPages: 0,
-      totalWorks: 0,
+      works: [mockWorks[0]],
+      totalPages: 1,
+      totalWorks: 1,
       isLoading: false,
       refetch: mockRefetch,
     });
 
     render(<MyWorks />);
 
-    expect(screen.getByText('Nenhum trabalho encontrado.')).toBeInTheDocument();
-    expect(screen.getByText('0 resultados')).toBeInTheDocument();
+    expect(screen.getByText('1 resultado')).toBeInTheDocument();
   });
 
-  test('deve navegar para a página de novo trabalho ao clicar no botão', () => {
-    const { navigateTo } = require('../../../../../services/utils/utils');
+
+  test('deve exibir a data de aprovação dos trabalhos', () => {
     render(<MyWorks />);
-
-    const newWorkButton = screen.getByText('Novo Trabalho');
-    fireEvent.click(newWorkButton);
-
-    expect(navigateTo).toHaveBeenCalledWith('trabalho/novo', mockNavigate, 'pt');
-  });
-
-  
-  test('deve abrir o modal de filtros ao clicar no botão de filtrar', () => {
-    render(<MyWorks />);
-
-    const filterButton = screen.getByText('Filtrar Trabalhos');
-    fireEvent.click(filterButton);
-
-    expect(screen.getByTestId('filter-modal')).toBeInTheDocument();
-  });
-
-  test('deve atualizar o termo de busca e resetar a página ao digitar no campo de busca', () => {
-    render(<MyWorks />);
-
-    const searchInput = screen.getByPlaceholderText('Buscar...');
-    fireEvent.change(searchInput, { target: { value: 'Pesquisa' } });
-
-    expect(mockSetSearch).toHaveBeenCalledWith('Pesquisa');
-    expect(mockSetCurrentPage).toHaveBeenCalledWith(0);
-  });
-
-  
-  test('não deve resetar a página se o termo de busca for igual ao anterior', () => {
-    useAtom.mockImplementation((atom) => {
-      if (atom === pageAtom)   return [0, mockSetCurrentPage];
-      if (atom === sizeAtom)   return [10, mockSetCurrentSize];
-      if (atom === searchAtom) return ['Pesquisa', mockSetSearch];
-      return [null, jest.fn()];
-    });
-
-    render(<MyWorks />);
-
-    const searchInput = screen.getByPlaceholderText('Buscar...');
-    fireEvent.change(searchInput, { target: { value: 'Pesquisa' } });
-    expect(mockSetCurrentPage).not.toHaveBeenCalled();
-  });
-
-  test('deve exibir estado de carregamento enquanto os dados são buscados', () => {
-    useMyWorks.mockReturnValue({
-      works: [],
-      totalPages: 0,
-      totalWorks: 0,
-      isLoading: true,
-      refetch: mockRefetch,
-    });
-
-    render(<MyWorks />);
-    expect(screen.getByText('Carregando...')).toBeInTheDocument();
+    expect(screen.getAllByText(/2024/).length).toBeGreaterThan(0);
   });
 });
