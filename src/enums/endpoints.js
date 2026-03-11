@@ -48,7 +48,7 @@ export const ENDPOINTS = {
   },
   SUAP: {
     OAUTH: "https://suap.ifpr.edu.br/o/authorize/",
-    INFO: "https://suap.ifpr.edu.br/api/eu/",
+    INFO: "https://suap.ifpr.edu.br/api/rh/eu/",
   },
   USERS: {
     CREATE: "/users",

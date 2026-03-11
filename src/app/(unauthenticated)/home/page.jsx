@@ -30,7 +30,6 @@ const Home = () => {
     handleOAuthCallback();
   }, []);
 
-  // Scroll animation observer
   useEffect(() => {
     const observerOptions = {
       threshold: 0.15,
@@ -40,7 +39,6 @@ const Home = () => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-          // Add staggered delay for child elements
           setTimeout(() => {
             entry.target.classList.add("animate-in");
           }, index * 50);
@@ -48,7 +46,6 @@ const Home = () => {
       });
     }, observerOptions);
 
-    // Wait a bit for DOM to fully render
     setTimeout(() => {
       const animatedElements = document.querySelectorAll("[data-animate]");
       animatedElements.forEach((el) => observer.observe(el));
@@ -172,13 +169,13 @@ const Home = () => {
           <h2 className="section-title">
             {t(
               "home.community.title",
-              "Uma Plataforma Feita pela Comunidade, para a Comunidade"
+              "Uma Plataforma Feita pela Comunidade, para a Comunidade",
             )}
           </h2>
           <p className="community-intro">
             {t(
               "home.community.intro",
-              "O DivulgaIF é um projeto de código aberto desenvolvido por estudantes e professores do IFPR. Nossa missão é criar um espaço onde todos possam descobrir e compartilhar conhecimento de forma aberta e acessível."
+              "O DivulgaIF é um projeto de código aberto desenvolvido por estudantes e professores do IFPR. Nossa missão é criar um espaço onde todos possam descobrir e compartilhar conhecimento de forma aberta e acessível.",
             )}
           </p>
           <div className="community-grid">
@@ -190,7 +187,7 @@ const Home = () => {
               <p>
                 {t(
                   "home.community.openAccess.description",
-                  "Todos os trabalhos publicados estão disponíveis gratuitamente para consulta, promovendo o livre acesso ao conhecimento científico e acadêmico."
+                  "Todos os trabalhos publicados estão disponíveis gratuitamente para consulta, promovendo o livre acesso ao conhecimento científico e acadêmico.",
                 )}
               </p>
             </div>
@@ -202,7 +199,7 @@ const Home = () => {
               <p>
                 {t(
                   "home.community.openSource.description",
-                  "Nossa plataforma é open source, permitindo que a comunidade contribua com melhorias e adaptações para atender melhor às necessidades acadêmicas."
+                  "Nossa plataforma é open source, permitindo que a comunidade contribua com melhorias e adaptações para atender melhor às necessidades acadêmicas.",
                 )}
               </p>
             </div>
@@ -214,7 +211,7 @@ const Home = () => {
               <p>
                 {t(
                   "home.community.collaborative.description",
-                  "Construído pela comunidade acadêmica do IFPR, o DivulgaIF é resultado do trabalho conjunto de estudantes, professores e pesquisadores."
+                  "Construído pela comunidade acadêmica do IFPR, o DivulgaIF é resultado do trabalho conjunto de estudantes, professores e pesquisadores.",
                 )}
               </p>
             </div>
@@ -234,7 +231,7 @@ const Home = () => {
               <p>
                 {t(
                   "home.faq.answer1",
-                  "Estudantes, professores e pesquisadores do IFPR podem usar a plataforma."
+                  "Estudantes, professores e pesquisadores do IFPR podem usar a plataforma.",
                 )}
               </p>
             </div>
@@ -245,7 +242,7 @@ const Home = () => {
               <p>
                 {t(
                   "home.faq.answer2",
-                  "Não! O DivulgaIF é totalmente gratuito para toda a comunidade acadêmica."
+                  "Não! O DivulgaIF é totalmente gratuito para toda a comunidade acadêmica.",
                 )}
               </p>
             </div>
@@ -253,13 +250,13 @@ const Home = () => {
               <h3>
                 {t(
                   "home.faq.question3",
-                  "Como faço para publicar meu trabalho?"
+                  "Como faço para publicar meu trabalho?",
                 )}
               </h3>
               <p>
                 {t(
                   "home.faq.answer3",
-                  "Basta fazer login, clicar em 'Novo Trabalho' e preencher as informações solicitadas."
+                  "Basta fazer login, clicar em 'Novo Trabalho' e preencher as informações solicitadas.",
                 )}
               </p>
             </div>
@@ -267,13 +264,13 @@ const Home = () => {
               <h3>
                 {t(
                   "home.faq.question4",
-                  "Posso editar meu trabalho depois de publicado?"
+                  "Posso editar meu trabalho depois de publicado?",
                 )}
               </h3>
               <p>
                 {t(
                   "home.faq.answer4",
-                  "Não, você não pode editar ou remover seus trabalhos depois de publicados."
+                  "Não, você não pode editar ou remover seus trabalhos depois de publicados.",
                 )}
               </p>
             </div>
@@ -288,7 +285,7 @@ const Home = () => {
             <p>
               {t(
                 "home.ifpr.description",
-                "O DivulgaIF nasceu no Instituto Federal do Paraná como uma iniciativa estudantil para revolucionar a forma como compartilhamos e descobrimos conhecimento acadêmico. Desenvolvido por alunos e orientado por professores, este projeto representa o compromisso do IFPR com a inovação e o acesso aberto à educação."
+                "O DivulgaIF nasceu no Instituto Federal do Paraná como uma iniciativa estudantil para revolucionar a forma como compartilhamos e descobrimos conhecimento acadêmico. Desenvolvido por alunos e orientado por professores, este projeto representa o compromisso do IFPR com a inovação e o acesso aberto à educação.",
               )}
             </p>
             <div className="ifpr-features">
@@ -299,7 +296,7 @@ const Home = () => {
                   <p>
                     {t(
                       "home.ifpr.feature1.description",
-                      "Desenvolvido como projeto de extensão e pesquisa pelos alunos do IFPR."
+                      "Desenvolvido como projeto de extensão e pesquisa pelos alunos do IFPR.",
                     )}
                   </p>
                 </div>
@@ -311,7 +308,7 @@ const Home = () => {
                   <p>
                     {t(
                       "home.ifpr.feature2.description",
-                      "Código totalmente aberto e disponível para a comunidade contribuir."
+                      "Código totalmente aberto e disponível para a comunidade contribuir.",
                     )}
                   </p>
                 </div>
@@ -325,7 +322,7 @@ const Home = () => {
                   <p>
                     {t(
                       "home.ifpr.feature3.description",
-                      "Sempre melhorando com feedback da comunidade acadêmica."
+                      "Sempre melhorando com feedback da comunidade acadêmica.",
                     )}
                   </p>
                 </div>
@@ -340,7 +337,7 @@ const Home = () => {
             <p>
               {t(
                 "home.ifpr.badge.description",
-                "Educação, Ciência e Tecnologia para transformar o futuro através do conhecimento compartilhado."
+                "Educação, Ciência e Tecnologia para transformar o futuro através do conhecimento compartilhado.",
               )}
             </p>
           </div>
@@ -353,7 +350,7 @@ const Home = () => {
           <p>
             {t(
               "home.cta.description",
-              "Junte-se à comunidade DivulgaIF e compartilhe seu conhecimento."
+              "Junte-se à comunidade DivulgaIF e compartilhe seu conhecimento.",
             )}
           </p>
           <Button
