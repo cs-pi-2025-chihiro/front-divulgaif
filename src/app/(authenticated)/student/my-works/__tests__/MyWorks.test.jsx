@@ -2,13 +2,20 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import MyWorks from "../page";
-import { useMyWorks } from "../useMyWorks";
+import { pageAtom, searchAtom, sizeAtom, useMyWorks } from "../useMyWorks";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { navigateTo } from "../../../../../services/utils/utils";
 
 // Mock das dependências
-jest.mock("../useMyWorks");
+jest.mock("../useMyWorks", () => {
+  const actual = jest.requireActual("../useMyWorks");
+  return {
+    ...actual,
+    useMyWorks: jest.fn(),
+  };
+});
 jest.mock("jotai", () => ({
   useAtom: jest.fn(),
   atom: jest.fn((initialValue) => ({
@@ -84,6 +91,7 @@ describe("Página Meus Trabalhos - Testes de Interface", () => {
           "pagination.results": "resultados",
           "pagination.result": "resultado",
           "errors.NoWorksFound": "Nenhum trabalho encontrado.",
+          "common.loading": "Carregando...",
         };
         return translations[key] || key;
       },
@@ -91,9 +99,9 @@ describe("Página Meus Trabalhos - Testes de Interface", () => {
     });
 
     useAtom.mockImplementation((atom) => {
-      if (atom.toString().includes("page")) return [0, mockSetCurrentPage];
-      if (atom.toString().includes("size")) return [10, mockSetCurrentSize];
-      if (atom.toString().includes("search")) return ["", mockSetSearch];
+      if (atom === pageAtom) return [0, mockSetCurrentPage];
+      if (atom === sizeAtom) return [10, mockSetCurrentSize];
+      if (atom === searchAtom) return ["", mockSetSearch];
       return [null, jest.fn()];
     });
 
@@ -160,7 +168,6 @@ describe("Página Meus Trabalhos - Testes de Interface", () => {
    * Verifica se o clique no botão de novo trabalho dispara a navegação correta.
    */
   test("deve navegar para a página de novo trabalho ao clicar no botão", () => {
-    const { navigateTo } = require("../../../../services/utils/utils");
     render(<MyWorks />);
 
     const newWorkButton = screen.getByText("Novo Trabalho");
