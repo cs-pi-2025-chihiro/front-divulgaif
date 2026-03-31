@@ -78,7 +78,7 @@ const WorkDetail = () => {
   }
 
   const isWorkOwner = work?.authors?.some(
-    (author) => author.userId === currentUser?.id
+    (author) => author.userId === currentUser?.id,
   );
 
   const canEdit =
@@ -170,7 +170,7 @@ const WorkDetail = () => {
           <h2>{t("workDetail.additionalLinks") || "Links Adicionais"}</h2>
           <ul className="additional-links-list">
             {work.links.map((link, index) => (
-              <li>
+              <li key={index}>
                 <a href={link.url} target="_blank" rel="noopener noreferrer">
                   {link.name}
                 </a>
