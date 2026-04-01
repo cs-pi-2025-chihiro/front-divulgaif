@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import DOMPurify from 'dompurify';
 import api from "../../../services/utils/api";
-import { ENDPOINTS, endpoints } from "../../../enums/endpoints";
+import { ENDPOINTS } from "../../../enums/endpoints";
 import { SUAP_CREDENTIALS } from "../../../constants";
 import { createSuap } from "../../../services/users/createSuap";
 
@@ -21,6 +22,7 @@ const loginSuapUser = async (suapData, provider) => {
 
 const useSuap = () => {
   const [isProcessing, setIsProcessing] = useState(false);
+  const isProcessingRef = useRef(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { i18n } = useTranslation();
@@ -38,15 +40,26 @@ const useSuap = () => {
   };
 
   const handleOAuthCallback = async () => {
+    // ✔️ Proteção contra chamadas duplicadas (Race Condition) usando ref síncrono
+    if (isProcessingRef.current) return false;
+
+    isProcessingRef.current = true;
+    setIsProcessing(true);
+
     try {
       const oauthHash = localStorage.getItem("oauth_hash");
 
-      if (!oauthHash) {
-        return false;
+      if (!oauthHash || !oauthHash.includes("=")) {
+        throw new Error("Malformed OAuth hash");
       }
 
       const params = new URLSearchParams(oauthHash.substring(1));
       const accessToken = params.get("access_token");
+
+      // ✔️ Validação do token
+      if (!accessToken) {
+        throw new Error("Invalid access token");
+      }
 
       const suapResponse = await fetch(ENDPOINTS.SUAP.INFO, {
         headers: {
@@ -61,65 +74,82 @@ const useSuap = () => {
 
       const suapUserData = await suapResponse.json();
 
+      let loginResult;
+
       try {
-        const loginResult = await loginSuapUser(suapUserData, SUAP_PROVIDER);
-
-        if (loginResult) {
-          localStorage.setItem("accessToken", loginResult.accessToken);
-          localStorage.setItem("refreshToken", loginResult.refreshToken);
-
-          if (loginResult.user) {
-            localStorage.setItem("userData", JSON.stringify(loginResult.user));
-
-            if (
-              loginResult.user.roles &&
-              Array.isArray(loginResult.user.roles)
-            ) {
-              const roleNames = loginResult.user.roles.map((role) => role.name);
-              localStorage.setItem("userRoles", JSON.stringify(roleNames));
-            }
-          }
-
-          localStorage.removeItem("oauth_hash");
-          window.history.replaceState(
-            {},
-            document.title,
-            window.location.pathname
-          );
-          navigate(`/${i18n.language}`);
-          return true;
-        }
+        loginResult = await loginSuapUser(suapUserData, SUAP_PROVIDER);
       } catch (error) {
-        console.error("error: ", error);
-      }
-
-      try {
+        // tenta criar usuário
         await createSuap(suapUserData);
-      } catch (error) {
-        console.error("error:", error);
+
+        // tenta login novamente
+        loginResult = await loginSuapUser(suapUserData, SUAP_PROVIDER);
       }
 
-      const loginResult = await loginSuapUser(suapUserData, SUAP_PROVIDER);
-
-      if (!loginResult) {
-        throw new Error("Failed to login after user creation");
+      // ✔️ Validação de retorno da API
+      if (!loginResult || !loginResult.accessToken) {
+        throw new Error("Invalid login response");
       }
 
-      localStorage.setItem("accessToken", loginResult.accessToken);
-      localStorage.setItem("refreshToken", loginResult.refreshToken);
+      // ✔️ Salvando com segurança
+      try {
+        if (loginResult.accessToken) {
+          localStorage.setItem("accessToken", loginResult.accessToken);
+        }
 
+        if (loginResult.refreshToken) {
+          localStorage.setItem("refreshToken", loginResult.refreshToken);
+        }
+
+        if (loginResult.user) {
+          // Sanitizar dados para prevenir XSS
+          const sanitizedUser = {
+            ...loginResult.user,
+            nome_registro: DOMPurify.sanitize(loginResult.user.nome_registro || '', { ALLOWED_TAGS: [] }),
+            email: DOMPurify.sanitize(loginResult.user.email || '', { ALLOWED_TAGS: [] }),
+            // Adicionar outros campos se necessário
+          };
+
+          localStorage.setItem(
+            "userData",
+            JSON.stringify(sanitizedUser)
+          );
+
+          if (
+            loginResult.user.roles &&
+            Array.isArray(loginResult.user.roles)
+          ) {
+            const roleNames = loginResult.user.roles.map(
+              (role) => role.name
+            );
+            localStorage.setItem(
+              "userRoles",
+              JSON.stringify(roleNames)
+            );
+          }
+        }
+      } catch (storageError) {
+        throw new Error("Storage failure");
+      }
+
+      // limpeza
       localStorage.removeItem("oauth_hash");
       window.history.replaceState({}, document.title, window.location.pathname);
+
       navigate(`/${i18n.language}`);
+
       return true;
     } catch (err) {
       console.error("OAuth callback error:", err);
       setError("Falha na autenticação com SUAP. Tente novamente.");
+
       localStorage.removeItem("oauth_hash");
       window.history.replaceState({}, document.title, window.location.pathname);
+
       return false;
     } finally {
       setIsProcessing(false);
+      isProcessingRef.current = false;
     }
   };
 

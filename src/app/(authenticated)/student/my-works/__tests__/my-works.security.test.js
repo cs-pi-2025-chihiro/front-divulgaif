@@ -33,12 +33,6 @@ jest.mock("lucide-react", () => ({
   Plus: () => <span data-testid="icon-plus" />,
 }));
 
-jest.mock("../../../../services/utils/utils", () => ({
-  __esModule: true,
-  navigateTo: (...args) => mockNavigateTo(...args),
-  mapPaginationValues: (...args) => mockMapPaginationValues(...args),
-}));
-
 jest.mock("../useMyWorks", () => ({
   __esModule: true,
   pageAtom: {},

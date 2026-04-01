@@ -12,14 +12,11 @@ jest.mock('../useMyWorks');
 jest.mock('jotai');
 jest.mock('react-i18next');
 jest.mock('react-router-dom');
-jest.mock('../../../../services/utils/utils', () => ({
-  navigateTo: jest.fn(),
-  mapPaginationValues: jest.fn(),
-}));
 
 // Mock do componente FiltrarBuscaModal para simplificar os testes de interface da página principal
-jest.mock('../../../../components/modal/filtrar-busca/filtrarBuscaModal', () => {
-  return function MockModal({ isOpen, onClose, onApplyFilters }) {
+jest.mock('../../../../components/modal/filtrar-busca/filtrarBuscaModal', () => ({
+  __esModule: true,
+  default: function MockModal({ isOpen, onClose, onApplyFilters }) {
     if (!isOpen) return null;
     return (
       <div data-testid="filter-modal">
@@ -27,8 +24,8 @@ jest.mock('../../../../components/modal/filtrar-busca/filtrarBuscaModal', () => 
         <button onClick={() => onApplyFilters({ workType: { ARTICLE: true } })}>Aplicar</button>
       </div>
     );
-  };
-});
+  },
+}));
 
 describe('Página Meus Trabalhos - Testes de Interface', () => {
   const mockNavigate = jest.fn();
